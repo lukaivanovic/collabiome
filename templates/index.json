@@ -9,12 +9,21 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "hero_fbajPp": {
+      "type": "hero",
+      "name": "t:general.hero",
+      "settings": {
+        "kicker": "",
+        "title": "missing translation: \"t:sections.hero.default_title\"",
+        "description": "",
+        "button_label": "missing translation: \"t:sections.hero.default_button\"",
+        "button_link": "",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
     }
   },
   "order": [
-    "main"
+    "hero_fbajPp"
   ]
 }
