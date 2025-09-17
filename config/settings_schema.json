@@ -19,7 +19,7 @@
         "id": "type_primary_font",
         "default": "work_sans_n4",
         "label": "t:general.primary"
-      },
+      }
     ]
   },
   {
@@ -66,6 +66,11 @@
         "type": "color",
         "id": "foreground_color",
         "default": "#333333",
+        "label": "t:labels.foreground"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient1",
         "label": "t:labels.foreground"
       },
       {
