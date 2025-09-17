@@ -5,9 +5,12 @@
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">Logo</a>
     </div>
     <div class="site-header__icons" aria-label="Header actions">
-      <a href="#" aria-label="Search">[Search]</a>
-      <a href="#" aria-label="User">[User]</a>
-      <a href="{{ routes.cart_url }}" aria-label="Cart">[Cart]</a>
+      <a href="#" aria-label="User">
+        {{ 'icon-user.svg' | inline_asset_content }}
+      </a>
+      <a href="{{ routes.cart_url }}" aria-label="Cart">
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a>
     </div>
   </div>
 

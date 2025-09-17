@@ -44,6 +44,10 @@ dialog {
   color: var(--color-foreground);
 }
 
+a {
+  font-family: var(--font-secondary--family);
+}
+
 p {
   font-family: var(--font-secondary--family);
   text-wrap: pretty;
@@ -77,6 +81,7 @@ body {
   font-family: var(--font-primary--family);
   background-color: var(--color-background);
   color: var(--color-foreground);
+  font-size: 0.875rem;
 }
 
 /** Section layout utilities */

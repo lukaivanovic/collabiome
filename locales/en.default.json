@@ -76,5 +76,28 @@
     "shop": "Shop",
     "about": "About",
     "contact": "Contact"
+  },
+  "sections": {
+    "category": {
+      "media": "Media"
+    },
+    "hero": {
+      "name": "Hero",
+      "content_group": "Content",
+      "kicker": "Eyebrow",
+      "title": "Title",
+      "default_title": "Big hero headline",
+      "description": "Description",
+      "button_label": "Button label",
+      "default_button": "Shop now",
+      "button_link": "Button link",
+      "media_group": "Media",
+      "video": "Video",
+      "video_url": "External video URL",
+      "image": "Image",
+      "style_group": "Style",
+      "overlay_color": "Overlay color",
+      "overlay_opacity": "Overlay opacity"
+    }
   }
 }

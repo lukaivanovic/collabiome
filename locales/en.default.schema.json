@@ -41,7 +41,10 @@
     "text": "Text",
     "theme": "Theme",
     "typography": "Typography",
-    "announcement_bar": "Announcement bar"
+    "announcement_bar": "Announcement bar",
+    "hero": "Hero",
+    "media": "Media",
+    "opacity": "Opacity"
   },
   "labels": {
     "alignment": "Alignment",
