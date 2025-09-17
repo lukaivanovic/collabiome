@@ -13,10 +13,20 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "menu": ""
+      }
+    },
+    "announcement_bar_PamLDR": {
+      "type": "announcement-bar",
+      "name": "t:general.announcement_bar",
+      "settings": {
+        "message": "Free shipping on orders over $50"
+      }
     }
   },
   "order": [
+    "announcement_bar_PamLDR",
     "header"
-  ],
+  ]
 }
