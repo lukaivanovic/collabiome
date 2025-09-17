@@ -11,17 +11,19 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
-    "header": {
-      "type": "header",
-      "settings": {
-        "menu": ""
-      }
-    },
     "announcement_bar_PamLDR": {
       "type": "announcement-bar",
       "name": "t:general.announcement_bar",
       "settings": {
-        "message": "Free shipping on orders over $50"
+        "message": "Free shipping on orders over $50",
+        "enable_countdown": true,
+        "countdown_target": "2025-12-31T23:59:59Z"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": ""
       }
     }
   },
