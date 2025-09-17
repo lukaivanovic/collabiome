@@ -69,7 +69,8 @@
       "m_short": "m",
       "s_short": "s"
     },
-    "click_here": "Click here"
+    "click_here": "Click here",
+    "products": "Products"
   },
   "navigation": {
     "home": "Home",
@@ -77,6 +78,7 @@
     "about": "About",
     "contact": "Contact"
   },
+
   "sections": {
     "category": {
       "media": "Media"

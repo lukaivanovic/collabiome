@@ -1,0 +1,137 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
+
+<section class="products-row full-width" id="products-row-{{ section_id }}">
+  <div class="products-row__inner">
+    {% if section.settings.title != blank %}
+      <h2 class="products-row__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+
+    <div class="products-row__scroller" role="list">
+      {% if section.settings.products and section.settings.products.size > 0 %}
+        {% for product in section.settings.products %}
+          <a class="product-card" role="listitem" href="{{ product.url }}">
+            <div class="product-card__media">
+              {% if product.featured_image %}
+                {% render 'image', class: 'product-card__image', image: product.featured_image, width: 600, height: 600, crop: 'center' %}
+              {% else %}
+                <div class="product-card__placeholder" aria-hidden="true"></div>
+              {% endif %}
+            </div>
+            <div class="product-card__content">
+              <p class="product-card__title">{{ product.title | escape }}</p>
+              {% assign first_variant = product.selected_or_first_available_variant %}
+              <p class="product-card__price">{{ first_variant.price | money }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..6) %}
+          <div class="product-card" role="listitem" aria-hidden="true">
+            <div class="product-card__media">
+              <div class="product-card__placeholder"></div>
+            </div>
+            <div class="product-card__content">
+              <p class="product-card__title">Product title</p>
+              <p class="product-card__price">$00.00</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .products-row__inner {
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    row-gap: 0.75rem;
+    padding-block: 1rem;
+  }
+
+  .products-row__title {
+    grid-column: 2;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .products-row__scroller {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 280px);
+    gap: 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-inline: var(--page-margin);
+    padding-bottom: 0.5rem;
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    text-decoration: none;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    border-radius: 10px;
+    padding: 0.5rem;
+    scroll-snap-align: start;
+  }
+
+  .product-card__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f2f2f2;
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
+  }
+
+  .product-card__content {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .product-card__title {
+    font-size: 0.95rem;
+  }
+
+  .product-card__price {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.9;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product",
+  "tag": "section",
+  "class": "products-row",
+  "settings": [
+    { "type": "text", "id": "title", "label": "t:labels.text", "default": "Featured products" },
+    { "type": "product_list", "id": "products", "label": "t:general.product", "limit": 24 }
+  ],
+  "presets": [
+    { "name": "t:general.product", "category": "t:general.main" }
+  ]
+}
+{% endschema %}
+
+
