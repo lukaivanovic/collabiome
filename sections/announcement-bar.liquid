@@ -14,21 +14,43 @@
   aria-label="{{ 'general.announcement_bar' | t }}"
 >
   <div class="announcement-bar__inner">
-    {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-      <div class="announcement-bar__countdown" data-target="{{ section.settings.countdown_target | escape }}">
-        {% if section.settings.message != blank %}
+    {% if section.settings.link_url != blank %}
+      <a class="announcement-bar__link" href="{{ section.settings.link_url }}">
+        {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
+          <div class="announcement-bar__countdown" data-target="{{ section.settings.countdown_target | escape }}">
+            {% if section.settings.message != blank %}
+              <span class="announcement-bar__text">{{ section.settings.message }}</span>
+            {% endif %}
+            <span class="announcement-bar__timer" aria-live="polite">
+              {{ 'general.countdown.ends_in' | t }}
+              <span class="time days">00</span>{{ 'general.time.d_short' | t }}
+              <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
+              <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
+              <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
+            </span>
+          </div>
+        {% else %}
           <span class="announcement-bar__text">{{ section.settings.message }}</span>
         {% endif %}
-        <span class="announcement-bar__timer" aria-live="polite">
-          {{ 'general.countdown.ends_in' | t }}
-          <span class="time days">00</span>{{ 'general.time.d_short' | t }}
-          <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
-          <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
-          <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
-        </span>
-      </div>
+        <span class="announcement-bar__cta">{{ 'general.click_here' | t }}</span>
+      </a>
     {% else %}
-      <p class="announcement-bar__text">{{ section.settings.message }}</p>
+      {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
+        <div class="announcement-bar__countdown" data-target="{{ section.settings.countdown_target | escape }}">
+          {% if section.settings.message != blank %}
+            <span class="announcement-bar__text">{{ section.settings.message }}</span>
+          {% endif %}
+          <span class="announcement-bar__timer" aria-live="polite">
+            {{ 'general.countdown.ends_in' | t }}
+            <span class="time days">00</span>{{ 'general.time.d_short' | t }}
+            <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
+            <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
+            <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
+          </span>
+        </div>
+      {% else %}
+        <p class="announcement-bar__text">{{ section.settings.message }}</p>
+      {% endif %}
     {% endif %}
   </div>
 </section>
@@ -50,6 +72,19 @@
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.4;
+  }
+  .announcement-bar__link {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+  }
+  .announcement-bar__cta {
+    text-decoration: underline;
   }
   .announcement-bar__countdown {
     grid-column: 1 / -1;
@@ -77,6 +112,11 @@
       "id": "message",
       "label": "t:labels.text",
       "default": "Free shipping on orders over $50"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "t:labels.link_url"
     },
     {
       "type": "checkbox",

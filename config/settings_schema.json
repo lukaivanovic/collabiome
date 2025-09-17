@@ -19,6 +19,12 @@
         "id": "type_primary_font",
         "default": "work_sans_n4",
         "label": "t:general.primary"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_secondary_font",
+        "default": "work_sans_n4",
+        "label": "t:general.secondary"
       }
     ]
   },
