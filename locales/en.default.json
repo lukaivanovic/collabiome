@@ -70,5 +70,11 @@
       "s_short": "s"
     },
     "click_here": "Click here"
+  },
+  "navigation": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact"
   }
 }
