@@ -59,6 +59,15 @@
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
   "general": {
-    "announcement_bar": "Announcement bar"
+    "announcement_bar": "Announcement bar",
+    "countdown": {
+      "ends_in": "Ends in"
+    },
+    "time": {
+      "d_short": "d",
+      "h_short": "h",
+      "m_short": "m",
+      "s_short": "s"
+    }
   }
 }

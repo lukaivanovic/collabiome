@@ -58,7 +58,10 @@
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "enable_countdown": "Enable countdown",
+    "countdown_target": "Countdown target (ISO 8601)",
+    "countdown_target_info": "Use ISO 8601 format, e.g. 2025-12-31T23:59:59Z"
   },
   "options": {
     "alignment": {
