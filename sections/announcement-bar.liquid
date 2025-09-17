@@ -3,6 +3,10 @@
   assign section_class = 'section-' | append: section.type
 %}
 
+
+
+<script defer src="{{ 'countdown.js' | asset_url }}"></script>
+
 <section
   id="{{ section_id }}"
   class="{{ section_class }} announcement-bar full-width"
@@ -60,51 +64,7 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-  (function() {
-    try {
-      var scriptEl = document.currentScript;
-      var sectionEl = scriptEl && scriptEl.closest('section');
-      if (!sectionEl) return;
-      var cd = sectionEl.querySelector('.announcement-bar__countdown');
-      if (!cd) return;
-      var targetStr = cd.getAttribute('data-target');
-      if (!targetStr) return;
-      var target = new Date(targetStr);
-      if (isNaN(target.getTime())) return;
 
-      var daysEl = cd.querySelector('.time.days');
-      var hoursEl = cd.querySelector('.time.hours');
-      var minutesEl = cd.querySelector('.time.minutes');
-      var secondsEl = cd.querySelector('.time.seconds');
-
-      function pad(n) { return String(n).padStart(2, '0'); }
-
-      function tick() {
-        var now = new Date();
-        var diff = Math.max(0, Math.floor((target.getTime() - now.getTime()) / 1000));
-        var days = Math.floor(diff / 86400);
-        var hours = Math.floor((diff % 86400) / 3600);
-        var minutes = Math.floor((diff % 3600) / 60);
-        var seconds = diff % 60;
-
-        if (daysEl) daysEl.textContent = pad(days);
-        if (hoursEl) hoursEl.textContent = pad(hours);
-        if (minutesEl) minutesEl.textContent = pad(minutes);
-        if (secondsEl) secondsEl.textContent = pad(seconds);
-
-        if (diff === 0) {
-          clearInterval(timer);
-        }
-      }
-
-      tick();
-      var timer = setInterval(tick, 1000);
-    } catch (e) {
-      // no-op
-    }
-  })();
-{% endjavascript %}
 
 {% schema %}
 {

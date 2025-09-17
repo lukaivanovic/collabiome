@@ -1,0 +1,65 @@
+(function () {
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function parseDate(value) {
+    // Try native Date first, then try to coerce common formats
+    var d = new Date(value);
+    if (!isNaN(d.getTime())) return d;
+    // Replace space with 'T' if needed
+    var norm = String(value).replace(" ", "T");
+    d = new Date(norm);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function initCountdown(container) {
+    var targetStr = container.getAttribute("data-target");
+    if (!targetStr) return;
+    var target = parseDate(targetStr);
+    if (!target) return;
+
+    var daysEl = container.querySelector(".time.days");
+    var hoursEl = container.querySelector(".time.hours");
+    var minutesEl = container.querySelector(".time.minutes");
+    var secondsEl = container.querySelector(".time.seconds");
+
+    function tick() {
+      var now = new Date();
+      var diff = Math.max(
+        0,
+        Math.floor((target.getTime() - now.getTime()) / 1000)
+      );
+      var days = Math.floor(diff / 86400);
+      var hours = Math.floor((diff % 86400) / 3600);
+      var minutes = Math.floor((diff % 3600) / 60);
+      var seconds = diff % 60;
+
+      if (daysEl) daysEl.textContent = pad(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minutesEl) minutesEl.textContent = pad(minutes);
+      if (secondsEl) secondsEl.textContent = pad(seconds);
+
+      if (diff === 0) {
+        clearInterval(timer);
+      }
+    }
+
+    tick();
+    var timer = setInterval(tick, 1000);
+  }
+
+  function ready(fn) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", fn);
+    } else {
+      fn();
+    }
+  }
+
+  ready(function () {
+    var containers = document.querySelectorAll(".announcement-bar__countdown");
+    if (!containers.length) return;
+    containers.forEach(initCountdown);
+  });
+})();
