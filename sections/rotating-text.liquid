@@ -1,0 +1,66 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
+
+<script defer src="{{ 'rotating-text.js' | asset_url }}"></script>
+
+<section class="rotating-text full-width" id="rotating-text-{{ section_id }}">
+  <div class="rotating-text__viewport" aria-hidden="true">
+    <div
+      class="rotating-text__track"
+      data-speed="{{ section.settings.speed }}"
+      data-gap="{{ section.settings.gap }}"
+    >
+      <span class="rotating-text__segment">
+        {{ section.settings.text }}
+      </span>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rotating-text {
+    position: relative;
+  }
+
+  .rotating-text__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .rotating-text__track {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--rt-gap, 2rem);
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    animation: rt-marquee linear infinite;
+    animation-duration: var(--rt-duration, 20s);
+  }
+
+  .rotating-text__segment {
+    white-space: nowrap;
+  }
+
+  @keyframes rt-marquee {
+    to { transform: translate3d(calc(-1 * var(--rt-segment-width, 0px)), 0, 0); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.rotating_text",
+  "tag": "section",
+  "class": "rotating-text-section",
+  "settings": [
+    { "type": "richtext", "id": "text", "label": "t:labels.text", "default": "t:sections.rotating_text.default_text" },
+    { "type": "range", "id": "speed", "label": "t:labels.speed", "min": 10, "max": 200, "step": 5, "default": 60, "unit": "px/s" },
+    { "type": "range", "id": "gap", "label": "t:labels.gap", "min": 0, "max": 100, "step": 2, "default": 24, "unit": "px" }
+  ],
+  "presets": [
+    { "name": "t:general.rotating_text", "category": "t:general.media" }
+  ]
+}
+{% endschema %}
+
+

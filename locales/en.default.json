@@ -100,6 +100,10 @@
       "style_group": "Style",
       "overlay_color": "Overlay color",
       "overlay_opacity": "Overlay opacity"
+    },
+    "rotating_text": {
+      "name": "Rotating text",
+      "default_text": "This is rotating text — add your message in the editor"
     }
   }
 }
