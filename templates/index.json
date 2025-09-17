@@ -18,13 +18,27 @@
         "description": "<p>Hello</p><p></p>",
         "button_label": "Hello2",
         "button_link": "shopify://pages/contact",
+        "video_url": "",
         "image": "shopify://shop_images/collagen_exclusive_boca.1.jpg",
         "overlay_color": "#000000",
         "overlay_opacity": 30
       }
+    },
+    "products_row_jCXxrb": {
+      "type": "products-row",
+      "name": "t:general.product",
+      "settings": {
+        "title": "Featured products",
+        "products": [
+          "kolagen-boost",
+          "kolagen-exclusive",
+          "kolagen-nutriage"
+        ]
+      }
     }
   },
   "order": [
-    "hero_fbajPp"
+    "hero_fbajPp",
+    "products_row_jCXxrb"
   ]
 }
