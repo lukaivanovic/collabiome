@@ -16,6 +16,7 @@
       "name": "t:general.announcement_bar",
       "settings": {
         "message": "Free shipping on orders over $50",
+        "link_url": "",
         "enable_countdown": true,
         "countdown_target": "2025-09-20T23:59:59Z"
       }
@@ -23,7 +24,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": ""
+        "menu": "main-menu"
       }
     }
   },
