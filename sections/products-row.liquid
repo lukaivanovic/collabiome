@@ -9,7 +9,7 @@
     {% endif %}
 
     <div class="products-row__scroller" role="list">
-      {% if section.settings.products and section.settings.products.size > 0 %}
+      {% if section.settings.products != blank %}
         {% for product in section.settings.products %}
           <a class="product-card" role="listitem" href="{{ product.url }}">
             <div class="product-card__media">
