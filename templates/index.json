@@ -13,11 +13,12 @@
       "type": "hero",
       "name": "t:general.hero",
       "settings": {
-        "kicker": "",
-        "title": "missing translation: \"t:sections.hero.default_title\"",
-        "description": "",
-        "button_label": "missing translation: \"t:sections.hero.default_button\"",
-        "button_link": "",
+        "kicker": "Hello",
+        "title": "Hello",
+        "description": "<p>Hello</p><p></p>",
+        "button_label": "Hello2",
+        "button_link": "shopify://pages/contact",
+        "image": "shopify://shop_images/collagen_exclusive_boca.1.jpg",
         "overlay_color": "#000000",
         "overlay_opacity": 30
       }
