@@ -71,7 +71,7 @@
       {
         "type": "color_background",
         "id": "gradient1",
-        "label": "t:labels.foreground"
+        "label": "t:labels.gradient1"
       },
       {
         "type": "range",
