@@ -9,6 +9,8 @@
  */
 {
   "current": {
+    "type_primary_font": "red_hat_display_n4",
+    "type_secondary_font": "geist_n4",
     "gradient1": "linear-gradient(57deg, rgba(249, 119, 255, 1) 8%, rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)",
     "content_for_index": []
   }
