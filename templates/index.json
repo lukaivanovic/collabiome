@@ -35,10 +35,20 @@
           "kolagen-nutriage"
         ]
       }
+    },
+    "rotating_text_DjiUXD": {
+      "type": "rotating-text",
+      "name": "t:general.rotating_text",
+      "settings": {
+        "text": "<p>testhseuthsueht</p>",
+        "speed": 60,
+        "gap": 24
+      }
     }
   },
   "order": [
     "hero_fbajPp",
-    "products_row_jCXxrb"
+    "products_row_jCXxrb",
+    "rotating_text_DjiUXD"
   ]
 }
