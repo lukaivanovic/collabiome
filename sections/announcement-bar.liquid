@@ -1,0 +1,56 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign section_class = 'section-' | append: section.type
+%}
+
+<section
+  id="{{ section_id }}"
+  class="{{ section_class }} announcement-bar full-width"
+  role="region"
+  aria-label="{{ 'general.announcement_bar' | t }}"
+>
+  <div class="announcement-bar__inner">
+    <p class="announcement-bar__text">{{ section.settings.message }}</p>
+  </div>
+</section>
+
+{% stylesheet %}
+  .announcement-bar {
+    width: 100%;
+    background-color: var(--color-background, #f6f6f7);
+    color: var(--color-foreground, #202223);
+  }
+  .announcement-bar__inner {
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    padding: 8px 0;
+  }
+  .announcement-bar__text {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.announcement_bar",
+  "tag": "section",
+  "class": "announcement-bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "t:labels.text",
+      "default": "Free shipping on orders over $50"
+    }
+  ],
+  "presets": [
+    { "name": "t:general.announcement_bar" }
+  ]
+}
+{% endschema %}
+
+
