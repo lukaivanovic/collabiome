@@ -70,7 +70,13 @@
       "s_short": "s"
     },
     "click_here": "Click here",
-    "products": "Products"
+    "products": "Products",
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "Your email",
+      "submit": "Subscribe",
+      "success": "Thanks for subscribing!"
+    }
   },
   "navigation": {
     "home": "Home",

@@ -1,39 +1,209 @@
 <footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+  <div class="footer__top">
+    <div class="footer__left">
+      <div class="footer__logo">Logo</div>
+      <div class="footer__menus">
+        <div class="footer__menu">
+          {% if section.settings.menu1_title != blank %}
+            <h4 class="footer__menu-title">{{ section.settings.menu1_title | escape }}</h4>
+          {% endif %}
+          {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
+            <ul class="footer__menu-list">
+              {% for link in section.settings.menu1.links %}
+                <li class="footer__menu-item">{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="footer__menu">
+          {% if section.settings.menu2_title != blank %}
+            <h4 class="footer__menu-title">{{ section.settings.menu2_title | escape }}</h4>
+          {% endif %}
+          {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
+            <ul class="footer__menu-list">
+              {% for link in section.settings.menu2.links %}
+                <li class="footer__menu-item">{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="footer__menu">
+          {% if section.settings.menu3_title != blank %}
+            <h4 class="footer__menu-title">{{ section.settings.menu3_title | escape }}</h4>
+          {% endif %}
+          {% if section.settings.menu3 and section.settings.menu3.links.size > 0 %}
+            <ul class="footer__menu-list">
+              {% for link in section.settings.menu3.links %}
+                <li class="footer__menu-item">{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="footer__newsletter">
+      <div class="newsletter-card">
+        <h4 class="newsletter-card__title">{{ 'general.newsletter.title' | t | default: 'Newsletter' }}</h4>
+        {% form 'customer' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="newsletter-card__controls">
+            <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}" required>
+            <button type="submit">{{ 'general.newsletter.submit' | t | default: 'Subscribe' }}</button>
+          </div>
+          {% if form.posted_successfully? %}
+            <p class="newsletter-card__success">{{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}</p>
+          {% endif %}
+          {% if form.errors %}
+            <p class="newsletter-card__error">{{ form.errors | default_errors }}</p>
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  <div class="footer__bottom">
+    <div class="footer__social">
+      <span>{{ section.settings.social_1 | default: 'Social 1' }}</span>
+      <span>{{ section.settings.social_2 | default: 'Social 2' }}</span>
+      <span>{{ section.settings.social_3 | default: 'Social 3' }}</span>
+    </div>
+    <div class="footer__bottom-menu">
+      {% if section.settings.bottom_menu %}
+        {% for link in section.settings.bottom_menu.links %}
+          {{ link.title | link_to: link.url }}
+        {% endfor %}
+      {% endif %}
+      {% if section.settings.show_payment_icons %}
+        <span class="footer__payment">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag }}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+    <div class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
   footer {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    gap: 2rem;
     margin-top: 2rem;
   }
-  footer a {
+  .footer__top {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .footer__left {
+    display: flex;
+    gap: 2rem;
+    flex: 1 1 auto;
+    align-items: flex-start;
+  }
+  .footer__logo {
+    font-weight: 600;
+  }
+  .footer__menus {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 1.5rem;
+    flex: 1 1 auto;
+  }
+  .footer__menu-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+  }
+  .footer__menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .footer__menu-item a {
     text-decoration: none;
     color: var(--color-foreground);
   }
-  footer .footer__links,
-  footer .footer__payment {
+  .footer__newsletter {
+    flex: 0 0 360px;
+    max-width: 100%;
+  }
+  .newsletter-card {
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .newsletter-card__title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+  }
+  .newsletter-card__controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .newsletter-card input[type="email"] {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 6px;
+  }
+  .newsletter-card button[type="submit"] {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .footer__bottom {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+  .footer__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .footer__bottom-menu {
     display: flex;
     gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .footer__bottom-menu a {
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+  .footer__payment {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    vertical-align: middle;
+  }
+  .footer__copyright {
+    justify-self: end;
+    text-align: right;
+  }
+  @container (max-width: 800px) {
+    .footer__top {
+      flex-direction: column;
+    }
+    .footer__menus {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer__bottom {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .footer__copyright {
+      justify-self: center;
+      text-align: center;
+    }
   }
 {% endstylesheet %}
 
@@ -41,17 +211,22 @@
 {
   "name": "t:general.footer",
   "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
+    { "type": "text", "id": "menu1_title", "label": "Menu 1 title" },
+    { "type": "link_list", "id": "menu1", "label": "Menu 1" },
+
+    { "type": "text", "id": "menu2_title", "label": "Menu 2 title" },
+    { "type": "link_list", "id": "menu2", "label": "Menu 2" },
+
+    { "type": "text", "id": "menu3_title", "label": "Menu 3 title" },
+    { "type": "link_list", "id": "menu3", "label": "Menu 3" },
+
+    { "type": "link_list", "id": "bottom_menu", "label": "Bottom menu" },
+
+    { "type": "text", "id": "social_1", "label": "Social 1 (text)" },
+    { "type": "text", "id": "social_2", "label": "Social 2 (text)" },
+    { "type": "text", "id": "social_3", "label": "Social 3 (text)" },
+
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
   ]
 }
 {% endschema %}
