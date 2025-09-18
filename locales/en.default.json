@@ -86,6 +86,11 @@
   },
 
   "sections": {
+    "home_categories": {
+      "name": "Home categories",
+      "default_card_title": "Category",
+      "default_card_description": "Describe this category"
+    },
     "category": {
       "media": "Media"
     },

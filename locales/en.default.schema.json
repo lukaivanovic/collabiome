@@ -48,6 +48,15 @@
     "products": "Products",
     "rotating_text": "Rotating text"
   },
+  "sections": {
+    "home_categories": {
+      "name": "Home categories",
+      "card_name": "Category card",
+      "title": "Title",
+      "description": "Description",
+      "image": "Image"
+    }
+  },
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
