@@ -44,11 +44,46 @@
         "speed": 60,
         "gap": 24
       }
+    },
+    "home_categories_WxnjY8": {
+      "type": "home-categories",
+      "blocks": {
+        "category_card_W4ApcV": {
+          "type": "category_card",
+          "settings": {
+            "image": "shopify://shop_images/material-maker-1.png",
+            "title": "test",
+            "description": "test"
+          }
+        },
+        "category_card_xYa3bG": {
+          "type": "category_card",
+          "settings": {
+            "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
+            "description": "missing translation: \"t:sections.home_categories.default_card_description\""
+          }
+        },
+        "category_card_CqrEwP": {
+          "type": "category_card",
+          "settings": {
+            "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
+            "description": "missing translation: \"t:sections.home_categories.default_card_description\""
+          }
+        }
+      },
+      "block_order": [
+        "category_card_W4ApcV",
+        "category_card_xYa3bG",
+        "category_card_CqrEwP"
+      ],
+      "name": "t:sections.home_categories.name",
+      "settings": {}
     }
   },
   "order": [
     "hero_fbajPp",
     "products_row_jCXxrb",
-    "rotating_text_DjiUXD"
+    "rotating_text_DjiUXD",
+    "home_categories_WxnjY8"
   ]
 }
