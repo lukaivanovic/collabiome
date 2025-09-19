@@ -130,3 +130,27 @@ body {
   padding: 0 24px;
   width: 100%;
 }
+
+.bg-green {
+  background-color: var(--color-background-green);
+}
+
+.bg-pink {
+  background-color: var(--color-background-pink);
+}
+
+.bg-blue {
+  background-color: var(--color-background-blue);
+}
+
+.text-green {
+  color: var(--color-foreground-green);
+}
+
+.text-pink {
+  color: var(--color-foreground-pink);
+}
+
+.text-blue {
+  color: var(--color-foreground-blue);
+}

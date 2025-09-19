@@ -36,7 +36,9 @@
 
       <div class="testimonial-grid__item">
         {% render 'testimonial-card-video', entry: v1 %}
-        {% render 'testimonial-card-text', entry: t1 %}
+        <article class="testimonial-grid__item bg-green text-green">
+          {% render 'testimonial-card-text', entry: t1 %}
+        </article>
       </div>
 
       <div class="testimonial-grid__item">
