@@ -43,24 +43,22 @@
   }
 
   @keyframes rt-marquee {
-    to { transform: translate3d(calc(-1 * var(--rt-segment-width, 0px)), 0, 0); }
+    to {
+      transform: translate3d(calc(-1 * var(--rt-segment-width, 0px)), 0, 0);
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.rotating_text",
+  "name": "Rotating text",
   "tag": "section",
   "class": "rotating-text-section",
   "settings": [
-    { "type": "richtext", "id": "text", "label": "t:labels.text", "default": "t:sections.rotating_text.default_text" },
-    { "type": "range", "id": "speed", "label": "t:labels.speed", "min": 10, "max": 200, "step": 5, "default": 60, "unit": "px" },
-    { "type": "range", "id": "gap", "label": "t:labels.gap", "min": 0, "max": 100, "step": 2, "default": 24, "unit": "px" }
+    { "type": "text", "id": "text", "label": "Text", "default": "Rotating text" },
+    { "type": "range", "id": "speed", "label": "Speed", "min": 10, "max": 200, "step": 5, "default": 60, "unit": "px" },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 0, "max": 100, "step": 2, "default": 24, "unit": "px" }
   ],
-  "presets": [
-    { "name": "t:general.rotating_text", "category": "t:general.media" }
-  ]
+  "presets": [{ "name": "Rotating text", "category": "Media" }]
 }
 {% endschema %}
-
-

@@ -2,8 +2,8 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<section class="products-row full-width" id="products-row-{{ section_id }}">
-  <div class="products-row__inner container">
+<section class="products-row" id="products-row-{{ section_id }}">
+  <div class=" container">
     {% if section.settings.title != blank %}
       <h2 class="products-row__title">{{ section.settings.title | escape }}</h2>
     {% endif %}
@@ -50,10 +50,9 @@
 </section>
 
 {% stylesheet %}
-  .products-row__inner {
-    display: grid;
-    grid-template-columns: var(--content-grid);
-    row-gap: 0.75rem;
+  .products-row {
+    padding-top: 120px;
+    padding-bottom: 120px;
   }
 
   .products-row__title {

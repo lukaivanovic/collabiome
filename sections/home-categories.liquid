@@ -43,6 +43,8 @@
 {% stylesheet %}
   .home-categories {
     position: relative;
+    padding-top: 120px;
+    padding-bottom: 120px;
   }
 
   .home-categories__grid {
@@ -125,58 +127,56 @@
 
 {% schema %}
 {
-  "name": "t:sections.home_categories.name",
+  "name": "Home categories",
   "tag": "section",
   "class": "home-categories-section",
   "max_blocks": 3,
-  "settings": [
-    { "type": "text", "id": "title", "label": "t:labels.text", "default": "t:sections.home_categories.default_title" }
-  ],
+  "settings": [{ "type": "text", "id": "title", "label": "Text", "default": "Home categories" }],
   "blocks": [
     {
       "type": "category_card",
-      "name": "t:sections.home_categories.card_name",
+      "name": "Category card",
       "limit": 3,
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "t:sections.home_categories.image" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
         {
           "type": "text",
           "id": "title",
-          "label": "t:sections.home_categories.title",
-          "default": "t:sections.home_categories.default_card_title"
+          "label": "Title",
+          "default": "Category"
         },
         {
           "type": "textarea",
           "id": "description",
-          "label": "t:sections.home_categories.description",
-          "default": "t:sections.home_categories.default_card_description"
+          "label": "Description",
+          "default": "Describe this category"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "t:sections.home_categories.name",
+      "name": "Home categories",
       "blocks": [
         {
           "type": "category_card",
           "settings": {
-            "title": "t:sections.home_categories.default_card_title",
-            "description": "t:sections.home_categories.default_card_description"
+            "title": "Category",
+            "description": "Describe this category"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "t:sections.home_categories.default_card_title",
-            "description": "t:sections.home_categories.default_card_description"
+            "title": "Category",
+            "description": "Describe this category"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "t:sections.home_categories.default_card_title",
-            "description": "t:sections.home_categories.default_card_description"
+            "title": "Category",
+            "description": "Describe this category"
           }
         }
       ]

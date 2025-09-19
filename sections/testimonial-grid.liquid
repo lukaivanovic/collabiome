@@ -72,6 +72,11 @@
 </section>
 
 {% stylesheet %}
+  .testimonial-grid {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
   .testimonial-grid__title {
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
@@ -184,36 +189,34 @@
 
 {% schema %}
 {
-  "name": "t:general.custom_section",
+  "name": "Testimonial grid",
   "tag": "section",
   "class": "testimonial-grid-section",
-  "settings": [
-    { "type": "text", "id": "title", "label": "t:labels.text", "default": "t:sections.testimonial_grid.default_title" }
-  ],
+  "settings": [{ "type": "text", "id": "title", "label": "Text", "default": "Testimonial grid" }],
   "blocks": [
     {
       "type": "text_testimonial",
-      "name": "t:sections.testimonial_grid.text_name",
+      "name": "Text testimonial",
       "settings": [
-        { "type": "richtext", "id": "quote", "label": "t:labels.text" },
-        { "type": "text", "id": "author", "label": "t:labels.text" },
-        { "type": "text", "id": "role", "label": "t:labels.text" }
+        { "type": "richtext", "id": "quote", "label": "Text" },
+        { "type": "text", "id": "author", "label": "Author" },
+        { "type": "text", "id": "role", "label": "Role" }
       ]
     },
     {
       "type": "press_testimonial",
-      "name": "t:sections.testimonial_grid.press_name",
+      "name": "Press testimonial",
       "settings": [
-        { "type": "richtext", "id": "quote", "label": "t:labels.text" },
-        { "type": "image_picker", "id": "logo", "label": "t:labels.image" },
-        { "type": "text", "id": "outlet", "label": "t:labels.text" },
-        { "type": "url", "id": "link", "label": "t:labels.link_url" }
+        { "type": "richtext", "id": "quote", "label": "Text" },
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "text", "id": "outlet", "label": "  Text" },
+        { "type": "url", "id": "link", "label": "Link URL" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "t:sections.testimonial_grid.name",
+      "name": "Testimonial grid",
       "blocks": [{ "type": "text_testimonial" }, { "type": "press_testimonial" }]
     }
   ]

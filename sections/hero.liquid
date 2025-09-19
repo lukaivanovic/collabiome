@@ -135,28 +135,28 @@
 
 {% schema %}
 {
-  "name": "t:general.hero",
+  "name": "Hero",
   "tag": "section",
   "class": "hero-section",
   "settings": [
-    { "type": "header", "content": "t:general.content" },
-    { "type": "text", "id": "kicker", "label": "t:labels.text" },
-    { "type": "text", "id": "title", "label": "t:labels.text", "default": "t:sections.hero.default_title" },
-    { "type": "richtext", "id": "description", "label": "t:labels.text" },
-    { "type": "text", "id": "button_label", "label": "t:labels.text", "default": "t:sections.hero.default_button" },
-    { "type": "url", "id": "button_link", "label": "t:labels.link_url" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "kicker", "label": "Kicker" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Hero title" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
 
-    { "type": "header", "content": "t:general.media" },
-    { "type": "video", "id": "video", "label": "t:general.media" },
-    { "type": "video_url", "id": "video_url", "label": "t:general.media", "accept": ["youtube", "vimeo"] },
-    { "type": "image_picker", "id": "image", "label": "t:general.media" },
+    { "type": "header", "content": "Media" },
+    { "type": "video", "id": "video", "label": "Video" },
+    { "type": "video_url", "id": "video_url", "label": "Video URL", "accept": ["youtube", "vimeo"] },
+    { "type": "image_picker", "id": "image", "label": "Image" },
 
-    { "type": "header", "content": "t:general.colors" },
-    { "type": "color", "id": "overlay_color", "label": "t:labels.background", "default": "#000000", "alpha": true },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "overlay_color", "label": "Background", "default": "#000000", "alpha": true },
     {
       "type": "range",
       "id": "overlay_opacity",
-      "label": "t:labels.opacity",
+      "label": "Opacity",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -164,6 +164,6 @@
       "unit": "%"
     }
   ],
-  "presets": [{ "name": "t:general.hero", "category": "t:general.main" }]
+  "presets": [{ "name": "Hero", "category": "Main" }]
 }
 {% endschema %}

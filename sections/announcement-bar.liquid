@@ -97,35 +97,35 @@
 
 {% schema %}
 {
-  "name": "t:general.announcement_bar",
+  "name": "Announcement bar",
   "tag": "section",
   "class": "announcement-bar",
   "settings": [
     {
       "type": "text",
       "id": "message",
-      "label": "t:labels.text",
+      "label": "Text",
       "default": "Free shipping on orders over $50"
     },
     {
       "type": "url",
       "id": "link_url",
-      "label": "t:labels.link_url"
+      "label": "Link URL"
     },
     {
       "type": "checkbox",
       "id": "enable_countdown",
-      "label": "t:labels.enable_countdown",
+      "label": "Enable countdown",
       "default": false
     },
     {
       "type": "text",
       "id": "countdown_target",
-      "label": "t:labels.countdown_target",
-      "info": "t:labels.countdown_target_info",
+      "label": "Countdown target",
+      "info": "Countdown target info",
       "placeholder": "2025-12-31T23:59:59Z"
     }
   ],
-  "presets": [{ "name": "t:general.announcement_bar" }]
+  "presets": [{ "name": "Announcement bar" }]
 }
 {% endschema %}
