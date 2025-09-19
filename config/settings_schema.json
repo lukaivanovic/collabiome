@@ -66,25 +66,25 @@
         "type": "color",
         "id": "background_default",
         "default": "#FFFFFF",
-        "label": "Background"
+        "label": "Background Default"
       },
       {
         "type": "color",
         "id": "background_green",
         "default": "#FFFFFF",
-        "label": "Background"
+        "label": "Background Green"
       },
       {
         "type": "color",
         "id": "background_pink",
         "default": "#FFFFFF",
-        "label": "Background"
+        "label": "Background Pink"
       },
       {
         "type": "color",
         "id": "background_blue",
         "default": "#FFFFFF",
-        "label": "Background"
+        "label": "Background Blue"
       },
       {
         "type": "color",
@@ -96,25 +96,25 @@
         "type": "color",
         "id": "foreground_secondary",
         "default": "#333333",
-        "label": "Foreground"
+        "label": "Foreground Green"
       },
       {
         "type": "color",
         "id": "foreground_pink",
         "default": "#333333",
-        "label": "Foreground"
+        "label": "Foreground Pink"
       },
       {
         "type": "color",
         "id": "foreground_blue",
         "default": "#333333",
-        "label": "Foreground"
+        "label": "Foreground Blue"
       },
       {
         "type": "color",
         "id": "foreground_green",
         "default": "#333333",
-        "label": "Foreground"
+        "label": "Foreground Green"
       },
       {
         "type": "color_background",
