@@ -42,7 +42,17 @@
       </div>
     </div>
     <div class="footer__newsletter">
-      <div class="newsletter-card">
+      <div
+        class="newsletter-card"
+        style="
+          {% if section.settings.newsletter_bg_image != blank %}
+            background-image: url('{{ section.settings.newsletter_bg_image | image_url }}');
+          {% endif %}
+          {% if section.settings.newsletter_bg_color != blank %}
+            background-color: {{ section.settings.newsletter_bg_color }};
+          {% endif %}
+        "
+      >
         <h4 class="newsletter-card__title">{{ 'general.newsletter.title' | t | default: 'Newsletter' }}</h4>
         {% form 'customer' %}
           <input type="hidden" name="contact[tags]" value="newsletter">
@@ -145,6 +155,9 @@
     border: 1px solid var(--color-border, #e5e5e5);
     border-radius: 8px;
     padding: 1rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   .newsletter-card__title {
     margin: 0 0 0.75rem 0;
@@ -234,7 +247,10 @@
     { "type": "text", "id": "social_2", "label": "Social 2 (text)" },
     { "type": "text", "id": "social_3", "label": "Social 3 (text)" },
 
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true },
+
+    { "type": "image_picker", "id": "newsletter_bg_image", "label": "Newsletter card background image" },
+    { "type": "color", "id": "newsletter_bg_color", "label": "Newsletter card background color" }
   ]
 }
 {% endschema %}

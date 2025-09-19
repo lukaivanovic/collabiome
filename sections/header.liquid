@@ -2,7 +2,9 @@
   <div class="site-header__top">
     <div class="site-header__spacer" aria-hidden="true"></div>
     <div class="site-header__logo">
-      <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">Logo</a>
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+        <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
+      </a>
     </div>
     <div class="site-header__icons" aria-label="Header actions">
       <a href="#" aria-label="User">
@@ -18,13 +20,23 @@
     <ul class="site-header__menu">
       {% if section.settings.menu and section.settings.menu.links.size > 0 %}
         {% for link in section.settings.menu.links %}
-          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
         {% endfor %}
       {% else %}
-        <li><a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a></li>
-        <li><a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a></li>
-        <li><a href="/pages/about">{{ 'navigation.about' | t }}</a></li>
-        <li><a href="/pages/contact">{{ 'navigation.contact' | t }}</a></li>
+        <li>
+          <a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a>
+        </li>
+        <li>
+          <a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a>
+        </li>
+        <li>
+          <a href="/pages/about">{{ 'navigation.about' | t }}</a>
+        </li>
+        <li>
+          <a href="/pages/contact">{{ 'navigation.contact' | t }}</a>
+        </li>
       {% endif %}
     </ul>
   </nav>
