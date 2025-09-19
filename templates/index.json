@@ -129,7 +129,7 @@
       "name": "t:sections.blog_grid.name",
       "settings": {
         "heading": "Latest articles",
-        "blog": "",
+        "blog": "news",
         "show_date": true,
         "show_author": false,
         "show_excerpt": true,
