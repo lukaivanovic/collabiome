@@ -29,7 +29,7 @@
               {% endif %}
             </a>
             <div class="blog-card__content">
-              <h3 class="blog-card__title">
+              <h3 class="blog-card__title text-lg font-medium">
                 <a href="{{ article.url }}">{{ article.title | escape }}</a>
               </h3>
 
@@ -37,21 +37,7 @@
                 {% if section.settings.show_date %}
                   <span class="blog-card__date">{{ article.published_at | time_tag: format: 'date' }}</span>
                 {% endif %}
-                {% if section.settings.show_author and article.user %}
-                  <span class="blog-card__author">
-                    {{- 'general.blog_grid.by_author' | t }}
-                    {{ article.user.first_name | default: article.author | escape -}}
-                  </span>
-                {% endif %}
               </div>
-
-              {% if section.settings.show_excerpt %}
-                <p class="blog-card__excerpt">
-                  {{ article.excerpt_or_content | strip_html | truncatewords: section.settings.excerpt_words }}
-                </p>
-              {% endif %}
-
-              <a class="blog-card__link" href="{{ article.url }}">{{ 'general.blog_grid.read_more' | t }}</a>
             </div>
           </article>
         {% endfor %}
@@ -94,6 +80,7 @@
   .blog-card {
     border-radius: var(--style-border-radius-cards, 12px);
     background: white;
+    overflow: hidden;
   }
 
   .blog-card__media {
@@ -115,11 +102,6 @@
     gap: 0.5rem;
   }
 
-  .blog-card__title {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.3;
-  }
   .blog-card__title a {
     color: inherit;
     text-decoration: none;
