@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <div class="footer__bottom">
+  <div class="footer__bottom container">
     <div class="footer__social">
       <span>{{ section.settings.social_1 | default: 'Social 1' }}</span>
       <span>{{ section.settings.social_2 | default: 'Social 2' }}</span>
@@ -167,6 +167,7 @@
     padding: 1rem;
     position: relative;
     overflow: hidden;
+    min-height: 240px;
   }
   .newsletter-card__bg-image {
     position: absolute;
@@ -190,6 +191,12 @@
   .newsletter-card__content {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    height: 100%;
   }
   .newsletter-card__title {
     margin: 0 0 0.75rem 0;
