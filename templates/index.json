@@ -123,6 +123,19 @@
       ],
       "name": "t:sections.testimonial_grid.name",
       "settings": {}
+    },
+    "blog_grid_GDkRNF": {
+      "type": "blog-grid",
+      "name": "t:sections.blog_grid.name",
+      "settings": {
+        "heading": "Latest articles",
+        "blog": "",
+        "show_date": true,
+        "show_author": false,
+        "show_excerpt": true,
+        "excerpt_words": 20,
+        "show_view_all": true
+      }
     }
   },
   "order": [
@@ -130,6 +143,7 @@
     "products_row_jCXxrb",
     "rotating_text_DjiUXD",
     "home_categories_WxnjY8",
-    "testimonial_grid_zcUike"
+    "testimonial_grid_zcUike",
+    "blog_grid_GDkRNF"
   ]
 }
