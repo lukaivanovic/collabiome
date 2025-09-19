@@ -1,44 +1,94 @@
 <section class="testimonial-grid">
   <div class="testimonial-grid__container">
     <div class="testimonial-grid__grid">
-      {% for block in section.blocks %}
-        <article class="testimonial-grid__item" {{ block.shopify_attributes }}>
-          {% case block.type %}
-            {% when 'text_testimonial' %}
-              <blockquote class="testimonial-grid__quote">
-                {{ block.settings.quote }}
-              </blockquote>
-              <div class="testimonial-grid__meta">
-                {% if block.settings.author != blank %}
-                  <span class="testimonial-grid__author">{{ block.settings.author | escape }}</span>
-                {% endif %}
-                {% if block.settings.role != blank %}
-                  <span class="testimonial-grid__role">{{ block.settings.role | escape }}</span>
-                {% endif %}
-              </div>
-            {% when 'press_testimonial' %}
-              <blockquote class="testimonial-grid__quote">
-                {{ block.settings.quote }}
-              </blockquote>
-              <div class="testimonial-grid__press">
-                {% if block.settings.logo != blank %}
-                  {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', alt: block.settings.outlet | escape }}
-                {% endif %}
-                {% if block.settings.outlet != blank %}
-                  {% if block.settings.link != blank %}
-                    <a class="testimonial-grid__outlet" href="{{ block.settings.link }}">{{ block.settings.outlet | escape }}</a>
-                  {% else %}
-                    <span class="testimonial-grid__outlet">{{ block.settings.outlet | escape }}</span>
-                  {% endif %}
-                {% endif %}
-              </div>
-          {% endcase %}
+      {% liquid
+        assign entries = nil
+        if metaobjects and metaobjects.text_testimonials and metaobjects.text_testimonials.values
+          assign entries = metaobjects.text_testimonials.values
+        endif
+      %}
+
+      {% if entries and entries.size > 0 %}
+        {% liquid
+          assign n = entries.size
+          assign nan = "now" | date: "%N"
+          assign idx1 = nan | modulo: n
+          assign half = nan | divided_by: 2
+          assign idx2 = half | modulo: n
+          if idx2 == idx1
+            assign idx2 = idx1 | plus: 1 | modulo: n
+          endif
+          assign e1 = entries[idx1]
+          assign e2 = entries[idx2]
+        %}
+
+        <article class="testimonial-grid__item">
+          <blockquote class="testimonial-grid__quote">
+            {{ e1.quote | default: e1.quote.value }}
+          </blockquote>
+          <div class="testimonial-grid__meta">
+            {% if e1.author or e1.author.value %}
+              <span class="testimonial-grid__author">{{ e1.author | default: e1.author.value | escape }}</span>
+            {% endif %}
+            {% if e1.role or e1.role.value %}
+              <span class="testimonial-grid__role">{{ e1.role | default: e1.role.value | escape }}</span>
+            {% endif %}
+          </div>
+        </article>
+
+        <article class="testimonial-grid__item">
+          <blockquote class="testimonial-grid__quote">
+            {{ e2.quote | default: e2.quote.value }}
+          </blockquote>
+          <div class="testimonial-grid__meta">
+            {% if e2.author or e2.author.value %}
+              <span class="testimonial-grid__author">{{ e2.author | default: e2.author.value | escape }}</span>
+            {% endif %}
+            {% if e2.role or e2.role.value %}
+              <span class="testimonial-grid__role">{{ e2.role | default: e2.role.value | escape }}</span>
+            {% endif %}
+          </div>
         </article>
       {% else %}
-        <article class="testimonial-grid__item">
-          <blockquote class="testimonial-grid__quote">Add testimonial blocks in the editor</blockquote>
-        </article>
-      {% endfor %}
+        {% for block in section.blocks %}
+          <article class="testimonial-grid__item" {{ block.shopify_attributes }}>
+            {% case block.type %}
+              {% when 'text_testimonial' %}
+                <blockquote class="testimonial-grid__quote">
+                  {{ block.settings.quote }}
+                </blockquote>
+                <div class="testimonial-grid__meta">
+                  {% if block.settings.author != blank %}
+                    <span class="testimonial-grid__author">{{ block.settings.author | escape }}</span>
+                  {% endif %}
+                  {% if block.settings.role != blank %}
+                    <span class="testimonial-grid__role">{{ block.settings.role | escape }}</span>
+                  {% endif %}
+                </div>
+              {% when 'press_testimonial' %}
+                <blockquote class="testimonial-grid__quote">
+                  {{ block.settings.quote }}
+                </blockquote>
+                <div class="testimonial-grid__press">
+                  {% if block.settings.logo != blank %}
+                    {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', alt: block.settings.outlet | escape }}
+                  {% endif %}
+                  {% if block.settings.outlet != blank %}
+                    {% if block.settings.link != blank %}
+                      <a class="testimonial-grid__outlet" href="{{ block.settings.link }}">{{ block.settings.outlet | escape }}</a>
+                    {% else %}
+                      <span class="testimonial-grid__outlet">{{ block.settings.outlet | escape }}</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+            {% endcase %}
+          </article>
+        {% else %}
+          <article class="testimonial-grid__item">
+            <blockquote class="testimonial-grid__quote">Add testimonial blocks in the editor</blockquote>
+          </article>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
