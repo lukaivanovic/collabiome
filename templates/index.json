@@ -51,14 +51,15 @@
         "category_card_W4ApcV": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/material-maker-1.png",
-            "title": "test",
-            "description": "test"
+            "image": "shopify://shop_images/pet-and-owner-on-fall-walk.jpg",
+            "title": "Koza, kosa i nokti",
+            "description": "Description"
           }
         },
         "category_card_xYa3bG": {
           "type": "category_card",
           "settings": {
+            "image": "shopify://shop_images/fall-vegetable-box.jpg",
             "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
             "description": "missing translation: \"t:sections.home_categories.default_card_description\""
           }
@@ -66,6 +67,7 @@
         "category_card_CqrEwP": {
           "type": "category_card",
           "settings": {
+            "image": "shopify://shop_images/portrait-of-young-woman-in-autumn-colored-coat.jpg",
             "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
             "description": "missing translation: \"t:sections.home_categories.default_card_description\""
           }
@@ -77,7 +79,9 @@
         "category_card_CqrEwP"
       ],
       "name": "t:sections.home_categories.name",
-      "settings": {}
+      "settings": {
+        "title": "Home categories"
+      }
     },
     "testimonial_grid_zcUike": {
       "type": "testimonial-grid",
@@ -122,7 +126,9 @@
         "text_testimonial_EHhNie"
       ],
       "name": "t:sections.testimonial_grid.name",
-      "settings": {}
+      "settings": {
+        "title": "Testimonial grid"
+      }
     },
     "blog_grid_GDkRNF": {
       "type": "blog-grid",
