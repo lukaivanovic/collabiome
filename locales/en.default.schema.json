@@ -71,17 +71,13 @@
   },
   "labels": {
     "alignment": "Alignment",
-    "background": "Background",
-    "foreground": "Foreground",
-    "gradient1": "Gradient 1",
+
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",
     "input_corner_radius": "Input corner radius",
     "layout_direction": "Layout direction",
     "menu": "Menu",
     "padding": "Padding",
-    "page_margin": "Page margin",
-    "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
     "text": "Text",
