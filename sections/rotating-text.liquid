@@ -4,7 +4,7 @@
 
 <script defer src="{{ 'rotating-text.js' | asset_url }}"></script>
 
-<section class="rotating-text full-width" id="rotating-text-{{ section_id }}">
+<section class="rotating-text bg-green text-green" id="rotating-text-{{ section_id }}">
   <div class="rotating-text__viewport" aria-hidden="true">
     <div
       class="rotating-text__track"
@@ -21,6 +21,8 @@
 {% stylesheet %}
   .rotating-text {
     position: relative;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
   .rotating-text__viewport {
