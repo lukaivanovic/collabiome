@@ -24,7 +24,9 @@
         "social_1": "Facebook",
         "social_2": "Twitter",
         "social_3": "LinkedIn",
-        "show_payment_icons": false
+        "show_payment_icons": false,
+        "newsletter_bg_image": "shopify://shop_images/Vitamin_C_serum_-_15_vitamina_C_pozadina.png",
+        "newsletter_bg_color": "#b11818"
       }
     }
   },
