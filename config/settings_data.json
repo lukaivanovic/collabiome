@@ -11,6 +11,13 @@
   "current": {
     "type_primary_font": "red_hat_display_n4",
     "type_secondary_font": "geist_n4",
+    "background_green": "#dbeae5",
+    "background_pink": "#f8dce5",
+    "background_blue": "#ddeafd",
+    "foreground_secondary": "#28483d",
+    "foreground_pink": "#482832",
+    "foreground_blue": "#283548",
+    "foreground_green": "#28483d",
     "gradient1": "linear-gradient(57deg, rgba(249, 119, 255, 1) 8%, rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)",
     "content_for_index": []
   }
