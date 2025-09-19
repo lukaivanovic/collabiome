@@ -46,7 +46,8 @@
     "media": "Media",
     "opacity": "Opacity",
     "products": "Products",
-    "rotating_text": "Rotating text"
+    "rotating_text": "Rotating text",
+    "blog_grid": "Blog posts"
   },
   "sections": {
     "home_categories": {
@@ -58,6 +59,14 @@
     },
     "testimonial_grid": {
       "name": "Testimonial grid"
+    },
+    "blog_grid": {
+      "name": "Blog posts",
+      "default_heading": "Latest articles",
+      "by_author": "By",
+      "read_more": "Read more",
+      "view_all": "View all",
+      "empty": "No articles yet."
     }
   },
   "labels": {
@@ -81,7 +90,13 @@
     "countdown_target_info": "Use ISO 8601 format, e.g. 2025-12-31T23:59:59Z",
     "link_url": "Link URL",
     "speed": "Speed",
-    "gap": "Gap"
+    "gap": "Gap",
+    "show_date": "Show date",
+    "show_author": "Show author",
+    "show_excerpt": "Show excerpt",
+    "excerpt_length": "Excerpt length",
+    "show_view_all": "Show view all",
+    "blog": "Blog"
   },
   "options": {
     "alignment": {

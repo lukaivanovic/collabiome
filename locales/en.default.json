@@ -76,6 +76,12 @@
       "placeholder": "Your email",
       "submit": "Subscribe",
       "success": "Thanks for subscribing!"
+    },
+    "blog_grid": {
+      "by_author": "By",
+      "read_more": "Read more",
+      "view_all": "View all",
+      "empty": "No articles yet."
     }
   },
   "navigation": {
@@ -118,6 +124,10 @@
     },
     "testimonial_grid": {
       "name": "Testimonial grid"
+    },
+    "blog_grid": {
+      "name": "Blog posts",
+      "default_heading": "Latest articles"
     }
   }
 }
