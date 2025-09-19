@@ -45,35 +45,43 @@
       <div
         class="newsletter-card"
         style="
-          {% if section.settings.newsletter_bg_image != blank %}
-            background-image: url('{{ section.settings.newsletter_bg_image | image_url }}');
-          {% endif %}
           {% if section.settings.newsletter_bg_color != blank %}
             background-color: {{ section.settings.newsletter_bg_color }};
           {% endif %}
         "
       >
-        <h4 class="newsletter-card__title">{{ 'general.newsletter.title' | t | default: 'Newsletter' }}</h4>
-        {% form 'customer' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="newsletter-card__controls">
-            <input
-              type="email"
-              name="contact[email]"
-              placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}"
-              required
-            >
-            <button type="submit">{{ 'general.newsletter.submit' | t | default: 'Subscribe' }}</button>
+        {% if section.settings.newsletter_bg_image != blank %}
+          <div class="newsletter-card__bg-image">
+            {{
+              section.settings.newsletter_bg_image
+              | image_url: width: 600
+              | image_tag: alt: 'Newsletter background', loading: 'lazy'
+            }}
           </div>
-          {% if form.posted_successfully? %}
-            <p class="newsletter-card__success">
-              {{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}
-            </p>
-          {% endif %}
-          {% if form.errors %}
-            <p class="newsletter-card__error">{{ form.errors | default_errors }}</p>
-          {% endif %}
-        {% endform %}
+        {% endif %}
+        <div class="newsletter-card__content">
+          <h4 class="newsletter-card__title">{{ 'general.newsletter.title' | t | default: 'Newsletter' }}</h4>
+          {% form 'customer' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter-card__controls">
+              <input
+                type="email"
+                name="contact[email]"
+                placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}"
+                required
+              >
+              <button type="submit">{{ 'general.newsletter.submit' | t | default: 'Subscribe' }}</button>
+            </div>
+            {% if form.posted_successfully? %}
+              <p class="newsletter-card__success">
+                {{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}
+              </p>
+            {% endif %}
+            {% if form.errors %}
+              <p class="newsletter-card__error">{{ form.errors | default_errors }}</p>
+            {% endif %}
+          {% endform %}
+        </div>
       </div>
     </div>
   </div>
@@ -155,9 +163,31 @@
     border: 1px solid var(--color-border, #e5e5e5);
     border-radius: 8px;
     padding: 1rem;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter-card__bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+  }
+  .newsletter-card__bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .newsletter-card__content {
+    position: relative;
+    z-index: 1;
   }
   .newsletter-card__title {
     margin: 0 0 0.75rem 0;
