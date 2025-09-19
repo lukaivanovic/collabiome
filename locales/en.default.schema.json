@@ -55,6 +55,9 @@
       "title": "Title",
       "description": "Description",
       "image": "Image"
+    },
+    "testimonial_grid": {
+      "name": "Testimonial grid"
     }
   },
   "labels": {

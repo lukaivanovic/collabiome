@@ -1,0 +1,146 @@
+<section class="testimonial-grid">
+  <div class="testimonial-grid__container">
+    <div class="testimonial-grid__grid">
+      {% for block in section.blocks %}
+        <article class="testimonial-grid__item" {{ block.shopify_attributes }}>
+          {% case block.type %}
+            {% when 'text_testimonial' %}
+              <blockquote class="testimonial-grid__quote">
+                {{ block.settings.quote }}
+              </blockquote>
+              <div class="testimonial-grid__meta">
+                {% if block.settings.author != blank %}
+                  <span class="testimonial-grid__author">{{ block.settings.author | escape }}</span>
+                {% endif %}
+                {% if block.settings.role != blank %}
+                  <span class="testimonial-grid__role">{{ block.settings.role | escape }}</span>
+                {% endif %}
+              </div>
+            {% when 'press_testimonial' %}
+              <blockquote class="testimonial-grid__quote">
+                {{ block.settings.quote }}
+              </blockquote>
+              <div class="testimonial-grid__press">
+                {% if block.settings.logo != blank %}
+                  {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', alt: block.settings.outlet | escape }}
+                {% endif %}
+                {% if block.settings.outlet != blank %}
+                  {% if block.settings.link != blank %}
+                    <a class="testimonial-grid__outlet" href="{{ block.settings.link }}">{{ block.settings.outlet | escape }}</a>
+                  {% else %}
+                    <span class="testimonial-grid__outlet">{{ block.settings.outlet | escape }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+          {% endcase %}
+        </article>
+      {% else %}
+        <article class="testimonial-grid__item">
+          <blockquote class="testimonial-grid__quote">Add testimonial blocks in the editor</blockquote>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .testimonial-grid__container {
+    width: var(--content-width);
+    margin-inline: auto;
+    padding-inline: var(--page-margin);
+  }
+
+  .testimonial-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .testimonial-grid__item {
+    background: var(--color-card, #f5f5f5);
+    border-radius: var(--style-border-radius-cards, 12px);
+    padding: 1rem;
+    color: var(--color-foreground);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+
+  .testimonial-grid__quote {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .testimonial-grid__meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    opacity: 0.9;
+  }
+
+  .testimonial-grid__author {
+    font-weight: 600;
+  }
+
+  .testimonial-grid__role {
+    font-size: 0.9375rem;
+    opacity: 0.8;
+  }
+
+  .testimonial-grid__press {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .testimonial-grid__outlet {
+    font-weight: 600;
+  }
+
+  @container (max-width: 1000px) {
+    .testimonial-grid__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @container (max-width: 600px) {
+    .testimonial-grid__grid { grid-template-columns: 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.custom_section",
+  "tag": "section",
+  "class": "testimonial-grid-section",
+  "blocks": [
+    {
+      "type": "text_testimonial",
+      "name": "t:sections.testimonial_grid.text_name",
+      "settings": [
+        { "type": "richtext", "id": "quote", "label": "t:labels.text" },
+        { "type": "text", "id": "author", "label": "t:labels.text" },
+        { "type": "text", "id": "role", "label": "t:labels.text" }
+      ]
+    },
+    {
+      "type": "press_testimonial",
+      "name": "t:sections.testimonial_grid.press_name",
+      "settings": [
+        { "type": "richtext", "id": "quote", "label": "t:labels.text" },
+        { "type": "image_picker", "id": "logo", "label": "t:labels.image" },
+        { "type": "text", "id": "outlet", "label": "t:labels.text" },
+        { "type": "url", "id": "link", "label": "t:labels.link_url" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.testimonial_grid.name",
+      "blocks": [
+        { "type": "text_testimonial" },
+        { "type": "press_testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}
