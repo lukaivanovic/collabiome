@@ -3,7 +3,7 @@
 %}
 
 <section class="home-categories" id="home-categories-{{ section_id }}">
-  <div class="home-categories__container">
+  <div class="container">
     <div class="home-categories__grid">
       {% for block in section.blocks %}
         <article class="home-categories__card" {{ block.shopify_attributes }}>
@@ -42,12 +42,6 @@
     position: relative;
   }
 
-  .home-categories__container {
-    width: var(--content-width);
-    margin-inline: auto;
-    padding-inline: var(--page-margin);
-  }
-
   .home-categories__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -55,11 +49,15 @@
   }
 
   @container (max-width: 900px) {
-    .home-categories__grid { grid-template-columns: repeat(2, 1fr); }
+    .home-categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @container (max-width: 600px) {
-    .home-categories__grid { grid-template-columns: 1fr; }
+    .home-categories__grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .home-categories__card {
@@ -85,7 +83,7 @@
   .home-categories__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.55) 100%);
     pointer-events: none;
   }
 
@@ -127,8 +125,18 @@
       "limit": 3,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "t:sections.home_categories.image" },
-        { "type": "text", "id": "title", "label": "t:sections.home_categories.title", "default": "t:sections.home_categories.default_card_title" },
-        { "type": "textarea", "id": "description", "label": "t:sections.home_categories.description", "default": "t:sections.home_categories.default_card_description" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.home_categories.title",
+          "default": "t:sections.home_categories.default_card_title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.home_categories.description",
+          "default": "t:sections.home_categories.default_card_description"
+        }
       ]
     }
   ],
@@ -136,13 +144,29 @@
     {
       "name": "t:sections.home_categories.name",
       "blocks": [
-        { "type": "category_card", "settings": { "title": "t:sections.home_categories.default_card_title", "description": "t:sections.home_categories.default_card_description" } },
-        { "type": "category_card", "settings": { "title": "t:sections.home_categories.default_card_title", "description": "t:sections.home_categories.default_card_description" } },
-        { "type": "category_card", "settings": { "title": "t:sections.home_categories.default_card_title", "description": "t:sections.home_categories.default_card_description" } }
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "t:sections.home_categories.default_card_title",
+            "description": "t:sections.home_categories.default_card_description"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "t:sections.home_categories.default_card_title",
+            "description": "t:sections.home_categories.default_card_description"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "t:sections.home_categories.default_card_title",
+            "description": "t:sections.home_categories.default_card_description"
+          }
+        }
       ]
     }
   ]
 }
 {% endschema %}
-
-

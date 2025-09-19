@@ -4,7 +4,7 @@
 %}
 
 <section class="blog-grid" id="blog-grid-{{ section_id }}">
-  <div class="blog-grid__inner">
+  <div class=" container">
     {% if section.settings.heading != blank %}
       <h2 class="blog-grid__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
@@ -15,25 +15,40 @@
           <article class="blog-card">
             <a class="blog-card__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
               {% if article.image %}
-                {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw', alt: article.title | escape }}
+                {{
+                  article.image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                    alt: article.title
+                  | escape
+                }}
               {% else %}
                 <div class="blog-card__placeholder" aria-hidden="true"></div>
               {% endif %}
             </a>
             <div class="blog-card__content">
-              <h3 class="blog-card__title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+              <h3 class="blog-card__title">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h3>
 
               <div class="blog-card__meta">
                 {% if section.settings.show_date %}
                   <span class="blog-card__date">{{ article.published_at | time_tag: format: 'date' }}</span>
                 {% endif %}
                 {% if section.settings.show_author and article.user %}
-                  <span class="blog-card__author">{{ 'general.blog_grid.by_author' | t }} {{ article.user.first_name | default: article.author | escape }}</span>
+                  <span class="blog-card__author">
+                    {{- 'general.blog_grid.by_author' | t }}
+                    {{ article.user.first_name | default: article.author | escape -}}
+                  </span>
                 {% endif %}
               </div>
 
               {% if section.settings.show_excerpt %}
-                <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: section.settings.excerpt_words }}</p>
+                <p class="blog-card__excerpt">
+                  {{ article.excerpt_or_content | strip_html | truncatewords: section.settings.excerpt_words }}
+                </p>
               {% endif %}
 
               <a class="blog-card__link" href="{{ article.url }}">{{ 'general.blog_grid.read_more' | t }}</a>
@@ -57,12 +72,6 @@
     padding-block: 2rem;
   }
 
-  .blog-grid__inner {
-    width: var(--content-width);
-    margin-inline: auto;
-    padding-inline: var(--page-margin);
-  }
-
   .blog-grid__heading {
     margin: 0 0 1rem 0;
     font-size: clamp(1.25rem, 2.5vw, 1.75rem);
@@ -70,16 +79,20 @@
 
   .blog-grid__grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
   }
 
   @container (min-width: 750px) {
-    .blog-grid__grid { grid-template-columns: repeat(2, 1fr); }
+    .blog-grid__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @container (min-width: 990px) {
-    .blog-grid__grid { grid-template-columns: repeat(3, 1fr); }
+    .blog-grid__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   .blog-card {
@@ -97,16 +110,41 @@
     background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
   }
 
-  .blog-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .blog-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-  .blog-card__content { padding: 1rem; display: grid; gap: 0.5rem; }
+  .blog-card__content {
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
 
-  .blog-card__title { margin: 0; font-size: 1rem; line-height: 1.3; }
-  .blog-card__title a { color: inherit; text-decoration: none; }
+  .blog-card__title {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+  .blog-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-  .blog-card__meta { font-size: 0.875rem; opacity: 0.8; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .blog-card__meta {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 
-  .blog-card__excerpt { margin: 0; opacity: 0.9; }
+  .blog-card__excerpt {
+    margin: 0;
+    opacity: 0.9;
+  }
 
   .blog-card__link {
     width: fit-content;
@@ -115,9 +153,17 @@
     font-weight: 600;
   }
 
-  .blog-grid__footer { margin-top: 1rem; text-align: center; }
-  .blog-grid__view-all { text-decoration: none; font-weight: 600; }
-  .blog-grid__empty { opacity: 0.7; }
+  .blog-grid__footer {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .blog-grid__view-all {
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .blog-grid__empty {
+    opacity: 0.7;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -132,13 +178,17 @@
     { "type": "checkbox", "id": "show_date", "label": "t:labels.show_date", "default": true },
     { "type": "checkbox", "id": "show_author", "label": "t:labels.show_author", "default": false },
     { "type": "checkbox", "id": "show_excerpt", "label": "t:labels.show_excerpt", "default": true },
-    { "type": "range", "id": "excerpt_words", "label": "t:labels.excerpt_length", "min": 5, "max": 60, "step": 1, "default": 20 },
+    {
+      "type": "range",
+      "id": "excerpt_words",
+      "label": "t:labels.excerpt_length",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 20
+    },
     { "type": "checkbox", "id": "show_view_all", "label": "t:labels.show_view_all", "default": true }
   ],
-  "presets": [
-    { "name": "t:sections.blog_grid.name", "category": "t:general.main" }
-  ]
+  "presets": [{ "name": "t:sections.blog_grid.name", "category": "t:general.main" }]
 }
 {% endschema %}
-
-

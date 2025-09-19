@@ -1,0 +1,15 @@
+<div class="testimonial-grid__media testimonial-grid__media--full-width">
+  {% liquid
+    assign video_media = video.value | default: video
+  %}
+  {{
+    video_media
+    | video_tag:
+      autoplay: true,
+      muted: true,
+      loop: true,
+      controls: false,
+      playsinline: true,
+      class: 'testimonial-grid__video'
+  }}
+</div>

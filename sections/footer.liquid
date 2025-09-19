@@ -1,5 +1,5 @@
 <footer>
-  <div class="footer__top">
+  <div class="footer__top container">
     <div class="footer__left">
       <div class="footer__logo">Logo</div>
       <div class="footer__menus">
@@ -47,11 +47,18 @@
         {% form 'customer' %}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <div class="newsletter-card__controls">
-            <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}" required>
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}"
+              required
+            >
             <button type="submit">{{ 'general.newsletter.submit' | t | default: 'Subscribe' }}</button>
           </div>
           {% if form.posted_successfully? %}
-            <p class="newsletter-card__success">{{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}</p>
+            <p class="newsletter-card__success">
+              {{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}
+            </p>
           {% endif %}
           {% if form.errors %}
             <p class="newsletter-card__error">{{ form.errors | default_errors }}</p>
@@ -82,7 +89,8 @@
       {% endif %}
     </div>
     <div class="footer__copyright">
-      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+      &copy; {{ 'now' | date: '%Y' }}
+      {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
     </div>
   </div>
 </footer>
@@ -146,13 +154,13 @@
     display: flex;
     gap: 0.5rem;
   }
-  .newsletter-card input[type="email"] {
+  .newsletter-card input[type='email'] {
     flex: 1 1 auto;
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--color-border, #e5e5e5);
     border-radius: 6px;
   }
-  .newsletter-card button[type="submit"] {
+  .newsletter-card button[type='submit'] {
     padding: 0.55rem 0.9rem;
     border: 1px solid var(--color-border, #e5e5e5);
     border-radius: 6px;

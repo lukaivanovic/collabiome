@@ -122,3 +122,11 @@ body {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+/** Container utility class */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}

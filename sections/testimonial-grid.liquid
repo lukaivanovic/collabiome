@@ -1,103 +1,64 @@
 <section class="testimonial-grid">
-  <div class="testimonial-grid__container">
+  <div class="container">
     <div class="testimonial-grid__grid">
       {% liquid
-        assign entries = nil
-        if metaobjects and metaobjects.text_testimonials and metaobjects.text_testimonials.values
-          assign entries = metaobjects.text_testimonials.values
+        assign entries = null
+        if metaobjects and metaobjects.testimonial_text and metaobjects.testimonial_text.values
+          assign entries = metaobjects.testimonial_text.values
         endif
+
+        assign videos = entries | where: 'type', 'video'
+        assign texts = entries | where: 'type', 'simple'
+
+        assign v_total = videos | size
+        assign t_total = texts | size
+
+        if v_total > 0
+          assign max = v_total | minus: 1
+          assign diff = max | plus: 1
+          assign v_result = 'now' | date: '%N' | modulo: diff
+        endif
+
+        if t_total > 0
+          assign max = t_total | minus: 1
+          assign diff = max | plus: 1
+          assign t_result = 'now' | date: '%N' | modulo: diff
+        endif
+
+        assign v1 = videos[0]
+        assign v2 = videos[1]
+        assign v3 = videos[2]
+        assign v4 = videos[3]
+        assign t1 = texts[0]
+        assign t2 = texts[1]
+        assign t3 = texts[2]
       %}
 
-      {% if entries and entries.size > 0 %}
-        {% liquid
-          assign n = entries.size
-          assign nan = "now" | date: "%N"
-          assign idx1 = nan | modulo: n
-          assign half = nan | divided_by: 2
-          assign idx2 = half | modulo: n
-          if idx2 == idx1
-            assign idx2 = idx1 | plus: 1 | modulo: n
-          endif
-          assign e1 = entries[idx1]
-          assign e2 = entries[idx2]
-        %}
+      <div class="testimonial-grid__item">
+        {% render 'testimonial-card-video', entry: v1 %}
+        {% render 'testimonial-card-text', entry: t1 %}
+      </div>
 
-        <article class="testimonial-grid__item">
-          <blockquote class="testimonial-grid__quote">
-            {{ e1.quote | default: e1.quote.value }}
-          </blockquote>
-          <div class="testimonial-grid__meta">
-            {% if e1.author or e1.author.value %}
-              <span class="testimonial-grid__author">{{ e1.author | default: e1.author.value | escape }}</span>
-            {% endif %}
-            {% if e1.role or e1.role.value %}
-              <span class="testimonial-grid__role">{{ e1.role | default: e1.role.value | escape }}</span>
-            {% endif %}
-          </div>
-        </article>
-
-        <article class="testimonial-grid__item">
-          <blockquote class="testimonial-grid__quote">
-            {{ e2.quote | default: e2.quote.value }}
-          </blockquote>
-          <div class="testimonial-grid__meta">
-            {% if e2.author or e2.author.value %}
-              <span class="testimonial-grid__author">{{ e2.author | default: e2.author.value | escape }}</span>
-            {% endif %}
-            {% if e2.role or e2.role.value %}
-              <span class="testimonial-grid__role">{{ e2.role | default: e2.role.value | escape }}</span>
-            {% endif %}
-          </div>
-        </article>
-      {% else %}
-        {% for block in section.blocks %}
-          <article class="testimonial-grid__item" {{ block.shopify_attributes }}>
-            {% case block.type %}
-              {% when 'text_testimonial' %}
-                <blockquote class="testimonial-grid__quote">
-                  {{ block.settings.quote }}
-                </blockquote>
-                <div class="testimonial-grid__meta">
-                  {% if block.settings.author != blank %}
-                    <span class="testimonial-grid__author">{{ block.settings.author | escape }}</span>
-                  {% endif %}
-                  {% if block.settings.role != blank %}
-                    <span class="testimonial-grid__role">{{ block.settings.role | escape }}</span>
-                  {% endif %}
-                </div>
-              {% when 'press_testimonial' %}
-                <blockquote class="testimonial-grid__quote">
-                  {{ block.settings.quote }}
-                </blockquote>
-                <div class="testimonial-grid__press">
-                  {% if block.settings.logo != blank %}
-                    {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '200px', alt: block.settings.outlet | escape }}
-                  {% endif %}
-                  {% if block.settings.outlet != blank %}
-                    {% if block.settings.link != blank %}
-                      <a class="testimonial-grid__outlet" href="{{ block.settings.link }}">{{ block.settings.outlet | escape }}</a>
-                    {% else %}
-                      <span class="testimonial-grid__outlet">{{ block.settings.outlet | escape }}</span>
-                    {% endif %}
-                  {% endif %}
-                </div>
-            {% endcase %}
-          </article>
-        {% else %}
-          <article class="testimonial-grid__item">
-            <blockquote class="testimonial-grid__quote">Add testimonial blocks in the editor</blockquote>
-          </article>
-        {% endfor %}
-      {% endif %}
+      <div class="testimonial-grid__item">
+        {% render 'testimonial-card-text', entry: t2 %}
+        {% render 'testimonial-card-video', entry: v2 %}
+      </div>
+      <div class="testimonial-grid__item">
+        {% render 'testimonial-card-text', entry: t2 %}
+        {% render 'testimonial-card-text', entry: t2 %}
+        {% render 'testimonial-card-text', entry: t2 %}
+      </div>
+      <div class="testimonial-grid__item">
+        {% render 'testimonial-card-video', entry: v3 %}
+        {% render 'testimonial-card-text', entry: t3 %}
+      </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .testimonial-grid__container {
-    width: var(--content-width);
-    margin-inline: auto;
-    padding-inline: var(--page-margin);
+  .testimonial-grid {
+    padding-block: 2rem;
   }
 
   .testimonial-grid__grid {
@@ -107,13 +68,11 @@
   }
 
   .testimonial-grid__item {
-    background: var(--color-card, #f5f5f5);
-    border-radius: var(--style-border-radius-cards, 12px);
-    padding: 1rem;
-    color: var(--color-foreground);
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
-    align-content: start;
+    align-items: start;
+    position: relative;
   }
 
   .testimonial-grid__quote {
@@ -148,12 +107,49 @@
     font-weight: 600;
   }
 
+  /* 9/16 video container */
+  .testimonial-grid__media {
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--style-border-radius-cards, 12px);
+  }
+  .testimonial-grid__media video,
+  .testimonial-grid__media iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Product badge pinned to bottom */
+  .testimonial-grid__product {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .testimonial-grid__product-link {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 0.375rem 0.625rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
   @container (max-width: 1000px) {
-    .testimonial-grid__grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @container (max-width: 600px) {
-    .testimonial-grid__grid { grid-template-columns: 1fr; }
+    .testimonial-grid__grid {
+      grid-template-columns: 1fr;
+    }
   }
 {% endstylesheet %}
 
@@ -186,10 +182,7 @@
   "presets": [
     {
       "name": "t:sections.testimonial_grid.name",
-      "blocks": [
-        { "type": "text_testimonial" },
-        { "type": "press_testimonial" }
-      ]
+      "blocks": [{ "type": "text_testimonial" }, { "type": "press_testimonial" }]
     }
   ]
 }

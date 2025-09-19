@@ -3,7 +3,7 @@
 %}
 
 <section class="products-row full-width" id="products-row-{{ section_id }}">
-  <div class="products-row__inner">
+  <div class="products-row__inner container">
     {% if section.settings.title != blank %}
       <h2 class="products-row__title">{{ section.settings.title | escape }}</h2>
     {% endif %}
@@ -14,7 +14,13 @@
           <a class="product-card" role="listitem" href="{{ product.url }}">
             <div class="product-card__media">
               {% if product.featured_image %}
-                {% render 'image', class: 'product-card__image', image: product.featured_image, width: 600, height: 600, crop: 'center' %}
+                {% render 'image',
+                  class: 'product-card__image',
+                  image: product.featured_image,
+                  width: 600,
+                  height: 600,
+                  crop: 'center'
+                %}
               {% else %}
                 <div class="product-card__placeholder" aria-hidden="true"></div>
               {% endif %}
@@ -48,7 +54,6 @@
     display: grid;
     grid-template-columns: var(--content-grid);
     row-gap: 0.75rem;
-    padding-block: 1rem;
   }
 
   .products-row__title {
@@ -66,7 +71,7 @@
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    padding-inline: var(--page-margin);
+
     padding-bottom: 0.5rem;
   }
 
@@ -128,10 +133,6 @@
     { "type": "text", "id": "title", "label": "t:labels.text", "default": "Featured products" },
     { "type": "product_list", "id": "products", "label": "t:general.product", "limit": 24 }
   ],
-  "presets": [
-    { "name": "t:general.product", "category": "t:general.main" }
-  ]
+  "presets": [{ "name": "t:general.product", "category": "t:general.main" }]
 }
 {% endschema %}
-
-

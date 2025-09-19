@@ -1,0 +1,12 @@
+<article class="testimonial-grid__item testimonial-grid__item--full-width">
+  {% if entry.type == 'video' or entry.type.value == 'video' %}
+    {% render 'testimonial-video', video: entry.video %}
+  {% endif %}
+
+  {% assign product_obj = entry.product.value | default: entry.product %}
+  {% if product_obj %}
+    <div class="testimonial-grid__product">
+      <a href="{{ product_obj.url }}" class="testimonial-grid__product-link">{{ product_obj.title }}</a>
+    </div>
+  {% endif %}
+</article>

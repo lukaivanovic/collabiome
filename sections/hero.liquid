@@ -5,33 +5,47 @@
 <div class="hero full-width" id="hero-{{ section_id }}">
   <div class="hero__media" aria-hidden="true">
     {% if section.settings.video != blank %}
-      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+      {{
+        section.settings.video
+        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false
+      }}
     {% elsif section.settings.video_url != blank %}
-      {{ section.settings.video_url | external_video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+      {{
+        section.settings.video_url
+        | external_video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false
+      }}
     {% elsif section.settings.image != blank %}
-      {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', alt: section.settings.title | escape }}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', alt: section.settings.title
+        | escape
+      }}
     {% else %}
       <div class="hero__placeholder"></div>
     {% endif %}
-    <div class="hero__scrim" style="--hero-overlay-color: {{ section.settings.overlay_color | default: '#000000' }}; --hero-overlay-opacity: {{ section.settings.overlay_opacity | default: 30 }};"></div>
+    <div
+      class="hero__scrim"
+      style="--hero-overlay-color: {{ section.settings.overlay_color | default: '#000000' }}; --hero-overlay-opacity: {{ section.settings.overlay_opacity | default: 30 }};"
+    ></div>
   </div>
 
-  <div class="hero__inner" style="--hero-height: 80svh;">
-    <div class="hero__container">
-      <div class="hero__content" data-align="bottom-left">
-        {% if section.settings.kicker != blank %}
-          <p class="hero__kicker">{{ section.settings.kicker | escape }}</p>
-        {% endif %}
-        {% if section.settings.title != blank %}
-          <h1 class="hero__title">{{ section.settings.title | escape }}</h1>
-        {% endif %}
-        {% if section.settings.description != blank %}
-          <div class="hero__description">{{ section.settings.description }}</div>
-        {% endif %}
-        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-          <a class="hero__button" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
-        {% endif %}
-      </div>
+  <div class="container hero__inner" style="--hero-height: 80svh;">
+    <div class="hero__content" data-align="bottom-left">
+      {% if section.settings.kicker != blank %}
+        <p class="hero__kicker">{{ section.settings.kicker | escape }}</p>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <h1 class="hero__title">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="hero__description">{{ section.settings.description }}</div>
+      {% endif %}
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a class="hero__button" href="{{ section.settings.button_link }}">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -78,14 +92,6 @@
     min-height: var(--hero-height, 80svh);
     display: flex;
     align-items: end;
-  }
-
-  /* Mimic the constrained container used by the theme grid */
-  .hero__container {
-    width: var(--content-width);
-    margin-inline: auto;
-    padding-inline: var(--page-margin);
-    padding-block: 2rem;
   }
 
   .hero__content {
@@ -147,12 +153,17 @@
 
     { "type": "header", "content": "t:general.colors" },
     { "type": "color", "id": "overlay_color", "label": "t:labels.background", "default": "#000000", "alpha": true },
-    { "type": "range", "id": "overlay_opacity", "label": "t:labels.opacity", "min": 0, "max": 100, "step": 1, "default": 30, "unit": "%" }
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "t:labels.opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    }
   ],
-  "presets": [
-    { "name": "t:general.hero", "category": "t:general.main" }
-  ]
+  "presets": [{ "name": "t:general.hero", "category": "t:general.main" }]
 }
 {% endschema %}
-
-
