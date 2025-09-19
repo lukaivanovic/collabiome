@@ -143,6 +143,10 @@ body {
   background-color: var(--color-background-blue);
 }
 
+.text-white {
+  color: white;
+}
+
 .text-green {
   color: var(--color-foreground-green);
 }
@@ -153,4 +157,34 @@ body {
 
 .text-blue {
   color: var(--color-foreground-blue);
+}
+
+.text-large {
+  font-family: var(--font-secondary--family);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.text-base {
+  font-family: var(--font-secondary--family);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-sm {
+  font-family: var(--font-secondary--family);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
 }

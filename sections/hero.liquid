@@ -33,16 +33,16 @@
   <div class="container hero__inner" style="--hero-height: 80svh;">
     <div class="hero__content" data-align="bottom-left">
       {% if section.settings.kicker != blank %}
-        <p class="hero__kicker">{{ section.settings.kicker | escape }}</p>
+        <p class="hero__kicker text-white">{{ section.settings.kicker | escape }}</p>
       {% endif %}
       {% if section.settings.title != blank %}
-        <h1 class="hero__title">{{ section.settings.title | escape }}</h1>
+        <h1 class="hero__title text-white">{{ section.settings.title | escape }}</h1>
       {% endif %}
       {% if section.settings.description != blank %}
-        <div class="hero__description">{{ section.settings.description }}</div>
+        <div class="hero__description text-white">{{ section.settings.description }}</div>
       {% endif %}
       {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-        <a class="hero__button" href="{{ section.settings.button_link }}">
+        <a class="hero__button text-white" href="{{ section.settings.button_link }}">
           {{- section.settings.button_label | escape -}}
         </a>
       {% endif %}

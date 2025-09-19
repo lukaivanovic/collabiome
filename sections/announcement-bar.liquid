@@ -3,8 +3,6 @@
   assign section_class = 'section-' | append: section.type
 %}
 
-
-
 <script defer src="{{ 'countdown.js' | asset_url }}"></script>
 
 <section
@@ -13,7 +11,7 @@
   role="region"
   aria-label="{{ 'general.announcement_bar' | t }}"
 >
-  <div class="announcement-bar__inner">
+  <div class="announcement-bar__inner text-sm">
     {% if section.settings.link_url != blank %}
       <a class="announcement-bar__link" href="{{ section.settings.link_url }}">
         {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
@@ -70,8 +68,6 @@
     grid-column: 1 / -1;
     text-align: center;
     margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.4;
   }
   .announcement-bar__link {
     grid-column: 1 / -1;
@@ -98,8 +94,6 @@
     white-space: nowrap;
   }
 {% endstylesheet %}
-
-
 
 {% schema %}
 {
@@ -132,10 +126,6 @@
       "placeholder": "2025-12-31T23:59:59Z"
     }
   ],
-  "presets": [
-    { "name": "t:general.announcement_bar" }
-  ]
+  "presets": [{ "name": "t:general.announcement_bar" }]
 }
 {% endschema %}
-
-

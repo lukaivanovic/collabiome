@@ -34,46 +34,62 @@
         assign t3 = texts[2]
       %}
 
-      <div class="testimonial-grid__item">
+      <div class="testimonial-grid__column">
         {% render 'testimonial-card-video', entry: v1 %}
         <article class="testimonial-grid__item bg-green text-green">
           {% render 'testimonial-card-text', entry: t1 %}
         </article>
       </div>
 
-      <div class="testimonial-grid__item">
-        {% render 'testimonial-card-text', entry: t2 %}
+      <div class="testimonial-grid__column">
+        <article class="testimonial-grid__item bg-pink text-pink">
+          {% render 'testimonial-card-text', entry: t2 %}
+        </article>
         {% render 'testimonial-card-video', entry: v2 %}
       </div>
-      <div class="testimonial-grid__item">
-        {% render 'testimonial-card-text', entry: t2 %}
-        {% render 'testimonial-card-text', entry: t2 %}
-        {% render 'testimonial-card-text', entry: t2 %}
+      <div class="testimonial-grid__column">
+        <article class="testimonial-grid__item bg-blue text-blue">
+          {% render 'testimonial-card-text', entry: t2 %}
+        </article>
+        <article class="testimonial-grid__item bg-green text-green">
+          {% render 'testimonial-card-text', entry: t2 %}
+        </article>
+        <article class="testimonial-grid__item bg-pink text-pink">
+          {% render 'testimonial-card-text', entry: t2 %}
+        </article>
       </div>
-      <div class="testimonial-grid__item">
+      <div class="testimonial-grid__column">
         {% render 'testimonial-card-video', entry: v3 %}
-        {% render 'testimonial-card-text', entry: t3 %}
+        <article class="testimonial-grid__item bg-blue text-blue">
+          {% render 'testimonial-card-text', entry: t3 %}
+        </article>
       </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .testimonial-grid {
-    padding-block: 2rem;
-  }
-
   .testimonial-grid__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
   }
 
-  .testimonial-grid__item {
+  .testimonial-grid__column {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     align-items: start;
+  }
+
+  .testimonial-grid__item {
+    position: relative;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .testimonial-grid__item-video {
+    width: 100%;
     position: relative;
   }
 

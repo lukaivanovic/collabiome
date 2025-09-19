@@ -1,11 +1,9 @@
-<article class="testimonial-grid__item">
-  <blockquote class="testimonial-grid__quote">
-    {{ entry.testimonial.value | default: entry.testimonial }}
-  </blockquote>
-  <div class="testimonial-grid__meta">
-    <span class="testimonial-grid__type">{{ entry.type.value | default: entry.type }}</span>
-    {% if entry.author or entry.author.value %}
-      <span class="testimonial-grid__author">{{ entry.author | default: entry.author.value | escape }}</span>
-    {% endif %}
-  </div>
-</article>
+<blockquote class="testimonial-grid__quote">
+  {{ entry.testimonial.value | default: entry.testimonial }}
+</blockquote>
+<div class="testimonial-grid__meta">
+  <span class="testimonial-grid__type">{{ entry.type.value | default: entry.type }}</span>
+  {% if entry.author or entry.author.value %}
+    <span class="testimonial-grid__author">{{ entry.author | default: entry.author.value | escape }}</span>
+  {% endif %}
+</div>
