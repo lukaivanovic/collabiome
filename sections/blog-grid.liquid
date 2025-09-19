@@ -4,7 +4,7 @@
 %}
 
 <section class="blog-grid" id="blog-grid-{{ section_id }}">
-  <div class=" container">
+  <div class="container">
     {% if section.settings.heading != blank %}
       <h2 class="blog-grid__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
@@ -56,20 +56,16 @@
           </article>
         {% endfor %}
       </div>
-      {% if section.settings.show_view_all %}
-        <div class="blog-grid__footer">
-          <a class="blog-grid__view-all" href="{{ selected_blog.url }}">{{ 'general.blog_grid.view_all' | t }}</a>
-        </div>
-      {% endif %}
-    {% else %}
-      <p class="blog-grid__empty">{{ 'general.blog_grid.empty' | t }}</p>
     {% endif %}
   </div>
 </section>
 
 {% stylesheet %}
   .blog-grid {
-    padding-block: 2rem;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.75) 40%),
+      linear-gradient(161deg, #bfc5ff 53.19%, #b4d7ff 73.82%, #a8eaff 96.54%);
   }
 
   .blog-grid__heading {
@@ -96,12 +92,8 @@
   }
 
   .blog-card {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    border: 1px solid var(--color-border, #e5e5e5);
     border-radius: var(--style-border-radius-cards, 12px);
-    overflow: clip;
-    background: var(--color-background);
+    background: white;
   }
 
   .blog-card__media {

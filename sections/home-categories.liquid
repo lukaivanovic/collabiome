@@ -4,6 +4,9 @@
 
 <section class="home-categories" id="home-categories-{{ section_id }}">
   <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="home-categories__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
     <div class="home-categories__grid">
       {% for block in section.blocks %}
         <article class="home-categories__card" {{ block.shopify_attributes }}>
@@ -99,6 +102,14 @@
   }
 
   .home-categories__title {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .home-categories__card .home-categories__title {
     margin: 0;
     font-size: 1.125rem;
     line-height: 1.2;
@@ -118,6 +129,9 @@
   "tag": "section",
   "class": "home-categories-section",
   "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "title", "label": "t:labels.text", "default": "t:sections.home_categories.default_title" }
+  ],
   "blocks": [
     {
       "type": "category_card",

@@ -1,5 +1,8 @@
 <section class="testimonial-grid">
   <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="testimonial-grid__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
     <div class="testimonial-grid__grid">
       {% liquid
         assign entries = null
@@ -69,6 +72,14 @@
 </section>
 
 {% stylesheet %}
+  .testimonial-grid__title {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+    text-align: center;
+  }
+
   .testimonial-grid__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -176,6 +187,9 @@
   "name": "t:general.custom_section",
   "tag": "section",
   "class": "testimonial-grid-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "t:labels.text", "default": "t:sections.testimonial_grid.default_title" }
+  ],
   "blocks": [
     {
       "type": "text_testimonial",
