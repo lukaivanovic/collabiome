@@ -147,6 +147,10 @@ body {
   color: white;
 }
 
+.text-secondary {
+  color: color-mix(in srgb, var(--color-foreground-default) 64%, transparent);
+}
+
 .text-green {
   color: var(--color-foreground-green);
 }
