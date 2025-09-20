@@ -19,7 +19,7 @@
           <div class="home-categories__overlay"></div>
           <div class="home-categories__content">
             {% if block.settings.title != blank %}
-              <h3 class="home-categories__title">{{ block.settings.title | escape }}</h3>
+              <h3 class="text-2xl uppercase font-regular">{{ block.settings.title | escape }}</h3>
             {% endif %}
             {% if block.settings.description != blank %}
               <p class="home-categories__description">{{ block.settings.description | escape }}</p>
@@ -54,13 +54,7 @@
     margin-top: 3rem;
   }
 
-  @container (max-width: 900px) {
-    .home-categories__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @container (max-width: 600px) {
+  @media (max-width: 600px) {
     .home-categories__grid {
       grid-template-columns: 1fr;
     }

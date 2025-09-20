@@ -126,7 +126,6 @@
     margin-top: 2rem;
     min-height: 400px;
   }
-
   .footer__top {
     display: flex;
     gap: 2rem;
@@ -300,12 +299,12 @@
     align-items: center;
     gap: 1rem;
   }
-  @container (max-width: 800px) {
+  @media (max-width: 800px) {
     .footer__top {
       flex-direction: column;
     }
-    .footer__menus {
-      grid-template-columns: 1fr;
+    .footer__left {
+      flex-direction: column;
     }
     .footer__bottom {
       grid-template-columns: 1fr;
