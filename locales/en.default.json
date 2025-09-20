@@ -88,7 +88,9 @@
     "home": "Home",
     "shop": "Shop",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu_toggle": "Toggle navigation menu",
+    "close_menu": "Close navigation menu"
   },
 
   "sections": {
@@ -128,6 +130,15 @@
     "blog_grid": {
       "name": "Blog posts",
       "default_heading": "Latest articles"
+    },
+    "products_row": {
+      "previous_product": "Previous product",
+      "next_product": "Next product"
+    }
+  },
+  "products": {
+    "price": {
+      "from_price_html": "From {{ price }}"
     }
   }
 }
