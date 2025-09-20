@@ -14,13 +14,13 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu1_title": "Test",
+        "menu1_title": "Shop",
         "menu1": "footer",
-        "menu2_title": "Test",
-        "menu2": "footer",
+        "menu2_title": "Company",
+        "menu2": "footer-company",
         "menu3_title": "Test",
         "menu3": "footer",
-        "bottom_menu": "footer",
+        "bottom_menu": "footer-legal",
         "social_1": "Facebook",
         "social_2": "Twitter",
         "social_3": "LinkedIn",
