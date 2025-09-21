@@ -6,7 +6,7 @@
 <section class="blog-grid" id="blog-grid-{{ section_id }}">
   <div class="container">
     {% if section.settings.heading != blank %}
-      <h2 class="blog-grid__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="blog-grid__heading text-2xl uppercase">{{ section.settings.heading | escape }}</h2>
     {% endif %}
 
     {% if selected_blog != blank and selected_blog.articles_count > 0 %}
@@ -35,7 +35,9 @@
 
               <div class="blog-card__meta">
                 {% if section.settings.show_date %}
-                  <span class="blog-card__date">{{ article.published_at | time_tag: format: 'date' }}</span>
+                  <span class="blog-card__date text-sm text-secondary">
+                    {{- article.published_at | time_tag: format: 'date' -}}
+                  </span>
                 {% endif %}
               </div>
             </div>
@@ -56,7 +58,6 @@
 
   .blog-grid__heading {
     margin: 0 0 1rem 0;
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   }
 
   .blog-grid__grid {
@@ -78,7 +79,7 @@
   }
 
   .blog-card__media {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1 / 1;
     display: block;
     background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
   }
@@ -93,7 +94,7 @@
   .blog-card__content {
     padding: 1rem;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 
   .blog-card__title a {
@@ -102,8 +103,6 @@
   }
 
   .blog-card__meta {
-    font-size: 0.875rem;
-    opacity: 0.8;
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;

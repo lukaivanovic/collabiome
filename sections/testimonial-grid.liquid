@@ -50,17 +50,19 @@
         </article>
         {% render 'testimonial-card-video', entry: v2 %}
       </div>
-      <div class="testimonial-grid__column">
-        <article class="testimonial-grid__item bg-blue text-blue">
-          {% render 'testimonial-card-text', entry: t2 %}
-        </article>
-        <article class="testimonial-grid__item bg-green text-green">
-          {% render 'testimonial-card-text', entry: t2 %}
-        </article>
-        <article class="testimonial-grid__item bg-pink text-pink">
-          {% render 'testimonial-card-text', entry: t2 %}
-        </article>
-      </div>
+      {% comment %}
+        <div class="testimonial-grid__column">
+          <article class="testimonial-grid__item bg-blue text-blue">
+            {% render 'testimonial-card-text', entry: t2 %}
+          </article>
+          <article class="testimonial-grid__item bg-green text-green">
+            {% render 'testimonial-card-text', entry: t2 %}
+          </article>
+          <article class="testimonial-grid__item bg-pink text-pink">
+            {% render 'testimonial-card-text', entry: t2 %}
+          </article>
+        </div>
+      {% endcomment %}
       <div class="testimonial-grid__column">
         {% render 'testimonial-card-video', entry: v3 %}
         <article class="testimonial-grid__item bg-blue text-blue">
@@ -87,14 +89,16 @@
 
   .testimonial-grid__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 2rem;
   }
 
   .testimonial-grid__column {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 2rem;
     align-items: start;
   }
 
