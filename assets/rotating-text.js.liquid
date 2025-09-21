@@ -68,15 +68,6 @@
     var durationSec = pxPerSecondToDurationPx(speed, segWidth);
     track.style.setProperty("--rt-duration", durationSec + "s");
 
-    // Pause on hover for accessibility
-    var viewportEl = viewport || track;
-    viewportEl.addEventListener("mouseenter", function () {
-      track.style.animationPlayState = "paused";
-    });
-    viewportEl.addEventListener("mouseleave", function () {
-      track.style.animationPlayState = "running";
-    });
-
     // Recalculate on resize
     var resizeTimer;
     window.addEventListener("resize", function () {

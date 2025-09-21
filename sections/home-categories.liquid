@@ -18,7 +18,7 @@
         <div class="home-categories__overlay"></div>
         <div class="home-categories__content">
           {% if block.settings.title != blank %}
-            <h3 class="text-2xl uppercase font-medium">{{ block.settings.title | escape }}</h3>
+            <h3 class="text-2xl uppercase font-medium wrap-pretty">{{ block.settings.title | escape }}</h3>
           {% endif %}
           {% if block.settings.description != blank %}
             <p class="home-categories__description">{{ block.settings.description | escape }}</p>
@@ -107,16 +107,10 @@
     gap: 0.25rem;
   }
 
-  .home-categories__card .home-categories__title {
-    margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.2;
-    font-weight: 700;
-  }
-
   .home-categories__description {
     margin: 0;
     margin-bottom: 1rem;
+    color: color-mix(in srgb, white 80%, transparent);
   }
 {% endstylesheet %}
 

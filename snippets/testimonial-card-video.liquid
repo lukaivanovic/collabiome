@@ -5,6 +5,9 @@
 
   {% assign product_obj = entry.product.value | default: entry.product %}
   {% if product_obj %}
-    <a href="{{ product_obj.url }}" class="testimonial-grid__product">{{ product_obj.title }}</a>
+    <a href="{{ product_obj.url }}" class="testimonial-grid__product">
+      {{ product_obj.featured_image | image_url: width: 120, height: 120 | image_tag }}
+      {{ product_obj.title -}}
+    </a>
   {% endif %}
 </article>

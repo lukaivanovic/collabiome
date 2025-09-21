@@ -209,7 +209,7 @@ body {
 
 .text-2xl {
   font-size: 1.5rem;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 .text-large {
@@ -228,6 +228,14 @@ body {
   font-family: "Geist", sans-serif;
   font-size: 0.75rem;
   line-height: 1.5;
+}
+
+.wrap-balance {
+  text-wrap: balance;
+}
+
+.wrap-pretty {
+  text-wrap: pretty;
 }
 
 .font-regular {
