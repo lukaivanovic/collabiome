@@ -18,13 +18,14 @@
           <a href="{{ product.url }}" class="product-card">
             <div class="product-card__media">
               {% if product.featured_media %}
-                {% render 'image', image: product.featured_media, class: 'product-card__image' %}
+                {% comment %} {% render 'image', image: product.featured_media, class: 'product-card__image' %} {% endcomment %}
+                {{ product.featured_media | image_url: width: 800, height: 800, crop: 'center' | image_tag }}
               {% else %}
                 <div class="product-card__placeholder"></div>
               {% endif %}
             </div>
             <div class="product-card__content">
-              <h3 class="text-large ">{{ product.title | escape }}</h3>
+              <h3 class="text-large font-medium">{{ product.title | escape }}</h3>
               <p class="product-card__price">
                 {% if product.price_varies %}
                   {{ 'products.price.from_price_html' | t: price: product.price_min | money }}
@@ -136,6 +137,7 @@
   .products-row {
     padding-top: 120px;
     padding-bottom: 120px;
+    overflow: hidden;
   }
 
   .products-row__title {
@@ -221,6 +223,12 @@
     width: 100%;
     overflow: hidden;
     border-radius: 8px;
+  }
+
+  .product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .product-card__image {

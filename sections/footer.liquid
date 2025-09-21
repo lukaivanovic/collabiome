@@ -1,42 +1,42 @@
 <footer class="container">
-  <div class="footer__logo">
-    <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-      <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
-    </a>
-  </div>
   <div class="footer__top">
-    <div class="footer__left">
-      <div class="footer__menus">
-        <div class="footer__menu">
-          {% if section.settings.menu1_title != blank %}
-            <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu1_title | escape }}</h4>
-          {% endif %}
-          {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
-            <ul class="footer__menu-list">
-              {% for link in section.settings.menu1.links %}
-                <li class="footer__menu-item">
-                  <a href="{{ link.url }}">{{ link.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </div>
-        <div class="footer__menu">
-          {% if section.settings.menu2_title != blank %}
-            <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu2_title | escape }}</h4>
-          {% endif %}
-          {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
-            <ul class="footer__menu-list">
-              {% for link in section.settings.menu2.links %}
-                <li class="footer__menu-item">
-                  <a href="{{ link.url }}">{{ link.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </div>
+    <div class="footer__logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+        <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
+      </a>
+    </div>
+
+    <div class="footer__menus">
+      <div class="footer__menu">
+        {% if section.settings.menu1_title != blank %}
+          <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu1_title | escape }}</h4>
+        {% endif %}
+        {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
+          <ul class="footer__menu-list">
+            {% for link in section.settings.menu1.links %}
+              <li class="footer__menu-item">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="footer__menu">
+        {% if section.settings.menu2_title != blank %}
+          <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu2_title | escape }}</h4>
+        {% endif %}
+        {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
+          <ul class="footer__menu-list">
+            {% for link in section.settings.menu2.links %}
+              <li class="footer__menu-item">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
     </div>
+
     <div class="footer__newsletter">
       <div
         class="newsletter-card"
@@ -96,17 +96,18 @@
   </div>
 
   <div class="footer__bottom ">
-    <div class="footer__social">
-      <a href="{{ section.settings.social_1 }}" aria-label="Facebook" class="footer__social-icon text-secondary">
-        {{ 'icon-facebook.svg' | inline_asset_content }}
-      </a>
-      <a href="{{ section.settings.social_2 }}" aria-label="Instagram" class="footer__social-icon text-secondary">
-        {{ 'icon-instagram.svg' | inline_asset_content }}
-      </a>
-      <a href="{{ section.settings.social_3 }}" aria-label="TikTok" class="footer__social-icon text-secondary">
-        {{ 'icon-tiktok.svg' | inline_asset_content }}
-      </a>
-
+    <div class="footer__bottom-left">
+      <div class="footer__social">
+        <a href="{{ section.settings.social_1 }}" aria-label="Facebook" class="footer__social-icon text-secondary">
+          {{ 'icon-facebook.svg' | inline_asset_content }}
+        </a>
+        <a href="{{ section.settings.social_2 }}" aria-label="Instagram" class="footer__social-icon text-secondary">
+          {{ 'icon-instagram.svg' | inline_asset_content }}
+        </a>
+        <a href="{{ section.settings.social_3 }}" aria-label="TikTok" class="footer__social-icon text-secondary">
+          {{ 'icon-tiktok.svg' | inline_asset_content }}
+        </a>
+      </div>
       {% if section.settings.bottom_menu %}
         <div class="footer__bottom-menu text-secondary text-sm">
           {% for link in section.settings.bottom_menu.links %}
@@ -121,8 +122,9 @@
 
 {% stylesheet %}
   footer {
-    display: grid;
-    gap: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     margin-top: 4rem;
     margin-bottom: 2rem;
   }
@@ -140,11 +142,15 @@
   }
   .footer__logo {
     font-weight: 600;
+    order: 1;
+    padding-right: 2rem;
   }
   .footer__menus {
     display: flex;
     flex-direction: row;
+    flex: 1 1 auto;
     gap: 4rem;
+    order: 2;
   }
   .footer__menu-list {
     list-style: none;
@@ -160,14 +166,14 @@
     color: var(--color-foreground);
   }
   .footer__newsletter {
-    flex: 0 0 420px;
-    max-width: 100%;
+    flex: 0 0 360px;
+    order: 3;
   }
   .footer__newsletter form {
     width: 100%;
   }
   .newsletter-card {
-    border-radius: 2rem;
+    border-radius: 1rem;
     padding: 1.5rem;
     position: relative;
     overflow: hidden;
@@ -266,6 +272,14 @@
     align-items: center;
     gap: 1rem;
   }
+  .footer__bottom-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .footer__social {
     display: flex;
     gap: 0.75rem;
@@ -313,6 +327,18 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 1.5rem;
+    }
+    .footer__bottom-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: start;
+      gap: 1rem;
+    }
+    .footer__newsletter {
+      width: 100%;
+      flex: 0 0 auto;
+      order: 1;
     }
     .footer__social {
       justify-content: flex-start;
