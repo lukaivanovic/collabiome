@@ -8,7 +8,7 @@
   {% endif %}
   <div class="home-categories__grid">
     {% for block in section.blocks %}
-      <article class="home-categories__card" {{ block.shopify_attributes }}>
+      <a href="{{ block.settings.button_url }}" class="home-categories__card" {{ block.shopify_attributes }}>
         {% if block.settings.image != blank %}
           {% assign bg = block.settings.image | image_url: width: 1200 %}
           <div class="home-categories__media" style="background-image: url('{{ bg }}');"></div>
@@ -23,8 +23,13 @@
           {% if block.settings.description != blank %}
             <p class="home-categories__description">{{ block.settings.description | escape }}</p>
           {% endif %}
+          {% if block.settings.button_text != blank %}
+            <div class="button-white">
+              {{- block.settings.button_text | escape -}}
+            </div>
+          {% endif %}
         </div>
-      </article>
+      </a>
     {% else %}
       <article class="home-categories__card">
         <div class="home-categories__media home-categories__media--placeholder"></div>
@@ -48,7 +53,7 @@
   .home-categories__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2rem;
     margin-top: 3rem;
   }
 
@@ -60,10 +65,14 @@
 
   .home-categories__card {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 2 / 3;
     overflow: clip;
     border-radius: var(--style-border-radius-cards, 12px);
-    background: var(--color-card, #f4f4f4);
+    background: black;
+  }
+
+  .home-categories__card:hover .home-categories__media {
+    transform: scale(1.05);
   }
 
   .home-categories__media {
@@ -72,6 +81,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
   }
 
   .home-categories__media--placeholder {
@@ -105,8 +116,7 @@
 
   .home-categories__description {
     margin: 0;
-    font-size: 0.9375rem;
-    opacity: 0.95;
+    margin-bottom: 1rem;
   }
 {% endstylesheet %}
 
@@ -134,7 +144,14 @@
           "id": "description",
           "label": "Description",
           "default": "Describe this category"
-        }
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button text"
+        },
+        { "type": "url", "id": "button_url", "label": "Button URL" }
       ]
     }
   ],

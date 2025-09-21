@@ -134,10 +134,14 @@
 {% endjavascript %}
 
 {% stylesheet %}
+  .products-row__section {
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.75) 40%),
+      linear-gradient(161deg, #bfc5ff 53.19%, #b4d7ff 73.82%, #a8eaff 96.54%);
+  }
+
   .products-row {
     padding-top: 120px;
-    padding-bottom: 120px;
-    overflow: hidden;
+    padding-bottom: 200px;
   }
 
   .products-row__title {
@@ -146,7 +150,6 @@
 
   .products-row__carousel {
     position: relative;
-    /* overflow: hidden; */
   }
 
   .embla__container {
@@ -301,6 +304,7 @@
 {% schema %}
 {
   "name": "t:general.product",
+  "class": "products-row__section",
   "tag": "section",
   "settings": [
     { "type": "text", "id": "title", "label": "t:labels.text", "default": "Featured products" },

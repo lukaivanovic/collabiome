@@ -264,6 +264,24 @@ body {
   font-size: 13px;
 }
 
+.button-white {
+  height: 32px;
+  background: white;
+  color: var(--color-foreground-default);
+  border-radius: 20px;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  font-weight: 500;
+  font-family: "Geist", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+
 @media (max-width: 768px) {
   .text-6xl {
     font-size: 2rem;
