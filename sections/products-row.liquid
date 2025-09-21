@@ -24,7 +24,7 @@
               {% endif %}
             </div>
             <div class="product-card__content">
-              <h3 class="product-card__title">{{ product.title | escape }}</h3>
+              <h3 class="text-large ">{{ product.title | escape }}</h3>
               <p class="product-card__price">
                 {% if product.price_varies %}
                   {{ 'products.price.from_price_html' | t: price: product.price_min | money }}
@@ -144,7 +144,7 @@
 
   .products-row__carousel {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   .embla__container {
@@ -238,10 +238,6 @@
   .product-card__content {
     display: grid;
     gap: 0.25rem;
-  }
-
-  .product-card__title {
-    font-size: 0.95rem;
   }
 
   .product-card__price {

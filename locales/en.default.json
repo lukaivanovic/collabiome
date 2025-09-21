@@ -129,7 +129,9 @@
     },
     "blog_grid": {
       "name": "Blog posts",
-      "default_heading": "Latest articles"
+      "default_heading": "Latest articles",
+      "previous_article": "Previous article",
+      "next_article": "Next article"
     },
     "products_row": {
       "previous_product": "Previous product",

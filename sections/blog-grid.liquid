@@ -1,52 +1,146 @@
 {% liquid
-  assign section_id = section.id
+  assign section_id = section.settings.custom_id | default: section.id
   assign selected_blog = section.settings.blog
 %}
 
-<section class="blog-grid" id="blog-grid-{{ section_id }}">
-  <div class="container">
-    {% if section.settings.heading != blank %}
-      <h2 class="blog-grid__heading text-2xl uppercase">{{ section.settings.heading | escape }}</h2>
-    {% endif %}
+<div class="blog-grid container">
+  {% if section.settings.heading != blank %}
+    <h2 class="blog-grid__heading text-2xl uppercase">{{ section.settings.heading | escape }}</h2>
+  {% endif %}
 
-    {% if selected_blog != blank and selected_blog.articles_count > 0 %}
-      <div class="blog-grid__grid">
-        {% for article in selected_blog.articles limit: 3 %}
-          <article class="blog-card">
-            <a class="blog-card__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
-              {% if article.image %}
-                {{
-                  article.image
-                  | image_url: width: 800
-                  | image_tag:
-                    loading: 'lazy',
-                    sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
-                    alt: article.title
-                  | escape
-                }}
-              {% else %}
-                <div class="blog-card__placeholder" aria-hidden="true"></div>
-              {% endif %}
-            </a>
-            <div class="blog-card__content">
-              <h3 class="blog-card__title text-lg font-medium">
-                <a href="{{ article.url }}">{{ article.title | escape }}</a>
-              </h3>
-
-              <div class="blog-card__meta">
-                {% if section.settings.show_date %}
-                  <span class="blog-card__date text-sm text-secondary">
-                    {{- article.published_at | time_tag: format: 'date' -}}
-                  </span>
+  {% if selected_blog != blank and selected_blog.articles_count > 0 %}
+    <div class="embla blog-grid__carousel" data-section-id="{{ section_id }}">
+      <div class="embla__container">
+        {% for article in selected_blog.articles limit: 6 %}
+          <div class="embla__slide">
+            <article class="blog-card">
+              <a class="blog-card__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+                {% if article.image %}
+                  {{
+                    article.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                      alt: article.title
+                    | escape
+                  }}
+                {% else %}
+                  <div class="blog-card__placeholder" aria-hidden="true"></div>
                 {% endif %}
+              </a>
+              <div class="blog-card__content">
+                <h3 class="blog-card__title text-lg font-medium">
+                  <a href="{{ article.url }}">{{ article.title | escape }}</a>
+                </h3>
+
+                <div class="blog-card__meta">
+                  {% if section.settings.show_date %}
+                    <span class="blog-card__date text-sm text-secondary">
+                      {{- article.published_at | time_tag: format: 'date' -}}
+                    </span>
+                  {% endif %}
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         {% endfor %}
       </div>
-    {% endif %}
-  </div>
-</section>
+
+      <button
+        class="embla__prev blog-grid__nav blog-grid__nav--prev"
+        aria-label="{{ 'sections.blog_grid.previous_article' | t }}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <button
+        class="embla__next blog-grid__nav blog-grid__nav--next"
+        aria-label="{{ 'sections.blog_grid.next_article' | t }}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="blog-grid__progress" aria-hidden="true">
+      <div class="blog-grid__progress-bar"></div>
+    </div>
+  {% endif %}
+</div>
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    // Load Embla Carousel from CDN
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
+    script.onload = function () {
+      // Initialize Embla Carousel for each blog grid
+      document.querySelectorAll('.blog-grid__carousel').forEach(function (carouselElement) {
+        const embla = EmblaCarousel(carouselElement, {
+          loop: true,
+          align: 'start',
+          containScroll: 'trimSnaps',
+          dragFree: false,
+          skipSnaps: false,
+          slidesToScroll: 1,
+        });
+
+        // Navigation buttons
+        const prevButton = carouselElement.querySelector('.embla__prev');
+        const nextButton = carouselElement.querySelector('.embla__next');
+
+        if (prevButton) {
+          prevButton.addEventListener('click', embla.scrollPrev);
+        }
+        if (nextButton) {
+          nextButton.addEventListener('click', embla.scrollNext);
+        }
+
+        // Update button states and progress bar
+        function updateButtons() {
+          if (prevButton) {
+            prevButton.disabled = !embla.canScrollPrev();
+          }
+          if (nextButton) {
+            nextButton.disabled = !embla.canScrollNext();
+          }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+          const progressBar = carouselElement.parentElement.querySelector('.blog-grid__progress-bar');
+          if (progressBar) {
+            const scrollProgress = embla.scrollProgress();
+            const progressPercentage = Math.min(Math.max(scrollProgress * 100, 0), 100);
+            progressBar.style.width = `${progressPercentage}%`;
+            console.log('Progress:', progressPercentage + '%'); // Debug log
+          } else {
+            console.log('Progress bar not found'); // Debug log
+          }
+        }
+
+        // Initial button state and progress bar
+        updateButtons();
+
+        // Initialize progress bar with a small delay to ensure DOM is ready
+        setTimeout(() => {
+          updateProgressBar();
+        }, 100);
+
+        // Update buttons and progress bar on scroll
+        embla.on('select', updateButtons);
+        embla.on('scroll', updateProgressBar);
+        embla.on('pointerUp', updateProgressBar);
+      });
+    };
+    document.head.appendChild(script);
+  });
+{% endjavascript %}
 
 {% stylesheet %}
   .blog-grid {
@@ -57,18 +151,124 @@
   }
 
   .blog-grid__heading {
-    margin: 0 0 1rem 0;
+    margin: 0 0 2rem 0;
   }
 
-  .blog-grid__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+  .blog-grid__carousel {
+    position: relative;
   }
 
-  @media (max-width: 990px) {
-    .blog-grid__grid {
-      grid-template-columns: 1fr;
+  .embla__container {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .embla__slide {
+    flex: 0 0 320px;
+    min-width: 0;
+  }
+
+  .embla__slide .blog-card {
+    width: 100%;
+    height: 100%;
+  }
+
+  .blog-grid__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: translateY(-50%);
+  }
+
+  .blog-grid__nav--prev {
+    left: 0;
+  }
+
+  .blog-grid__nav--next {
+    right: 0;
+  }
+
+  .blog-grid__nav:hover:not(:disabled) {
+    background: #333;
+    color: #fff;
+  }
+
+  .blog-grid__nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .blog-grid__nav svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Progress Bar Styles */
+  .blog-grid__progress {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    margin-top: 2rem;
+    overflow: hidden;
+  }
+
+  .blog-grid__progress-bar {
+    height: 100%;
+    background-color: var(--color-foreground, #000);
+    border-radius: 1px;
+    width: 0%;
+    min-width: 1px;
+    transition: width 0.3s ease;
+    transform-origin: left;
+  }
+
+  @media (max-width: 768px) {
+    .blog-grid {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .blog-grid__carousel {
+      margin: 0 -16px;
+      padding: 0 16px;
+    }
+
+    .embla__slide {
+      flex: 0 0 280px;
+    }
+
+    .blog-grid__nav {
+      width: 24px;
+      height: 24px;
+    }
+
+    .blog-grid__nav--prev {
+      left: 20px;
+    }
+
+    .blog-grid__nav--next {
+      right: -20px;
+    }
+
+    .blog-grid__nav svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .blog-grid__progress {
+      margin-top: 1.5rem;
     }
   }
 
@@ -137,7 +337,7 @@
 {
   "name": "Blog grid",
   "tag": "section",
-  "class": "blog-grid-section",
+
   "settings": [
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "heading", "label": "Text", "default": "t:sections.blog_grid.default_heading" },
