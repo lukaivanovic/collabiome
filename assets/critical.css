@@ -227,9 +227,16 @@ body {
 }
 
 .button-primary {
-  background-color: var(--color-gradient1);
+  height: 40px;
+  background: var(--color-gradient1);
   color: var(--color-foreground);
+  border-radius: 20px;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border-radius: var(--style-border-radius-buttons, 8px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  font-weight: 500;
+  font-family: var(--font-secondary--family);
 }

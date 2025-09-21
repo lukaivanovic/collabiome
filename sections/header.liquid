@@ -15,6 +15,11 @@
         </span>
       </button>
     </div>
+    <div aria-label="Header actions">
+      <a href="#" aria-label="User" class="site-header__icon">
+        {{ 'icon-account.svg' | inline_asset_content }}
+      </a>
+    </div>
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
@@ -175,8 +180,6 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    padding: 0.5rem;
-    border-radius: 4px;
   }
 
   .site-header__icon:hover {
