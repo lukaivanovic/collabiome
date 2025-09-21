@@ -48,9 +48,9 @@
       "type": "rotating-text",
       "name": "t:general.rotating_text",
       "settings": {
-        "text": "Friends don’t let friends dehydrate.#DrinkBrilliantlyHow many sips does it take to be amazing?",
+        "text": "Friends don’t let friends dehydrate.          #DrinkBrilliantly           How many sips does it take to be amazing?",
         "speed": 60,
-        "gap": 24
+        "gap": 60
       }
     },
     "home_categories_WxnjY8": {
@@ -61,7 +61,9 @@
           "settings": {
             "image": "shopify://shop_images/pet-and-owner-on-fall-walk.jpg",
             "title": "Koza, kosa i nokti",
-            "description": "Description"
+            "description": "Description",
+            "button_text": "Button text",
+            "button_url": ""
           }
         },
         "category_card_xYa3bG": {
@@ -69,7 +71,9 @@
           "settings": {
             "image": "shopify://shop_images/fall-vegetable-box.jpg",
             "title": "imunitet i zaštita od sunca",
-            "description": "Zastitite se od sunca uz kolagen."
+            "description": "Zastitite se od sunca uz kolagen.",
+            "button_text": "Button text",
+            "button_url": ""
           }
         },
         "category_card_CqrEwP": {
@@ -77,7 +81,9 @@
           "settings": {
             "image": "shopify://shop_images/a-moutain-biker-on-a-hillside.jpg",
             "title": "bol u zglobovima, kostima i tetivama",
-            "description": "Zastitite se od sunca uz kolagen."
+            "description": "Zastitite se od sunca uz kolagen.",
+            "button_text": "Button text",
+            "button_url": ""
           }
         }
       },
