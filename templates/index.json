@@ -68,16 +68,16 @@
           "type": "category_card",
           "settings": {
             "image": "shopify://shop_images/fall-vegetable-box.jpg",
-            "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
-            "description": "missing translation: \"t:sections.home_categories.default_card_description\""
+            "title": "imunitet i zaštita od sunca",
+            "description": "Zastitite se od sunca uz kolagen."
           }
         },
         "category_card_CqrEwP": {
           "type": "category_card",
           "settings": {
             "image": "shopify://shop_images/portrait-of-young-woman-in-autumn-colored-coat.jpg",
-            "title": "missing translation: \"t:sections.home_categories.default_card_title\"",
-            "description": "missing translation: \"t:sections.home_categories.default_card_description\""
+            "title": "bol u zglobovima, kostima i tetivama",
+            "description": "Zastitite se od sunca uz kolagen."
           }
         }
       },
