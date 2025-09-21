@@ -36,15 +36,24 @@
         <p class="hero__kicker text-white">{{ section.settings.kicker | escape }}</p>
       {% endif %}
       {% if section.settings.title != blank %}
-        <h1 class="text-3xl uppercase text-white">{{ section.settings.title | escape }}</h1>
+        <h1 class="text-6xl uppercase text-white">{{ section.settings.title | escape }}</h1>
       {% endif %}
       {% if section.settings.description != blank %}
         <div class="hero__description text-white">{{ section.settings.description }}</div>
       {% endif %}
-      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-        <a class="hero__button text-white" href="{{ section.settings.button_link }}">
-          {{- section.settings.button_label | escape -}}
-        </a>
+      {% if section.settings.show_buttons %}
+        <div class="hero__buttons">
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+            <a class="hero__button button-primary text-white" href="{{ section.settings.button_link }}">
+              {{- section.settings.button_label | escape -}}
+            </a>
+          {% endif %}
+          {% if section.settings.button_2_label != blank and section.settings.button_2_link != blank %}
+            <a class="hero__button hero__button--secondary text-white" href="{{ section.settings.button_2_link }}">
+              {{- section.settings.button_2_label | escape -}}
+            </a>
+          {% endif %}
+        </div>
       {% endif %}
     </div>
   </div>
@@ -97,7 +106,7 @@
   .hero__content {
     display: grid;
     gap: 0.75rem;
-    max-width: min(48ch, 90%);
+    max-width: min(64ch, 90%);
     color: var(--color-hero-foreground, var(--color-foreground));
   }
 
@@ -119,6 +128,12 @@
     opacity: 0.95;
   }
 
+  .hero__buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
   .hero__button {
     display: inline-flex;
     align-items: center;
@@ -130,6 +145,12 @@
     color: var(--color-background);
     text-decoration: none;
     width: fit-content;
+  }
+
+  .hero__button--secondary {
+    background: transparent;
+    border: 1px solid var(--color-foreground);
+    color: var(--color-foreground);
   }
 {% endstylesheet %}
 
@@ -143,8 +164,11 @@
     { "type": "text", "id": "kicker", "label": "Kicker" },
     { "type": "text", "id": "title", "label": "Title", "default": "Hero title" },
     { "type": "richtext", "id": "description", "label": "Description" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Button label" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "show_buttons", "label": "Show buttons", "default": true },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" },
 
     { "type": "header", "content": "Media" },
     { "type": "video", "id": "video", "label": "Video" },

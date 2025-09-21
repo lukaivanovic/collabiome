@@ -14,6 +14,7 @@ body {
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
@@ -166,6 +167,21 @@ body {
   color: var(--color-foreground-blue);
 }
 
+.text-6xl {
+  font-size: 3.5rem;
+  line-height: 1.1;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.text-4xl {
+  font-size: 2.5rem;
+  line-height: 1.5;
+}
+
 .text-3xl {
   font-size: 2rem;
   line-height: 1.5;
@@ -208,4 +224,12 @@ body {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.button-primary {
+  background-color: var(--color-gradient1);
+  color: var(--color-foreground);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--style-border-radius-buttons, 8px);
 }
