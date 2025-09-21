@@ -1,21 +1,22 @@
 <header class="site-header full-width">
   <div class="site-header__top container">
-    <div class="site-header__left">
-      <button
-        class="site-header__menu-toggle"
-        aria-label="{{ 'navigation.menu_toggle' | t }}"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        data-menu-toggle
-      >
-        <span class="hamburger" aria-hidden="true">
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
-          <span class="hamburger__line"></span>
-        </span>
-      </button>
+    <div>
+      <div class="site-header__left">
+        <button
+          class="site-header__menu-toggle"
+          aria-label="{{ 'navigation.menu_toggle' | t }}"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-menu-toggle
+        >
+          <span class="hamburger" aria-hidden="true">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+          </span>
+        </button>
+      </div>
     </div>
-
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img class="site-header__logo-image" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
