@@ -57,11 +57,11 @@
         {% endif %}
         <div class="newsletter-card__content">
           <div class="newsletter-card__header">
-            <h4 class="newsletter-card__title text-2xl text-white uppercase">
+            <h4 class="text-2xl text-white uppercase">
               {{ 'general.newsletter.title' | t | default: 'Newsletter' }}
             </h4>
             {% if section.settings.newsletter_description != blank %}
-              <p class="newsletter-card__description text-white">
+              <p class="text-large text-white">
                 {{ section.settings.newsletter_description }}
               </p>
             {% endif %}
@@ -143,7 +143,8 @@
   .footer__logo {
     font-weight: 600;
     order: 1;
-    padding-right: 2rem;
+    padding: 0.5rem;
+    margin-right: 5rem;
   }
   .footer__menus {
     display: flex;
@@ -166,7 +167,7 @@
     color: var(--color-foreground);
   }
   .footer__newsletter {
-    flex: 0 0 360px;
+    flex: 0 0 440px;
     order: 3;
   }
   .footer__newsletter form {
@@ -185,10 +186,10 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: 100% 100%;
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
     mask-repeat: no-repeat;
     mask-size: 100% 100%;
   }
@@ -213,10 +214,7 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  .newsletter-card__title {
-    margin: 0;
-    font-size: 1rem;
-  }
+
   .newsletter-card__description {
     margin: 0;
     font-size: 0.875rem;
@@ -271,6 +269,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    padding-top: 3rem;
   }
   .footer__bottom-left {
     display: flex;

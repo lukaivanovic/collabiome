@@ -1,6 +1,41 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
+    {% # Custom Fonts %}
+    <style>
+      @font-face {
+        font-family: 'Geist';
+        src: url("{{ 'Geist-VariableFont_wght.ttf' | file_url }}") format('ttf');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Red Hat Display';
+        src: url("{{ 'RedHatDisplay-Regular.woff2' | file_url }}") format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Red Hat Display';
+        src: url("{{ 'RedHatDisplay-Medium.woff2' | file_url }}") format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Red Hat Display';
+        src: url("{{ 'RedHatDisplay-Bold.woff2' | file_url }}") format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 

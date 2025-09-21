@@ -49,11 +49,11 @@ dialog {
 }
 
 a {
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
 }
 
 p {
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
   text-wrap: pretty;
 }
 p,
@@ -73,6 +73,7 @@ h4,
 h5,
 h6 {
   font-weight: 600;
+  font-family: "Red Hat Display", sans-serif;
 }
 
 p:empty {
@@ -91,7 +92,7 @@ p:empty {
 
 /** Theme styles below */
 body {
-  font-family: var(--font-primary--family);
+  font-family: "Red Hat Display", sans-serif;
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-size: 0.875rem;
@@ -178,6 +179,14 @@ body {
   color: var(--color-foreground-blue);
 }
 
+.font-red-hat {
+  font-family: "Red Hat Display", sans-serif;
+}
+
+.font-geist {
+  font-family: "Geist", sans-serif;
+}
+
 .text-6xl {
   font-size: 3.5rem;
   line-height: 1.1;
@@ -204,19 +213,19 @@ body {
 }
 
 .text-large {
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
 }
 
 .text-base {
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 
 .text-sm {
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
   font-size: 0.75rem;
   line-height: 1.5;
 }
@@ -249,7 +258,7 @@ body {
   justify-content: center;
   width: fit-content;
   font-weight: 500;
-  font-family: var(--font-secondary--family);
+  font-family: "Geist", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 13px;
