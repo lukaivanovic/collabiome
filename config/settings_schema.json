@@ -122,6 +122,16 @@
         "label": "Gradient 1"
       },
       {
+        "type": "color_background",
+        "id": "gradient2",
+        "label": "Gradient 2"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient3",
+        "label": "Gradient 3"
+      },
+      {
         "type": "range",
         "id": "input_corner_radius",
         "min": 0,
