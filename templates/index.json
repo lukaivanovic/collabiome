@@ -59,7 +59,7 @@
         "category_card_W4ApcV": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/pet-and-owner-on-fall-walk.jpg",
+            "image": "shopify://shop_images/Vitamin_C_serum_-_15_vitamina_C_model.png",
             "title": "Koza, kosa i nokti",
             "description": "Description",
             "button_text": "Shop all",
@@ -69,7 +69,7 @@
         "category_card_xYa3bG": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/fall-vegetable-box.jpg",
+            "image": "shopify://shop_images/Collabiome_Simona_Svalina-3.jpg",
             "title": "imunitet i zaštita od sunca",
             "description": "Zastitite se od sunca uz kolagen.",
             "button_text": "Shop all",
@@ -82,7 +82,7 @@
             "image": "shopify://shop_images/a-moutain-biker-on-a-hillside.jpg",
             "title": "bol u zglobovima, kostima i tetivama",
             "description": "Zastitite se od sunca uz kolagen.",
-            "button_text": "Button text",
+            "button_text": "Shop all",
             "button_url": ""
           }
         }
@@ -141,7 +141,7 @@
       ],
       "name": "t:sections.testimonial_grid.name",
       "settings": {
-        "title": "Testimonial grid"
+        "title": "See what our customers say"
       }
     },
     "blog_grid_GDkRNF": {
