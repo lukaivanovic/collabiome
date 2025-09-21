@@ -72,6 +72,7 @@
   .testimonial-grid {
     padding-top: 120px;
     padding-bottom: 120px;
+    --product-background: var(--color-gradient1);
   }
 
   .testimonial-grid__title {
@@ -93,6 +94,14 @@
     flex-direction: column;
     gap: 2rem;
     align-items: start;
+  }
+
+  .testimonial-grid__grid > *:nth-child(1) {
+    --product-background: var(--color-gradient2);
+  }
+
+  .testimonial-grid__grid > *:nth-child(2) {
+    --product-background: var(--color-gradient3);
   }
 
   .testimonial-grid__item {
