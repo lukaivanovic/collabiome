@@ -64,7 +64,15 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
 }
 
 p:empty {
@@ -245,4 +253,21 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .text-6xl {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .text-5xl {
+    font-size: 2rem;
+    line-height: 1.5;
+  }
+
+  .text-4xl {
+    font-size: 2rem;
+    line-height: 1.5;
+  }
 }
