@@ -48,7 +48,7 @@
       "type": "rotating-text",
       "name": "t:general.rotating_text",
       "settings": {
-        "text": "<p>testhseuthsueht</p>",
+        "text": "Friends don’t let friends dehydrate.#DrinkBrilliantlyHow many sips does it take to be amazing?",
         "speed": 60,
         "gap": 24
       }
