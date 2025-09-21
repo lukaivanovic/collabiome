@@ -1,5 +1,5 @@
 <header class="site-header full-width">
-  <div class="site-header__top">
+  <div class="site-header__top container">
     <div class="site-header__left">
       <button
         class="site-header__menu-toggle"
@@ -22,7 +22,7 @@
     </div>
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-        <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
+        <img class="site-header__logo-image" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
     </div>
     <div class="site-header__icons" aria-label="Header actions">
@@ -113,11 +113,11 @@
 </header>
 
 {% stylesheet %}
-  .site-header {
+  .header-section {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--color-background);
+    background: var(--color-background-default);
     border-bottom: 1px solid rgb(0 0 0 / 0.06);
     width: 100%;
   }
@@ -132,8 +132,7 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 1rem;
-    min-height: 56px;
-    padding: 0 1rem;
+    min-height: 72px;
   }
 
   .site-header__left {
@@ -145,6 +144,11 @@
     justify-self: center;
     font-weight: 600;
     letter-spacing: 0.02em;
+  }
+
+  .site-header__logo-image {
+    height: 48px;
+    width: auto;
   }
 
   .site-header__icons {
@@ -525,6 +529,7 @@
 {% schema %}
 {
   "name": "t:general.header",
+  "class": "header-section",
   "settings": [
     {
       "type": "link_list",

@@ -8,7 +8,7 @@
 
 <div class="products-row container">
   {% if section.settings.title != blank %}
-    <h2 class="products-row__title">{{ section.settings.title | escape }}</h2>
+    <h2 class="products-row__title text-2xl uppercase">{{ section.settings.title | escape }}</h2>
   {% endif %}
 
   <div class="embla products-row__carousel" data-section-id="{{ section_id }}">
@@ -139,9 +139,6 @@
   }
 
   .products-row__title {
-    grid-column: 2;
-    font-size: 1.25rem;
-    line-height: 1.2;
     margin-bottom: 2rem;
   }
 
