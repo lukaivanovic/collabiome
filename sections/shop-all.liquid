@@ -1,8 +1,15 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
   assign products_per_page = section.settings.products_per_page | default: 24
-  assign all_products = collections.all.products
-  assign total_products = all_products.size
+
+  if section.settings.collection != blank
+    assign selected_collection = collections[section.settings.collection]
+    assign collection_products = selected_collection.products
+    assign total_products = selected_collection.products_count
+  else
+    assign collection_products = collections.all.products
+    assign total_products = collections.all.products_count
+  endif
 %}
 
 <div class="shop-all container">
@@ -34,7 +41,7 @@
   {% endif %}
 
   <div class="shop-all__grid" data-section-id="{{ section_id }}">
-    {% for product in all_products limit: products_per_page %}
+    {% for product in collection_products limit: products_per_page %}
       <div class="shop-all__product">
         <a href="{{ product.url }}" class="product-card">
           <div class="product-card__media">
@@ -88,7 +95,7 @@
 
     let currentPage = 1;
     const productsPerPage = parseInt(loadMoreBtn?.dataset.productsPerPage || 24);
-    const allProducts = {{ all_products | json }};
+    const allProducts = {{ collection_products | json }};
 
     // Sort products
     function sortProducts(products, sortBy) {
@@ -373,6 +380,12 @@
       "id": "title",
       "label": "Page Title",
       "default": "Shop All Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select a collection to display. Leave empty to show all products."
     },
     {
       "type": "range",
