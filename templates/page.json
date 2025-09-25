@@ -11,10 +11,22 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {}
+    },
+    "shop_all_HhCym3": {
+      "type": "shop-all",
+      "name": "Shop All",
+      "settings": {
+        "title": "Shop All Products",
+        "products_per_page": 24,
+        "show_sorting": true,
+        "show_filters": false
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "shop_all_HhCym3"
   ]
 }
