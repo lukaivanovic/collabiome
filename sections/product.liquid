@@ -5,42 +5,60 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
+<div class="container">
+  <div class="product-container">
+    <div class="product-images">
+      {% render 'image', class: 'product-image', image: product.featured_image %}
+      <div class="thumbnail-grid">
+        {% for image in product.images offset: 1 %}
+          <div class="thumbnail">
+            {% render 'image', class: 'product-image', image: image %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="product-images">
+      text
+      <h1>{{ product.title }}</h1>
+      <p>{{ product.price | money }}</p>
+      <p>{{ product.description }}</p>
+    </div>
+  </div>
 </div>
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
+{% stylesheet %}
+  .product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two equal columns */
+    gap: 20px;
+  }
+  .product-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
+  .main-image {
+    width: 100%;
+  }
 
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
+  .main-image img {
+    width: 100%;
+    height: auto;
+  }
 
-    <input type="text" name="quantity" min="1" value="1">
+  .thumbnail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two columns */
+    gap: 10px;
+  }
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
-
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+{% endstylesheet %}
 {% schema %}
 {
   "name": "t:general.product",
