@@ -37,7 +37,20 @@
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "sorting": {
+      "title": "Sort by",
+      "featured": "Featured",
+      "best_selling": "Best selling",
+      "az": "Alphabetically, A-Z",
+      "za": "Alphabetically, Z-A",
+      "price_ascending": "Price, low to high",
+      "price_descending": "Price, high to low",
+      "date_descending": "Date, new to old"
+    },
+    "general": {
+      "load_more": "Load more products"
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -136,6 +149,9 @@
     "products_row": {
       "previous_product": "Previous product",
       "next_product": "Next product"
+    },
+    "shop_all": {
+      "name": "Shop All"
     }
   },
   "products": {

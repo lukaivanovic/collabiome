@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "shop-all",
+      "settings": {
+        "title": "Shop All Products",
+        "products_per_page": 24,
+        "show_sorting": true,
+        "show_filters": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
