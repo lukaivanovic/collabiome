@@ -15,12 +15,22 @@
         "title": "Shop All Products",
         "collection": "kozmetika",
         "products_per_page": 24,
-        "show_sorting": true,
+        "show_filters": false
+      }
+    },
+    "shop_all_AXFjX6": {
+      "type": "shop-all",
+      "name": "Shop All",
+      "settings": {
+        "title": "Shop All Products",
+        "collection": "poklon-paketi",
+        "products_per_page": 24,
         "show_filters": false
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "shop_all_AXFjX6"
   ]
 }
