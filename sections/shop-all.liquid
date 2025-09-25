@@ -15,7 +15,7 @@
 <div class="shop-all container">
   {% if section.settings.title != blank %}
     <div class="shop-all__header">
-      <h1 class="shop-all__title text-3xl uppercase">{{ section.settings.title | escape }}</h1>
+      <h1 class="shop-all__title text-3xl uppercase">{{ selected_collection.title }}</h1>
       <p class="shop-all__count text-sm opacity-75">
         {{ total_products }}
         {{ 'general.products' | t }}
