@@ -155,6 +155,11 @@
     }
   },
   "products": {
+    "product": {
+      "quantity": "Quantity",
+      "add_to_cart": "Add to cart", 
+      "sold_out": "Sold out"
+    },
     "price": {
       "from_price_html": "From {{ price }}"
     }
