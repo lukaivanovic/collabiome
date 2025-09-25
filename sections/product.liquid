@@ -7,8 +7,21 @@
 
 <div class="container">
   <div class="product-container">
-    <div class="product-content">
+    <div class="product-main-image">
+      <!-- changed -->
       {% render 'image', class: 'product-image', image: product.featured_image %}
+    </div>
+
+    <div class="product-content">
+      <!-- changed -->
+      text
+      <h1>{{ product.title }}</h1>
+      <p>{{ product.price | money }}</p>
+      <p>{{ product.description }}</p>
+    </div>
+
+    <div class="product-thumbnails">
+      <!-- changed -->
       <div class="thumbnail-grid">
         {% for image in product.images offset: 1 %}
           <div class="thumbnail">
@@ -16,12 +29,6 @@
           </div>
         {% endfor %}
       </div>
-    </div>
-    <div class="product-images">
-      text
-      <h1>{{ product.title }}</h1>
-      <p>{{ product.price | money }}</p>
-      <p>{{ product.description }}</p>
     </div>
   </div>
 </div>
@@ -32,12 +39,22 @@
     grid-template-columns: 1fr 1fr; /* two equal columns */
     gap: 20px;
   }
-  .product-images {
+  .product-main-image {
+    /* changed */
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
+
   .product-content {
+    /* changed */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-thumbnails {
+    /* changed */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -64,16 +81,25 @@
     object-fit: cover;
   }
   @media (max-width: 768px) {
-    .product-images {
-      order: 1;
-    }
-    .product-content {
-      order: 2;
-    }
     .product-container {
       display: grid;
-      grid-template-columns: 1fr; /* two equal columns */
+      grid-template-columns: 1fr;
       gap: 24px;
+    }
+
+    .product-main-image {
+      /* changed */
+      order: 1; /* First: main image */
+    }
+
+    .product-content {
+      /* changed */
+      order: 2; /* Second: product content */
+    }
+
+    .product-thumbnails {
+      /* changed */
+      order: 3; /* Third: thumbnail grid */
     }
   }
 {% endstylesheet %}
