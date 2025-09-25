@@ -13,6 +13,7 @@
       "type": "shop-all",
       "settings": {
         "title": "Shop All Products",
+        "collection": "kozmetika",
         "products_per_page": 24,
         "show_sorting": true,
         "show_filters": false
