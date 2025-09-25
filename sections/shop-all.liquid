@@ -23,23 +23,6 @@
     </div>
   {% endif %}
 
-  {% if section.settings.show_sorting %}
-    <div class="shop-all__controls">
-      <div class="shop-all__sorting">
-        <label for="sort-select" class="shop-all__sort-label">{{ 'collections.sorting.title' | t }}</label>
-        <select id="sort-select" class="shop-all__sort-select">
-          <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
-          <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
-          <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
-          <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
-          <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
-          <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
-          <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
-        </select>
-      </div>
-    </div>
-  {% endif %}
-
   <div class="shop-all__grid" data-section-id="{{ section_id }}">
     {% for product in collection_products limit: products_per_page %}
       <div class="shop-all__product">
@@ -395,12 +378,6 @@
       "max": 48,
       "step": 6,
       "default": 24
-    },
-    {
-      "type": "checkbox",
-      "id": "show_sorting",
-      "label": "Show sorting options",
-      "default": true
     },
     {
       "type": "checkbox",
