@@ -7,7 +7,7 @@
 
 <div class="container">
   <div class="product-container">
-    <div class="product-images">
+    <div class="product-content">
       {% render 'image', class: 'product-image', image: product.featured_image %}
       <div class="thumbnail-grid">
         {% for image in product.images offset: 1 %}
@@ -37,6 +37,11 @@
     flex-direction: column;
     gap: 20px;
   }
+  .product-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
   .main-image {
     width: 100%;
@@ -60,10 +65,15 @@
   }
   @media (max-width: 768px) {
     .product-images {
-      gap: 24px;
+      order: 1;
+    }
+    .product-content {
+      order: 2;
     }
     .product-container {
+      display: grid;
       grid-template-columns: 1fr; /* two equal columns */
+      gap: 24px;
     }
   }
 {% endstylesheet %}
