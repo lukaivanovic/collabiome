@@ -84,6 +84,7 @@
     },
     "click_here": "Click here",
     "products": "Products",
+    "continue_shopping": "Continue shopping",
     "newsletter": {
       "title": "Newsletter",
       "placeholder": "Your email",
@@ -104,6 +105,10 @@
     "contact": "Contact",
     "menu_toggle": "Toggle navigation menu",
     "close_menu": "Close navigation menu"
+  },
+  "accessibility": {
+    "close": "Close",
+    "loading": "Loading"
   },
 
   "sections": {
@@ -152,16 +157,71 @@
     },
     "shop_all": {
       "name": "Shop All"
+    },
+    "cart": {
+      "title": "Your cart",
+      "caption": "Cart items",
+      "remove_title": "Remove {{ title }}",
+      "estimated_total": "Estimated total",
+      "new_estimated_total": "New estimated total",
+      "note": "Order special instructions",
+      "checkout": "Check out",
+      "empty": "Your cart is empty",
+      "cart_error": "There was an error while updating your cart. Please try again.",
+      "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart.",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Duties and taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts and shipping calculated at checkout.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts and shipping calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Duties included. Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes, discounts and shipping calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes, discounts and shipping calculated at checkout.",
+      "headings": {
+        "product": "Product",
+        "price": "Price",
+        "total": "Total",
+        "quantity": "Quantity",
+        "image": "Product image"
+      },
+      "update": "Update",
+      "login": {
+        "title": "Have an account?",
+        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in</a> to check out faster."
+      }
     }
   },
   "products": {
     "product": {
-      "quantity": "Quantity",
-      "add_to_cart": "Add to cart", 
-      "sold_out": "Sold out"
+      "quantity": {
+        "label": "Quantity",
+        "decrease": "Decrease quantity for {{ product }}",
+        "increase": "Increase quantity for {{ product }}",
+        "input_label": "Quantity for {{ product }}",
+        "note": "Quantity rules apply",
+        "multiples_of": "Must be purchased in multiples of {{ quantity }}",
+        "min_of": "Minimum of {{ quantity }}",
+        "max_of": "Maximum of {{ quantity }}"
+      },
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "nested_label": "{{ title }} part of {{ parent_title }}",
+      "price": {
+        "regular_price": "Regular price",
+        "sale_price": "Sale price"
+      },
+      "volume_pricing": {
+        "title": "Volume pricing",
+        "note": "Discounts applied at certain quantities"
+      }
     },
     "price": {
       "from_price_html": "From {{ price }}"
+    }
+  },
+  "customer": {
+    "order": {
+      "discount": "Discount"
     }
   }
 }
