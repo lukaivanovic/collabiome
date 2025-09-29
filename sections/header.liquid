@@ -26,7 +26,13 @@
       <a href="#" aria-label="User" class="site-header__icon">
         {{ 'icon-account.svg' | inline_asset_content }}
       </a>
-      <a href="{{ routes.cart_url }}" aria-label="Cart" class="site-header__icon">
+      <a
+        href="{{ routes.cart_url }}"
+        aria-label="Cart"
+        aria-haspopup="drawer"
+        id="cart-icon-bubble"
+        class="site-header__icon"
+      >
         {{ 'icon-cart.svg' | inline_asset_content }}
       </a>
     </div>
