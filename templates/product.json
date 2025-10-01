@@ -32,10 +32,18 @@
         "title": "Featured products",
         "products": []
       }
+    },
+    "product_ingredients_Mhp7N3": {
+      "type": "product-ingredients",
+      "name": "Product Ingredients",
+      "settings": {
+        "title": ""
+      }
     }
   },
   "order": [
     "main",
-    "products_row_UnBGCp"
+    "products_row_UnBGCp",
+    "product_ingredients_Mhp7N3"
   ]
 }
