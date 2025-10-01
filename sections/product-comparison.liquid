@@ -1,0 +1,58 @@
+{%- liquid
+  assign comparisons = product.metafields.custom.comparison2.value
+-%}
+
+<div class="container-small">
+  <h2>{{ section.settings.title | default: 'Comparison' }}</h2>
+
+  {% if comparisons and comparisons.size > 0 %}
+    {% assign first = comparisons | first %}
+    {% assign fields = first.definition.fields %}
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr>
+            <th class="py-2 pr-4">Field</th>
+            {% for entry in comparisons %}
+              <th class="py-2 pr-4">{{ entry.handle }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for field in fields %}
+            <tr>
+              <td class="py-2 pr-4 align-top font-medium">{{ field.key }}</td>
+              {% for entry in comparisons %}
+                {% assign field_value = entry[field.key] %}
+                <td class="py-2 pr-4 align-top">
+                  {% if field_value != blank %}
+                    {{ field_value | metafield_text }}
+                  {% else %}
+                    &mdash;
+                  {% endif %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No comparison data.</p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Product Comparison",
+  "tag": "section",
+  "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "Comparison" }],
+  "presets": [
+    {
+      "name": "Product Comparison",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
