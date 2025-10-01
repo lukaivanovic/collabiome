@@ -1,0 +1,17 @@
+{%- liquid
+  assign ingredients = product.metafields.custom.ingredients.value
+-%}
+
+<div>
+  <h2>Ingredients</h2>
+  <div>
+    <div>
+      {% for ingredient in ingredients %}
+        <div>
+          <h3>{{ ingredient.title }}</h3>
+          {% render 'image', image: ingredient.image %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
