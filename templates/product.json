@@ -26,11 +26,17 @@
       "settings": {
         "title": "Comparison"
       }
+    },
+    "product_before_after_RheAtk": {
+      "type": "product-before-after",
+      "name": "Product Before & After",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "product_ingredients_Mhp7N3",
-    "product_comparison_YHCngK"
+    "product_comparison_YHCngK",
+    "product_before_after_RheAtk"
   ]
 }
