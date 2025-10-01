@@ -5,11 +5,11 @@
 <div class="container-small">
   <h2>Ingredients</h2>
   <div>
-    <div>
+    <div class="grid grid-cols-2 gap-4">
       {% for ingredient in ingredients %}
-        <div class="grid grid-cols-2 gap-4">
+        <div class="flex items-center justify-center flex-col gap-4">
+          {% render 'image', image: ingredient.image, class: 'rounded-xl'} %}
           <h3>{{ ingredient.name }}</h3>
-          {% render 'image', image: ingredient.image %}
         </div>
       {% endfor %}
     </div>
