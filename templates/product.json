@@ -19,10 +19,18 @@
       "settings": {
         "title": ""
       }
+    },
+    "product_comparison_YHCngK": {
+      "type": "product-comparison",
+      "name": "Product Comparison",
+      "settings": {
+        "title": "Comparison"
+      }
     }
   },
   "order": [
     "main",
-    "product_ingredients_Mhp7N3"
+    "product_ingredients_Mhp7N3",
+    "product_comparison_YHCngK"
   ]
 }
