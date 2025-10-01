@@ -125,7 +125,6 @@ body {
   /* grid-template-columns: var(--content-grid);
   display: grid; */
   width: 100%;
-  
 }
 
 /* Child elements, by default, are constrained to the central column of the grid. */
@@ -138,9 +137,16 @@ body {
   grid-column: 1 / -1;
 }
 
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 /** Container utility class */
 .container {
-  max-width: 1440px;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 24px;
@@ -166,6 +172,10 @@ body {
 
 .text-secondary {
   color: color-mix(in srgb, var(--color-foreground-default) 64%, transparent);
+}
+
+.text-accent {
+  color: #4e71eb;
 }
 
 .text-green {
@@ -306,4 +316,8 @@ body {
     font-size: 2rem;
     line-height: 1.5;
   }
+}
+
+.strikethrough {
+  text-decoration: line-through;
 }

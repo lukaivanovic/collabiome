@@ -104,7 +104,8 @@
     "about": "About",
     "contact": "Contact",
     "menu_toggle": "Toggle navigation menu",
-    "close_menu": "Close navigation menu"
+    "close_menu": "Close navigation menu",
+    "view_all": "View all"
   },
   "accessibility": {
     "close": "Close",
@@ -214,6 +215,9 @@
         "title": "Volume pricing",
         "note": "Discounts applied at certain quantities"
       }
+    },
+    "benefits": {
+      "title": "Product benefits"
     },
     "price": {
       "from_price_html": "From {{ price }}"

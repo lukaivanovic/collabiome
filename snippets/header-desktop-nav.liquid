@@ -1,0 +1,307 @@
+{% comment %}
+  Renders the desktop navigation bar with mega-menu support
+
+  Accepts:
+  - menu: {Object} Link list object (required)
+
+  Usage:
+  {% render 'header-desktop-nav', menu: section.settings.menu %}
+{% endcomment %}
+
+<nav class="site-header__nav" aria-label="Primary">
+  <ul class="site-header__menu" data-desktop-menu>
+    {% if menu and menu.links.size > 0 %}
+      {% for link in menu.links %}
+        <li class="site-header__menu-item">
+          <a
+            href="{{ link.url }}"
+            class="site-header__menu-link"
+            {% if link.type == 'collection_link' %}
+              data-mega-menu-trigger
+              data-collection-handle="{{ link.object.handle }}"
+            {% endif %}
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+
+  <!-- Mega Menu Panels - pre-rendered for each collection -->
+  {% if menu and menu.links.size > 0 %}
+    {% for link in menu.links %}
+      {% if link.type == 'collection_link' %}
+        <div
+          class="mega-menu"
+          data-mega-menu-panel="{{ link.object.handle }}"
+          aria-hidden="true"
+        >
+          <div class="mega-menu__content">
+            <div class="mega-menu__grid">
+              {% if link.object.image %}
+                <div class="mega-menu__featured">
+                  <a href="{{ link.object.url }}">
+                    {{
+                      link.object.image
+                      | image_url: width: 600, height: 600, crop: 'center'
+                      | image_tag: class: 'mega-menu__image', alt: link.object.title
+                    }}
+                    <div class="mega-menu__featured-overlay">
+                      <span class="mega-menu__view-all">
+                        {{ 'navigation.view_all' | t }}
+                        {{ link.object.title }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              {% endif %}
+
+              <div class="mega-menu__products">
+                {% for product in link.object.products limit: 3 %}
+                  {% render 'product-card', product: product %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</nav>
+
+{% stylesheet %}
+  .site-header__nav {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid rgb(0 0 0 / 0.12);
+    padding: 0.5rem 0.75rem;
+    background: var(--color-background-default);
+    position: relative;
+  }
+
+  .site-header__menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__menu-item {
+    position: relative;
+  }
+
+  .site-header__menu-link {
+    color: var(--color-foreground);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: block;
+    position: relative;
+  }
+
+  .site-header__menu-link:hover {
+    color: var(--color-foreground);
+  }
+
+  .site-header__menu-link[data-mega-menu-trigger]:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: currentColor;
+  }
+
+  /* Mega Menu Styles */
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    max-height: 0;
+    overflow: hidden;
+    background: var(--color-background-default);
+    border-top: 1px solid rgb(0 0 0 / 0.12);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, max-height 0.25s ease;
+    z-index: 100;
+  }
+
+  .mega-menu[aria-hidden='false'] {
+    max-height: 600px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mega-menu__content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .mega-menu__grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .mega-menu__featured {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .mega-menu__featured a {
+    display: block;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .mega-menu__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    display: block;
+  }
+
+  .mega-menu__featured-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.6) 0%, rgb(0 0 0 / 0) 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .mega-menu__featured:hover .mega-menu__featured-overlay {
+    opacity: 1;
+  }
+
+  .mega-menu__view-all {
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mega-menu__products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Mobile - hide desktop nav */
+  .site-header__nav {
+    display: none;
+  }
+
+  /* Desktop - show nav */
+  @media (min-width: 768px) {
+    .site-header__nav {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class MegaMenu {
+    constructor() {
+      this.menu = document.querySelector('[data-desktop-menu]');
+      this.triggers = document.querySelectorAll('[data-mega-menu-trigger]');
+      this.panels = document.querySelectorAll('[data-mega-menu-panel]');
+      this.currentPanel = null;
+      this.hoverTimeout = null;
+
+      this.init();
+    }
+
+    init() {
+      if (!this.menu || this.triggers.length === 0) {
+        return;
+      }
+
+      this.bindEvents();
+    }
+
+    bindEvents() {
+      // Add hover listeners to each trigger
+      this.triggers.forEach((trigger) => {
+        trigger.addEventListener('mouseenter', (e) => this.handleTriggerEnter(e));
+        trigger.addEventListener('mouseleave', () => this.scheduleClose());
+      });
+
+      // Keep mega menu open when hovering over it
+      this.panels.forEach((panel) => {
+        panel.addEventListener('mouseenter', () => this.cancelClose());
+        panel.addEventListener('mouseleave', () => this.scheduleClose());
+      });
+
+      // Close on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.currentPanel) {
+          this.closeAll();
+        }
+      });
+    }
+
+    handleTriggerEnter(e) {
+      this.cancelClose();
+      const handle = e.currentTarget.dataset.collectionHandle;
+
+      if (!handle) return;
+
+      // Close current panel if different
+      if (this.currentPanel && this.currentPanel !== handle) {
+        this.closeAll();
+      }
+
+      // Show the panel for this collection
+      this.showPanel(handle);
+    }
+
+    showPanel(handle) {
+      const panel = document.querySelector(`[data-mega-menu-panel="${handle}"]`);
+
+      if (panel) {
+        panel.setAttribute('aria-hidden', 'false');
+        this.currentPanel = handle;
+      }
+    }
+
+    scheduleClose() {
+      // Delay closing to allow moving mouse to mega menu
+      this.hoverTimeout = setTimeout(() => this.closeAll(), 150);
+    }
+
+    cancelClose() {
+      if (this.hoverTimeout) {
+        clearTimeout(this.hoverTimeout);
+        this.hoverTimeout = null;
+      }
+    }
+
+    closeAll() {
+      this.panels.forEach((panel) => {
+        panel.setAttribute('aria-hidden', 'true');
+      });
+      this.currentPanel = null;
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new MegaMenu());
+  } else {
+    new MegaMenu();
+  }
+{% endjavascript %}
