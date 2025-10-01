@@ -1,0 +1,41 @@
+{%- liquid
+  assign before_after = product.metafields.custom['product-before-after'].value
+-%}
+
+<div class="container-small">
+  <h2>{{ before_after.title | default: 'Before & After' }}</h2>
+
+  {% if before_after.description %}
+    <p class="opacity-70 mt-2">{{ before_after.description }}</p>
+  {% endif %}
+
+  {% if before_after and before_after.before_image and before_after.after_image %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <div class="flex flex-col">
+        <h3 class="text-lg font-medium mb-4">{{ before_after.before_label | default: 'Before' }}</h3>
+        {% render 'image', image: before_after.before_image, class: 'rounded-xl w-full' %}
+      </div>
+
+      <div class="flex flex-col">
+        <h3 class="text-lg font-medium mb-4">{{ before_after.after_label | default: 'After' }}</h3>
+        {% render 'image', image: before_after.after_image, class: 'rounded-xl w-full' %}
+      </div>
+    </div>
+  {% else %}
+    <p class="opacity-70 mt-6">No before/after images available.</p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Product Before & After",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Before & After",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
