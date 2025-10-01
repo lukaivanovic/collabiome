@@ -43,6 +43,7 @@
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
+    {{ 'application.css' | asset_url | stylesheet_tag }}
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
