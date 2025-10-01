@@ -49,6 +49,14 @@
     "rotating_text": "Rotating text",
     "blog_grid": "Blog posts"
   },
+  "blocks": {
+    "rotating_text": {
+      "name": "Rotating text",
+      "text": "Text",
+      "speed": "Speed",
+      "gap": "Gap"
+    }
+  },
   "options": {
     "alignment": {
       "left": "Left",

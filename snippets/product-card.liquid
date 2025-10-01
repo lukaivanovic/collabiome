@@ -1,0 +1,100 @@
+<a href="{{ product.url }}" class="product-card">
+  <div class="product-card__media">
+    {% if product.featured_media %}
+      {{
+        product.featured_media
+        | image_url: width: 800, height: 800, crop: 'center'
+        | image_tag: class: 'product-card__image product-card__image--primary'
+      }}
+
+      {% if product.media[1] %}
+        {{
+          product.media[1]
+          | image_url: width: 800, height: 800, crop: 'center'
+          | image_tag: class: 'product-card__image product-card__image--secondary'
+        }}
+      {% endif %}
+    {% else %}
+      <div class="product-card__placeholder"></div>
+    {% endif %}
+  </div>
+  <div class="product-card__content">
+    <h3 class="text-large font-medium">{{ product.title | escape }}</h3>
+    <p class="text-base font-regular">
+      {% if product.price_varies %}
+        {{ 'products.price.from_price_html' | t: price: product.price_min | money }}
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+    </p>
+  </div>
+</a>
+
+{% stylesheet %}
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .product-card__media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card__image--primary {
+    position: relative;
+    opacity: 1;
+  }
+
+  .product-card__image--secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .product-card:hover .product-card__image--primary {
+    opacity: 0;
+  }
+
+  .product-card:hover .product-card__image--secondary {
+    opacity: 1;
+  }
+
+  .product-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
+  }
+
+  .product-card__content {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .product-card__price {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.9;
+  }
+{% endstylesheet %}
