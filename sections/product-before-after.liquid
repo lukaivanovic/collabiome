@@ -1,29 +1,36 @@
 {%- liquid
-  assign before_after = product.metafields.before_after.value
+  assign before_after = product.metafields.custom.before_after.value
 -%}
 
-<div class="container-small">
-  <h2>{{ before_after.title | default: 'Before & After' }}</h2>
+<div class="container-small text-center py-30">
+  <h2 class="text-4xl uppercase font-medium">{{ before_after.title | default: 'Before & After' }}</h2>
 
   {% if before_after.description %}
-    <p class="opacity-70 mt-2">{{ before_after.description }}</p>
+    <p class="text-base opacity-70 mt-2">{{ before_after.description }}</p>
   {% endif %}
 
-  {% if before_after and before_after.before and before_after.after %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12">
+    {% comment %}
       <div class="flex flex-col">
         <h3 class="text-lg font-medium mb-4">{{ before_after.before_title | default: 'Before' }}</h3>
         {% render 'image', image: before_after.before, class: 'rounded-xl w-full' %}
       </div>
+    {% endcomment %}
 
-      <div class="flex flex-col">
-        <h3 class="text-lg font-medium mb-4">{{ before_after.after_title | default: 'After' }}</h3>
-        {% render 'image', image: before_after.after, class: 'rounded-xl w-full' %}
-      </div>
+    <div class="flex flex-col relative rounded-xl w-full">
+      {% render 'image', image: before_after.before, class: 'aspect-[3/4] w-full h-full object-cover rounded-3xl' %}
+      <h3 class="text-large font-regular mb-4 px-2 py-1 absolute bottom-2 left-2 bg-white rounded-2xl">
+        {{ before_after.before_title | default: 'Before' }}
+      </h3>
     </div>
-  {% else %}
-    <p class="opacity-70 mt-6">No before/after images available.</p>
-  {% endif %}
+
+    <div class="flex flex-col relative rounded-xl w-full">
+      {% render 'image', image: before_after.after, class: 'aspect-[3/4] rounded-3xl' %}
+      <h3 class="text-large font-regular mb-4 px-2 py-1 absolute bottom-2 left-2 bg-white rounded-2xl">
+        {{ before_after.after_title | default: 'After' }}
+      </h3>
+    </div>
+  </div>
 </div>
 
 {% schema %}

@@ -11,6 +11,10 @@
 -%}
 
 <div class="container mx-auto px-4">
+  <script id="product-data" type="application/json">
+    {{ product | json }}
+  </script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   <div class="product-container grid gap-10 pt-10 lg:[grid-template-columns:1fr_512px]">
     <div class="product-main-image">
       <div class="embla product-carousel" data-product-id="{{ product.id }}">
@@ -51,77 +55,7 @@
         </span>
       </div>
 
-      {%- form 'product', product, id: 'add-to-cart-form' -%}
-        <!-- Variant Selection -->
-        {% unless product.has_only_default_variant %}
-          <div class="product-form__variants flex flex-col gap-4 mt-5">
-            {% for option in product.options_with_values %}
-              <div class="product-form__option flex flex-col gap-2">
-                <label class="option-label text-sm font-medium text-gray-700">{{ option.name }}</label>
-                <div class="option-values flex flex-col gap-3">
-                  {% for value in option.values %}
-                    <label class="option-value flex items-center justify-between border border-gray-200 rounded-lg p-3 gap-3 cursor-pointer">
-                      <div class="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="options[{{ option.name }}]"
-                          value="{{ value }}"
-                          {% if option.selected_value == value %}
-                            checked
-                          {% endif %}
-                          class="w-4 h-4 rounded-full border border-gray-300 cursor-pointer"
-                        >
-                        <span class="text-large text-sm text-gray-700">{{ value }}</span>
-                      </div>
-
-                      <div class="option-price-wrapper flex items-center gap-3 self-end">
-                        <span class="text-base text-accent line-through">
-                          {{- value.variant.compare_at_price | money -}}
-                        </span>
-                        <span class="text-large text-base">{{ value.variant.price | money }}</span>
-                      </div>
-                    </label>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        {% endunless %}
-
-        <div class="quantity-selector flex items-center w-fit border border-gray-200 rounded-lg overflow-hidden">
-          <button
-            type="button"
-            class="quantity-button quantity-button--minus flex items-center justify-center w-10 h-11 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Decrease quantity"
-            data-quantity-minus
-          >
-            {{ 'icon-minus.svg' | inline_asset_content }}
-          </button>
-          <input
-            type="number"
-            id="quantity-{{ product.id }}"
-            name="quantity"
-            value="1"
-            min="1"
-            class="quantity-input w-16 h-11 text-center text-base font-medium outline-none [appearance:textfield] border-x border-gray-200"
-            aria-label="Quantity"
-          >
-          <button
-            type="button"
-            class="quantity-button quantity-button--plus flex items-center justify-center w-10 h-11 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Increase quantity"
-            data-quantity-plus
-          >
-            {{ 'icon-plus.svg' | inline_asset_content }}
-          </button>
-        </div>
-        <button
-          class="buy-button h-10 bg-[var(--gradient)] text-[color:var(--color-foreground)] rounded-full px-4 inline-flex items-center justify-center w-fit font-medium font-[Geist] uppercase tracking-[0.08em] text-[15px] border-0 cursor-pointer"
-          type="submit"
-        >
-          Add to Cart
-        </button>
-      {%- endform -%}
+      {% render 'buy-form', product: product, section_id: section.id %}
 
       <p class="font-geist">{{ product.content }}</p>
 
@@ -318,48 +252,6 @@
 
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function () {
-    const product = JSON.parse(document.querySelector('#product-data').textContent);
-    const form = document.querySelector('#add-to-cart-form');
-    const priceElement = document.querySelector('.product-price');
-    const priceWrapper = document.querySelector('.product-price-wrapper');
-    const quantityField = document.querySelector('#quantity-' + product.id);
-    const minusButton = document.querySelector('[data-quantity-minus]');
-    const plusButton = document.querySelector('[data-quantity-plus]');
-
-    // Quantity button handlers
-    function updateQuantityButtons() {
-      const quantity = parseInt(quantityField.value) || 1;
-      minusButton.disabled = quantity <= 1;
-    }
-
-    minusButton.addEventListener('click', function () {
-      const currentValue = parseInt(quantityField.value) || 1;
-      if (currentValue > 1) {
-        quantityField.value = currentValue - 1;
-        quantityField.dispatchEvent(new Event('change'));
-        updateQuantityButtons();
-      }
-    });
-
-    plusButton.addEventListener('click', function () {
-      const currentValue = parseInt(quantityField.value) || 1;
-      quantityField.value = currentValue + 1;
-      quantityField.dispatchEvent(new Event('change'));
-      updateQuantityButtons();
-    });
-
-    quantityField.addEventListener('change', function () {
-      const value = parseInt(quantityField.value);
-      if (isNaN(value) || value < 1) {
-        quantityField.value = 1;
-      }
-      updateQuantityButtons();
-      updatePrice();
-    });
-
-    // Initial state
-    updateQuantityButtons();
-
     // Load Embla Carousel from CDN
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
@@ -401,78 +293,6 @@
       }
     };
     document.head.appendChild(script);
-
-    // Get currently selected variant from Shopify's native form
-    function getCurrentVariant() {
-      const formData = new FormData(form);
-      const variantId = formData.get('id');
-      return product.variants.find((v) => v.id == variantId) || product.variants[0];
-    }
-
-    // Update price display
-    function updatePrice() {
-      const variant = getCurrentVariant();
-      const quantity = parseInt(quantityField.value) || 1;
-      const totalPrice = variant.price * quantity;
-      const compareAtPrice = variant.compare_at_price * quantity;
-
-      // Update regular price
-      priceElement.textContent = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(totalPrice / 100);
-
-      // Handle compare at price
-      let compareElement = priceWrapper.querySelector('.product-price-compare');
-
-      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-        if (!compareElement) {
-          compareElement = document.createElement('span');
-          compareElement.className = 'product-price-compare';
-          priceWrapper.insertBefore(compareElement, priceElement);
-        }
-        compareElement.textContent = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        }).format(compareAtPrice / 100);
-      } else if (compareElement) {
-        compareElement.remove();
-      }
-    }
-
-    // Listen for variant changes (Shopify's form updates the hidden 'id' field)
-    form.addEventListener('change', function (e) {
-      // Only update price if it's not the quantity field changing
-      if (e.target !== quantityField) {
-        updatePrice();
-      }
-    });
-
-    // Ajax cart add with drawer
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: [
-            {
-              id: getCurrentVariant().id,
-              quantity: parseInt(quantityField.value) || 1,
-            },
-          ],
-        }),
-      })
-        .then((response) => response.json())
-        .then(() => {
-          const cartDrawer = document.querySelector('cart-drawer');
-          if (cartDrawer) cartDrawer.open();
-        })
-        .catch((error) => console.error('Error:', error));
-    });
-
-    updatePrice();
   });
 {% endjavascript %}
 

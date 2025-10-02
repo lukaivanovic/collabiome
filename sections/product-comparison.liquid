@@ -2,11 +2,15 @@
   assign comparisons = product.metafields.custom.comparison.value
 -%}
 
-<div class="container-small">
-  <h2>{{ section.settings.title | default: 'Comparison' }}</h2>
+<div class="container-small text-center py-30">
+  <h2 class="text-4xl uppercase font-medium">{{ comparisons.title | default: 'Comparison' }}</h2>
+
+  {% if comparisons.description %}
+    <p class="text-base opacity-70 mt-2">{{ comparisons.description }}</p>
+  {% endif %}
 
   {% if comparisons and comparisons.products and comparisons.categories and comparisons.values %}
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto pt-12">
       <table class="w-full text-left">
         <thead>
           <tr>

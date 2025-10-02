@@ -31,6 +31,11 @@ svg {
   height: auto;
 }
 
+img {
+  object-fit: cover;
+  height: 100%;
+}
+
 input,
 textarea,
 select {
@@ -155,7 +160,7 @@ button {
 }
 
 .container-small {
-  max-width: 1000px;
+  max-width: 920px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 48px;
@@ -334,4 +339,21 @@ button {
 
 .strikethrough {
   text-decoration: line-through;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  word-wrap: normal !important;
+}
+
+.visually-hidden--inline {
+  margin: 0;
+  height: 1em;
 }

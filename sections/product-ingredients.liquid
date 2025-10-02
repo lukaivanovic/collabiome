@@ -2,17 +2,20 @@
   assign ingredients = product.metafields.custom.ingredients.value
 -%}
 
-<div class="container-small">
-  <h2>Ingredients</h2>
-  <div>
-    <div class="grid grid-cols-2 gap-4">
-      {% for ingredient in ingredients %}
-        <div class="flex items-center justify-center flex-col gap-4">
-          {% render 'image', image: ingredient.image, class: 'rounded-xl'} %}
-          <h3>{{ ingredient.name }}</h3>
-        </div>
-      {% endfor %}
-    </div>
+<div class="container-small text-center py-30">
+  <h2 class="text-4xl uppercase font-medium">{{ ingredients.title | default: 'Ingredients' }}</h2>
+
+  {% if ingredients.description %}
+    <p class="text-base opacity-70 mt-2">{{ ingredients.description }}</p>
+  {% endif %}
+
+  <div class="grid grid-cols-2 gap-4 pt-12">
+    {% for ingredient in ingredients %}
+      <div class="flex items-center justify-center flex-col gap-4">
+        {% render 'image', image: ingredient.image, class: 'rounded-xl' %}
+        <h3>{{ ingredient.name }}</h3>
+      </div>
+    {% endfor %}
   </div>
 </div>
 
