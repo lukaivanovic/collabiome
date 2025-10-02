@@ -16,25 +16,25 @@
   </script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   <div class="product-container grid gap-10 pt-10 lg:[grid-template-columns:1fr_512px]">
-    <div class="product-main-image">
-      <div class="embla product-carousel" data-product-id="{{ product.id }}">
-        <div class="embla__container">
+    <div class="overflow-hidden relative rounded-2xl aspect-[1/1]">
+      <div class="embla flex overflow-hidden relative h-full" data-product-id="{{ product.id }}">
+        <div class="flex">
           {% for image in product.images %}
-            <div class="embla__slide">
-              {% render 'image', class: 'product-image', image: image %}
+            <div class="embla__slide h-full">
+              {% render 'image', image: image %}
             </div>
           {% endfor %}
         </div>
 
         <button
-          class="embla__prev product-carousel__nav product-carousel__nav--prev"
+          class="embla__prev absolute top-1/2 -translate-y-1/2 left-2 bg-white rounded-full z-2 p-1 text-black"
           aria-label="Previous image"
         >
           {{ 'icon-chevron-left.svg' | inline_asset_content }}
         </button>
 
         <button
-          class="embla__next product-carousel__nav product-carousel__nav--next"
+          class="embla__next absolute top-1/2 -translate-y-1/2 right-2 bg-black rounded-full z-2 p-1 text-white"
           aria-label="Next image"
         >
           {{ 'icon-chevron-right.svg' | inline_asset_content }}
@@ -143,28 +143,9 @@
     font-weight: 500;
   }
 
-  .product-main-image {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-carousel {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-carousel .embla__container {
-    display: flex;
-  }
-
-  .product-carousel .embla__slide {
+  .embla .embla__slide {
     flex: 0 0 100%;
     min-width: 0;
-  }
-
-  .product-carousel .embla__slide .product-image {
-    width: 100%;
-    height: auto;
   }
 
   .product-carousel__nav {
@@ -183,14 +164,6 @@
     cursor: pointer;
     transition: all 0.2s ease;
     transform: translateY(-50%);
-  }
-
-  .product-carousel__nav--prev {
-    left: 16px;
-  }
-
-  .product-carousel__nav--next {
-    right: 16px;
   }
 
   .product-carousel__nav:hover:not(:disabled) {
@@ -228,26 +201,6 @@
   .accordion-item.active .accordion-content {
     max-height: 500px;
   }
-
-  @media (max-width: 768px) {
-    .product-carousel__nav {
-      width: 32px;
-      height: 32px;
-    }
-
-    .product-carousel__nav--prev {
-      left: 8px;
-    }
-
-    .product-carousel__nav--next {
-      right: 8px;
-    }
-
-    .product-carousel__nav svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -257,7 +210,7 @@
     script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
     script.onload = function () {
       // Initialize Embla Carousel for product images
-      const carouselElement = document.querySelector('.product-carousel');
+      const carouselElement = document.querySelector('.embla');
       if (carouselElement) {
         const embla = EmblaCarousel(carouselElement, {
           loop: true,
