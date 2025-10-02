@@ -118,18 +118,23 @@
       },
       {
         "type": "color_background",
-        "id": "gradient1",
-        "label": "Gradient 1"
+        "id": "gradient-boost",
+        "label": "Gradient Boost"
       },
       {
         "type": "color_background",
-        "id": "gradient2",
-        "label": "Gradient 2"
+        "id": "gradient-exclusive",
+        "label": "Gradient Exclusive"
       },
       {
         "type": "color_background",
-        "id": "gradient3",
-        "label": "Gradient 3"
+        "id": "gradient-nutriage",
+        "label": "Gradient Nutriage"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient-recupera",
+        "label": "Gradient Recupera"
       },
       {
         "type": "range",

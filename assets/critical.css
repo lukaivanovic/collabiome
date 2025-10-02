@@ -180,6 +180,22 @@ button {
   background-color: var(--color-background-blue);
 }
 
+.bg-gradient-boost {
+  background: var(--color-gradient1);
+}
+
+.bg-gradient-exclusive {
+  background: var(--color-gradient1);
+}
+
+.bg-gradient-nutriage {
+  background: var(--color-gradient1);
+}
+
+.bg-gradient-recupera {
+  background: var(--color-gradient1);
+}
+
 .text-white {
   color: white;
 }
@@ -281,7 +297,6 @@ button {
 
 .button-primary {
   height: 40px;
-  background: var(--color-gradient1);
   color: var(--color-foreground);
   border-radius: 20px;
   text-decoration: none;
