@@ -6,6 +6,10 @@
   margin: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -15,6 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
@@ -341,6 +346,11 @@ button {
 
 @media (max-width: 768px) {
   .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .container-small {
     padding-left: 24px;
     padding-right: 24px;
   }

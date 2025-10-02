@@ -17,7 +17,7 @@
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   <div class="product-container grid gap-10 pt-10 lg:[grid-template-columns:1fr_512px]">
     <div class="overflow-hidden relative rounded-2xl aspect-[1/1]">
-      <div class="embla flex overflow-hidden relative h-full" data-product-id="{{ product.id }}">
+      <div class="embla embla-product flex overflow-hidden relative h-full" data-product-id="{{ product.id }}">
         <div class="flex">
           {% for image in product.images %}
             <div class="embla__slide h-full">
@@ -42,17 +42,17 @@
       </div>
     </div>
 
-    <div class="product-content flex flex-col gap-5">
-      <h1>{{ product.title }}</h1>
+    <div class="product-content flex flex-col gap-5 py-6">
+      <h1 class="text-3xl font-medium">{{ product.title }}</h1>
       <div class="product-price-wrapper flex items-center gap-3">
+        <span class="product-price text-2xl font-semibold text-black" data-base-price="{{ product.price }}">
+          {{- product.price | money -}}
+        </span>
         {% if product.compare_at_price > product.price %}
           <span class="product-price-compare text-lg text-gray-500 line-through">
             {{- product.compare_at_price | money -}}
           </span>
         {% endif %}
-        <span class="product-price text-2xl font-semibold text-black" data-base-price="{{ product.price }}">
-          {{- product.price | money -}}
-        </span>
       </div>
 
       {% render 'buy-form', product: product, section_id: section.id %}
@@ -87,7 +87,7 @@
             </button>
             <div class="accordion-content" data-collapsible-content>
               <div class="accordion-content-inner px-4 pb-4 text-[15px] leading-[1.6] text-gray-600">
-                {{ accordion_item.content }}
+                {{ accordion_item.content | metafield_tag }}
               </div>
             </div>
           </collapsible-item>
@@ -143,7 +143,7 @@
     font-weight: 500;
   }
 
-  .embla .embla__slide {
+  .embla-product .embla__slide {
     flex: 0 0 100%;
     min-width: 0;
   }
@@ -210,7 +210,7 @@
     script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
     script.onload = function () {
       // Initialize Embla Carousel for product images
-      const carouselElement = document.querySelector('.embla');
+      const carouselElement = document.querySelector('.embla-product');
       if (carouselElement) {
         const embla = EmblaCarousel(carouselElement, {
           loop: true,

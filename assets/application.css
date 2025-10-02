@@ -383,6 +383,9 @@
   .flex-shrink {
     flex-shrink: 1;
   }
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
   .shrink {
     flex-shrink: 1;
   }
@@ -394,6 +397,9 @@
   }
   .grow {
     flex-grow: 1;
+  }
+  .basis-\[320px\] {
+    flex-basis: 320px;
   }
   .basis-full {
     flex-basis: 100%;
@@ -584,6 +590,9 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .py-6 {
+    padding-block: calc(var(--spacing) * 6);
   }
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
@@ -795,6 +804,11 @@
   .md\:grid-cols-2 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .md\:gap-6 {
+    @media (width >= 48rem) {
+      gap: calc(var(--spacing) * 6);
     }
   }
   .lg\:\[grid-template-columns\:1fr_512px\] {

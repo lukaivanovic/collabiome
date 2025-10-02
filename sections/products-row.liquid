@@ -11,17 +11,17 @@
     <h2 class="products-row__title text-2xl uppercase">{{ section.settings.title | escape }}</h2>
   {% endif %}
 
-  <div class="embla products-row__carousel" data-section-id="{{ section_id }}">
-    <div class="embla__container">
+  <div class="embla embla-products-row relative overflow-hidden" data-section-id="{{ section_id }}">
+    <div class="embla__container flex">
       {% for product in products limit: 6 %}
-        <div class="embla__slide">
+        <div class="flex-grow flex-shrink-0 basis-[320px] min-w-0">
           {% render 'product-card', product: product %}
         </div>
       {% endfor %}
     </div>
 
     <button
-      class="embla__prev products-row__nav products-row__nav--prev"
+      class="embla__prev absolute top-1/2 -translate-y-1/2 left-2 bg-white rounded-full z-2 p-1 text-black"
       aria-label="{{ 'sections.products_row.previous_product' | t }}"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
     </button>
 
     <button
-      class="embla__next products-row__nav products-row__nav--next"
+      class="embla__next absolute top-1/2 -translate-y-1/2 right-2 bg-black rounded-full z-2 p-1 text-white"
       aria-label="{{ 'sections.products_row.next_product' | t }}"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@
     script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
     script.onload = function () {
       // Initialize Embla Carousel for each products row
-      document.querySelectorAll('.products-row__carousel').forEach(function (carouselElement) {
+      document.querySelectorAll('.embla-products-row').forEach(function (carouselElement) {
         const embla = EmblaCarousel(carouselElement, {
           loop: true,
           align: 'start',
@@ -132,7 +132,7 @@
     margin-bottom: 2rem;
   }
 
-  .products-row__carousel {
+  .embla-products-row {
     position: relative;
   }
 
@@ -149,47 +149,6 @@
   .embla__slide .product-card {
     width: 100%;
     height: 100%;
-  }
-
-  .products-row__nav {
-    position: absolute;
-    top: 50%;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border: none;
-    border-radius: 50%;
-    background: #000;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    transform: translateY(-50%);
-  }
-
-  .products-row__nav--prev {
-    left: -12px;
-  }
-
-  .products-row__nav--next {
-    right: -12px;
-  }
-
-  .products-row__nav:hover:not(:disabled) {
-    background: #333;
-    color: #fff;
-  }
-
-  .products-row__nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .products-row__nav svg {
-    width: 16px;
-    height: 16px;
   }
 
   /* Progress Bar Styles */
