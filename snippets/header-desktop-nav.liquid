@@ -1,9 +1,5 @@
-<nav class="bg-[var(--color-background-default)]">
-  <div
-    class="container grid items-center justify-center border-t border-black/12 py-2 px-3  relative"
-    aria-label="Primary"
-    style="grid-template-columns: 1fr auto 1fr;"
-  >
+<nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 z-10">
+  <div class="container grid grid-cols-[1fr_auto_1fr] items-center justify-center py-2 px-3 relative h-16">
     <div class="flex gap-8" data-desktop-menu>
       {% if shop_menu and shop_menu.links.size > 0 %}
         {% for link in shop_menu.links %}
@@ -23,9 +19,9 @@
       {% endif %}
     </div>
 
-    <div class="site-header__logo">
+    <div class="h-10">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-        <img class="site-header__logo-image" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
+        <img class="h-full w-auto" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
     </div>
 
@@ -40,7 +36,7 @@
           </a>
         {% endfor %}
       {% endif %}
-      <a href="account" aria-label="User" class="flex items-center justify-center size-5 rounded-full">
+      <a href="account" aria-label="User" class="flex items-center justify-center size-6 rounded-full">
         {{ 'icon-account.svg' | inline_asset_content }}
       </a>
       <a
@@ -48,7 +44,7 @@
         aria-label="Cart"
         aria-haspopup="drawer"
         id="cart-icon-bubble"
-        class="flex items-center justify-center size-5 rounded-full"
+        class="flex items-center justify-center size-6 rounded-full"
       >
         {{ 'icon-cart.svg' | inline_asset_content }}
       </a>
@@ -57,11 +53,11 @@
 </nav>
 
 <!-- Mega Menu Panels - pre-rendered for each collection -->
-{% if menu and menu.links.size > 0 %}
-  {% for link in menu.links %}
+{% if shop_menu and shop_menu.links.size > 0 %}
+  {% for link in shop_menu.links %}
     {% if link.type == 'collection_link' %}
       <div
-        class="absolute top-full left-0 w-screen max-h-0 overflow-hidden bg-[var(--color-background-default)] border-t border-black/12 shadow-md opacity-0 invisible transition-all duration-[250ms] ease-in-out z-[100] aria-[hidden=false]:max-h-[600px] aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
+        class="absolute top-full left-0 w-screen max-h-0 overflow-hidden bg-[var(--color-background-default)] opacity-0 invisible transition-all duration-[250ms] ease-in-out z-[100] aria-[hidden=false]:max-h-[600px] aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
         data-mega-menu-panel="{{ link.object.handle }}"
         aria-hidden="true"
       >

@@ -1,18 +1,24 @@
-<header class="site-header full-width">
-  <header class="hidden md:block">
-    {% render 'header-desktop-nav',
-      shop_menu: section.settings.shop_menu,
-      marketing_menu: section.settings.marketing_menu
-    %}
-  </header>
-
-  <header class="relative block md:hidden">
-    {% render 'header-mobile-menu',
-      shop_menu: section.settings.shop_menu,
-      marketing_menu: section.settings.marketing_menu
-    %}
-  </header>
+<header class="hidden md:block">
+  {% render 'header-desktop-nav',
+    shop_menu: section.settings.shop_menu,
+    marketing_menu: section.settings.marketing_menu
+  %}
 </header>
+
+<header class="relative block md:hidden">
+  {% render 'header-mobile-menu',
+    shop_menu: section.settings.shop_menu,
+    marketing_menu: section.settings.marketing_menu
+  %}
+</header>
+
+{% stylesheet %}
+  .header-section {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
