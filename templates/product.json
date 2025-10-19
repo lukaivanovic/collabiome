@@ -48,6 +48,20 @@
         "description": "Got a less-frequently asked question?",
         "contact_email": "pitanja@kollagenboost.com"
       }
+    },
+    "product_reviews_APUjTe": {
+      "type": "product-reviews",
+      "name": "Product Reviews",
+      "settings": {
+        "custom_id": "",
+        "title": "Customer Reviews",
+        "background_color": "#ffffff",
+        "reviews_per_page": 10,
+        "show_review_form": true,
+        "no_reviews_text": "No reviews yet. Be the first to review this product!",
+        "show_review_button": true,
+        "review_button_text": "Write a Review"
+      }
     }
   },
   "order": [
@@ -56,6 +70,7 @@
     "product_ingredients_Mhp7N3",
     "product_comparison_YHCngK",
     "product_before_after_RheAtk",
-    "product_faq_jmHdaa"
+    "product_faq_jmHdaa",
+    "product_reviews_APUjTe"
   ]
 }
