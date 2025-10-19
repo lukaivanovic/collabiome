@@ -1,0 +1,173 @@
+{%- liquid
+  assign faq_data = product.metafields.custom.faq.value
+-%}
+
+<div class="container-small py-30">
+  <div class="bg-white rounded-3xl p-8">
+    <h2 class="text-4xl uppercase font-bold text-black mb-4">FAQ</h2>
+
+    {% if faq_data.description %}
+      <p class="text-base text-gray-600 mb-8">
+        {{ faq_data.description }}
+        <a href="mailto:pitanja@kollagenboost.com" class="underline">pitanja@kollagenboost.com</a>
+        {% comment %} {{ 'sections.product_faq.contact_text' | t }} {% endcomment %}
+      </p>
+    {% else %}
+      <p class="text-base text-gray-600 mb-8">
+        {% comment %} {{ 'sections.product_faq.default_description' | t }} {% endcomment %}
+        <a href="mailto:pitanja@kollagenboost.com" class="underline">pitanja@kollagenboost.com</a>
+        {% comment %} {{ 'sections.product_faq.contact_text' | t }} {% endcomment %}
+      </p>
+    {% endif %}
+
+    {% if faq_data and faq_data.items.size > 0 %}
+      <div class="faq-accordion">
+        {% for item in faq_data.items %}
+          <div class="faq-item border-b border-gray-200 last:border-b-0">
+            <button
+              class="faq-question w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              data-faq-toggle="{{ forloop.index }}"
+              aria-expanded="false"
+            >
+              <span class="text-base font-medium text-black pr-4">{{ item.question }}</span>
+              <div class="faq-icon w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="faq-plus text-blue-600 text-lg font-bold">+</span>
+                <span class="faq-minus text-blue-600 text-lg font-bold hidden">−</span>
+              </div>
+            </button>
+            <div
+              class="faq-answer hidden pb-4"
+              data-faq-content="{{ forloop.index }}"
+            >
+              <div class="text-base text-gray-700 pr-12">
+                {{ item.answer }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq-accordion {
+    max-width: 100%;
+  }
+
+  .faq-item {
+    transition: all 0.3s ease;
+  }
+
+  .faq-question {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .faq-question:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .faq-icon {
+    transition: all 0.3s ease;
+  }
+
+  .faq-question[aria-expanded='true'] .faq-plus {
+    display: none;
+  }
+
+  .faq-question[aria-expanded='true'] .faq-minus {
+    display: block;
+  }
+
+  .faq-answer {
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .faq-answer.show {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .faq-question span {
+      font-size: 14px;
+    }
+
+    .faq-answer .text-base {
+      font-size: 14px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach((question) => {
+      question.addEventListener('click', function () {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        const contentId = this.getAttribute('data-faq-toggle');
+        const content = document.querySelector(`[data-faq-content="${contentId}"]`);
+
+        // Close all other FAQ items
+        faqQuestions.forEach((q) => {
+          if (q !== this) {
+            q.setAttribute('aria-expanded', 'false');
+            const otherContentId = q.getAttribute('data-faq-toggle');
+            const otherContent = document.querySelector(`[data-faq-content="${otherContentId}"]`);
+            if (otherContent) {
+              otherContent.classList.remove('show');
+              otherContent.style.maxHeight = null;
+            }
+          }
+        });
+
+        // Toggle current FAQ item
+        if (isExpanded) {
+          this.setAttribute('aria-expanded', 'false');
+          content.classList.remove('show');
+          content.style.maxHeight = null;
+        } else {
+          this.setAttribute('aria-expanded', 'true');
+          content.classList.add('show');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "FAQ title",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "FAQ description",
+      "default": "Got a less-frequently asked question?"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "pitanja@kollagenboost.com"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

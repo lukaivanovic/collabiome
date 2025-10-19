@@ -51,7 +51,7 @@
     </div>
 
     {%- if product.images.size > 1 -%}
-      <div class="embla-thumbs flex gap-2 ">
+      <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap w-full">
         {%- for image in product.images -%}
           <button
             class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
