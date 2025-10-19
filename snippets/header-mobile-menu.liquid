@@ -49,25 +49,22 @@
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
   </div>
-</nav>
 
-<!-- Mobile Menu Drawer -->
-<div
-  id="mobile-menu"
-  class="fixed top-16 left-0 right-0 bottom-0 z-[9999] opacity-0 invisible transition-opacity duration-300 aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
-  aria-hidden="true"
-  data-mobile-menu
->
-  <!-- Overlay -->
+  <!-- Mobile Menu Drawer -->
   <div
-    class="absolute inset-0 bg-black/50"
-    data-menu-overlay
-  ></div>
+    id="mobile-menu"
+    class="absolute inset-0 top-16 z-[9999] h-screen w-screen opacity-0 invisible transition-opacity duration-300 aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
+    aria-hidden="true"
+    data-mobile-menu
+  >
+    <!-- Overlay -->
+    <div
+      class="absolute inset-0 bg-black/50"
+      data-menu-overlay
+    ></div>
 
-  <!-- Menu Content -->
-  <div class="absolute inset-y-0 left-0 w-full max-w-sm bg-[var(--color-background-default)] flex flex-col transform -translate-x-full transition-transform duration-300 aria-[hidden=false]:translate-x-0 shadow-lg">
-    <!-- Navigation -->
-    <nav class="flex-1 py-6 overflow-y-auto" aria-label="{{ 'navigation.mobile' | t }}">
+    <!-- Menu Content -->
+    <nav class="w-full bg-[var(--color-background-default)] flex flex-col transform -translate-x-full  aria-[hidden=false]:translate-x-0 shadow-lg">
       {% if shop_menu and shop_menu.links.size > 0 %}
         <div class="mb-6">
           <ul class="list-none m-0 p-0">
@@ -103,7 +100,7 @@
       {% endif %}
     </nav>
   </div>
-</div>
+</nav>
 
 {% javascript %}
   class MobileMenu {
