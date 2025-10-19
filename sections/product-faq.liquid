@@ -20,19 +20,21 @@
       </p>
     {% endif %}
 
-    <div class="faq-accordion">
+    <div>
       {% for item in faq_data %}
-        <collapsible-item class="faq-item border-b border-gray-200 last:border-b-0 bg-white hover:border-gray-300 transition-colors">
+        <collapsible-item class="faq-item border-b border-red-500 last:border-b-0 transition-colors">
           <button
-            class="faq-question w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors px-1"
+            class="faq-question  cursor-pointer  outline-none w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-0"
             data-collapsible-trigger
             type="button"
           >
-            <span class="text-base font-medium text-black pr-4">{{ item.title }}</span>
-            {{ 'icon-plus.svg' | inline_asset_content }}
+            <span class="text-lg font-medium text-black pr-4">{{ item.title }}</span>
+            <div class="w-7 h-7 bg-blue-50 text-blue-800 rounded-full flex items-center justify-center [&>svg]:size-4">
+              {{ 'icon-plus.svg' | inline_asset_content }}
+            </div>
           </button>
           <div class="faq-answer" data-collapsible-content>
-            <div class="text-base text-gray-700 px-4 pb-4">
+            <div class=" text-gray-700 py-4">
               {{ item.answer }}
             </div>
           </div>
@@ -45,24 +47,6 @@
 </div>
 
 {% stylesheet %}
-  .faq-accordion {
-    max-width: 100%;
-  }
-
-  .faq-item {
-    transition: all 0.3s ease;
-  }
-
-  .faq-question {
-    cursor: pointer;
-    outline: none;
-  }
-
-  .faq-question:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-  }
-
   .faq-answer {
     max-height: 0;
     overflow: hidden;
@@ -71,16 +55,6 @@
 
   .faq-item.active .faq-answer {
     max-height: 500px;
-  }
-
-  @media (max-width: 768px) {
-    .faq-question span {
-      font-size: 14px;
-    }
-
-    .faq-answer .text-base {
-      font-size: 14px;
-    }
   }
 {% endstylesheet %}
 
