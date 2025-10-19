@@ -4,7 +4,7 @@
 
 <div class="container-small py-30">
   <div>
-    <h2 class="text-6xl uppercase font-bold text-black mb-4">FAQ</h2>
+    <h2 class="text-6xl uppercase font-bold text-black mb-4">{{ section.settings.title | default: 'FAQ' }}</h2>
 
     {% if section.settings.description != blank %}
       <p class="text-base text-gray-600 mb-8">
@@ -59,19 +59,13 @@
       "type": "text",
       "id": "title",
       "label": "FAQ title",
-      "default": "Frequently asked questions"
+      "default": "FAQ"
     },
     {
       "type": "richtext",
       "id": "description",
       "label": "FAQ description",
       "default": "<p>Got a less-frequently asked question?</p>"
-    },
-    {
-      "type": "text",
-      "id": "contact_email",
-      "label": "Contact email",
-      "default": "pitanja@kollagenboost.com"
     }
   ],
   "presets": [
