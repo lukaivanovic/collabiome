@@ -11,46 +11,53 @@
   assign headline = product.metafields.custom.headline.value
 -%}
 
-<div class="container mx-auto py-10 grid gap-10 lg:[grid-template-columns:1fr_700px]">
+<div class="w-full max-w-[1600px] !mx-auto px-0 md:px-6 py-10 grid gap-10 lg:[grid-template-columns:1fr_640px]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-  <div class="flex flex-col gap-3">
-    <div class="overflow-hidden relative rounded-2xl aspect-[1/1]">
-      <div class="embla embla-product flex overflow-hidden relative h-full" data-product-id="{{ product.id }}">
-        <div class="flex">
+  {% comment %} Product images {% endcomment %}
+  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden">
+    <div class="overflow-hidden relative rounded-2xl  w-full">
+      <div
+        class="embla embla-product flex overflow-hidden relative h-full"
+        data-product-id="{{ product.id }}"
+      >
+        <div class="flex bg-white">
           {% for image in product.images %}
-            <div class="embla__slide h-full">
+            <div class="embla__slide h-full w-full object-cover">
               {% render 'image', image: image %}
             </div>
           {% endfor %}
         </div>
 
-        <button
-          class="embla__prev absolute top-1/2 -translate-y-1/2 left-2 bg-white rounded-full z-2 p-1 text-black"
-          aria-label="Previous image"
-        >
-          {{ 'icon-chevron-left.svg' | inline_asset_content }}
-        </button>
+        <div class="absolute bottom-2 right-2">
+          <button
+            class="embla__prev  bg-black rounded-full z-2 p-1 text-white"
+            aria-label="Previous image"
+          >
+            {{ 'icon-chevron-left.svg' | inline_asset_content }}
+          </button>
 
-        <button
-          class="embla__next absolute top-1/2 -translate-y-1/2 right-2 bg-black rounded-full z-2 p-1 text-white"
-          aria-label="Next image"
-        >
-          {{ 'icon-chevron-right.svg' | inline_asset_content }}
-        </button>
+          <button
+            class="embla__next   bg-black rounded-full z-2 p-1 text-white"
+            aria-label="Next image"
+          >
+            {{ 'icon-chevron-right.svg' | inline_asset_content }}
+          </button>
+        </div>
       </div>
     </div>
 
     {%- if product.images.size > 1 -%}
-      <div class="embla-thumbs flex gap-2 overflow-x-auto">
+      <div class="embla-thumbs flex gap-2 ">
         {%- for image in product.images -%}
           <button
-            class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent transition-all hover:border-gray-300"
+            class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
             type="button"
             aria-label="View image {{ forloop.index }}"
+            data-active="false"
           >
             {% render 'image', image: image %}
           </button>
@@ -59,17 +66,22 @@
     {%- endif -%}
   </div>
 
-  <div class="flex flex-col gap-10 bg-white rounded-lg p-8">
-    <h1 class="text-3xl font-medium uppercase">{{ product.title }}</h1>
-    <p class="font-geist">{{ product.headline }}</p>
+  {% comment %} Product content {% endcomment %}
+  <div class="flex flex-col gap-10 bg-white rounded-lg p-8 md:p-6">
+    <div>
+      <h1 class="text-3xl font-medium uppercase">{{ product.title }}</h1>
+      <p class="font-geist">{{ headline }}</p>
+    </div>
 
     {% comment %} Buy form{% endcomment %}
     {% render 'buy-form', product: product, section_id: section.id %}
 
-    {% comment %} Buy form{% endcomment %}
+    {% comment %} Description {% endcomment %}
     <div>
       <h3 class="text-base uppercase">Description</h3>
-      <p class="font-geist">{{ product.content }}</p>
+      <div class="flex flex-col gap-2">
+        {{ product.description }}
+      </div>
     </div>
 
     {% comment %} Benefits icons {% endcomment %}
@@ -106,13 +118,13 @@
               data-collapsible-trigger
               type="button"
             >
-              <span class="accordion-title text-base font-medium text-primary">
+              <span class="accordion-title  font-medium text-primary">
                 {{- accordion_item.title | strip -}}
               </span>
               {{ 'icon-plus.svg' | inline_asset_content }}
             </button>
             <div class="accordion-content" data-collapsible-content>
-              <div class="accordion-content-inner px-4 pb-4 text-[15px] leading-[1.6] text-gray-600">
+              <div class=" px-4 pb-4 text-[15px] leading-[1.6] text-gray-600">
                 {{ accordion_item.content | metafield_tag }}
               </div>
             </div>
@@ -175,10 +187,6 @@
   }
 
   /* Thumbnail Styles */
-  .embla-thumbs__slide.is-active {
-    border-color: #000 !important;
-  }
-
   .embla-thumbs {
     scrollbar-width: thin;
     scrollbar-color: #ddd transparent;
@@ -256,11 +264,7 @@
         function updateThumbnails() {
           const selectedIndex = embla.selectedScrollSnap();
           thumbnails.forEach((thumb, index) => {
-            if (index === selectedIndex) {
-              thumb.classList.add('is-active');
-            } else {
-              thumb.classList.remove('is-active');
-            }
+            thumb.setAttribute('data-active', index === selectedIndex ? 'true' : 'false');
           });
         }
 
