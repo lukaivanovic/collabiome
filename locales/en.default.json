@@ -104,8 +104,12 @@
     "about": "About",
     "contact": "Contact",
     "menu_toggle": "Toggle navigation menu",
+    "open_menu": "Open navigation menu",
     "close_menu": "Close navigation menu",
-    "view_all": "View all"
+    "view_all": "View all",
+    "account": "Account",
+    "cart": "Cart",
+    "mobile": "Mobile navigation"
   },
   "accessibility": {
     "close": "Close",

@@ -1,190 +1,117 @@
-{% comment %}
-  Renders the mobile menu drawer
+{% doc %}
+  Mobile Navigation Menu
 
-  Accepts:
-  - menu: {Object} Link list object (required)
+  Renders a full-screen mobile menu drawer with overlay.
 
-  Usage:
-  {% render 'header-mobile-menu', menu: section.settings.menu %}
-{% endcomment %}
+  @param {object} shop_menu - Shop navigation menu (required)
+  @param {object} marketing_menu - Marketing/utility menu (optional)
 
-<!-- Mobile Menu Overlay -->
+  @example
+  {% render 'header-mobile-menu',
+    shop_menu: section.settings.shop_menu,
+    marketing_menu: section.settings.marketing_menu
+  %}
+{% enddoc %}
+
+{% liquid
+  assign shop_menu = shop_menu | default: empty
+  assign marketing_menu = marketing_menu | default: empty
+%}
+
+<!-- Mobile Header Bar -->
+<nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 flex items-center justify-between px-4">
+  <button
+    class="flex items-center justify-center p-2 rounded hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
+    aria-label="{{ 'navigation.open_menu' | t }}"
+    aria-expanded="false"
+    data-menu-toggle
+  >
+    {{ 'icon-menu.svg' | inline_asset_content }}
+  </button>
+
+  <div class="h-10">
+    <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      <img class="h-full w-auto" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
+    </a>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <a href="account" aria-label="{{ 'navigation.account' | t }}" class="flex items-center justify-center size-6">
+      {{ 'icon-account.svg' | inline_asset_content }}
+    </a>
+    <a
+      href="{{ routes.cart_url }}"
+      aria-label="{{ 'navigation.cart' | t }}"
+      aria-haspopup="drawer"
+      id="cart-icon-bubble"
+      class="flex items-center justify-center size-6"
+    >
+      {{ 'icon-cart.svg' | inline_asset_content }}
+    </a>
+  </div>
+</nav>
+
+<!-- Mobile Menu Drawer -->
 <div
   id="mobile-menu"
+  class="fixed top-16 left-0 right-0 bottom-0 z-[9999] opacity-0 invisible transition-opacity duration-300 aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
   aria-hidden="true"
   data-mobile-menu
 >
-  <div class="mobile-menu__overlay" data-menu-overlay></div>
-  <div class="mobile-menu__content">
-    <div class="mobile-menu__header">
-      <button
-        class="mobile-menu__close"
-        aria-label="{{ 'navigation.close_menu' | t }}"
-        data-menu-close
-      >
-        <span class="close-icon" aria-hidden="true">
-          <span class="close-icon__line"></span>
-          <span class="close-icon__line"></span>
-        </span>
-      </button>
-    </div>
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-black/50"
+    data-menu-overlay
+  ></div>
 
-    <nav class="mobile-menu__nav" aria-label="Mobile navigation">
-      <ul class="mobile-menu__list">
-        {% if shop_menu and shop_menu.links.size > 0 %}
-          {% for link in shop_menu.links %}
-            <li class="mobile-menu__item">
-              <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
-            </li>
-          {% endfor %}
-        {% endif %}
-      </ul>
+  <!-- Menu Content -->
+  <div class="absolute inset-y-0 left-0 w-full max-w-sm bg-[var(--color-background-default)] flex flex-col transform -translate-x-full transition-transform duration-300 aria-[hidden=false]:translate-x-0 shadow-lg">
+    <!-- Navigation -->
+    <nav class="flex-1 py-6 overflow-y-auto" aria-label="{{ 'navigation.mobile' | t }}">
+      {% if shop_menu and shop_menu.links.size > 0 %}
+        <div class="mb-6">
+          <ul class="list-none m-0 p-0">
+            {% for link in shop_menu.links %}
+              <li class="border-b border-black/5">
+                <a
+                  href="{{ link.url }}"
+                  class="block px-6 py-4 text-[var(--color-foreground)] no-underline text-lg font-medium hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-[-2px]"
+                >
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if marketing_menu and marketing_menu.links.size > 0 %}
+        <div class="px-6">
+          <ul class="list-none m-0 p-0 flex flex-col gap-2">
+            {% for link in marketing_menu.links %}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  class="block py-2 text-[var(--color-foreground)]/64 no-underline text-base hover:text-[var(--color-foreground)] focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
+                >
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </nav>
   </div>
 </div>
-
-{% stylesheet %}
-  /* Mobile Menu Overlay */
-  .mobile-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .mobile-menu[aria-hidden='false'] {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0 0 0 / 0.5);
-  }
-
-  .mobile-menu__content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-background-default);
-    transform: translateX(-100%);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mobile-menu[aria-hidden='false'] .mobile-menu__content {
-    transform: translateX(0);
-  }
-
-  .mobile-menu__header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-    border-bottom: 1px solid rgb(0 0 0 / 0.1);
-  }
-
-  .mobile-menu__close {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-  }
-
-  .mobile-menu__close:hover {
-    background-color: rgb(0 0 0 / 0.05);
-  }
-
-  .mobile-menu__close:focus {
-    outline: 2px solid var(--color-foreground);
-    outline-offset: 2px;
-  }
-
-  /* Close Icon */
-  .close-icon {
-    position: relative;
-    width: 20px;
-    height: 20px;
-  }
-
-  .close-icon__line {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-foreground);
-    transform-origin: center;
-  }
-
-  .close-icon__line:nth-child(1) {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-  .close-icon__line:nth-child(2) {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-
-  .mobile-menu__nav {
-    flex: 1;
-    padding: 2rem 0;
-  }
-
-  .mobile-menu__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .mobile-menu__item {
-    border-bottom: 1px solid rgb(0 0 0 / 0.05);
-  }
-
-  .mobile-menu__link {
-    display: block;
-    padding: 1rem 2rem;
-    color: var(--color-foreground);
-    text-decoration: none;
-    font-size: 1.125rem;
-    font-weight: 500;
-  }
-
-  .mobile-menu__link:hover {
-    background-color: rgb(0 0 0 / 0.05);
-    color: var(--color-foreground);
-  }
-
-  .mobile-menu__link:focus {
-    outline: 2px solid var(--color-foreground);
-    outline-offset: -2px;
-  }
-
-  /* Desktop - hide mobile menu */
-  @media (min-width: 768px) {
-    .mobile-menu {
-      display: none;
-    }
-  }
-{% endstylesheet %}
 
 {% javascript %}
   class MobileMenu {
     constructor() {
       this.menuToggle = document.querySelector('[data-menu-toggle]');
       this.mobileMenu = document.querySelector('[data-mobile-menu]');
+      this.menuContent = this.mobileMenu?.querySelector('.transform');
       this.menuOverlay = document.querySelector('[data-menu-overlay]');
-      this.menuClose = document.querySelector('[data-menu-close]');
       this.isOpen = false;
 
       this.init();
@@ -202,7 +129,6 @@
 
     bindEvents() {
       this.menuToggle.addEventListener('click', () => this.toggle());
-      this.menuClose.addEventListener('click', () => this.close());
       this.menuOverlay.addEventListener('click', () => this.close());
 
       // Close on escape key
@@ -218,6 +144,13 @@
           this.close();
         }
       });
+
+      // Close menu when clicking a link
+      this.mobileMenu.addEventListener('click', (e) => {
+        if (e.target.matches('a[href]')) {
+          this.close();
+        }
+      });
     }
 
     setupFocusManagement() {
@@ -226,7 +159,7 @@
         if (!this.isOpen) return;
 
         const focusableElements = this.mobileMenu.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          '[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
@@ -255,25 +188,20 @@
       this.isOpen = true;
       this.menuToggle.setAttribute('aria-expanded', 'true');
       this.mobileMenu.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-
-      // Focus first focusable element
-      const firstFocusable = this.mobileMenu.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (firstFocusable) {
-        firstFocusable.focus();
+      if (this.menuContent) {
+        this.menuContent.setAttribute('aria-hidden', 'false');
       }
+      document.body.style.overflow = 'hidden';
     }
 
     close() {
       this.isOpen = false;
       this.menuToggle.setAttribute('aria-expanded', 'false');
       this.mobileMenu.setAttribute('aria-hidden', 'true');
+      if (this.menuContent) {
+        this.menuContent.setAttribute('aria-hidden', 'true');
+      }
       document.body.style.overflow = '';
-
-      // Return focus to menu toggle
-      this.menuToggle.focus();
     }
   }
 
