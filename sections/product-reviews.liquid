@@ -27,123 +27,8 @@
       {{ product.metafields.judgeme.widget }}
     </div>
     <!-- End of Judge.me code -->
-
-    {% comment %}
-      Judge.me Review Widget
-      The Judge.me app automatically injects reviews here when installed
-    {% endcomment %}
-    <div
-      class="jdgm-widget jdgm-review-widget"
-      data-id="{{ product.id }}"
-      data-from="{{ section.settings.reviews_per_page }}"
-    >
-      {{ product.metafields.judgeme.widget }}
-    </div>
-
-    {% comment %}
-      Fallback message if Judge.me is not installed or no reviews exist
-    {% endcomment %}
-    <div class="reviews-fallback text-center py-8 text-gray-600">
-      <p class="text-base">{{ section.settings.no_reviews_text }}</p>
-      {% if section.settings.show_review_button %}
-        <a
-          href="#judgeme_product_reviews"
-          class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
-        >
-          {{ section.settings.review_button_text }}
-        </a>
-      {% endif %}
-    </div>
-
-    {% comment %}
-      Judge.me Review Form Widget
-      Allows customers to write reviews
-    {% endcomment %}
-    {% if section.settings.show_review_form %}
-      <div
-        class="jdgm-widget jdgm-write-review-widget mt-8"
-        data-id="{{ product.id }}"
-      >
-        {{ product.metafields.judgeme.badge }}
-      </div>
-    {% endif %}
   </div>
 </div>
-
-{% stylesheet %}
-  /* Hide fallback when Judge.me content loads */
-  .jdgm-widget:not(:empty) ~ .reviews-fallback {
-    display: none;
-  }
-
-  /* Judge.me widget customization */
-  .jdgm-widget {
-    font-family: inherit;
-  }
-
-  .jdgm-rev-widg {
-    border: none !important;
-  }
-
-  .jdgm-rev-widg__title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .jdgm-rev {
-    border-bottom: 1px solid #e5e7eb;
-    padding: 1.5rem 0;
-  }
-
-  .jdgm-rev:last-child {
-    border-bottom: none;
-  }
-
-  /* Star rating colors */
-  .jdgm-star {
-    color: #fbbf24;
-  }
-
-  /* Review form styling */
-  .jdgm-write-rev-link {
-    background-color: #000 !important;
-    color: #fff !important;
-    border-radius: 9999px !important;
-    padding: 0.75rem 1.5rem !important;
-    transition: background-color 0.2s;
-  }
-
-  .jdgm-write-rev-link:hover {
-    background-color: #1f2937 !important;
-  }
-
-  @media (max-width: 768px) {
-    .product-reviews .text-4xl {
-      font-size: 2rem;
-    }
-
-    .product-reviews .p-8 {
-      padding: 1.5rem;
-    }
-  }
-{% endstylesheet %}
-
-{% javascript %}
-  document.addEventListener('DOMContentLoaded', function () {
-    // Initialize Judge.me widgets if the library is loaded
-    if (typeof judgeme !== 'undefined' && judgeme.widgets) {
-      judgeme.widgets.forEach(function (widget) {
-        widget.init();
-      });
-    }
-
-    // Listen for Judge.me loaded event
-    document.addEventListener('judgeme_widgets_loaded', function () {
-      console.log('Judge.me reviews loaded');
-    });
-  });
-{% endjavascript %}
 
 {% schema %}
 {
@@ -152,76 +37,11 @@
   "class": "section-product-reviews",
   "settings": [
     {
-      "type": "header",
-      "content": "Section settings"
-    },
-    {
-      "type": "text",
-      "id": "custom_id",
-      "label": "Custom section ID"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section title",
-      "default": "Customer Reviews"
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "Background color",
       "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Review settings"
-    },
-    {
-      "type": "range",
-      "id": "reviews_per_page",
-      "label": "Reviews per page",
-      "min": 5,
-      "max": 50,
-      "step": 5,
-      "default": 10
-    },
-    {
-      "type": "checkbox",
-      "id": "show_review_form",
-      "label": "Show review form",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Fallback content"
-    },
-    {
-      "type": "text",
-      "id": "no_reviews_text",
-      "label": "No reviews text",
-      "default": "No reviews yet. Be the first to review this product!"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_review_button",
-      "label": "Show write review button",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "review_button_text",
-      "label": "Review button text",
-      "default": "Write a Review"
     }
-  ],
-  "presets": [
-    {
-      "name": "Product Reviews",
-      "category": "Product"
-    }
-  ],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+  ]
 }
 {% endschema %}
