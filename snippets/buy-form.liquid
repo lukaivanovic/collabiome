@@ -32,42 +32,43 @@
     <div class="flex flex-col gap-4">
       {% unless product.has_only_default_variant %}
         <div class="flex flex-col gap-1">
+          {% comment %}  Variants {% endcomment %}
           {% for option in product.options_with_values %}
-            <div class="flex flex-col gap-2">
-              <label class=" text-sm font-medium text-gray-700">{{ option.name }}</label>
-              <div class="flex flex-col gap-2">
-                {% for value in option.values %}
-                  <label class="flex items-center justify-between border border-gray-200 rounded-lg p-3 gap-3 cursor-pointer">
-                    <div class="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="options[{{ option.name }}]"
-                        value="{{ value }}"
-                        {% if option.selected_value == value %}
-                          checked
-                        {% endif %}
-                        class="w-4 h-4 rounded-full border border-gray-300 cursor-pointer"
-                      >
-                      <span class="text-large  text-gray-700">{{ value }}</span>
-                    </div>
-                    <div class="flex items-center gap-3 self-end">
-                      <span class="text-base text-accent line-through">
-                        {{- value.variant.compare_at_price | money -}}
-                      </span>
-                      <span class="text-large">{{ value.variant.price | money }}</span>
-                    </div>
-                  </label>
-                {% endfor %}
-              </div>
+            {% comment %}  Options {% endcomment %}
+            <div class="flex flex-col border border-gray-200 rounded-lg">
+              {% for value in option.values %}
+                <label class="flex items-center justify-between px-4 py-4 gap-3 cursor-pointer{% unless forloop.last %} border-b border-gray-200{% endunless %}">
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="options[{{ option.name }}]"
+                      value="{{ value }}"
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
+                      class="w-4 h-4 rounded-full border border-gray-300 cursor-pointer"
+                    >
+                    <span class="text-large  text-primary">{{ value }}</span>
+                  </div>
+                  <div class="flex items-center gap-3 self-end">
+                    <span class="text-base text-accent line-through">
+                      {{- value.variant.compare_at_price | money -}}
+                    </span>
+                    <span class="text-large">{{ value.variant.price | money }}</span>
+                  </div>
+                </label>
+              {% endfor %}
             </div>
           {% endfor %}
         </div>
       {% endunless %}
 
-      <div class="quantity-selector flex items-center w-fit border border-gray-200 rounded-lg overflow-hidden">
+      {% comment %}  Quantity selector {% endcomment %}
+
+      <div class="flex items-center justify-between w-40 border border-gray-200 rounded-lg overflow-hidden px-2">
         <button
           type="button"
-          class="quantity-button quantity-button--minus flex items-center justify-center w-10 h-11 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
           aria-label="Decrease quantity"
           data-quantity-minus
         >
@@ -79,18 +80,20 @@
           name="quantity"
           value="1"
           min="1"
-          class="quantity-input w-16 h-11 text-center text-base font-medium outline-none [appearance:textfield] border-x border-gray-200"
+          class="quantity-input w-16 h-11 text-center text-base outline-none [appearance:none]"
           aria-label="Quantity"
         >
         <button
           type="button"
-          class="quantity-button quantity-button--plus flex items-center justify-center w-10 h-11 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
           aria-label="Increase quantity"
           data-quantity-plus
         >
           {{ 'icon-plus.svg' | inline_asset_content }}
         </button>
       </div>
+
+      {% comment %}  Submit button {% endcomment %}
 
       <div class="product-form__buttons">
         {%- liquid

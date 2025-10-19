@@ -10,7 +10,6 @@
 
 <!-- Mobile Menu Overlay -->
 <div
-  class="mobile-menu"
   id="mobile-menu"
   aria-hidden="true"
   data-mobile-menu
@@ -32,8 +31,8 @@
 
     <nav class="mobile-menu__nav" aria-label="Mobile navigation">
       <ul class="mobile-menu__list">
-        {% if menu and menu.links.size > 0 %}
-          {% for link in menu.links %}
+        {% if shop_menu and shop_menu.links.size > 0 %}
+          {% for link in shop_menu.links %}
             <li class="mobile-menu__item">
               <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
             </li>

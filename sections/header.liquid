@@ -1,153 +1,18 @@
 <header class="site-header full-width">
-  <div class="site-header__top container">
-    <div>
-      <div class="site-header__left">
-        <button
-          class="site-header__menu-toggle"
-          aria-label="{{ 'navigation.menu_toggle' | t }}"
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-          data-menu-toggle
-        >
-          {{ 'icon-menu.svg' | inline_asset_content }}
-        </button>
-      </div>
-    </div>
-    <div class="site-header__logo">
-      <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-        <img class="site-header__logo-image" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
-      </a>
-    </div>
-    <div class="site-header__icons" aria-label="Header actions">
-      <a href="account" aria-label="User" class="site-header__icon">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </a>
-      <a
-        href="{{ routes.cart_url }}"
-        aria-label="Cart"
-        aria-haspopup="drawer"
-        id="cart-icon-bubble"
-        class="site-header__icon"
-      >
-        {{ 'icon-cart.svg' | inline_asset_content }}
-      </a>
-    </div>
-  </div>
+  <header class="hidden md:block">
+    {% render 'header-desktop-nav',
+      shop_menu: section.settings.shop_menu,
+      marketing_menu: section.settings.marketing_menu
+    %}
+  </header>
 
-  {% render 'header-desktop-nav', menu: section.settings.menu %}
-
-  <div style="position: relative;">
-    {% render 'header-mobile-menu', menu: section.settings.menu %}
-  </div>
+  <header class="relative block md:hidden">
+    {% render 'header-mobile-menu',
+      shop_menu: section.settings.shop_menu,
+      marketing_menu: section.settings.marketing_menu
+    %}
+  </header>
 </header>
-
-{% stylesheet %}
-  .header-section {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: var(--color-background-default);
-    border-bottom: 1px solid rgb(0 0 0 / 0.12);
-    width: 100%;
-  }
-
-  .site-header a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-
-  .site-header__top {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    min-height: 72px;
-  }
-
-  .site-header__left {
-    display: flex;
-    align-items: center;
-  }
-
-  .site-header__logo {
-    justify-self: center;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
-  .site-header__logo-image {
-    height: 48px;
-    width: auto;
-  }
-
-  .site-header__icons {
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .site-header__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-  }
-
-  .site-header__icon:hover {
-    background-color: rgb(0 0 0 / 0.05);
-  }
-
-  .site-header__icon:focus {
-    outline: 2px solid var(--color-foreground);
-    outline-offset: 2px;
-  }
-
-  /* Mobile Menu Toggle Button */
-  .site-header__menu-toggle {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-  }
-
-  .site-header__menu-toggle:hover {
-    background-color: rgb(0 0 0 / 0.05);
-  }
-
-  .site-header__menu-toggle:focus {
-    outline: 2px solid var(--color-foreground);
-    outline-offset: 2px;
-  }
-
-  /* Mobile Styles - Show hamburger */
-  .site-header__left {
-    display: flex;
-    align-items: center;
-  }
-
-  .site-header__icons {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  /* Desktop Styles */
-  @media (min-width: 768px) {
-    .site-header__top {
-      grid-template-columns: 1fr auto 1fr;
-    }
-
-    .site-header__left {
-      display: none;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -156,8 +21,13 @@
   "settings": [
     {
       "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "id": "shop_menu",
+      "label": "Shop menu"
+    },
+    {
+      "type": "link_list",
+      "id": "marketing_menu",
+      "label": "Marketing menu"
     }
   ]
 }

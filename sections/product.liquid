@@ -76,11 +76,11 @@
         {%- for accordion_item in accordion_items -%}
           <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
             <button
-              class="accordion-trigger w-full flex items-center justify-between py-2 px-1 text-left hover:bg-gray-50"
+              class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
               data-collapsible-trigger
               type="button"
             >
-              <span class="accordion-title text-base font-medium text-gray-700">
+              <span class="accordion-title text-base font-medium text-primary">
                 {{- accordion_item.title | strip -}}
               </span>
               {{ 'icon-plus.svg' | inline_asset_content }}
@@ -181,11 +181,6 @@
     height: 20px;
   }
 
-  .quantity-input::-webkit-outer-spin-button,
-  .quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
   /* Accordion Styles (only the interactive parts kept) */
 
   .accordion-item.active .accordion-icon {

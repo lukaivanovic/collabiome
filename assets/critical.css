@@ -82,7 +82,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
+  font-weight: 500;
   font-family: "Red Hat Display", sans-serif;
 }
 
@@ -102,7 +102,7 @@ p:empty {
 
 /** Theme styles below */
 body {
-  font-family: "Red Hat Display", sans-serif;
+  font-family: "Geist", sans-serif;
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-size: 0.875rem;
@@ -149,7 +149,6 @@ body {
 
 button {
   border: none;
-  padding: 0;
   cursor: pointer;
 }
 
@@ -390,4 +389,10 @@ button {
 .visually-hidden--inline {
   margin: 0;
   height: 1em;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
