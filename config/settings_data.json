@@ -21,7 +21,14 @@
     "gradient1": "linear-gradient(57deg, rgba(219, 234, 229, 1), rgba(237, 225, 215, 1) 50%, rgba(246, 180, 202, 1) 100%)",
     "gradient2": "linear-gradient(119deg, rgba(162, 238, 255, 1), rgba(180, 206, 255, 1) 30%, rgba(212, 185, 255, 1) 100%)",
     "gradient3": "linear-gradient(57deg, rgba(249, 119, 255, 1) 8%, rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)",
+    "cart_type": "drawer",
     "content_for_index": [],
-    "cart_type": "drawer"
+    "blocks": {
+      "10641372206048101839": {
+        "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-global-embed/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   }
 }
