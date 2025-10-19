@@ -182,11 +182,31 @@ if (!customElements.get("product-form")) {
         optionInputs.forEach((input) => {
           input.addEventListener("change", () => {
             this.updateVariantSelection();
+            this.updateOptionStyles();
           });
         });
 
-        // Initial variant selection
+        // Add click handlers to labels to stop propagation to parent elements
+        const optionLabels = this.form.querySelectorAll("[data-option-label]");
+        optionLabels.forEach((label) => {
+          label.addEventListener("click", (e) => {
+            // Don't prevent default (let the radio input work)
+            // Only stop propagation to prevent bubbling to parent elements
+            e.stopPropagation();
+
+            // Manually trigger the associated radio input
+            const input = label.querySelector('input[type="radio"]');
+            if (input && !input.checked) {
+              input.checked = true;
+              // Manually trigger change event
+              input.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+          });
+        });
+
+        // Initial variant selection and styling
         this.updateVariantSelection();
+        this.updateOptionStyles();
       }
 
       updateVariantSelection() {
@@ -247,8 +267,16 @@ if (!customElements.get("product-form")) {
           this.submitButtonText.textContent = "Sold out";
         } else {
           this.submitButton.disabled = false;
-          this.submitButtonText.textContent = "Add to cart";
+          const formattedPrice = this.formatMoney(variant.price);
+          this.submitButtonText.textContent = `Add to cart - ${formattedPrice}`;
         }
+      }
+
+      formatMoney(cents) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(cents / 100);
       }
 
       updatePriceDisplay(variant) {
@@ -355,6 +383,15 @@ if (!customElements.get("product-form")) {
         if (!this.product || !variantId) return null;
 
         return this.product.variants.find((v) => v.id == variantId) || null;
+      }
+
+      updateOptionStyles() {
+        const optionLabels = this.form.querySelectorAll("[data-option-label]");
+
+        optionLabels.forEach((label) => {
+          const input = label.querySelector('input[type="radio"]');
+          label.setAttribute("data-selected", input && input.checked);
+        });
       }
     }
   );

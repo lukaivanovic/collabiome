@@ -31,71 +31,39 @@
     >
     <div class="flex flex-col gap-4">
       {% unless product.has_only_default_variant %}
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-row gap-2">
           {% comment %}  Variants {% endcomment %}
           {% for option in product.options_with_values %}
             {% comment %}  Options {% endcomment %}
-            <div class="flex flex-col border border-gray-200 rounded-lg">
+            <div class="flex flex-row ">
               {% for value in option.values %}
-                <label class="flex items-center justify-between px-4 py-4 gap-3 cursor-pointer{% unless forloop.last %} border-b border-gray-200{% endunless %}">
-                  <div class="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="options[{{ option.name }}]"
-                      value="{{ value }}"
-                      {% if option.selected_value == value %}
-                        checked
-                      {% endif %}
-                      class="w-4 h-4 rounded-full border border-gray-300 cursor-pointer"
-                    >
-                    <span class="text-large  text-primary">{{ value }}</span>
-                  </div>
-                  <div class="flex items-center gap-3 self-end">
-                    <span class="text-base text-accent line-through">
-                      {{- value.variant.compare_at_price | money -}}
-                    </span>
-                    <span class="text-large">{{ value.variant.price | money }}</span>
-                  </div>
+                <label
+                  for="options[{{ option.name }}]-{{ forloop.index }}"
+                  class="variant-option flex items-center p-2 gap-2 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-400 data-[selected=true]:border-primary data-[selected=true]:bg-primary/5 data-[selected=true]:border-2"
+                  data-option-label
+                  {% if option.selected_value == value %}
+                    data-selected="true"
+                  {% else %}
+                    data-selected="false"
+                  {% endif %}
+                >
+                  <input
+                    type="radio"
+                    id="options[{{ option.name }}]-{{ forloop.index }}"
+                    name="options[{{ option.name }}]"
+                    value="{{ value }}"
+                    {% if option.selected_value == value %}
+                      checked
+                    {% endif %}
+                    class="sr-only"
+                  >
+                  <span class="text-large text-primary">{{ value }}</span>
                 </label>
               {% endfor %}
             </div>
           {% endfor %}
         </div>
       {% endunless %}
-
-      {% comment %}  Quantity selector {% endcomment %}
-
-      {% comment %}
-        <div class="flex items-center justify-between w-40 border border-gray-200 rounded-lg overflow-hidden px-2">
-          <button
-            type="button"
-            class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
-            aria-label="Decrease quantity"
-            data-quantity-minus
-          >
-            {{ 'icon-minus.svg' | inline_asset_content }}
-          </button>
-          <input
-            type="number"
-            id="quantity-{{ section_id | default: 'main' }}"
-            name="quantity"
-            value="1"
-            min="1"
-            class="quantity-input w-16 h-11 text-center text-base outline-none [appearance:none]"
-            aria-label="Quantity"
-          >
-          <button
-            type="button"
-            class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
-            aria-label="Increase quantity"
-            data-quantity-plus
-          >
-            {{ 'icon-plus.svg' | inline_asset_content }}
-          </button>
-        </div>
-      {% endcomment %}
-
-      {% comment %}  Submit button {% endcomment %}
 
       <div class="product-form__buttons">
         {%- liquid
@@ -125,7 +93,7 @@
             {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
               {{ 'products.product.sold_out' | t }}
             {%- else -%}
-              {{ 'products.product.add_to_cart' | t }}
+              {{ 'products.product.add_to_cart' | t }} - {{ product.selected_or_first_available_variant.price | money }}
             {%- endif -%}
           </span>
           {% comment %} {%- render 'loading-spinner' -%} {% endcomment %}
