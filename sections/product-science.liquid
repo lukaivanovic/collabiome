@@ -1,16 +1,18 @@
 {%- liquid
-  assign science = product.metafields.custom.science.value
+  assign science_title = product.metafields.custom.science_title.value
+  assign science_description = product.metafields.custom.science_description.value
+  assign science_studies = product.metafields.custom.science_studies.value
 -%}
 
 <div class="container-small text-center py-30">
-  <h2 class="text-4xl uppercase font-medium">{{ science.title | default: 'Science' }}</h2>
+  <h2 class="text-4xl uppercase font-medium">{{ science_title | default: 'Science' }}</h2>
 
-  {% if science.description %}
-    <p class="text-base opacity-70 mt-2">{{ science.description }}</p>
+  {% if science_description %}
+    <p class="text-base opacity-70 mt-2">{{ science_description }}</p>
   {% endif %}
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-    {% for study in science.studies %}
+    {% for study in science_studies %}
       <div class="bg-gray-100 rounded-xl p-6 text-center">
         {% if study.title %}
           <div class="text-5xl font-bold text-blue-600 mb-2">{{ study.title }}</div>
@@ -32,13 +34,6 @@
 {
   "name": "Product Science",
   "tag": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title"
-    }
-  ],
   "presets": [
     {
       "name": "Product Science",
