@@ -4,36 +4,38 @@
   assign science_studies = product.metafields.custom.science_studies.value
 -%}
 
-<div class="container-small text-center py-30">
-  <h2 class="text-4xl uppercase font-medium">{{ science_title | default: 'Science' }}</h2>
+<div class="container text-center py-30 text-white">
+  <div class="bg-blue-950 rounded-3xl p-6">
+    <h2 class="text-4xl uppercase font-medium">{{ science_title | default: 'Science' }}</h2>
 
-  {% if science_description %}
-    <p class="text-base opacity-70 mt-2">{{ science_description }}</p>
-  {% endif %}
+    {% if science_description %}
+      <p class="text-base opacity-70 mt-2">{{ science_description }}</p>
+    {% endif %}
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-    {% for study in science_studies %}
-      <div class="bg-gray-100 rounded-xl p-6 text-center">
-        {% if study.title %}
-          <div class="text-5xl font-bold text-blue-600 mb-2">{{ study.title }}</div>
-        {% endif %}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+      {% for study in science_studies %}
+        <div class="bg-gray-100 rounded-xl p-6 text-center">
+          {% if study.title %}
+            <div class="text-5xl font-bold text-blue-600 mb-2">{{ study.title }}</div>
+          {% endif %}
 
-        {% if study.description %}
-          <p class="text-sm mb-4">{{ study.description }}</p>
-        {% endif %}
+          {% if study.description %}
+            <p class="text-sm mb-4">{{ study.description }}</p>
+          {% endif %}
 
-        {% if study.reference_link.url %}
-          <a
-            href="{{ study.reference_link.url }}"
-            class="text-xs text-gray-500 underline"
-            target="_blank"
-            rel="noopener"
-          >
-            {{ study.reference_link.text | default: 'Read Study' }}
-          </a>
-        {% endif %}
-      </div>
-    {% endfor %}
+          {% if study.reference_link.url %}
+            <a
+              href="{{ study.reference_link.url }}"
+              class="text-xs text-gray-500 underline"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ study.reference_link.text | default: 'Read Study' }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 

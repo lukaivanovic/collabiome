@@ -9,14 +9,41 @@
     <p class="text-base opacity-70 mt-2">{{ ingredients.description }}</p>
   {% endif %}
 
-  <div class="grid grid-cols-2 gap-4 pt-12">
-    {% for ingredient in ingredients %}
-      <div class="flex items-center justify-center flex-col gap-4">
-        {% render 'image', image: ingredient.image, class: 'rounded-xl' %}
-        <h3>{{ ingredient.name }}</h3>
+  {%- liquid
+    assign other_ingredients = ''
+    assign other_ingredients_count = 0
+  -%}
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
+    {% for ingredient in ingredients limit: 3 %}
+      <div class="ingredient-card">
+        {% render 'image', image: ingredient.image, class: 'rounded-3xl' %}
+        <div class="ingredient-card__content">
+          <h3 class="text-xl font-medium">{{ ingredient.name }}</h3>
+          <p class="text-neutral-700">{{ ingredient.description }}</p>
+        </div>
       </div>
     {% endfor %}
   </div>
+
+  {% for ingredient in ingredients %}
+    {% if forloop.index > 3 %}
+      {%- liquid
+        if other_ingredients_count > 0
+          assign other_ingredients = other_ingredients | append: ', '
+        endif
+        assign other_ingredients = other_ingredients | append: ingredient.name
+        assign other_ingredients_count = other_ingredients_count | plus: 1
+      -%}
+    {% endif %}
+  {% endfor %}
+
+  {% if other_ingredients != '' %}
+    <div class="h-px bg-neutral-300"></div>
+    <div class="mt-20">
+      <p>{{ other_ingredients }}</p>
+    </div>
+  {% endif %}
 </div>
 
 {% schema %}
