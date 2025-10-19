@@ -53,15 +53,26 @@
       "type": "product-reviews",
       "name": "Product Reviews",
       "settings": {
-        "custom_id": "",
-        "title": "Customer Reviews",
-        "background_color": "#ffffff",
-        "reviews_per_page": 10,
-        "show_review_form": true,
-        "no_reviews_text": "No reviews yet. Be the first to review this product!",
-        "show_review_button": true,
-        "review_button_text": "Write a Review"
+        "background_color": "#ffffff"
       }
+    },
+    "17608911194ced151f": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_AF39gB": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_AF39gB"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -71,6 +82,7 @@
     "product_comparison_YHCngK",
     "product_before_after_RheAtk",
     "product_faq_jmHdaa",
-    "product_reviews_APUjTe"
+    "product_reviews_APUjTe",
+    "17608911194ced151f"
   ]
 }
