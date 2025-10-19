@@ -4,15 +4,15 @@
 
 <div class="container-small py-30">
   <div>
-    <h2 class="text-6xl uppercase font-bold text-black mb-4">{{ section.settings.title | default: 'FAQ' }}</h2>
+    <h2 class="text-6xl uppercase font-bold text-black mb-8">{{ section.settings.title | default: 'FAQ' }}</h2>
 
     {% if section.settings.description != blank %}
-      <p class="text-base text-gray-600 mb-8">
+      <p class=" text-neutral-700">
         {{ section.settings.description }}
       </p>
     {% endif %}
 
-    <div>
+    <div class="mt-12">
       {% for item in faq_data %}
         <collapsible-item class="block faq-item border-b border-blue-100 last:border-b-0 transition-colors">
           <button
