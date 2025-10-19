@@ -1009,6 +1009,9 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
+  .py-5 {
+    padding-block: calc(var(--spacing) * 5);
+  }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
@@ -1249,6 +1252,16 @@
   .outline-none {
     --tw-outline-style: none;
     outline-style: none;
+  }
+  .group-has-\[aria-expanded\=true\]\:rotate-90 {
+    &:is(:where(.group):has(*:is(aria-expanded=true)) *) {
+      rotate: 90deg;
+    }
+  }
+  .group-has-\[aria-expanded\=true\]\:rotate-180 {
+    &:is(:where(.group):has(*:is(aria-expanded=true)) *) {
+      rotate: 180deg;
+    }
   }
   .last\:border-b-0 {
     &:last-child {

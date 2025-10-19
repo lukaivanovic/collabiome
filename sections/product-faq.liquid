@@ -4,8 +4,8 @@
 
 <div class="container-small py-30">
   <div class="flex flex-col gap-12">
-    <div class="flex flex-col gap-4">
-      <h2 class="text-6xl uppercase font-bold text-black mb-8">{{ section.settings.title | default: 'FAQ' }}</h2>
+    <div class="flex flex-col gap-3">
+      <h2 class="text-6xl uppercase font-bold text-black">{{ section.settings.title | default: 'FAQ' }}</h2>
 
       {% if section.settings.description != blank %}
         <p class=" text-neutral-700">
@@ -18,12 +18,12 @@
       {% for item in faq_data %}
         <collapsible-item class="block faq-item border-b border-blue-100 last:border-b-0 transition-colors">
           <button
-            class="faq-question  cursor-pointer  outline-none w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-0"
+            class="group faq-question cursor-pointer outline-none w-full text-left py-5 flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-0"
             data-collapsible-trigger
             type="button"
           >
-            <span class="text-lg font-medium text-black pr-4">{{ item.title }}</span>
-            <div class="w-7 h-7 bg-blue-50 text-blue-800 rounded-full flex items-center justify-center [&>svg]:size-4">
+            <span class="text-xl font-red-hat font-medium text-black pr-4">{{ item.title }}</span>
+            <div class="w-7 h-7 bg-blue-50 text-blue-800 rounded-full flex items-center justify-center [&>svg]:size-4 group-has-[aria-expanded=true]:rotate-90 transition-transform duration-300">
               {{ 'icon-plus.svg' | inline_asset_content }}
             </div>
           </button>
