@@ -8,14 +8,16 @@
 {%- liquid
   assign benefits = product.metafields.custom.benefits.value
   assign accordion_items = product.metafields.custom.accordion.value
+  assign headline = product.metafields.custom.headline.value
 -%}
 
-<div class="container mx-auto px-4">
+<div class="container mx-auto py-10 grid gap-10 lg:[grid-template-columns:1fr_700px]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-  <div class="product-container grid gap-10 pt-10 lg:[grid-template-columns:1fr_512px]">
+
+  <div class="flex flex-col gap-3">
     <div class="overflow-hidden relative rounded-2xl aspect-[1/1]">
       <div class="embla embla-product flex overflow-hidden relative h-full" data-product-id="{{ product.id }}">
         <div class="flex">
@@ -42,37 +44,61 @@
       </div>
     </div>
 
-    <div class="product-content flex flex-col gap-5 py-6">
-      <h1 class="text-3xl font-medium">{{ product.title }}</h1>
-      <div class="product-price-wrapper flex items-center gap-3">
-        <span class="product-price text-2xl font-semibold text-black" data-base-price="{{ product.price }}">
-          {{- product.price | money -}}
-        </span>
-        {% if product.compare_at_price > product.price %}
-          <span class="product-price-compare text-lg text-gray-500 line-through">
-            {{- product.compare_at_price | money -}}
-          </span>
-        {% endif %}
+    {%- if product.images.size > 1 -%}
+      <div class="embla-thumbs flex gap-2 overflow-x-auto">
+        {%- for image in product.images -%}
+          <button
+            class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent transition-all hover:border-gray-300"
+            type="button"
+            aria-label="View image {{ forloop.index }}"
+          >
+            {% render 'image', image: image %}
+          </button>
+        {%- endfor -%}
       </div>
+    {%- endif -%}
+  </div>
 
-      {% render 'buy-form', product: product, section_id: section.id %}
+  <div class="flex flex-col gap-10 bg-white rounded-lg p-8">
+    <h1 class="text-3xl font-medium uppercase">{{ product.title }}</h1>
+    <p class="font-geist">{{ product.headline }}</p>
 
+    {% comment %} Buy form{% endcomment %}
+    {% render 'buy-form', product: product, section_id: section.id %}
+
+    {% comment %} Buy form{% endcomment %}
+    <div>
+      <h3 class="text-base uppercase">Description</h3>
       <p class="font-geist">{{ product.content }}</p>
+    </div>
 
+    {% comment %} Benefits icons {% endcomment %}
+    <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+      {%- for benefit in benefits -%}
+        <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
+          {{ 'icon-check.svg' | inline_asset_content }}
+          <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {% comment %} Benefits {% endcomment %}
+    <div class="flex flex-col gap-4">
       <h3 class="text-base uppercase">Benefits</h3>
-
-      <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+      <div class="flex flex-col  gap-2">
         {%- for benefit in benefits -%}
-          <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
+          <div class="flex items-center gap-3 bg-white rounded-lg">
             {{ 'icon-check.svg' | inline_asset_content }}
-            <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
+            <span>{{ benefit | strip }}</span>
           </div>
         {%- endfor -%}
       </div>
+    </div>
 
+    {% comment %} Accordions {% endcomment %}
+    <div class="flex flex-col gap-4">
       <h3 class="text-base uppercase">More information</h3>
-
-      <div class="product-accordion flex flex-col gap-3 mt-2">
+      <div class="product-accordion flex flex-col">
         {%- for accordion_item in accordion_items -%}
           <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
             <button
@@ -93,9 +119,9 @@
           </collapsible-item>
         {%- endfor -%}
       </div>
-
-      <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
     </div>
+
+    <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
   </div>
 </div>
 
@@ -148,37 +174,27 @@
     min-width: 0;
   }
 
-  .product-carousel__nav {
-    position: absolute;
-    top: 50%;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    transform: translateY(-50%);
+  /* Thumbnail Styles */
+  .embla-thumbs__slide.is-active {
+    border-color: #000 !important;
   }
 
-  .product-carousel__nav:hover:not(:disabled) {
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  .embla-thumbs {
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
   }
 
-  .product-carousel__nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+  .embla-thumbs::-webkit-scrollbar {
+    height: 6px;
   }
 
-  .product-carousel__nav svg {
-    width: 20px;
-    height: 20px;
+  .embla-thumbs::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .embla-thumbs::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
   }
 
   /* Accordion Styles (only the interactive parts kept) */
@@ -216,6 +232,9 @@
         const prevButton = carouselElement.querySelector('.embla__prev');
         const nextButton = carouselElement.querySelector('.embla__next');
 
+        // Thumbnail elements
+        const thumbnails = document.querySelectorAll('.embla-thumbs__slide');
+
         if (prevButton) {
           prevButton.addEventListener('click', embla.scrollPrev);
         }
@@ -233,11 +252,34 @@
           }
         }
 
-        // Initial button state
-        updateButtons();
+        // Update thumbnail active state
+        function updateThumbnails() {
+          const selectedIndex = embla.selectedScrollSnap();
+          thumbnails.forEach((thumb, index) => {
+            if (index === selectedIndex) {
+              thumb.classList.add('is-active');
+            } else {
+              thumb.classList.remove('is-active');
+            }
+          });
+        }
 
-        // Update buttons on scroll
-        embla.on('select', updateButtons);
+        // Add click handlers to thumbnails
+        thumbnails.forEach((thumb, index) => {
+          thumb.addEventListener('click', () => {
+            embla.scrollTo(index);
+          });
+        });
+
+        // Initial states
+        updateButtons();
+        updateThumbnails();
+
+        // Update on scroll
+        embla.on('select', () => {
+          updateButtons();
+          updateThumbnails();
+        });
       }
     };
     document.head.appendChild(script);
@@ -248,6 +290,7 @@
 {
   "name": "t:general.product",
   "settings": [],
+  "class": "bg-pink",
   "disabled_on": {
     "groups": ["header", "footer"]
   }

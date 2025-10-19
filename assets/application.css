@@ -662,6 +662,9 @@
   .border-neutral-300 {
     border-color: var(--color-neutral-300);
   }
+  .border-transparent {
+    border-color: transparent;
+  }
   .bg-\[var\(--color-background-default\)\] {
     background-color: var(--color-background-default);
   }
@@ -783,6 +786,9 @@
   }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
+  }
+  .py-10 {
+    padding-block: calc(var(--spacing) * 10);
   }
   .py-30 {
     padding-block: calc(var(--spacing) * 30);
@@ -1105,6 +1111,16 @@
   .lg\:\[grid-template-columns\:1fr_512px\] {
     @media (width >= 64rem) {
       grid-template-columns: 1fr 512px;
+    }
+  }
+  .lg\:\[grid-template-columns\:1fr_700px\] {
+    @media (width >= 64rem) {
+      grid-template-columns: 1fr 700px;
+    }
+  }
+  .lg\:\[grid-template-columns\:1fr_800px\] {
+    @media (width >= 64rem) {
+      grid-template-columns: 1fr 800px;
     }
   }
 }
