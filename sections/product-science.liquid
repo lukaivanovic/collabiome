@@ -12,27 +12,20 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
     {% for study in science.studies %}
       <div class="bg-gray-100 rounded-xl p-6 text-center">
-        {% if study.percentage %}
-          <div class="text-5xl font-bold text-blue-600 mb-2">{{ study.percentage }}%</div>
+        {% if study.title %}
+          <div class="text-5xl font-bold text-blue-600 mb-2">{{ study.title }}</div>
         {% endif %}
 
-        {% if study.statement %}
-          <p class="text-sm mb-4">{{ study.statement }}</p>
+        {% if study.description %}
+          <p class="text-sm mb-4">{{ study.description }}</p>
         {% endif %}
 
-        {% if study.reference %}
-          <p class="text-xs text-gray-500 underline">{{ study.reference }}</p>
+        {% if study.link %}
+          <a href="{{ study.link }}" class="text-xs text-gray-500 underline">{{ study.link }}</a>
         {% endif %}
       </div>
     {% endfor %}
   </div>
-
-  {% if science.results %}
-    <div class="mt-12">
-      <h3 class="text-2xl font-medium mb-4">{{ science.results.title | default: 'Tangible Results' }}</h3>
-      <p class="text-base opacity-70">{{ science.results.description }}</p>
-    </div>
-  {% endif %}
 </div>
 
 {% schema %}
