@@ -22,8 +22,15 @@
           <p class="text-sm mb-4">{{ study.description }}</p>
         {% endif %}
 
-        {% if study.link %}
-          <a href="{{ study.link }}" class="text-xs text-gray-500 underline">{{ study.link }}</a>
+        {% if study.reference_link.url %}
+          <a
+            href="{{ study.reference_link.url }}"
+            class="text-xs text-gray-500 underline"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ study.reference_link.text | default: 'Read Study' }}
+          </a>
         {% endif %}
       </div>
     {% endfor %}
