@@ -65,33 +65,35 @@
 
       {% comment %}  Quantity selector {% endcomment %}
 
-      <div class="flex items-center justify-between w-40 border border-gray-200 rounded-lg overflow-hidden px-2">
-        <button
-          type="button"
-          class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
-          aria-label="Decrease quantity"
-          data-quantity-minus
-        >
-          {{ 'icon-minus.svg' | inline_asset_content }}
-        </button>
-        <input
-          type="number"
-          id="quantity-{{ section_id | default: 'main' }}"
-          name="quantity"
-          value="1"
-          min="1"
-          class="quantity-input w-16 h-11 text-center text-base outline-none [appearance:none]"
-          aria-label="Quantity"
-        >
-        <button
-          type="button"
-          class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
-          aria-label="Increase quantity"
-          data-quantity-plus
-        >
-          {{ 'icon-plus.svg' | inline_asset_content }}
-        </button>
-      </div>
+      {% comment %}
+        <div class="flex items-center justify-between w-40 border border-gray-200 rounded-lg overflow-hidden px-2">
+          <button
+            type="button"
+            class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
+            aria-label="Decrease quantity"
+            data-quantity-minus
+          >
+            {{ 'icon-minus.svg' | inline_asset_content }}
+          </button>
+          <input
+            type="number"
+            id="quantity-{{ section_id | default: 'main' }}"
+            name="quantity"
+            value="1"
+            min="1"
+            class="quantity-input w-16 h-11 text-center text-base outline-none [appearance:none]"
+            aria-label="Quantity"
+          >
+          <button
+            type="button"
+            class="flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed rounded-full"
+            aria-label="Increase quantity"
+            data-quantity-plus
+          >
+            {{ 'icon-plus.svg' | inline_asset_content }}
+          </button>
+        </div>
+      {% endcomment %}
 
       {% comment %}  Submit button {% endcomment %}
 

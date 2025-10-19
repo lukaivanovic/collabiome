@@ -347,6 +347,15 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-50 {
+    height: calc(var(--spacing) * 50);
+  }
+  .h-70 {
+    height: calc(var(--spacing) * 70);
+  }
+  .h-92 {
+    height: calc(var(--spacing) * 92);
+  }
   .h-full {
     height: 100%;
   }
@@ -594,8 +603,14 @@
   .mask-repeat {
     mask-repeat: repeat;
   }
+  .object-contain {
+    object-fit: contain;
+  }
   .object-cover {
     object-fit: cover;
+  }
+  .object-fill {
+    object-fit: fill;
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
