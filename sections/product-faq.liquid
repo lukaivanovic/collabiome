@@ -4,25 +4,17 @@
 
 <div class="container-small py-30">
   <div>
-    <h2 class="text-4xl uppercase font-bold text-black mb-4">FAQ</h2>
+    <h2 class="text-6xl uppercase font-bold text-black mb-4">FAQ</h2>
 
-    {% if faq_data.description %}
+    {% if section.settings.description != blank %}
       <p class="text-base text-gray-600 mb-8">
-        {{ faq_data.description }}
-        <a href="mailto:pitanja@kollagenboost.com" class="underline">pitanja@kollagenboost.com</a>
-        {% comment %} {{ 'sections.product_faq.contact_text' | t }} {% endcomment %}
-      </p>
-    {% else %}
-      <p class="text-base text-gray-600 mb-8">
-        {% comment %} {{ 'sections.product_faq.default_description' | t }} {% endcomment %}
-        <a href="mailto:pitanja@kollagenboost.com" class="underline">pitanja@kollagenboost.com</a>
-        {% comment %} {{ 'sections.product_faq.contact_text' | t }} {% endcomment %}
+        {{ section.settings.description }}
       </p>
     {% endif %}
 
     <div>
       {% for item in faq_data %}
-        <collapsible-item class="faq-item border-b border-red-500 last:border-b-0 transition-colors">
+        <collapsible-item class="block faq-item border-b border-blue-100 last:border-b-0 transition-colors">
           <button
             class="faq-question  cursor-pointer  outline-none w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-0"
             data-collapsible-trigger

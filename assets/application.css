@@ -818,6 +818,9 @@
       border-color: color-mix(in oklab, var(--color-black) 12%, transparent);
     }
   }
+  .border-blue-100 {
+    border-color: var(--color-blue-100);
+  }
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
