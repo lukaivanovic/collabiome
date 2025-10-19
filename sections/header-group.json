@@ -24,7 +24,8 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu"
+        "shop_menu": "main-navigation-shop-menu",
+        "marketing_menu": "main-navigation-marketing-menu"
       }
     }
   },
