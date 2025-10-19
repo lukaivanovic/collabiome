@@ -35,6 +35,13 @@
         "title": ""
       }
     },
+    "product_science_nfrBbH": {
+      "type": "product-science",
+      "name": "Product Science",
+      "settings": {
+        "title": "test"
+      }
+    },
     "product_comparison_YHCngK": {
       "type": "product-comparison",
       "name": "Product Comparison",
@@ -61,13 +68,6 @@
       "name": "Product Reviews",
       "settings": {
         "background_color": "#ffffff"
-      }
-    },
-    "product_science_nfrBbH": {
-      "type": "product-science",
-      "name": "Product Science",
-      "settings": {
-        "title": ""
       }
     }
   },
