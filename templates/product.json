@@ -21,6 +21,13 @@
         "description": ""
       }
     },
+    "product_benefits_FBPNrK": {
+      "type": "product-benefits",
+      "name": "Product Benefits",
+      "settings": {
+        "title": ""
+      }
+    },
     "product_ingredients_Mhp7N3": {
       "type": "product-ingredients",
       "name": "Product Ingredients",
@@ -55,12 +62,21 @@
       "settings": {
         "background_color": "#ffffff"
       }
+    },
+    "product_science_nfrBbH": {
+      "type": "product-science",
+      "name": "Product Science",
+      "settings": {
+        "title": ""
+      }
     }
   },
   "order": [
     "main",
     "product_upsell_RFhKfi",
+    "product_benefits_FBPNrK",
     "product_ingredients_Mhp7N3",
+    "product_science_nfrBbH",
     "product_comparison_YHCngK",
     "product_before_after_RheAtk",
     "product_faq_jmHdaa",
