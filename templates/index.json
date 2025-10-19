@@ -29,29 +29,36 @@
     },
     "products_row_jCXxrb": {
       "type": "products-row",
+      "blocks": {
+        "products-row-rotating-text": {
+          "type": "rotating-text",
+          "static": true,
+          "settings": {
+            "text": "Rotating text",
+            "speed": 60,
+            "gap": 24
+          },
+          "blocks": {}
+        }
+      },
       "name": "t:general.product",
       "settings": {
         "title": "Featured products",
         "products": [
-          "kolagen-boost",
-          "kolagen-exclusive",
-          "kolagen-nutriage",
-          "exfolijant-kompleks-vocnih-kiselina-i-enzima",
           "essential-collagen-gel-za-ciscenje-lica",
           "complete-collagen-nocna-krema",
           "collagen-anti-pollution-moisturizer",
-          "collagen-biome-moistureizer-spf30-multibiome-complex"
+          "collagen-biome-moistureizer-spf30-multibiome-complex",
+          "respiracijski-ultra-hidratantni-serum",
+          "vitamin-c-serum-preko-15-vitamina-c",
+          "paket-za-posebnu-dnevnu-rutinu-koze-1"
         ]
       }
     },
     "rotating_text_DjiUXD": {
       "type": "rotating-text",
       "name": "t:general.rotating_text",
-      "settings": {
-        "text": "Friends don’t let friends dehydrate.          #DrinkBrilliantly           How many sips does it take to be amazing?",
-        "speed": 60,
-        "gap": 60
-      }
+      "settings": {}
     },
     "home_categories_WxnjY8": {
       "type": "home-categories",
