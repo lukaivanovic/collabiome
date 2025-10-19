@@ -13,6 +13,14 @@
       "type": "product",
       "settings": {}
     },
+    "product_upsell_RFhKfi": {
+      "type": "product-upsell",
+      "name": "Product Upsell",
+      "settings": {
+        "title": "Complete Your Routine",
+        "description": ""
+      }
+    },
     "product_ingredients_Mhp7N3": {
       "type": "product-ingredients",
       "name": "Product Ingredients",
@@ -31,12 +39,23 @@
       "type": "product-before-after",
       "name": "Product Before & After",
       "settings": {}
+    },
+    "product_faq_jmHdaa": {
+      "type": "product-faq",
+      "name": "Product FAQ",
+      "settings": {
+        "title": "Frequently asked questions",
+        "description": "Got a less-frequently asked question?",
+        "contact_email": "pitanja@kollagenboost.com"
+      }
     }
   },
   "order": [
     "main",
+    "product_upsell_RFhKfi",
     "product_ingredients_Mhp7N3",
     "product_comparison_YHCngK",
-    "product_before_after_RheAtk"
+    "product_before_after_RheAtk",
+    "product_faq_jmHdaa"
   ]
 }
