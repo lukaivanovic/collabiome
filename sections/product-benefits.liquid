@@ -6,10 +6,10 @@
 -%}
 
 <div class="container py-30">
-  <div class="bg-blue grid grid-cols-2">
+  <div class="bg-blue grid grid-cols-2 rounded-3xl overflow-hidden">
     {% if benefits_image %}
       <div class="mb-12">
-        {% render 'image', image: benefits_image, class: 'rounded-xl w-full' %}
+        {% render 'image', image: benefits_image, class: 'rounded-3xl w-full' %}
       </div>
     {% endif %}
 
