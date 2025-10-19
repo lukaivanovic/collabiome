@@ -38,9 +38,7 @@
     "product_science_nfrBbH": {
       "type": "product-science",
       "name": "Product Science",
-      "settings": {
-        "title": "test"
-      }
+      "settings": {}
     },
     "product_comparison_YHCngK": {
       "type": "product-comparison",
@@ -58,9 +56,8 @@
       "type": "product-faq",
       "name": "Product FAQ",
       "settings": {
-        "title": "Frequently asked questions",
-        "description": "Got a less-frequently asked question?",
-        "contact_email": "pitanja@kollagenboost.com"
+        "title": "FAQ",
+        "description": "<p>Got a less-frequently asked question? Contact us at <a href=\"/policies/privacy-policy\" title=\"Privacy Policy\">pitanja@kolagenboost.hr</a></p>"
       }
     },
     "product_reviews_APUjTe": {
