@@ -1,21 +1,21 @@
-<footer class="container">
-  <div class="footer__top">
-    <div class="footer__logo">
+<footer class="container flex flex-col gap-8 mt-24 mb-8">
+  <div class="footer__top flex gap-8 items-start justify-between flex-wrap">
+    <div class="footer__logo font-semibold order-1 p-2 mr-20">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
     </div>
 
-    <div class="footer__menus">
+    <div class="footer__menus flex flex-row flex-1 gap-16 order-2">
       <div class="footer__menu">
         {% if section.settings.menu1_title != blank %}
           <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu1_title | escape }}</h4>
         {% endif %}
         {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
-          <ul class="footer__menu-list">
+          <ul class="footer__menu-list list-none p-0 m-0 flex flex-col gap-3 mt-3">
             {% for link in section.settings.menu1.links %}
               <li class="footer__menu-item">
-                <a href="{{ link.url }}">{{ link.title }}</a>
+                <a href="{{ link.url }}" class="no-underline">{{ link.title }}</a>
               </li>
             {% endfor %}
           </ul>
@@ -26,10 +26,10 @@
           <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu2_title | escape }}</h4>
         {% endif %}
         {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
-          <ul class="footer__menu-list">
+          <ul class="footer__menu-list list-none p-0 m-0 flex flex-col gap-3 mt-3">
             {% for link in section.settings.menu2.links %}
               <li class="footer__menu-item">
-                <a href="{{ link.url }}">{{ link.title }}</a>
+                <a href="{{ link.url }}" class="no-underline">{{ link.title }}</a>
               </li>
             {% endfor %}
           </ul>
@@ -173,19 +173,7 @@
   .footer__newsletter form {
     width: 100%;
   }
-  .newsletter-card {
-    border-radius: 1rem;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
   .newsletter-card__bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: 100% 100%;
@@ -193,133 +181,8 @@
     mask-repeat: no-repeat;
     mask-size: 100% 100%;
   }
-  .newsletter-card__bg-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .newsletter-card__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    width: 100%;
-    min-height: 160px;
-    gap: 1rem;
-  }
-  .newsletter-card__header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .newsletter-card__description {
-    margin: 0;
-    font-size: 0.875rem;
-    opacity: 0.9;
-  }
-  .newsletter-card__controls {
-    display: flex;
-    gap: 0.5rem;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 50px;
-    padding: 4px;
-    align-items: center;
-    width: 100%;
-  }
-  .newsletter-card input[type='email'] {
-    flex: 1 1 auto;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 50px;
-    background: transparent;
-    color: #fff;
-    outline: none;
-    width: 100%;
-  }
-  .newsletter-card input[type='email']::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .newsletter-card button[type='submit'] {
-    padding: 0.5rem;
-    border: none;
-    border-radius: 50%;
-    background: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-  }
-  .newsletter-card button[type='submit']:hover {
-    background: #f5f5f5;
-  }
-  .newsletter-card button[type='submit'] svg {
-    width: 16px;
-    height: 16px;
-    color: #000;
-  }
-  .footer__bottom {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 8rem;
-  }
-  .footer__bottom-left {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .footer__social {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .footer__social-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-  }
-  .footer__bottom-menu {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-left: 1rem;
-  }
-  .footer__bottom-menu a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  .footer__payment {
-    display: inline-flex;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    vertical-align: middle;
-  }
-  .footer__copyright {
-    justify-self: end;
-    text-align: right;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
   @media (max-width: 800px) {
     .footer__top {
-      flex-direction: column;
-    }
-    .footer__left {
       flex-direction: column;
     }
     .footer__bottom {
@@ -328,26 +191,17 @@
       gap: 1.5rem;
     }
     .footer__bottom-left {
-      display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: start;
-      gap: 1rem;
     }
     .footer__newsletter {
       width: 100%;
       flex: 0 0 auto;
       order: 1;
     }
-    .footer__social {
-      justify-content: flex-start;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.75rem;
-    }
     .footer__bottom-menu {
       margin-left: 0;
-      justify-content: flex-start;
       flex-direction: column;
       gap: 0.5rem;
     }

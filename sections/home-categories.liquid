@@ -2,11 +2,11 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<div class="home-categories container">
+<div class="home-categories container relative py-[120px]">
   {% if section.settings.title != blank %}
     <h2 class="text-xl uppercase">{{ section.settings.title | escape }}</h2>
   {% endif %}
-  <div class="home-categories__grid">
+  <div class="home-categories__grid grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12">
     {% for block in section.blocks %}
       <a href="{{ block.settings.button_url }}" class="home-categories__card" {{ block.shopify_attributes }}>
         {% if block.settings.image != blank %}
@@ -16,12 +16,12 @@
           <div class="home-categories__media home-categories__media--placeholder"></div>
         {% endif %}
         <div class="home-categories__overlay"></div>
-        <div class="home-categories__content">
+        <div class="home-categories__content absolute left-0 right-0 bottom-0 p-6 text-white grid gap-1">
           {% if block.settings.title != blank %}
             <h3 class="text-2xl uppercase font-medium wrap-pretty">{{ block.settings.title | escape }}</h3>
           {% endif %}
           {% if block.settings.description != blank %}
-            <p class="home-categories__description">{{ block.settings.description | escape }}</p>
+            <p class="home-categories__description m-0 mb-4">{{ block.settings.description | escape }}</p>
           {% endif %}
           {% if block.settings.button_text != blank %}
             <div class="button-white">
@@ -34,9 +34,9 @@
       <article class="home-categories__card">
         <div class="home-categories__media home-categories__media--placeholder"></div>
         <div class="home-categories__overlay"></div>
-        <div class="home-categories__content">
-          <h3 class="home-categories__title">{{ 'sections.home_categories.default_card_title' | t }}</h3>
-          <p class="home-categories__description">{{ 'sections.home_categories.default_card_description' | t }}</p>
+        <div class="home-categories__content absolute left-0 right-0 bottom-0 p-6 text-white grid gap-1">
+          <h3 class="home-categories__title text-2xl uppercase font-medium">{{ 'sections.home_categories.default_card_title' | t }}</h3>
+          <p class="home-categories__description m-0 mb-4">{{ 'sections.home_categories.default_card_description' | t }}</p>
         </div>
       </article>
     {% endfor %}
@@ -44,25 +44,6 @@
 </div>
 
 {% stylesheet %}
-  .home-categories {
-    position: relative;
-    padding-top: 120px;
-    padding-bottom: 120px;
-  }
-
-  .home-categories__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  @media (max-width: 600px) {
-    .home-categories__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
   .home-categories__card {
     position: relative;
     aspect-ratio: 2 / 3;
@@ -96,20 +77,7 @@
     pointer-events: none;
   }
 
-  .home-categories__content {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.5rem;
-    color: #fff;
-    display: grid;
-    gap: 0.25rem;
-  }
-
   .home-categories__description {
-    margin: 0;
-    margin-bottom: 1rem;
     color: color-mix(in srgb, white 80%, transparent);
   }
 {% endstylesheet %}
