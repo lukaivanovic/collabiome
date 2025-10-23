@@ -2,7 +2,7 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<div class="hero full-width" id="hero-{{ section_id }}">
+<div class="hero full-width relative" id="hero-{{ section_id }}">
   <div class="hero__media" aria-hidden="true">
     {% if section.settings.video != blank %}
       {{
@@ -30,19 +30,19 @@
     ></div>
   </div>
 
-  <div class="container hero__inner" style="--hero-height: 80svh;">
-    <div class="hero__content" data-align="bottom-left">
+  <div class="container hero__inner relative z-10 flex items-end" style="--hero-height: 80svh;">
+    <div class="hero__content grid gap-3 max-w-[min(64ch,90%)] md:max-w-[min(64ch,90%)] pb-12" data-align="bottom-left">
       {% if section.settings.kicker != blank %}
-        <p class="hero__kicker text-white">{{ section.settings.kicker | escape }}</p>
+        <p class="hero__kicker text-white text-[0.8125rem] tracking-wider uppercase opacity-90">{{ section.settings.kicker | escape }}</p>
       {% endif %}
       {% if section.settings.title != blank %}
-        <h1 class="text-6xl uppercase text-white">{{ section.settings.title | escape }}</h1>
+        <h1 class="text-6xl uppercase text-white leading-tight font-bold">{{ section.settings.title | escape }}</h1>
       {% endif %}
       {% if section.settings.description != blank %}
-        <div class="hero__description">{{ section.settings.description }}</div>
+        <div class="hero__description text-base">{{ section.settings.description }}</div>
       {% endif %}
       {% if section.settings.show_buttons %}
-        <div class="hero__buttons">
+        <div class="hero__buttons flex gap-4 flex-wrap mt-4">
           {% if section.settings.button_label != blank and section.settings.button_link != blank %}
             <a class="button button-recupera text-white" href="{{ section.settings.button_link }}">
               {{- section.settings.button_label | escape -}}
@@ -60,10 +60,6 @@
 </div>
 
 {% stylesheet %}
-  .hero {
-    position: relative;
-  }
-
   .hero__media {
     position: absolute;
     inset: 0;
@@ -96,50 +92,11 @@
   }
 
   .hero__inner {
-    position: relative;
-    z-index: 1;
     min-height: var(--hero-height, 80svh);
-    display: flex;
-    align-items: end;
-  }
-
-  .hero__content {
-    display: grid;
-    gap: 0.75rem;
-    max-width: min(64ch, 90%);
-    color: var(--color-hero-foreground, var(--color-foreground));
-    padding-bottom: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .hero__content {
-      max-width: 100%;
-    }
-  }
-
-  .hero__kicker {
-    font-size: 0.8125rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0.9;
-  }
-
-  .hero__title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.1;
-    font-weight: 700;
   }
 
   .hero__description {
-    font-size: 1rem;
     color: color-mix(in srgb, white 80%, transparent);
-  }
-
-  .hero__buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
   }
 
   .hero__button--secondary {

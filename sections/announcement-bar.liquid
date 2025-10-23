@@ -9,41 +9,45 @@
   id="{{ section_id }}"
   class="{{ section_class }} announcement-bar full-width"
   role="region"
-  aria-label="Announcement bar"
+  aria-label="{{ 'general.announcement_bar' | t }}"
 >
-  <div class="announcement-bar__inner text-sm">
+  <div class="announcement-bar__inner text-sm py-2">
     {% if section.settings.link_url != blank %}
-      <a class="announcement-bar__link" href="{{ section.settings.link_url }}">
+      <a class="announcement-bar__link flex items-center justify-center gap-2 no-underline w-full" href="{{ section.settings.link_url }}">
         {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-          <div class="announcement-bar__countdown" data-target="{{ section.settings.countdown_target | escape }}">
+          <div class="announcement-bar__countdown flex items-center justify-center gap-2" data-target="{{ section.settings.countdown_target | escape }}">
             {% if section.settings.message != blank %}
-              <span class="announcement-bar__text">{{ section.settings.message }}</span>
+              <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
             {% endif %}
-            <span class="announcement-bar__timer" aria-live="polite">
-              Ends in
-              <span class="time days">00</span>d <span class="time hours">00</span>h
-              <span class="time minutes">00</span>m <span class="time seconds">00</span>s
+            <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
+              {{ 'general.countdown.ends_in' | t }}
+              <span class="time days">00</span>{{ 'general.time.d_short' | t }}
+              <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
+              <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
+              <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
             </span>
           </div>
         {% else %}
-          <span class="announcement-bar__text">{{ section.settings.message }}</span>
+          <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
         {% endif %}
-        <span class="announcement-bar__cta">Click here</span>
+        <span class="announcement-bar__cta underline">{{ 'general.click_here' | t }}</span>
       </a>
     {% else %}
       {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-        <div class="announcement-bar__countdown" data-target="{{ section.settings.countdown_target | escape }}">
+        <div class="announcement-bar__countdown flex items-center justify-center gap-2" data-target="{{ section.settings.countdown_target | escape }}">
           {% if section.settings.message != blank %}
-            <span class="announcement-bar__text">{{ section.settings.message }}</span>
+            <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
           {% endif %}
-          <span class="announcement-bar__timer" aria-live="polite">
-            Ends in
-            <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-            <span class="time seconds">00</span>s
+          <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
+            {{ 'general.countdown.ends_in' | t }}
+            <span class="time days">00</span>{{ 'general.time.d_short' | t }}
+            <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
+            <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
+            <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
           </span>
         </div>
       {% else %}
-        <p class="announcement-bar__text">{{ section.settings.message }}</p>
+        <p class="announcement-bar__text text-center m-0">{{ section.settings.message }}</p>
       {% endif %}
     {% endif %}
   </div>
@@ -52,42 +56,21 @@
 {% stylesheet %}
   .announcement-bar {
     width: 100%;
-    background: var(--color-gradient-recupera, linear-gradient(to right, #f6f6f7, #e0e0e0));
+    background: var(--color-gradient1, linear-gradient(to right, #f6f6f7, #e0e0e0));
     color: var(--color-foreground, #202223);
   }
   .announcement-bar__inner {
     display: grid;
     grid-template-columns: var(--content-grid);
-    padding: 8px 0;
   }
   .announcement-bar__text {
     grid-column: 1 / -1;
-    text-align: center;
-    margin: 0;
   }
   .announcement-bar__link {
     grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: inherit;
-    text-decoration: none;
-    width: 100%;
-  }
-  .announcement-bar__cta {
-    text-decoration: underline;
   }
   .announcement-bar__countdown {
     grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .announcement-bar__timer {
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
   }
 {% endstylesheet %}
 

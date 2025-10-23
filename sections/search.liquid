@@ -5,6 +5,7 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/search
 {% endcomment %}
 
+<<<<<<< Current (Your changes)
 <h1>Search</h1>
 
 <form action="{{ routes.search_url }}" method="get" role="search">
@@ -23,44 +24,59 @@
     <p>No results found for {{ search.terms }}</p>
   {% else %}
     <p>{{ search.results_count }} results found for {{ search.terms }}</p>
+=======
+<div class="container max-w-4xl py-8">
+  <h1 class="text-4xl font-bold mb-8">{{ 'search.title' | t }}</h1>
 
-    <div class="search-results">
-      {% paginate search.results by 20 %}
-        {% # Search result items may be an article, a page, or a product. %}
-        {% for result in search.results %}
-          <div class="search-result">
-            {% assign featured_image = result.featured_image | default: result.image %}
-            {% if featured_image %}
-              {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
-            {% endif %}
-            <div class="search-result__content">
-              <p>
-                {{ result.title | link_to: result.url }}
-                {% if result.price %}
-                  {{ result.price | money_with_currency }}
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
+  <form action="{{ routes.search_url }}" method="get" role="search" class="mb-8">
+    <div class="flex gap-2">
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'search.placeholder' | t }}"
+        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      >
+      <button type="submit" class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">{{ 'search.submit' | t }}</button>
     </div>
-  {% endif %}
-{% endif %}
+  </form>
 
-{% stylesheet %}
-  .search-results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  .search-results .prev,
-  .search-results .page,
-  .search-results .next {
-    grid-column: 1 / -1;
-  }
-{% endstylesheet %}
+  {% if search.performed %}
+    {% if search.results_count == 0 %}
+      <p class="text-center text-gray-600 py-8">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+    {% else %}
+      <p class="text-sm text-gray-600 mb-6">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+>>>>>>> Incoming (Background Agent changes)
+
+      <div class="search-results">
+        {% paginate search.results by 20 %}
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 mb-8">
+            {% for result in search.results %}
+              <div class="search-result bg-white rounded-lg shadow-sm overflow-hidden">
+                {% assign featured_image = result.featured_image | default: result.image %}
+                {% if featured_image %}
+                  {% render 'image', class: 'w-full aspect-square object-cover', image: featured_image, url: result.url, width: 400 %}
+                {% endif %}
+                <div class="p-4">
+                  <p class="font-medium mb-2">
+                    {{ result.title | link_to: result.url, class: 'hover:text-gray-600' }}
+                  </p>
+                  {% if result.price %}
+                    <p class="text-sm font-semibold">{{ result.price | money_with_currency }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="col-span-full">
+            {{ paginate | default_pagination }}
+          </div>
+        {% endpaginate %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
 
 {% schema %}
 {
