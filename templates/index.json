@@ -11,7 +11,7 @@
   "sections": {
     "hero_fbajPp": {
       "type": "hero",
-      "name": "t:general.hero",
+      "name": "Hero",
       "settings": {
         "kicker": "",
         "title": "Purify. track. Self-cleaning.",
@@ -41,7 +41,7 @@
           "blocks": {}
         }
       },
-      "name": "t:general.product",
+      "name": "Product",
       "settings": {
         "title": "Featured products",
         "products": [
@@ -54,7 +54,7 @@
     },
     "rotating_text_DjiUXD": {
       "type": "rotating-text",
-      "name": "t:general.rotating_text",
+      "name": "Rotating text",
       "settings": {}
     },
     "home_categories_WxnjY8": {
@@ -96,7 +96,7 @@
         "category_card_xYa3bG",
         "category_card_CqrEwP"
       ],
-      "name": "t:sections.home_categories.name",
+      "name": "Home categories",
       "settings": {
         "title": "Home categories"
       }
@@ -143,14 +143,14 @@
         "press_testimonial_gBrx7a",
         "text_testimonial_EHhNie"
       ],
-      "name": "t:sections.testimonial_grid.name",
+      "name": "Testimonial grid",
       "settings": {
         "title": "See what our customers say"
       }
     },
     "blog_grid_GDkRNF": {
       "type": "blog-grid",
-      "name": "t:sections.blog_grid.name",
+      "name": "Blog posts",
       "settings": {
         "heading": "Latest articles",
         "blog": "news",

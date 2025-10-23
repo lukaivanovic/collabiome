@@ -91,9 +91,9 @@
             {%- if product.selected_or_first_available_variant == null -%}
               Unavailable
             {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-              {{ 'products.product.sold_out' | t }}
+              Sold out
             {%- else -%}
-              {{ 'products.product.add_to_cart' | t }} - {{ product.selected_or_first_available_variant.price | money }}
+              Add to cart - {{ product.selected_or_first_available_variant.price | money }}
             {%- endif -%}
           </span>
           {% comment %} {%- render 'loading-spinner' -%} {% endcomment %}

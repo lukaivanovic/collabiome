@@ -46,35 +46,35 @@
 
 {% schema %}
 {
-  "name": "t:general.group",
+  "name": "Group",
   "blocks": [{ "type": "@theme" }],
   "settings": [
     {
       "type": "select",
       "id": "layout_direction",
-      "label": "t:labels.layout_direction",
+      "label": "Layout direction",
       "default": "group--vertical",
       "options": [
-        { "value": "group--horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "group--vertical", "label": "t:options.direction.vertical" }
+        { "value": "group--horizontal", "label": "Horizontal" },
+        { "value": "group--vertical", "label": "Vertical" }
       ]
     },
     {
       "visible_if": "{{ block.settings.layout_direction == 'group--vertical' }}",
       "type": "select",
       "id": "alignment",
-      "label": "t:labels.alignment",
+      "label": "Alignment",
       "default": "flex-start",
       "options": [
-        { "value": "flex-start", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "flex-end", "label": "t:options.alignment.right" }
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
       ]
     },
     {
       "type": "range",
       "id": "padding",
-      "label": "t:labels.padding",
+      "label": "Padding",
       "default": 0,
       "min": 0,
       "max": 200,
@@ -84,8 +84,8 @@
   ],
   "presets": [
     {
-      "name": "t:general.column",
-      "category": "t:general.layout",
+      "name": "Column",
+      "category": "Layout",
       "settings": {
         "layout_direction": "group--vertical",
         "alignment": "flex-start",
@@ -93,8 +93,8 @@
       }
     },
     {
-      "name": "t:general.row",
-      "category": "t:general.layout",
+      "name": "Row",
+      "category": "Layout",
       "settings": {
         "layout_direction": "group--horizontal",
         "padding": 0

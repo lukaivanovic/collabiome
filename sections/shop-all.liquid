@@ -18,7 +18,7 @@
       <h1 class="shop-all__title text-3xl uppercase">{{ selected_collection.title }}</h1>
       <p class="shop-all__count text-sm opacity-75">
         {{ total_products }}
-        {{ 'general.products' | t }}
+        Products
       </p>
     </div>
   {% endif %}
@@ -42,7 +42,7 @@
             <h3 class="product-card__title text-base font-medium">{{ product.title | escape }}</h3>
             <p class="product-card__price">
               {% if product.price_varies %}
-                {{ 'products.price.from_price_html' | t: price: product.price_min | money }}
+                From {{ product.price_min | money }}
               {% else %}
                 {{ product.price | money }}
               {% endif %}
@@ -61,7 +61,7 @@
   {% if total_products > products_per_page %}
     <div class="shop-all__pagination">
       <button class="shop-all__load-more btn btn--secondary" data-products-per-page="{{ products_per_page }}">
-        {{ 'collections.general.load_more' | t }}
+        Load more products
       </button>
     </div>
   {% endif %}

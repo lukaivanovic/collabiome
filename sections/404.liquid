@@ -5,19 +5,19 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/404
 {% endcomment %}
 
-<h1>{{ '404.title' | t }}</h1>
+<h1>404</h1>
 
 <p>
-  {{ '404.not_found' | t }}
+  Page not found.
 </p>
 
 <a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
+  Back to shopping
 </a>
 
 {% schema %}
 {
-  "name": "t:general.404",
+  "name": "Not found",
   "settings": []
 }
 {% endschema %}

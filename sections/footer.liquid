@@ -58,7 +58,7 @@
         <div class="newsletter-card__content">
           <div class="newsletter-card__header">
             <h4 class="text-large text-white uppercase">
-              {{ 'general.newsletter.title' | t | default: 'Newsletter' }}
+              Newsletter
             </h4>
             {% if section.settings.newsletter_description != blank %}
               <p class="text-base text-white">
@@ -72,10 +72,10 @@
               <input
                 type="email"
                 name="contact[email]"
-                placeholder="{{ 'general.newsletter.placeholder' | t | default: 'Your email' }}"
+                placeholder="Your email"
                 required
               >
-              <button type="submit" aria-label="{{ 'general.newsletter.submit' | t | default: 'Subscribe' }}">
+              <button type="submit" aria-label="Subscribe">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -83,7 +83,7 @@
             </div>
             {% if form.posted_successfully? %}
               <p class="newsletter-card__success">
-                {{ 'general.newsletter.success' | t | default: 'Thanks for subscribing!' }}
+                Thanks for subscribing!
               </p>
             {% endif %}
             {% if form.errors %}
@@ -360,7 +360,7 @@
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Footer",
   "settings": [
     { "type": "text", "id": "menu1_title", "label": "Menu 1 title" },
     { "type": "link_list", "id": "menu1", "label": "Menu 1" },
