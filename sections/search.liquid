@@ -5,7 +5,7 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/search
 {% endcomment %}
 
-<h1>{{ 'search.title' | t }}</h1>
+<h1>Search</h1>
 
 <form action="{{ routes.search_url }}" method="get" role="search">
   <input
@@ -13,16 +13,16 @@
     size="50"
     name="q"
     value="{{ search.terms | escape }}"
-    placeholder="{{ 'search.placeholder' | t }}"
+    placeholder="Search articles, pages, or products"
   >
-  <button type="submit">{{ 'search.submit' | t }}</button>
+  <button type="submit">Search</button>
 </form>
 
 {% if search.performed %}
   {% if search.results_count == 0 %}
-    <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+    <p>No results found for {{ search.terms }}</p>
   {% else %}
-    <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+    <p>{{ search.results_count }} results found for {{ search.terms }}</p>
 
     <div class="search-results">
       {% paginate search.results by 20 %}
@@ -64,7 +64,7 @@
 
 {% schema %}
 {
-  "name": "t:general.search",
+  "name": "Search",
   "settings": []
 }
 {% endschema %}

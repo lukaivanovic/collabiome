@@ -22,7 +22,7 @@
 
     <button
       class="embla__prev absolute top-1/2 -translate-y-1/2 left-2 bg-white rounded-full z-2 p-1 text-black"
-      aria-label="{{ 'sections.products_row.previous_product' | t }}"
+      aria-label="Previous product"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -31,7 +31,7 @@
 
     <button
       class="embla__next absolute top-1/2 -translate-y-1/2 right-2 bg-black rounded-full z-2 p-1 text-white"
-      aria-label="{{ 'sections.products_row.next_product' | t }}"
+      aria-label="Next product"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -198,13 +198,13 @@
 
 {% schema %}
 {
-  "name": "t:general.product",
+  "name": "Product",
   "class": "products-row__section",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "t:labels.text", "default": "Featured products" },
-    { "type": "product_list", "id": "products", "label": "t:general.product", "limit": 24 }
+    { "type": "text", "id": "title", "label": "Text", "default": "Featured products" },
+    { "type": "product_list", "id": "products", "label": "Product", "limit": 24 }
   ],
-  "presets": [{ "name": "t:general.product", "category": "t:general.main" }]
+  "presets": [{ "name": "Product", "category": "Main" }]
 }
 {% endschema %}

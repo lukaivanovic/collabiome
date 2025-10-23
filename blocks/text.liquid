@@ -28,32 +28,32 @@
 
 {% schema %}
 {
-  "name": "t:general.text",
+  "name": "Text",
   "settings": [
     {
       "type": "text",
       "id": "text",
-      "label": "t:labels.text",
+      "label": "Text",
       "default": "Text"
     },
     {
       "type": "select",
       "id": "text_style",
-      "label": "t:labels.text_style",
+      "label": "Text style",
       "options": [
-        { "value": "text--title", "label": "t:options.text_style.title" },
-        { "value": "text--subtitle", "label": "t:options.text_style.subtitle" },
-        { "value": "text--normal", "label": "t:options.text_style.normal" }
+        { "value": "text--title", "label": "Title" },
+        { "value": "text--subtitle", "label": "Subtitle" },
+        { "value": "text--normal", "label": "Normal text" }
       ],
       "default": "text--title"
     },
     {
       "type": "text_alignment",
       "id": "alignment",
-      "label": "t:labels.alignment",
+      "label": "Alignment",
       "default": "left"
     }
   ],
-  "presets": [{ "name": "t:general.text" }]
+  "presets": [{ "name": "Text" }]
 }
 {% endschema %}
