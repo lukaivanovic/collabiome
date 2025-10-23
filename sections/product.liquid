@@ -138,6 +138,23 @@
 </div>
 
 {% stylesheet %}
+  .product-background {
+    background: linear-gradient(
+        0deg,
+        hsla(0, 0%, 100%, 1) 0%,
+        hsla(0, 0%, 100%, 0.79) 11%,
+        hsla(0, 0%, 100%, 0.6) 22%,
+        hsla(0, 0%, 100%, 0.44) 33%,
+        hsla(0, 0%, 100%, 0.31) 44%,
+        hsla(0, 0%, 100%, 0.2) 56%,
+        hsla(0, 0%, 100%, 0.11) 67%,
+        hsla(0, 0%, 100%, 0.05) 78%,
+        hsla(0, 0%, 100%, 0.01) 89%,
+        hsla(0, 0%, 100%, 0) 100%
+      ),
+      linear-gradient(86deg, #dbeae5 -1.58%, #ede1d7 49.21%, #f6b4ca 100%);
+  }
+
   .option-value input[type='radio'] {
     appearance: none;
     -webkit-appearance: none;
@@ -294,7 +311,7 @@
 {
   "name": "Product",
   "settings": [],
-  "class": "bg-pink",
+  "class": "product-background",
   "disabled_on": {
     "groups": ["header", "footer"]
   }

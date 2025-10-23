@@ -44,7 +44,7 @@
       {% if section.settings.show_buttons %}
         <div class="hero__buttons">
           {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-            <a class="button-recupera text-white" href="{{ section.settings.button_link }}">
+            <a class="button button-recupera text-white" href="{{ section.settings.button_link }}">
               {{- section.settings.button_label | escape -}}
             </a>
           {% endif %}

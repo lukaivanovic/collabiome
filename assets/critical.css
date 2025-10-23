@@ -304,6 +304,7 @@ button {
 
 .button-recupera {
   background: var(--color-gradient-recupera);
+  color: var(--color-foreground-default);
 }
 
 .button-recupera:hover {
