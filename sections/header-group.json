@@ -9,11 +9,11 @@
  */
 {
   "type": "header",
-  "name": "t:general.header",
+  "name": "Header",
   "sections": {
     "announcement_bar_PamLDR": {
       "type": "announcement-bar",
-      "name": "t:general.announcement_bar",
+      "name": "Announcement bar",
       "settings": {
         "message": "Free shipping on orders over $50",
         "link_url": "",

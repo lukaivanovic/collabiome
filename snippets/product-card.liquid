@@ -24,7 +24,7 @@
     <h3 class="text-large font-medium">{{ product.title | escape }}</h3>
     <p class="text-base font-regular">
       {% if product.price_varies %}
-        {{ 'products.price.from_price_html' | t: price: product.price_min | money }}
+        From {{ product.price_min | money }}
       {% else %}
         {{ product.price | money }}
       {% endif %}

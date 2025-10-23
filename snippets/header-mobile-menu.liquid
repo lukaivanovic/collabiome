@@ -22,7 +22,7 @@
 <nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 flex items-center justify-between px-4">
   <button
     class="flex items-center justify-center p-2 rounded hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
-    aria-label="{{ 'navigation.open_menu' | t }}"
+    aria-label="Open navigation menu"
     aria-expanded="false"
     data-menu-toggle
   >
@@ -36,12 +36,12 @@
   </div>
 
   <div class="flex items-center gap-4">
-    <a href="account" aria-label="{{ 'navigation.account' | t }}" class="flex items-center justify-center size-6">
+    <a href="account" aria-label="Account" class="flex items-center justify-center size-6">
       {{ 'icon-account.svg' | inline_asset_content }}
     </a>
     <a
       href="{{ routes.cart_url }}"
-      aria-label="{{ 'navigation.cart' | t }}"
+      aria-label="Cart"
       aria-haspopup="drawer"
       id="cart-icon-bubble"
       class="flex items-center justify-center size-6"
