@@ -9,12 +9,39 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "collections",
-      "settings": {}
+    "collection_preview_NKkd7T": {
+      "type": "collection-preview",
+      "name": "t:sections.collection_preview.name",
+      "settings": {
+        "collection": "dodaci-prehrani",
+        "heading": "Featured products",
+        "description": "",
+        "products_to_show": 3,
+        "show_button": true,
+        "button_text": "View all products",
+        "custom_id": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "collection_preview_fGW6Nf": {
+      "type": "collection-preview",
+      "name": "t:sections.collection_preview.name",
+      "settings": {
+        "collection": "kozmetika",
+        "heading": "Featured products",
+        "description": "",
+        "products_to_show": 3,
+        "show_button": true,
+        "button_text": "View all products",
+        "custom_id": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
-    "main"
+    "collection_preview_NKkd7T",
+    "collection_preview_fGW6Nf"
   ]
 }
