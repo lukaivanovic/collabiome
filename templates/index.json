@@ -103,7 +103,8 @@
       ],
       "name": "Home categories",
       "settings": {
-        "title": "Home categories"
+        "title": "Home categories",
+        "description": "Describe this category"
       }
     },
     "testimonial_grid_zcUike": {
@@ -150,7 +151,8 @@
       ],
       "name": "Testimonial grid",
       "settings": {
-        "title": "See what our customers say"
+        "title": "See what our customers say",
+        "description": "See why our customers keep choosing us time and time again."
       }
     },
     "blog_grid_GDkRNF": {
