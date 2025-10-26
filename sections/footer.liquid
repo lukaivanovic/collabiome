@@ -1,6 +1,6 @@
-<footer class="container flex flex-col gap-8 pt-24 pb-8">
+<footer class="container flex flex-col gap-16 md:gap-8 pt-24 pb-8">
   <div class="flex gap-8 items-start justify-between flex-wrap md:flex-col">
-    <div class="font-semibold order-1 p-2 mr-20 md:mr-0 md:order-1">
+    <div class=" order-1 p-2 mr-20 md:mr-0 md:order-1">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
@@ -9,10 +9,12 @@
     <div class="flex flex-row flex-1 gap-16 order-2 md:order-2">
       <div>
         {% if section.settings.menu1_title != blank %}
-          <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu1_title | escape }}</h4>
+          <h4 class="text-sm font-medium font-geist uppercase text-secondary">
+            {{ section.settings.menu1_title | escape }}
+          </h4>
         {% endif %}
         {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
-          <ul class="list-none p-0 m-0 flex flex-col gap-3 mt-3">
+          <ul class="list-none p-0 m-0 flex flex-col gap-3 pt-4">
             {% for link in section.settings.menu1.links %}
               <li>
                 <a href="{{ link.url }}" class="no-underline text-foreground hover:text-primary">{{ link.title }}</a>
@@ -23,10 +25,12 @@
       </div>
       <div>
         {% if section.settings.menu2_title != blank %}
-          <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu2_title | escape }}</h4>
+          <h4 class="text-sm font-medium font-geist uppercase text-secondary">
+            {{ section.settings.menu2_title | escape }}
+          </h4>
         {% endif %}
         {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
-          <ul class="list-none p-0 m-0 flex flex-col gap-3 mt-3">
+          <ul class="list-none p-0 m-0 flex flex-col gap-3 pt-4">
             {% for link in section.settings.menu2.links %}
               <li>
                 <a href="{{ link.url }}" class="no-underline text-foreground hover:text-primary">{{ link.title }}</a>
@@ -96,8 +100,8 @@
     </div>
   </div>
 
-  <div class="flex justify-between items-center md:flex-col md:items-start md:gap-6">
-    <div class="flex items-center gap-4 md:flex-col md:items-start md:gap-4">
+  <div class="flex flex-col gap-12 md:justify-between md:items-center md:flex-row">
+    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-4">
       <div class="flex gap-4">
         <a
           href="{{ section.settings.social_1 }}"
@@ -122,7 +126,7 @@
         </a>
       </div>
       {% if section.settings.bottom_menu %}
-        <div class="text-secondary text-sm flex gap-4 md:flex-col md:gap-2">
+        <div class="text-secondary text-sm flex flex-col gap-4 md:flex-row md:gap-2">
           {% for link in section.settings.bottom_menu.links %}
             {{ link.title | link_to: link.url }}
           {% endfor %}
