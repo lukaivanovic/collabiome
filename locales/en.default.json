@@ -28,54 +28,7 @@
     "update": "Update",
     "remove": "Remove"
   },
-  "gift_card": {
-    "add_to_apple_wallet": "Add to Apple Wallet",
-    "card": "Gift card",
-    "expired": "This gift card has expired",
-    "expires_on": "Expires on {{ expires_on }}",
-    "use_at_checkout": "Use this gift card at checkout"
-  },
-  "password": {
-    "title": "This shop is private",
-    "password": "Password",
-    "enter": "Enter"
-  },
-  "search": {
-    "title": "Search",
-    "placeholder": "Search articles, pages, or products",
-    "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
-  },
-  "general": {
-    "announcement_bar": "Announcement bar",
-    "countdown": {
-      "ends_in": "Ends in"
-    },
-    "time": {
-      "d_short": "d",
-      "h_short": "h",
-      "m_short": "m",
-      "s_short": "s"
-    },
-    "click_here": "Click here",
-    "products": "Products",
-    "continue_shopping": "Continue shopping",
-    "newsletter": {
-      "title": "Newsletter",
-      "placeholder": "Your email",
-      "submit": "Subscribe",
-      "success": "Thanks for subscribing!"
-    },
-    "blog_grid": {
-      "by_author": "By",
-      "read_more": "Read more",
-      "view_all": "View all",
-      "empty": "No articles yet."
-    }
-  },
-  "sections": {
-  },
+  "sections": {},
   "products": {
     "product": {
       "quantity": {
