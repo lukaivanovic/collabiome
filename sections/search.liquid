@@ -5,28 +5,8 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/search
 {% endcomment %}
 
-<<<<<<< Current (Your changes)
-<h1>Search</h1>
-
-<form action="{{ routes.search_url }}" method="get" role="search">
-  <input
-    type="search"
-    size="50"
-    name="q"
-    value="{{ search.terms | escape }}"
-    placeholder="Search articles, pages, or products"
-  >
-  <button type="submit">Search</button>
-</form>
-
-{% if search.performed %}
-  {% if search.results_count == 0 %}
-    <p>No results found for {{ search.terms }}</p>
-  {% else %}
-    <p>{{ search.results_count }} results found for {{ search.terms }}</p>
-=======
 <div class="container max-w-4xl py-8">
-  <h1 class="text-4xl font-bold mb-8">{{ 'search.title' | t }}</h1>
+  <h1 class="text-4xl font-bold mb-8">Search</h1>
 
   <form action="{{ routes.search_url }}" method="get" role="search" class="mb-8">
     <div class="flex gap-2">
@@ -34,19 +14,18 @@
         type="search"
         name="q"
         value="{{ search.terms | escape }}"
-        placeholder="{{ 'search.placeholder' | t }}"
+        placeholder="Search articles, pages, or products"
         class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       >
-      <button type="submit" class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">{{ 'search.submit' | t }}</button>
+      <button type="submit" class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">Search</button>
     </div>
   </form>
 
   {% if search.performed %}
     {% if search.results_count == 0 %}
-      <p class="text-center text-gray-600 py-8">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+      <p class="text-center text-gray-600 py-8">No results found for {{ search.terms }}</p>
     {% else %}
-      <p class="text-sm text-gray-600 mb-6">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
->>>>>>> Incoming (Background Agent changes)
+      <p class="text-sm text-gray-600 mb-6">{{ search.results_count }} results found for {{ search.terms }}</p>
 
       <div class="search-results">
         {% paginate search.results by 20 %}

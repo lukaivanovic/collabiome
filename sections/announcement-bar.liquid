@@ -20,17 +20,17 @@
               <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
             {% endif %}
             <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
-              {{ 'general.countdown.ends_in' | t }}
-              <span class="time days">00</span>{{ 'general.time.d_short' | t }}
-              <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
-              <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
-              <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
+              Ends in
+              <span class="time days">00</span>d
+              <span class="time hours">00</span>h
+              <span class="time minutes">00</span>m
+              <span class="time seconds">00</span>s
             </span>
           </div>
         {% else %}
           <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
         {% endif %}
-        <span class="announcement-bar__cta underline">{{ 'general.click_here' | t }}</span>
+        <span class="announcement-bar__cta underline">Click here</span>
       </a>
     {% else %}
       {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
@@ -39,11 +39,11 @@
             <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
           {% endif %}
           <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
-            {{ 'general.countdown.ends_in' | t }}
-            <span class="time days">00</span>{{ 'general.time.d_short' | t }}
-            <span class="time hours">00</span>{{ 'general.time.h_short' | t }}
-            <span class="time minutes">00</span>{{ 'general.time.m_short' | t }}
-            <span class="time seconds">00</span>{{ 'general.time.s_short' | t }}
+            Ends in
+            <span class="time days">00</span>d
+            <span class="time hours">00</span>h
+            <span class="time minutes">00</span>m
+            <span class="time seconds">00</span>s
           </span>
         </div>
       {% else %}
