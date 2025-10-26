@@ -25,36 +25,7 @@
 
   <div class="shop-all__grid" data-section-id="{{ section_id }}">
     {% for product in collection_products limit: products_per_page %}
-      <div class="shop-all__product">
-        <a href="{{ product.url }}" class="product-card">
-          <div class="product-card__media">
-            {% if product.featured_media %}
-              {{
-                product.featured_media
-                | image_url: width: 400, height: 400, crop: 'center'
-                | image_tag: class: 'product-card__image', loading: 'lazy'
-              }}
-            {% else %}
-              <div class="product-card__placeholder"></div>
-            {% endif %}
-          </div>
-          <div class="product-card__content">
-            <h3 class="product-card__title text-base font-medium">{{ product.title | escape }}</h3>
-            <p class="product-card__price">
-              {% if product.price_varies %}
-                From {{ product.price_min | money }}
-              {% else %}
-                {{ product.price | money }}
-              {% endif %}
-            </p>
-            {% if product.compare_at_price > product.price %}
-              <p class="product-card__compare-price text-sm opacity-75 line-through">
-                {{ product.compare_at_price | money }}
-              </p>
-            {% endif %}
-          </div>
-        </a>
-      </div>
+      {% render 'product-card', product: product %}
     {% endfor %}
   </div>
 
