@@ -58,35 +58,50 @@
         {{ 'general.products' | t | default: 'Products' }}
       </div>
 
-      {% paginate selected_collection.products by products_per_page %}
-        {% if selected_collection.products.size == 0 %}
-          <div class="text-center py-12">
-            <p class="text-lg opacity-75">
-              {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
-            </p>
-            <a href="{{ selected_collection.url }}" class="inline-block mt-4 px-6 py-2 bg-black text-white rounded">
-              {{ 'filters.clear_all' | t | default: 'Clear all filters' }}
-            </a>
-          </div>
-        {% else %}
-          <div
-            class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
-            data-section-id="{{ section_id }}"
-          >
-            {% for product in selected_collection.products %}
-              <div class="product-card">
-                {% render 'product-card', product: product %}
-              </div>
-            {% endfor %}
-          </div>
-
-          {% if paginate.pages > 1 %}
-            <div class="text-center">
-              {{ paginate | default_pagination }}
+      {% if collection != blank %}
+        {% comment %} Collection context - use pagination {% endcomment %}
+        {% paginate selected_collection.products by products_per_page %}
+          {% if selected_collection.products.size == 0 %}
+            <div class="text-center py-12">
+              <p class="text-lg opacity-75">
+                {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
+              </p>
+              <a href="{{ selected_collection.url }}" class="inline-block mt-4 px-6 py-2 bg-black text-white rounded">
+                {{ 'filters.clear_all' | t | default: 'Clear all filters' }}
+              </a>
             </div>
+          {% else %}
+            <div
+              class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
+              data-section-id="{{ section_id }}"
+            >
+              {% for product in selected_collection.products %}
+                <div class="product-card">
+                  {% render 'product-card', product: product %}
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if paginate.pages > 1 %}
+              <div class="text-center">
+                {{ paginate | default_pagination }}
+              </div>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      {% endpaginate %}
+        {% endpaginate %}
+      {% else %}
+        {% comment %} No collection context - show all products without pagination {% endcomment %}
+        <div
+          class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
+          data-section-id="{{ section_id }}"
+        >
+          {% for product in collections.all.products limit: products_per_page %}
+            <div class="product-card">
+              {% render 'product-card', product: product %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
