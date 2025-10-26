@@ -3,11 +3,14 @@
   assign products_per_page = section.settings.products_per_page | default: 24
 
   # Get collection from URL or section settings
-  assign url_collection = request.path | split: '/' | last
+  # Extract collection handle from URL path, accounting for filter parameters
+  assign url_parts = request.path | split: '/'
+  assign collection_handle = url_parts[2] | default: ''
+
   if section.settings.collection != blank
     assign selected_collection = collections[section.settings.collection]
-  elsif url_collection != blank and url_collection != 'shop-all'
-    assign selected_collection = collections[url_collection]
+  elsif collection_handle != blank and collection_handle != 'shop-all'
+    assign selected_collection = collections[collection_handle]
   else
     assign selected_collection = collections.all
   endif
@@ -45,6 +48,10 @@
   {% if section.settings.title != blank %}
     <div class="text-center mb-8">
       <h1 class="text-3xl uppercase mb-2">{{ selected_collection.title }}</h1>
+      {% comment %} Debug info - remove in production {% endcomment %}
+      <p class="text-sm opacity-50">
+        Collection: {{ selected_collection.handle }} | Filters: {{ selected_collection.filters.size }}
+      </p>
     </div>
   {% endif %}
 
@@ -53,72 +60,46 @@
     {% comment %} Filters sidebar {% endcomment %}
     {% if show_filters and section.settings.show_filters %}
       <aside class="w-full md:w-64 flex-shrink-0">
-        <collection-filters
-          data-products-per-page="{{ products_per_page }}"
-          data-filter-config='
-            {
-              "skin_type": [
-                {"value": "dry"},
-                {"value": "oily"},
-                {"value": "combination"},
-                {"value": "sensitive"},
-                {"value": "normal"}
-              ],
-              "routine_part": [
-                {"value": "cleanser"},
-                {"value": "toner"},
-                {"value": "serum"},
-                {"value": "moisturizer"},
-                {"value": "mask"},
-                {"value": "eye_care"}
-              ],
-              "problem_solution": [
-                {"value": "acne"},
-                {"value": "aging"},
-                {"value": "hydration"},
-                {"value": "brightening"},
-                {"value": "redness"},
-                {"value": "dark_spots"}
-              ]
-            }
-          '
-        ></collection-filters>
+        {% render 'facets' %}
       </aside>
     {% endif %}
 
     {% comment %} Products grid {% endcomment %}
     <div class="flex-1">
       <div class="mb-4 text-sm opacity-75 product-count">
-        {{ selected_collection.products.size }}
+        {{ selected_collection.products_count }}
         {{ 'general.products' | t | default: 'Products' }}
       </div>
 
-      <div
-        class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
-        data-section-id="{{ section_id }}"
-      >
-        {% for product in selected_collection.products %}
-          <div
-            class="product-card"
-            data-skin-type="{{ product.metafields.custom.skin_type.value | default: '' }}"
-            data-routine-part="{{ product.metafields.custom.routine_part.value | default: '' }}"
-            data-problem-solution="{{ product.metafields.custom.problem_solution.value | default: '' }}"
-          >
-            {% render 'product-card', product: product %}
+      {% paginate selected_collection.products by products_per_page %}
+        {% if selected_collection.products.size == 0 %}
+          <div class="text-center py-12">
+            <p class="text-lg opacity-75">
+              {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
+            </p>
+            <a href="{{ selected_collection.url }}" class="inline-block mt-4 px-6 py-2 bg-black text-white rounded">
+              {{ 'filters.clear_all' | t | default: 'Clear all filters' }}
+            </a>
           </div>
-        {% endfor %}
-      </div>
-
-      {% if selected_collection.products.size > products_per_page %}
-        <div class="text-center">
-          <button
-            class="px-8 py-3 bg-background text-foreground border border-border rounded cursor-pointer text-sm transition-all duration-200 hover:bg-foreground hover:text-background"
-            data-products-per-page="{{ products_per_page }}"
+        {% else %}
+          <div
+            class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
+            data-section-id="{{ section_id }}"
           >
-            {{ 'general.load_more' | t | default: 'Load more products' }}
-          </button>
-        </div>
-      {% endif %}
+            {% for product in selected_collection.products %}
+              <div class="product-card">
+                {% render 'product-card', product: product %}
+              </div>
+            {% endfor %}
+          </div>
+
+          {% if paginate.pages > 1 %}
+            <div class="text-center">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endpaginate %}
     </div>
   </div>
 </div>
@@ -178,7 +159,7 @@
   }
 {% endstylesheet %}
 
-<script src="{{ 'collection-filters.js' | asset_url }}" defer></script>
+<script src="{{ 'facets.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
