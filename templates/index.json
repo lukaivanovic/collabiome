@@ -68,8 +68,8 @@
           "type": "category_card",
           "settings": {
             "image": "shopify://shop_images/Vitamin_C_serum_-_15_vitamina_C_model.png",
-            "title": "Koza, kosa i nokti",
-            "description": "Description",
+            "title": "Koža, kosa i nokti",
+            "description": "Uz kolagen proizvode preporodite svoje najbolje vrline",
             "button_text": "Shop all",
             "button_url": ""
           }
@@ -79,7 +79,7 @@
           "settings": {
             "image": "shopify://shop_images/Collabiome_Simona_Svalina-3.jpg",
             "title": "imunitet i zaštita od sunca",
-            "description": "Zaštitite se od sunca uz kolagen.",
+            "description": "Sunce više nije problem uz naš lineup",
             "button_text": "Shop all",
             "button_url": ""
           }
@@ -89,7 +89,7 @@
           "settings": {
             "image": "shopify://shop_images/a-moutain-biker-on-a-hillside.jpg",
             "title": "bol u zglobovima, kostima i tetivama",
-            "description": "Zaštitite se od sunca uz kolagen.",
+            "description": "Pomažemo kod kroničnih bolova",
             "button_text": "Shop all",
             "button_url": ""
           }
