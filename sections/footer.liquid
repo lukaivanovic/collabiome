@@ -1,12 +1,73 @@
-<footer class="container flex flex-col gap-16 md:gap-8 pt-24 pb-8">
-  <div class="flex gap-8 items-start justify-between flex-wrap md:flex-col">
-    <div class=" order-1 p-2 mr-20 md:mr-0 md:order-1">
+<footer class="pt-20">
+<div
+  class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden"
+  style="
+    {% if section.settings.newsletter_bg_color != blank %}
+      background-color: {{ section.settings.newsletter_bg_color }};
+    {% endif %}
+  "
+>
+  {% if section.settings.newsletter_bg_image != blank %}
+    <div class="absolute inset-0 opacity-20">
+      {{
+        section.settings.newsletter_bg_image
+        | image_url: width: 600
+        | image_tag: alt: 'Newsletter background', loading: 'lazy', class: 'w-full h-full object-cover'
+      }}
+    </div>
+  {% endif %}
+  <div
+    class="container"
+  >
+    <div class="relative z-10">
+      <div class="mb-4">
+        <h4 class="text-lg text-white uppercase font-semibold">Newsletter</h4>
+        {% if section.settings.newsletter_description != blank %}
+          <p class="text-base text-white mt-2">
+            {{ section.settings.newsletter_description }}
+          </p>
+        {% endif %}
+      </div>
+      {% form 'customer', class: 'w-full' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="flex gap-2">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Your email"
+            required
+            class="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <button
+            type="submit"
+            aria-label="Subscribe"
+            class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p class="mt-2 text-green-500 text-sm">Thanks for subscribing!</p>
+        {% endif %}
+        {% if form.errors %}
+          <p class="mt-2 text-red-500 text-sm">{{ form.errors | default_errors }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<div class="container flex flex-col gap-16 md:gap-40 pt-24 pb-8">
+  <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-between flex-wrap">
+    <div class="px-2 mr-20 md:mr-0">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
     </div>
 
-    <div class="flex flex-row flex-1 gap-16 order-2 md:order-2">
+    <div class="flex flex-row flex-1 gap-16 o">
       <div>
         {% if section.settings.menu1_title != blank %}
           <h4 class="text-sm font-medium font-geist uppercase text-secondary">
@@ -41,90 +102,33 @@
       </div>
     </div>
 
-    <div class="flex-none w-full md:w-auto md:order-1">
-      <div
-        class="relative overflow-hidden rounded-lg p-6"
-        style="
-          {% if section.settings.newsletter_bg_color != blank %}
-            background-color: {{ section.settings.newsletter_bg_color }};
-          {% endif %}
-        "
+    <div class="flex gap-4">
+      <a
+        href="{{ section.settings.social_1 }}"
+        aria-label="Facebook"
+        class="text-foreground-secondary hover:text-foreground-default transition-colors"
       >
-        {% if section.settings.newsletter_bg_image != blank %}
-          <div class="absolute inset-0 opacity-20">
-            {{
-              section.settings.newsletter_bg_image
-              | image_url: width: 600
-              | image_tag: alt: 'Newsletter background', loading: 'lazy', class: 'w-full h-full object-cover'
-            }}
-          </div>
-        {% endif %}
-        <div class="relative z-10">
-          <div class="mb-4">
-            <h4 class="text-lg text-white uppercase font-semibold">Newsletter</h4>
-            {% if section.settings.newsletter_description != blank %}
-              <p class="text-base text-white mt-2">
-                {{ section.settings.newsletter_description }}
-              </p>
-            {% endif %}
-          </div>
-          {% form 'customer', class: 'w-full' %}
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            <div class="flex gap-2">
-              <input
-                type="email"
-                name="contact[email]"
-                placeholder="Your email"
-                required
-                class="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-              <button
-                type="submit"
-                aria-label="Subscribe"
-                class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
-              >
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-            {% if form.posted_successfully? %}
-              <p class="mt-2 text-green-500 text-sm">Thanks for subscribing!</p>
-            {% endif %}
-            {% if form.errors %}
-              <p class="mt-2 text-red-500 text-sm">{{ form.errors | default_errors }}</p>
-            {% endif %}
-          {% endform %}
-        </div>
-      </div>
+        {{ 'icon-facebook.svg' | inline_asset_content }}
+      </a>
+      <a
+        href="{{ section.settings.social_2 }}"
+        aria-label="Instagram"
+        class="text-foreground-secondary hover:text-foreground-default transition-colors"
+      >
+        {{ 'icon-instagram.svg' | inline_asset_content }}
+      </a>
+      <a
+        href="{{ section.settings.social_3 }}"
+        aria-label="TikTok"
+        class="text-foreground-secondary hover:text-foreground-default transition-colors"
+      >
+        {{ 'icon-tiktok.svg' | inline_asset_content }}
+      </a>
     </div>
   </div>
 
   <div class="flex flex-col gap-12 md:justify-between md:items-center md:flex-row">
     <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-4">
-      <div class="flex gap-4">
-        <a
-          href="{{ section.settings.social_1 }}"
-          aria-label="Facebook"
-          class="text-secondary hover:text-primary transition-colors"
-        >
-          {{ 'icon-facebook.svg' | inline_asset_content }}
-        </a>
-        <a
-          href="{{ section.settings.social_2 }}"
-          aria-label="Instagram"
-          class="text-secondary hover:text-primary transition-colors"
-        >
-          {{ 'icon-instagram.svg' | inline_asset_content }}
-        </a>
-        <a
-          href="{{ section.settings.social_3 }}"
-          aria-label="TikTok"
-          class="text-secondary hover:text-primary transition-colors"
-        >
-          {{ 'icon-tiktok.svg' | inline_asset_content }}
-        </a>
-      </div>
       {% if section.settings.bottom_menu %}
         <div class="text-secondary text-sm flex flex-col gap-4 md:flex-row md:gap-2">
           {% for link in section.settings.bottom_menu.links %}
@@ -135,7 +139,9 @@
     </div>
     <div class="text-secondary text-sm md:text-left">Collabiome &copy; {{ 'now' | date: '%Y' }}</div>
   </div>
-</footer>
+</div>
+
+
 
 {% schema %}
 {

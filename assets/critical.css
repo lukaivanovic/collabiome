@@ -220,6 +220,10 @@ button {
   color: white;
 }
 
+.text-primary {
+  color: var(--color-foreground-default);
+}
+
 .text-secondary {
   color: color-mix(in srgb, var(--color-foreground-default) 64%, transparent);
 }
@@ -275,6 +279,11 @@ button {
   font-size: 0.875rem;
 }
 
+.button-small {
+  height: 32px;
+  padding: 0 1rem;
+}
+
 .button-neutral {
   background: color-mix(in srgb, black 95%, transparent);
   color: white;
@@ -306,6 +315,10 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 13px;
+}
+
+.card-outline {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset;
 }
 
 @media (max-width: 768px) {

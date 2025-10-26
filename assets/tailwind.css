@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+@theme{
+    --page-width: var(--page-width);
+    --page-margin: var(--page-margin);
+    --color-background-default: var(--color-background-default);
+    --color-foreground-default: var(--color-foreground-default);
+    --color-foreground-secondary: color-mix(in srgb, var(--color-foreground-default) 64%, transparent);
+    --color-background-green: var(--color-background-green);
+    --color-foreground-green: var(--color-foreground-green);
+    --color-background-pink: {{ settings.background_pink }};
+    --color-foreground-pink: var(--color-foreground-pink);
+    --color-background-blue: {{ settings.background_blue }};
+    --color-foreground-blue: var(--color-foreground-blue);
+    --gradient-boost: 86deg, #DBEAE5 -1.58%, #EDE1D7 49.21%, #F6B4CA 100%;
+    --gradient-exclusive: var(--gradient-exclusive);
+    --gradient-nutriage: var(--gradient-nutriage);
+    --gradient-recupera: 100deg, #A2EEFF 3.17%, #B4CEFF 35.34%, #D4B9FF 103.04%;
+    --style-border-radius-inputs: var(--style-border-radius-inputs);
+  }
