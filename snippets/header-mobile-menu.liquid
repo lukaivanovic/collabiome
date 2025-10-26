@@ -33,8 +33,8 @@
     {{ 'logo.svg' | inline_asset_content }}
   </a>
 
-  <div class="flex items-center gap-4">
-    <a href="account" aria-label="Account" class="flex items-center justify-center size-6">
+  <div class="flex items-center gap-2">
+    <a href="account" aria-label="Account" class=" size-6 [&>svg]:size-6">
       {{ 'icon-account.svg' | inline_asset_content }}
     </a>
     <a
@@ -42,7 +42,7 @@
       aria-label="Cart"
       aria-haspopup="drawer"
       id="cart-icon-bubble"
-      class="flex items-center justify-center size-6"
+      class="size-6 [&>svg]:size-6"
     >
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
