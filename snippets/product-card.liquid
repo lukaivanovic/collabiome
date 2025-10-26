@@ -1,4 +1,7 @@
 <a href="{{ product.url }}" class="flex flex-col gap-2 text-foreground rounded-lg overflow-hidden p-4">
+  <script id="product-data-{{ product.id }}" type="application/json">
+    {{ product | json }}
+  </script>
   <div class="h-92">
     {% if product.featured_media %}
       {{

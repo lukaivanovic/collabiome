@@ -2,89 +2,40 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<div class="home-categories container relative py-[120px]">
+<div class="container relative py-[120px]">
   {% if section.settings.title != blank %}
     <h2 class="text-xl uppercase">{{ section.settings.title | escape }}</h2>
   {% endif %}
-  <div class="home-categories__grid grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12">
     {% for block in section.blocks %}
-      <a href="{{ block.settings.button_url }}" class="home-categories__card" {{ block.shopify_attributes }}>
-        {% if block.settings.image != blank %}
-          {% assign bg = block.settings.image | image_url: width: 1200 %}
-          <div class="home-categories__media" style="background-image: url('{{ bg }}');"></div>
-        {% else %}
-          <div class="home-categories__media home-categories__media--placeholder"></div>
-        {% endif %}
-        <div class="home-categories__overlay"></div>
-        <div class="home-categories__content absolute left-0 right-0 bottom-0 p-6 text-white grid gap-1">
+      <a
+        href="{{ block.settings.button_url }}"
+        class="category-card flex flex-col relative overflow-hidden rounded-xl bg-black group shadow-sm"
+        {{ block.shopify_attributes }}
+      >
+        {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-1' %}
+
+        <div class="p-6  grid gap-1 bg-white">
           {% if block.settings.title != blank %}
-            <h3 class="text-2xl uppercase font-medium wrap-pretty">{{ block.settings.title | escape }}</h3>
+            <h3 class="text-2xl uppercase font-medium">{{ block.settings.title | escape }}</h3>
           {% endif %}
           {% if block.settings.description != blank %}
-            <p class="home-categories__description m-0 mb-4">{{ block.settings.description | escape }}</p>
+            <p class="text-white/80 m-0 mb-4">{{ block.settings.description | escape }}</p>
           {% endif %}
           {% if block.settings.button_text != blank %}
-            <div class="button-white">
+            <div class="button button-boost">
               {{- block.settings.button_text | escape -}}
             </div>
           {% endif %}
         </div>
       </a>
-    {% else %}
-      <article class="home-categories__card">
-        <div class="home-categories__media home-categories__media--placeholder"></div>
-        <div class="home-categories__overlay"></div>
-<<<<<<< Current (Your changes)
-        <div class="home-categories__content">
-          <h3 class="home-categories__title">Category</h3>
-          <p class="home-categories__description">Describe this category</p>
-=======
-        <div class="home-categories__content absolute left-0 right-0 bottom-0 p-6 text-white grid gap-1">
-          <h3 class="home-categories__title text-2xl uppercase font-medium">{{ 'sections.home_categories.default_card_title' | t }}</h3>
-          <p class="home-categories__description m-0 mb-4">{{ 'sections.home_categories.default_card_description' | t }}</p>
->>>>>>> Incoming (Background Agent changes)
-        </div>
-      </article>
     {% endfor %}
   </div>
 </div>
 
 {% stylesheet %}
-  .home-categories__card {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    overflow: clip;
-    border-radius: var(--style-border-radius-cards, 12px);
-    background: black;
-  }
-
-  .home-categories__card:hover .home-categories__media {
-    transform: scale(1.05);
-  }
-
-  .home-categories__media {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.8;
-    transition: transform 0.3s ease;
-  }
-
-  .home-categories__media--placeholder {
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
-  }
-
-  .home-categories__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.55) 100%);
-    pointer-events: none;
-  }
-
-  .home-categories__description {
-    color: color-mix(in srgb, white 80%, transparent);
+  .category-card {
+    box-shadow: 0 0 0 1px rgba(246, 180, 202, 0.5) inset;
   }
 {% endstylesheet %}
 

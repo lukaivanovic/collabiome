@@ -2,54 +2,76 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<div class="hero full-width relative" id="hero-{{ section_id }}">
-  <div class="hero__media" aria-hidden="true">
+<div class="hero w-full relative" id="hero-{{ section_id }}">
+  <div class="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
     {% if section.settings.video != blank %}
       {{
         section.settings.video
-        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          class: 'absolute inset-0 w-full h-full object-cover'
       }}
     {% elsif section.settings.video_url != blank %}
       {{
         section.settings.video_url
-        | external_video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false
+        | external_video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          class: 'absolute inset-0 w-full h-full object-cover'
       }}
     {% elsif section.settings.image != blank %}
       {{
         section.settings.image
         | image_url: width: 2400
-        | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', alt: section.settings.title
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          alt: section.settings.title,
+          class: 'absolute inset-0 w-full h-full object-cover'
         | escape
       }}
     {% else %}
-      <div class="hero__placeholder"></div>
+      <div class="w-full h-full bg-gradient-to-b from-black/4 to-black/12"></div>
     {% endif %}
     <div
-      class="hero__scrim"
-      style="--hero-overlay-color: {{ section.settings.overlay_color | default: '#000000' }}; --hero-overlay-opacity: {{ section.settings.overlay_opacity | default: 30 }};"
+      class="absolute inset-0 pointer-events-none"
+      style="background: {{ section.settings.overlay_color | default: '#000000' }}; opacity: {{ section.settings.overlay_opacity | default: 30 | divided_by: 100.0 }};"
     ></div>
   </div>
 
-  <div class="container hero__inner relative z-10 flex items-end" style="--hero-height: 80svh;">
-    <div class="hero__content grid gap-3 max-w-[min(64ch,90%)] md:max-w-[min(64ch,90%)] pb-12" data-align="bottom-left">
+  <div class="container relative flex items-end" style="min-height: 80svh;">
+    <div class="grid gap-3 max-w-[min(64ch,90%)] md:max-w-[min(64ch,90%)] pb-12" data-align="bottom-left">
       {% if section.settings.kicker != blank %}
-        <p class="hero__kicker text-white text-[0.8125rem] tracking-wider uppercase opacity-90">{{ section.settings.kicker | escape }}</p>
+        <p class="text-white text-sm tracking-wider uppercase opacity-90">
+          {{ section.settings.kicker | escape }}
+        </p>
       {% endif %}
       {% if section.settings.title != blank %}
         <h1 class="text-6xl uppercase text-white leading-tight font-bold">{{ section.settings.title | escape }}</h1>
       {% endif %}
       {% if section.settings.description != blank %}
-        <div class="hero__description text-base">{{ section.settings.description }}</div>
+        <div class=" text-white/80">{{ section.settings.description }}</div>
       {% endif %}
       {% if section.settings.show_buttons %}
-        <div class="hero__buttons flex gap-4 flex-wrap mt-4">
+        <div class="flex gap-4 flex-wrap mt-4">
           {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-            <a class="button button-recupera text-white" href="{{ section.settings.button_link }}">
+            <a class="button button-boost text-white" href="{{ section.settings.button_link }}">
               {{- section.settings.button_label | escape -}}
             </a>
           {% endif %}
           {% if section.settings.button_2_label != blank and section.settings.button_2_link != blank %}
-            <a class="hero__button--secondary text-white" href="{{ section.settings.button_2_link }}">
+            <a
+              class="bg-transparent border border-foreground text-foreground px-4 py-2 rounded hover:bg-foreground hover:text-background transition-colors"
+              href="{{ section.settings.button_2_link }}"
+            >
               {{- section.settings.button_2_label | escape -}}
             </a>
           {% endif %}
@@ -58,53 +80,6 @@
     </div>
   </div>
 </div>
-
-{% stylesheet %}
-  .hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: clip;
-  }
-
-  .hero__media video,
-  .hero__media iframe,
-  .hero__media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero__placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
-  }
-
-  .hero__scrim {
-    position: absolute;
-    inset: 0;
-    background: var(--hero-overlay-color);
-    opacity: calc(var(--hero-overlay-opacity, 30) / 100);
-    pointer-events: none;
-  }
-
-  .hero__inner {
-    min-height: var(--hero-height, 80svh);
-  }
-
-  .hero__description {
-    color: color-mix(in srgb, white 80%, transparent);
-  }
-
-  .hero__button--secondary {
-    background: transparent;
-    border: 1px solid var(--color-foreground);
-    color: var(--color-foreground);
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

@@ -288,10 +288,10 @@ button {
 }
 
 .button {
-  height: 48px;
-  border-radius: 24px;
+  height: 42px;
+  border-radius: 21px;
   text-decoration: none;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1.35rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -299,20 +299,17 @@ button {
   font-family: "Geist", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
-.button-recupera {
-  background: var(--color-gradient-recupera);
-  color: var(--color-foreground-default);
+.button-boost {
+  background: linear-gradient(var(--gradient-boost));
+  color: color-mix(in srgb, black 80%, transparent);
+  transition: background 0.3s ease;
 }
 
-.button-recupera:hover {
-  background: color-mix(
-    in srgb,
-    var(--color-gradient-recupera) 90%,
-    transparent
-  );
+.button-boost:hover {
+  background: linear-gradient(86deg, #dbeae5 10%, #ede1d7 60%, #f6b4ca 120%);
 }
 
 .button-white {

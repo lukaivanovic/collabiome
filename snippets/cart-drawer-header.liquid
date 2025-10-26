@@ -1,0 +1,22 @@
+{% doc %}
+  Cart Drawer Header Component
+
+  Renders the header section of the cart drawer with title and close button.
+
+  @example
+  {% render 'cart-drawer-header' %}
+{% enddoc %}
+
+<div class="flex items-center justify-between py-2 px-4 border-b border-neutral-300">
+  <h2>Your cart</h2>
+  <button
+    class="drawer__close"
+    type="button"
+    onclick="this.closest('cart-drawer').close()"
+    aria-label="Close"
+  >
+    <span class="svg-wrapper">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </span>
+  </button>
+</div>

@@ -1,35 +1,35 @@
-<footer class="container flex flex-col gap-8 mt-24 mb-8">
-  <div class="footer__top flex gap-8 items-start justify-between flex-wrap">
-    <div class="footer__logo font-semibold order-1 p-2 mr-20">
+<footer class="container flex flex-col gap-8 pt-24 pb-8">
+  <div class="flex gap-8 items-start justify-between flex-wrap md:flex-col">
+    <div class="font-semibold order-1 p-2 mr-20 md:mr-0 md:order-1">
       <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
         <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
       </a>
     </div>
 
-    <div class="footer__menus flex flex-row flex-1 gap-16 order-2">
-      <div class="footer__menu">
+    <div class="flex flex-row flex-1 gap-16 order-2 md:order-2">
+      <div>
         {% if section.settings.menu1_title != blank %}
           <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu1_title | escape }}</h4>
         {% endif %}
         {% if section.settings.menu1 and section.settings.menu1.links.size > 0 %}
-          <ul class="footer__menu-list list-none p-0 m-0 flex flex-col gap-3 mt-3">
+          <ul class="list-none p-0 m-0 flex flex-col gap-3 mt-3">
             {% for link in section.settings.menu1.links %}
-              <li class="footer__menu-item">
-                <a href="{{ link.url }}" class="no-underline">{{ link.title }}</a>
+              <li>
+                <a href="{{ link.url }}" class="no-underline text-foreground hover:text-primary">{{ link.title }}</a>
               </li>
             {% endfor %}
           </ul>
         {% endif %}
       </div>
-      <div class="footer__menu">
+      <div>
         {% if section.settings.menu2_title != blank %}
           <h4 class="text-base font-medium uppercase text-secondary">{{ section.settings.menu2_title | escape }}</h4>
         {% endif %}
         {% if section.settings.menu2 and section.settings.menu2.links.size > 0 %}
-          <ul class="footer__menu-list list-none p-0 m-0 flex flex-col gap-3 mt-3">
+          <ul class="list-none p-0 m-0 flex flex-col gap-3 mt-3">
             {% for link in section.settings.menu2.links %}
-              <li class="footer__menu-item">
-                <a href="{{ link.url }}" class="no-underline">{{ link.title }}</a>
+              <li>
+                <a href="{{ link.url }}" class="no-underline text-foreground hover:text-primary">{{ link.title }}</a>
               </li>
             {% endfor %}
           </ul>
@@ -37,9 +37,9 @@
       </div>
     </div>
 
-    <div class="footer__newsletter">
+    <div class="flex-none w-full md:w-auto md:order-1">
       <div
-        class="newsletter-card"
+        class="relative overflow-hidden rounded-lg p-6"
         style="
           {% if section.settings.newsletter_bg_color != blank %}
             background-color: {{ section.settings.newsletter_bg_color }};
@@ -47,47 +47,48 @@
         "
       >
         {% if section.settings.newsletter_bg_image != blank %}
-          <div class="newsletter-card__bg-image">
+          <div class="absolute inset-0 opacity-20">
             {{
               section.settings.newsletter_bg_image
               | image_url: width: 600
-              | image_tag: alt: 'Newsletter background', loading: 'lazy'
+              | image_tag: alt: 'Newsletter background', loading: 'lazy', class: 'w-full h-full object-cover'
             }}
           </div>
         {% endif %}
-        <div class="newsletter-card__content">
-          <div class="newsletter-card__header">
-            <h4 class="text-large text-white uppercase">
-              Newsletter
-            </h4>
+        <div class="relative z-10">
+          <div class="mb-4">
+            <h4 class="text-lg text-white uppercase font-semibold">Newsletter</h4>
             {% if section.settings.newsletter_description != blank %}
-              <p class="text-base text-white">
+              <p class="text-base text-white mt-2">
                 {{ section.settings.newsletter_description }}
               </p>
             {% endif %}
           </div>
-          {% form 'customer' %}
+          {% form 'customer', class: 'w-full' %}
             <input type="hidden" name="contact[tags]" value="newsletter">
-            <div class="newsletter-card__controls">
+            <div class="flex gap-2">
               <input
                 type="email"
                 name="contact[email]"
                 placeholder="Your email"
                 required
+                class="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
               >
-              <button type="submit" aria-label="Subscribe">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <button
+                type="submit"
+                aria-label="Subscribe"
+                class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
             {% if form.posted_successfully? %}
-              <p class="newsletter-card__success">
-                Thanks for subscribing!
-              </p>
+              <p class="mt-2 text-green-500 text-sm">Thanks for subscribing!</p>
             {% endif %}
             {% if form.errors %}
-              <p class="newsletter-card__error">{{ form.errors | default_errors }}</p>
+              <p class="mt-2 text-red-500 text-sm">{{ form.errors | default_errors }}</p>
             {% endif %}
           {% endform %}
         </div>
@@ -95,122 +96,42 @@
     </div>
   </div>
 
-  <div class="footer__bottom ">
-    <div class="footer__bottom-left">
-      <div class="footer__social">
-        <a href="{{ section.settings.social_1 }}" aria-label="Facebook" class="footer__social-icon text-secondary">
+  <div class="flex justify-between items-center md:flex-col md:items-start md:gap-6">
+    <div class="flex items-center gap-4 md:flex-col md:items-start md:gap-4">
+      <div class="flex gap-4">
+        <a
+          href="{{ section.settings.social_1 }}"
+          aria-label="Facebook"
+          class="text-secondary hover:text-primary transition-colors"
+        >
           {{ 'icon-facebook.svg' | inline_asset_content }}
         </a>
-        <a href="{{ section.settings.social_2 }}" aria-label="Instagram" class="footer__social-icon text-secondary">
+        <a
+          href="{{ section.settings.social_2 }}"
+          aria-label="Instagram"
+          class="text-secondary hover:text-primary transition-colors"
+        >
           {{ 'icon-instagram.svg' | inline_asset_content }}
         </a>
-        <a href="{{ section.settings.social_3 }}" aria-label="TikTok" class="footer__social-icon text-secondary">
+        <a
+          href="{{ section.settings.social_3 }}"
+          aria-label="TikTok"
+          class="text-secondary hover:text-primary transition-colors"
+        >
           {{ 'icon-tiktok.svg' | inline_asset_content }}
         </a>
       </div>
       {% if section.settings.bottom_menu %}
-        <div class="footer__bottom-menu text-secondary text-sm">
+        <div class="text-secondary text-sm flex gap-4 md:flex-col md:gap-2">
           {% for link in section.settings.bottom_menu.links %}
             {{ link.title | link_to: link.url }}
           {% endfor %}
         </div>
       {% endif %}
     </div>
-    <div class="footer__copyright text-secondary text-sm">Collabiome &copy; {{ 'now' | date: '%Y' }}</div>
+    <div class="text-secondary text-sm md:text-left">Collabiome &copy; {{ 'now' | date: '%Y' }}</div>
   </div>
 </footer>
-
-{% stylesheet %}
-  footer {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 6rem;
-    margin-bottom: 2rem;
-  }
-  .footer__top {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  .footer__left {
-    display: flex;
-    gap: 2rem;
-    flex: 1 1 auto;
-    align-items: flex-start;
-  }
-  .footer__logo {
-    font-weight: 600;
-    order: 1;
-    padding: 0.5rem;
-    margin-right: 5rem;
-  }
-  .footer__menus {
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 auto;
-    gap: 4rem;
-    order: 2;
-  }
-  .footer__menu-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-  }
-  .footer__menu-item a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  .footer__newsletter {
-    flex: 0 0 440px;
-    order: 3;
-  }
-  .footer__newsletter form {
-    width: 100%;
-  }
-  .newsletter-card__bg-image {
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-  }
-  @media (max-width: 800px) {
-    .footer__top {
-      flex-direction: column;
-    }
-    .footer__bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-    .footer__bottom-left {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: start;
-    }
-    .footer__newsletter {
-      width: 100%;
-      flex: 0 0 auto;
-      order: 1;
-    }
-    .footer__bottom-menu {
-      margin-left: 0;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .footer__copyright {
-      text-align: left;
-      align-self: flex-start;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

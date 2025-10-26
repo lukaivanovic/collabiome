@@ -1,0 +1,39 @@
+{% doc %}
+  Cart Drawer Empty State Component
+
+  Renders the empty cart state with login prompt and optional collection display.
+
+  @example
+  {% render 'cart-drawer-empty' %}
+{% enddoc %}
+
+<div class="drawer__inner-empty">
+  <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
+    <div class="cart-drawer__empty-content">
+      <h2 class="cart__empty-text">Your cart is empty</h2>
+      <button
+        class="drawer__close"
+        type="button"
+        onclick="this.closest('cart-drawer').close()"
+        aria-label="Close"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-close.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <a href="{{ routes.all_products_collection_url }}" class="button"> Continue shopping </a>
+
+      {%- if shop.customer_accounts_enabled and customer == null -%}
+        <p class="cart__login-title h3">Have an account?</p>
+        <p class="cart__login-paragraph">
+          <a href="{{ routes.account_login_url }}" class="link underlined-link">Log in</a> to check out faster.
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- if settings.cart_drawer_collection != blank -%}
+    <div class="cart-drawer__collection">
+      {% comment %} {% render 'card-collection', card_collection: settings.cart_drawer_collection, columns: 1 %} {% endcomment %}
+    </div>
+  {%- endif -%}
+</div>

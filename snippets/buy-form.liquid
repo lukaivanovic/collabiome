@@ -2,6 +2,7 @@
   class="product-form"
   data-hide-errors="{{ gift_card_recipient_feature_active }}"
   data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
 >
   <div class="product-form__error-message-wrapper" role="alert" hidden>
     <span class="svg-wrapper">
@@ -79,7 +80,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="product-form__submit button button--full-width button-recupera text-blue w-full"
+          class="product-form__submit button button--full-width button-boost text-blue w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null

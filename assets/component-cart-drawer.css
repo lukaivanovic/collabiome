@@ -19,6 +19,7 @@
 }
 
 .drawer__inner {
+  position: relative;
   height: 100%;
   width: 40rem;
   max-width: calc(100vw - 3rem);
@@ -29,6 +30,7 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform var(--duration-default) ease;
+  z-index: 2;
 }
 
 .drawer__inner-empty {
@@ -155,6 +157,7 @@ cart-drawer {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
 }
 
 .cart-drawer__overlay:empty {

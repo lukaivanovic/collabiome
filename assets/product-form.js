@@ -162,7 +162,25 @@ if (!customElements.get("product-form")) {
       }
 
       initializeProductData() {
-        const productDataScript = document.querySelector("#product-data");
+        // Try to find product data script with specific product ID first
+        let productDataScript = null;
+
+        // Look for product data script with specific ID (for product cards)
+        const productForm = this.closest("product-form");
+        if (productForm) {
+          const productId = productForm.dataset.productId;
+          if (productId) {
+            productDataScript = document.querySelector(
+              `#product-data-${productId}`
+            );
+          }
+        }
+
+        // Fallback to generic product-data script (for product page)
+        if (!productDataScript) {
+          productDataScript = document.querySelector("#product-data");
+        }
+
         if (productDataScript) {
           this.product = JSON.parse(productDataScript.textContent);
         } else {
