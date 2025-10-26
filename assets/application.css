@@ -511,9 +511,6 @@
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
-  .h-40 {
-    height: calc(var(--spacing) * 40);
-  }
   .h-48 {
     height: calc(var(--spacing) * 48);
   }
@@ -1029,9 +1026,6 @@
   }
   .py-30 {
     padding-block: calc(var(--spacing) * 30);
-  }
-  .\!pt-20 {
-    padding-top: calc(var(--spacing) * 20) !important;
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -1625,11 +1619,6 @@
       gap: calc(var(--spacing) * 6);
     }
   }
-  .md\:order-1 {
-    @media (width >= 48rem) {
-      order: 1;
-    }
-  }
   .md\:mr-0 {
     @media (width >= 48rem) {
       margin-right: calc(var(--spacing) * 0);
@@ -1648,11 +1637,6 @@
   .md\:w-64 {
     @media (width >= 48rem) {
       width: calc(var(--spacing) * 64);
-    }
-  }
-  .md\:w-auto {
-    @media (width >= 48rem) {
-      width: auto;
     }
   }
   .md\:max-w-\[min\(64ch\,90\%\)\] {
