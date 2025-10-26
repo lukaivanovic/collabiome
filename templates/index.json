@@ -44,6 +44,7 @@
       "name": "Product",
       "settings": {
         "title": "Featured products",
+        "description": "Discover our latest products",
         "products": [
           "complete-collagen-nocna-krema",
           "kolagen-boost",
@@ -78,7 +79,7 @@
           "type": "category_card",
           "settings": {
             "image": "shopify://shop_images/Collabiome_Simona_Svalina-3.jpg",
-            "title": "imunitet i zaštita od sunca",
+            "title": "Imunitet i zaštita od sunca",
             "description": "Sunce više nije problem uz naš lineup",
             "button_text": "Shop all",
             "button_url": ""
@@ -88,7 +89,7 @@
           "type": "category_card",
           "settings": {
             "image": "shopify://shop_images/a-moutain-biker-on-a-hillside.jpg",
-            "title": "bol u zglobovima, kostima i tetivama",
+            "title": "Bol u zglobovima, kostima i tetivama",
             "description": "Pomažemo kod kroničnih bolova",
             "button_text": "Shop all",
             "button_url": ""
