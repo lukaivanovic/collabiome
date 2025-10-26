@@ -1,9 +1,15 @@
 <section class="testimonial-grid">
   <div class="container">
-    {% if section.settings.title != blank %}
-      <h2 class="text-4xl text-center">{{ section.settings.title | escape }}</h2>
-    {% endif %}
-    <div class="testimonial-grid__grid pt-12">
+    <div class="py-6">
+      {% if section.settings.title != blank %}
+        <h2 class=" text-center">{{ section.settings.title | escape }}</h2>
+        {% if section.settings.description != blank %}
+          <p class="text-secondary text-center">{{ section.settings.description | escape }}</p>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="testimonial-grid__grid pt-16">
       {% liquid
         assign entries = null
         if metaobjects and metaobjects.testimonial_text and metaobjects.testimonial_text.values
@@ -194,7 +200,10 @@
   "name": "Testimonial grid",
   "tag": "section",
   "class": "testimonial-grid-section",
-  "settings": [{ "type": "text", "id": "title", "label": "Text", "default": "Testimonial grid" }],
+  "settings": [
+    { "type": "text", "id": "title", "label": "Text", "default": "Testimonial grid" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Describe this category" }
+  ],
   "blocks": [
     {
       "type": "text_testimonial",
