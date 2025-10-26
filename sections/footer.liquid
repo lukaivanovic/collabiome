@@ -1,6 +1,6 @@
 <footer class="pt-20">
   <div
-    class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden "
+    class="container rounded-3xl flex-none w-full py-8 relative overflow-hidden "
     style="
       {% if section.settings.newsletter_bg_color != blank %}
         background-color: {{ section.settings.newsletter_bg_color }};
@@ -19,48 +19,45 @@
         }}
       </div>
     {% endif %}
-    <div
-      class="container"
-    >
-      <div class="relative z-10">
-        <div class="mb-4">
-          <h4 class="text-lg text-white uppercase font-semibold">
-            {{ section.settings.newsletter_title | default: 'Newsletter' }}
-          </h4>
-          {% if section.settings.newsletter_description != blank %}
-            <p class="text-base text-white mt-2">
-              {{ section.settings.newsletter_description }}
-            </p>
-          {% endif %}
-        </div>
-        {% form 'customer', class: 'w-full' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="flex gap-2">
-            <input
-              type="email"
-              name="contact[email]"
-              placeholder="Your email"
-              required
-              class="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-            <button
-              type="submit"
-              aria-label="Subscribe"
-              class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-          {% if form.posted_successfully? %}
-            <p class="mt-2 text-green-500 text-sm">Thanks for subscribing!</p>
-          {% endif %}
-          {% if form.errors %}
-            <p class="mt-2 text-red-500 text-sm">{{ form.errors | default_errors }}</p>
-          {% endif %}
-        {% endform %}
+
+    <div class="relative z-10 h-full flex flex-col gap-6 justify-center items-start max-w-95">
+      <div class="flex flex-col gap-2">
+        <h4 class="text-2xl text-white uppercase font-semibold">
+          {{ section.settings.newsletter_title | default: 'Newsletter' }}
+        </h4>
+        {% if section.settings.newsletter_description != blank %}
+          <p class=" text-white/80 mt-2">
+            {{ section.settings.newsletter_description }}
+          </p>
+        {% endif %}
       </div>
+      {% form 'customer', class: 'w-full' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="flex gap-2">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Your email"
+            required
+            class="flex-grow px-3 py-2 rounded-full bg-black/60 backdrop-blur-2xl border border-black/20 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+          <button
+            type="submit"
+            aria-label="Subscribe"
+            class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p class="mt-2 text-green-500 text-sm">Thanks for subscribing!</p>
+        {% endif %}
+        {% if form.errors %}
+          <p class="mt-2 text-red-500 text-sm">{{ form.errors | default_errors }}</p>
+        {% endif %}
+      {% endform %}
     </div>
   </div>
 
