@@ -23,7 +23,7 @@
             </h2>
             {% assign date = article.published_at | time_tag: format: 'date' %}
             <p class="text-sm text-gray-500 mb-4">
-              {{ 'blog.article_metadata_html' | t: date: date, author: article.author }}
+              {{ date }} by {{ article.author }}
             </p>
             <p class="text-gray-700">{{ article.excerpt }}</p>
           </div>
