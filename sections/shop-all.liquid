@@ -12,26 +12,26 @@
   endif
 %}
 
-<div class="shop-all container">
+<div class="container mx-auto max-w-7xl px-4 py-8 md:py-16">
   {% if section.settings.title != blank %}
-    <div class="shop-all__header">
-      <h1 class="shop-all__title text-3xl uppercase">{{ selected_collection.title }}</h1>
-      <p class="shop-all__count text-sm opacity-75">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl uppercase mb-2">{{ selected_collection.title }}</h1>
+      <p class="text-sm opacity-75">
         {{ total_products }}
         Products
       </p>
     </div>
   {% endif %}
 
-  <div class="shop-all__grid" data-section-id="{{ section_id }}">
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12" data-section-id="{{ section_id }}">
     {% for product in collection_products limit: products_per_page %}
       {% render 'product-card', product: product %}
     {% endfor %}
   </div>
 
   {% if total_products > products_per_page %}
-    <div class="shop-all__pagination">
-      <button class="shop-all__load-more btn btn--secondary" data-products-per-page="{{ products_per_page }}">
+    <div class="text-center">
+      <button class="px-8 py-3 bg-background text-foreground border border-border rounded cursor-pointer text-sm transition-all duration-200 hover:bg-foreground hover:text-background" data-products-per-page="{{ products_per_page }}">
         Load more products
       </button>
     </div>
@@ -39,67 +39,10 @@
 </div>
 
 {% stylesheet %}
-  .shop-all {
-    padding: 2rem 0;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .shop-all__header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .shop-all__title {
-    margin-bottom: 0.5rem;
-  }
-
-  .shop-all__count {
-    color: var(--color-foreground, #000);
-  }
-
-  .shop-all__controls {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 2rem;
-    gap: 1rem;
-  }
-
-  .shop-all__sorting {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .shop-all__sort-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .shop-all__sort-select {
-    padding: 0.5rem;
-    border: 1px solid var(--color-border, #ddd);
-    border-radius: 4px;
-    background: var(--color-background, #fff);
-    font-size: 0.875rem;
-  }
-
-  .shop-all__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .shop-all__product {
-    width: 100%;
-  }
-
   .product-card {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    /* background: var(--color-background, #fff); */
     color: var(--color-foreground, #000);
     text-decoration: none;
     border-radius: 8px;
@@ -147,55 +90,6 @@
 
   .product-card__compare-price {
     font-variant-numeric: tabular-nums;
-  }
-
-  .shop-all__pagination {
-    text-align: center;
-  }
-
-  .shop-all__load-more {
-    padding: 0.75rem 2rem;
-    background: var(--color-background, #fff);
-    color: var(--color-foreground, #000);
-    border: 1px solid var(--color-border, #ddd);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-  }
-
-  .shop-all__load-more:hover {
-    background: var(--color-foreground, #000);
-    color: var(--color-background, #fff);
-  }
-
-  @media (max-width: 768px) {
-    .shop-all {
-      padding: 1rem;
-    }
-
-    .shop-all__grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .shop-all__controls {
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .shop-all__sorting {
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .shop-all__grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
   }
 {% endstylesheet %}
 
