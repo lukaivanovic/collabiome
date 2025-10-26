@@ -12,32 +12,6 @@
     assign selected_collection = collections.all
   endif
 
-  # Parse URL parameters for filters
-  assign active_skin_types = ''
-  assign active_routine_parts = ''
-  assign active_problem_solutions = ''
-
-  if request.query_string contains 'skin_type='
-    assign skin_type_param = request.query_string | split: 'skin_type=' | last | split: '&' | first
-    assign active_skin_types = skin_type_param | split: ','
-  endif
-
-  if request.query_string contains 'routine_part='
-    assign routine_part_param = request.query_string | split: 'routine_part=' | last | split: '&' | first
-    assign active_routine_parts = routine_part_param | split: ','
-  endif
-
-  if request.query_string contains 'problem_solution='
-    assign problem_solution_param = request.query_string | split: 'problem_solution=' | last | split: '&' | first
-    assign active_problem_solutions = problem_solution_param | split: ','
-  endif
-
-  # Check if any filters are active
-  assign has_active_filters = false
-  if active_skin_types.size > 0 or active_routine_parts.size > 0 or active_problem_solutions.size > 0
-    assign has_active_filters = true
-  endif
-
   # Define filter options for Kozmetika collection
   assign show_filters = false
   if selected_collection.handle == 'kozmetika' or selected_collection.handle == 'cosmetics'
@@ -79,323 +53,43 @@
     {% comment %} Filters sidebar {% endcomment %}
     {% if show_filters and section.settings.show_filters %}
       <aside class="w-full md:w-64 flex-shrink-0">
-        <div class="bg-white rounded-lg p-6 border border-gray-200">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-medium uppercase">{{ 'filters.title' | t | default: 'Filters' }}</h2>
-            {% if has_active_filters %}
-              <a href="{{ selected_collection.url }}" class="text-sm underline">
-                {{ 'filters.clear_all' | t | default: 'Clear all' }}
-              </a>
-            {% endif %}
-          </div>
-
-          <form method="get" action="{{ selected_collection.url }}" id="filter-form">
-            {% comment %} Skin Type Filter {% endcomment %}
-            <div class="filter-group mb-6">
-              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.skin_type' | t }}</h3>
-              <div class="flex flex-col gap-2">
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="skin_type"
-                    value="dry"
-                    {% if active_skin_types contains 'dry' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.skin_type_options.dry' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="skin_type"
-                    value="oily"
-                    {% if active_skin_types contains 'oily' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.skin_type_options.oily' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="skin_type"
-                    value="combination"
-                    {% if active_skin_types contains 'combination' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.skin_type_options.combination' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="skin_type"
-                    value="sensitive"
-                    {% if active_skin_types contains 'sensitive' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.skin_type_options.sensitive' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="skin_type"
-                    value="normal"
-                    {% if active_skin_types contains 'normal' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.skin_type_options.normal' | t }}</span>
-                </label>
-              </div>
-            </div>
-
-            {% comment %} Routine Part Filter {% endcomment %}
-            <div class="filter-group mb-6">
-              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.routine_part' | t }}</h3>
-              <div class="flex flex-col gap-2">
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="cleanser"
-                    {% if active_routine_parts contains 'cleanser' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.cleanser' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="toner"
-                    {% if active_routine_parts contains 'toner' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.toner' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="serum"
-                    {% if active_routine_parts contains 'serum' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.serum' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="moisturizer"
-                    {% if active_routine_parts contains 'moisturizer' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.moisturizer' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="mask"
-                    {% if active_routine_parts contains 'mask' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.mask' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="routine_part"
-                    value="eye_care"
-                    {% if active_routine_parts contains 'eye_care' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.routine_part_options.eye_care' | t }}</span>
-                </label>
-              </div>
-            </div>
-
-            {% comment %} Problem Solution Filter {% endcomment %}
-            <div class="filter-group mb-6">
-              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.problem_solution' | t }}</h3>
-              <div class="flex flex-col gap-2">
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="acne"
-                    {% if active_problem_solutions contains 'acne' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.acne' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="aging"
-                    {% if active_problem_solutions contains 'aging' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.aging' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="hydration"
-                    {% if active_problem_solutions contains 'hydration' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.hydration' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="brightening"
-                    {% if active_problem_solutions contains 'brightening' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.brightening' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="redness"
-                    {% if active_problem_solutions contains 'redness' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.redness' | t }}</span>
-                </label>
-                <label class="filter-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="problem_solution"
-                    value="dark_spots"
-                    {% if active_problem_solutions contains 'dark_spots' %}
-                      checked
-                    {% endif %}
-                    class="filter-checkbox"
-                  >
-                  <span class="text-sm">{{ 'filters.problem_solution_options.dark_spots' | t }}</span>
-                </label>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              class="w-full px-4 py-2 bg-black text-white rounded text-sm hover:bg-gray-800 transition-colors"
-            >
-              {{ 'filters.apply' | t | default: 'Apply Filters' }}
-            </button>
-          </form>
-        </div>
+        <collection-filters
+          data-products-per-page="{{ products_per_page }}"
+          data-filter-config='
+            {
+              "skin_type": [
+                {"value": "dry"},
+                {"value": "oily"},
+                {"value": "combination"},
+                {"value": "sensitive"},
+                {"value": "normal"}
+              ],
+              "routine_part": [
+                {"value": "cleanser"},
+                {"value": "toner"},
+                {"value": "serum"},
+                {"value": "moisturizer"},
+                {"value": "mask"},
+                {"value": "eye_care"}
+              ],
+              "problem_solution": [
+                {"value": "acne"},
+                {"value": "aging"},
+                {"value": "hydration"},
+                {"value": "brightening"},
+                {"value": "redness"},
+                {"value": "dark_spots"}
+              ]
+            }
+          '
+        ></collection-filters>
       </aside>
     {% endif %}
 
     {% comment %} Products grid {% endcomment %}
     <div class="flex-1">
-      {% liquid
-        # Count filtered products
-        assign filtered_count = 0
-
-        for product in selected_collection.products
-          assign product_matches = true
-
-          if has_active_filters
-            # Check skin type filter
-            if active_skin_types.size > 0
-              assign has_skin_type_match = false
-              assign product_skin_types = product.metafields.custom.skin_type.value
-              if product_skin_types
-                for active_skin_type in active_skin_types
-                  if product_skin_types contains active_skin_type
-                    assign has_skin_type_match = true
-                    break
-                  endif
-                endfor
-              endif
-              if has_skin_type_match == false
-                assign product_matches = false
-              endif
-            endif
-
-            # Check routine part filter
-            if product_matches and active_routine_parts.size > 0
-              assign has_routine_part_match = false
-              assign product_routine_parts = product.metafields.custom.routine_part.value
-              if product_routine_parts
-                for active_routine_part in active_routine_parts
-                  if product_routine_parts contains active_routine_part
-                    assign has_routine_part_match = true
-                    break
-                  endif
-                endfor
-              endif
-              if has_routine_part_match == false
-                assign product_matches = false
-              endif
-            endif
-
-            # Check problem solution filter
-            if product_matches and active_problem_solutions.size > 0
-              assign has_problem_solution_match = false
-              assign product_problem_solutions = product.metafields.custom.problem_solution.value
-              if product_problem_solutions
-                for active_problem_solution in active_problem_solutions
-                  if product_problem_solutions contains active_problem_solution
-                    assign has_problem_solution_match = true
-                    break
-                  endif
-                endfor
-              endif
-              if has_problem_solution_match == false
-                assign product_matches = false
-              endif
-            endif
-          endif
-
-          if product_matches
-            assign filtered_count = filtered_count | plus: 1
-          endif
-        endfor
-      %}
-
-      <div class="mb-4 text-sm opacity-75">
-        {{ filtered_count }}
+      <div class="mb-4 text-sm opacity-75 product-count">
+        {{ selected_collection.products.size }}
         {{ 'general.products' | t | default: 'Products' }}
       </div>
 
@@ -403,90 +97,19 @@
         class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
         data-section-id="{{ section_id }}"
       >
-        {% liquid
-          assign products_shown = 0
-          for product in selected_collection.products
-            if products_shown >= products_per_page
-              break
-            endif
-
-            assign product_matches = true
-
-            # Apply filters
-            if has_active_filters
-              # Check skin type filter
-              if active_skin_types.size > 0
-                assign has_skin_type_match = false
-                assign product_skin_types = product.metafields.custom.skin_type.value
-                if product_skin_types
-                  for active_skin_type in active_skin_types
-                    if product_skin_types contains active_skin_type
-                      assign has_skin_type_match = true
-                      break
-                    endif
-                  endfor
-                endif
-                if has_skin_type_match == false
-                  assign product_matches = false
-                endif
-              endif
-
-              # Check routine part filter
-              if product_matches and active_routine_parts.size > 0
-                assign has_routine_part_match = false
-                assign product_routine_parts = product.metafields.custom.routine_part.value
-                if product_routine_parts
-                  for active_routine_part in active_routine_parts
-                    if product_routine_parts contains active_routine_part
-                      assign has_routine_part_match = true
-                      break
-                    endif
-                  endfor
-                endif
-                if has_routine_part_match == false
-                  assign product_matches = false
-                endif
-              endif
-
-              # Check problem solution filter
-              if product_matches and active_problem_solutions.size > 0
-                assign has_problem_solution_match = false
-                assign product_problem_solutions = product.metafields.custom.problem_solution.value
-                if product_problem_solutions
-                  for active_problem_solution in active_problem_solutions
-                    if product_problem_solutions contains active_problem_solution
-                      assign has_problem_solution_match = true
-                      break
-                    endif
-                  endfor
-                endif
-                if has_problem_solution_match == false
-                  assign product_matches = false
-                endif
-              endif
-            endif
-
-            if product_matches
-              render 'product-card', product: product
-              assign products_shown = products_shown | plus: 1
-            endif
-          endfor
-        %}
+        {% for product in selected_collection.products %}
+          <div
+            class="product-card"
+            data-skin-type="{{ product.metafields.custom.skin_type.value | default: '' }}"
+            data-routine-part="{{ product.metafields.custom.routine_part.value | default: '' }}"
+            data-problem-solution="{{ product.metafields.custom.problem_solution.value | default: '' }}"
+          >
+            {% render 'product-card', product: product %}
+          </div>
+        {% endfor %}
       </div>
 
-      {% if filtered_count == 0 %}
-        <div class="text-center py-12">
-          <p class="text-lg opacity-75">
-            {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
-          </p>
-          <a
-            href="{{ selected_collection.url }}"
-            class="inline-block mt-4 px-6 py-2 border border-gray-300 rounded hover:bg-gray-50"
-          >
-            {{ 'filters.clear_all' | t | default: 'Clear all' }}
-          </a>
-        </div>
-      {% elsif filtered_count > products_per_page %}
+      {% if selected_collection.products.size > products_per_page %}
         <div class="text-center">
           <button
             class="px-8 py-3 bg-background text-foreground border border-border rounded cursor-pointer text-sm transition-all duration-200 hover:bg-foreground hover:text-background"
@@ -555,39 +178,7 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-  // Handle filter form submission to support multiple checkbox values
-  document.addEventListener('DOMContentLoaded', function () {
-    const filterForm = document.getElementById('filter-form');
-
-    if (filterForm) {
-      filterForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(filterForm);
-        const params = new URLSearchParams();
-
-        // Group checkboxes by name
-        const checkboxGroups = {};
-        formData.forEach((value, key) => {
-          if (!checkboxGroups[key]) {
-            checkboxGroups[key] = [];
-          }
-          checkboxGroups[key].push(value);
-        });
-
-        // Build query string with comma-separated values
-        Object.keys(checkboxGroups).forEach((key) => {
-          params.set(key, checkboxGroups[key].join(','));
-        });
-
-        // Navigate to filtered URL
-        const queryString = params.toString();
-        window.location.href = filterForm.action + (queryString ? '?' + queryString : '');
-      });
-    }
-  });
-{% endjavascript %}
+<script src="{{ 'collection-filters.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
