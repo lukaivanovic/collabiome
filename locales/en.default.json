@@ -7,4 +7,46 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{}
+{
+  "general": {
+    "products": "Products",
+    "load_more": "Load more products"
+  },
+  "collections": {
+    "all": "Shop all",
+    "supplements": "Dodaci prehrani",
+    "cosmetics": "Kozmetika"
+  },
+  "filters": {
+    "title": "Filters",
+    "clear_all": "Clear all",
+    "apply": "Apply Filters",
+    "no_products": "No products found with the selected filters.",
+    "skin_type": "Skin Type",
+    "routine_part": "Routine Part",
+    "problem_solution": "Problem Solution",
+    "skin_type_options": {
+      "dry": "Dry",
+      "oily": "Oily",
+      "combination": "Combination",
+      "sensitive": "Sensitive",
+      "normal": "Normal"
+    },
+    "routine_part_options": {
+      "cleanser": "Cleanser",
+      "toner": "Toner",
+      "serum": "Serum",
+      "moisturizer": "Moisturizer",
+      "mask": "Mask",
+      "eye_care": "Eye Care"
+    },
+    "problem_solution_options": {
+      "acne": "Acne",
+      "aging": "Aging",
+      "hydration": "Hydration",
+      "brightening": "Brightening",
+      "redness": "Redness",
+      "dark_spots": "Dark Spots"
+    }
+  }
+}

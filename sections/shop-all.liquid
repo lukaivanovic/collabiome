@@ -2,202 +2,592 @@
   assign section_id = section.settings.custom_id | default: section.id
   assign products_per_page = section.settings.products_per_page | default: 24
 
+  # Get collection from URL or section settings
+  assign url_collection = request.path | split: '/' | last
   if section.settings.collection != blank
     assign selected_collection = collections[section.settings.collection]
-    assign collection_products = selected_collection.products
-    assign total_products = selected_collection.products_count
+  elsif url_collection != blank and url_collection != 'shop-all'
+    assign selected_collection = collections[url_collection]
   else
-    assign collection_products = collections.all.products
-    assign total_products = collections.all.products_count
+    assign selected_collection = collections.all
+  endif
+
+  # Parse URL parameters for filters
+  assign active_skin_types = ''
+  assign active_routine_parts = ''
+  assign active_problem_solutions = ''
+
+  if request.query_string contains 'skin_type='
+    assign skin_type_param = request.query_string | split: 'skin_type=' | last | split: '&' | first
+    assign active_skin_types = skin_type_param | split: ','
+  endif
+
+  if request.query_string contains 'routine_part='
+    assign routine_part_param = request.query_string | split: 'routine_part=' | last | split: '&' | first
+    assign active_routine_parts = routine_part_param | split: ','
+  endif
+
+  if request.query_string contains 'problem_solution='
+    assign problem_solution_param = request.query_string | split: 'problem_solution=' | last | split: '&' | first
+    assign active_problem_solutions = problem_solution_param | split: ','
+  endif
+
+  # Check if any filters are active
+  assign has_active_filters = false
+  if active_skin_types.size > 0 or active_routine_parts.size > 0 or active_problem_solutions.size > 0
+    assign has_active_filters = true
+  endif
+
+  # Define filter options for Kozmetika collection
+  assign show_filters = false
+  if selected_collection.handle == 'kozmetika' or selected_collection.handle == 'cosmetics'
+    assign show_filters = true
   endif
 %}
 
-<div class="shop-all container">
-  {% if section.settings.title != blank %}
-    <div class="shop-all__header">
-      <h1 class="shop-all__title text-3xl uppercase">{{ selected_collection.title }}</h1>
-      <p class="shop-all__count text-sm opacity-75">
-        {{ total_products }}
-        Products
-      </p>
-    </div>
-  {% endif %}
-
-  <div class="shop-all__grid" data-section-id="{{ section_id }}">
-    {% for product in collection_products limit: products_per_page %}
-      {% render 'product-card', product: product %}
-    {% endfor %}
+<div class="container mx-auto max-w-7xl px-4 py-8 md:py-16">
+  {% comment %} Collection chips navigation {% endcomment %}
+  <div class="flex flex-wrap gap-2 mb-8 justify-center">
+    <a
+      href="{{ routes.collections_url }}/all"
+      class="collection-chip {% if selected_collection.handle == 'all' %}active{% endif %}"
+    >
+      {{ 'collections.all' | t | default: 'Shop all' }}
+    </a>
+    <a
+      href="{{ routes.collections_url }}/dodaci-prehrani"
+      class="collection-chip {% if selected_collection.handle == 'dodaci-prehrani' %}active{% endif %}"
+    >
+      {{ 'collections.supplements' | t | default: 'Dodaci prehrani' }}
+    </a>
+    <a
+      href="{{ routes.collections_url }}/kozmetika"
+      class="collection-chip {% if selected_collection.handle == 'kozmetika' %}active{% endif %}"
+    >
+      {{ 'collections.cosmetics' | t | default: 'Kozmetika' }}
+    </a>
   </div>
 
-  {% if total_products > products_per_page %}
-    <div class="shop-all__pagination">
-      <button class="shop-all__load-more btn btn--secondary" data-products-per-page="{{ products_per_page }}">
-        Load more products
-      </button>
+  {% if section.settings.title != blank %}
+    <div class="text-center mb-8">
+      <h1 class="text-3xl uppercase mb-2">{{ selected_collection.title }}</h1>
     </div>
   {% endif %}
+
+  {% comment %} Main content area with filters and products {% endcomment %}
+  <div class="flex flex-col md:flex-row gap-8">
+    {% comment %} Filters sidebar {% endcomment %}
+    {% if show_filters and section.settings.show_filters %}
+      <aside class="w-full md:w-64 flex-shrink-0">
+        <div class="bg-white rounded-lg p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-medium uppercase">{{ 'filters.title' | t | default: 'Filters' }}</h2>
+            {% if has_active_filters %}
+              <a href="{{ selected_collection.url }}" class="text-sm underline">
+                {{ 'filters.clear_all' | t | default: 'Clear all' }}
+              </a>
+            {% endif %}
+          </div>
+
+          <form method="get" action="{{ selected_collection.url }}" id="filter-form">
+            {% comment %} Skin Type Filter {% endcomment %}
+            <div class="filter-group mb-6">
+              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.skin_type' | t }}</h3>
+              <div class="flex flex-col gap-2">
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="skin_type"
+                    value="dry"
+                    {% if active_skin_types contains 'dry' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.skin_type_options.dry' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="skin_type"
+                    value="oily"
+                    {% if active_skin_types contains 'oily' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.skin_type_options.oily' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="skin_type"
+                    value="combination"
+                    {% if active_skin_types contains 'combination' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.skin_type_options.combination' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="skin_type"
+                    value="sensitive"
+                    {% if active_skin_types contains 'sensitive' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.skin_type_options.sensitive' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="skin_type"
+                    value="normal"
+                    {% if active_skin_types contains 'normal' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.skin_type_options.normal' | t }}</span>
+                </label>
+              </div>
+            </div>
+
+            {% comment %} Routine Part Filter {% endcomment %}
+            <div class="filter-group mb-6">
+              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.routine_part' | t }}</h3>
+              <div class="flex flex-col gap-2">
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="cleanser"
+                    {% if active_routine_parts contains 'cleanser' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.cleanser' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="toner"
+                    {% if active_routine_parts contains 'toner' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.toner' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="serum"
+                    {% if active_routine_parts contains 'serum' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.serum' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="moisturizer"
+                    {% if active_routine_parts contains 'moisturizer' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.moisturizer' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="mask"
+                    {% if active_routine_parts contains 'mask' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.mask' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="routine_part"
+                    value="eye_care"
+                    {% if active_routine_parts contains 'eye_care' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.routine_part_options.eye_care' | t }}</span>
+                </label>
+              </div>
+            </div>
+
+            {% comment %} Problem Solution Filter {% endcomment %}
+            <div class="filter-group mb-6">
+              <h3 class="text-sm font-medium mb-3 uppercase">{{ 'filters.problem_solution' | t }}</h3>
+              <div class="flex flex-col gap-2">
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="acne"
+                    {% if active_problem_solutions contains 'acne' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.acne' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="aging"
+                    {% if active_problem_solutions contains 'aging' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.aging' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="hydration"
+                    {% if active_problem_solutions contains 'hydration' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.hydration' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="brightening"
+                    {% if active_problem_solutions contains 'brightening' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.brightening' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="redness"
+                    {% if active_problem_solutions contains 'redness' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.redness' | t }}</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="problem_solution"
+                    value="dark_spots"
+                    {% if active_problem_solutions contains 'dark_spots' %}
+                      checked
+                    {% endif %}
+                    class="filter-checkbox"
+                  >
+                  <span class="text-sm">{{ 'filters.problem_solution_options.dark_spots' | t }}</span>
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full px-4 py-2 bg-black text-white rounded text-sm hover:bg-gray-800 transition-colors"
+            >
+              {{ 'filters.apply' | t | default: 'Apply Filters' }}
+            </button>
+          </form>
+        </div>
+      </aside>
+    {% endif %}
+
+    {% comment %} Products grid {% endcomment %}
+    <div class="flex-1">
+      {% liquid
+        # Count filtered products
+        assign filtered_count = 0
+
+        for product in selected_collection.products
+          assign product_matches = true
+
+          if has_active_filters
+            # Check skin type filter
+            if active_skin_types.size > 0
+              assign has_skin_type_match = false
+              assign product_skin_types = product.metafields.custom.skin_type.value
+              if product_skin_types
+                for active_skin_type in active_skin_types
+                  if product_skin_types contains active_skin_type
+                    assign has_skin_type_match = true
+                    break
+                  endif
+                endfor
+              endif
+              if has_skin_type_match == false
+                assign product_matches = false
+              endif
+            endif
+
+            # Check routine part filter
+            if product_matches and active_routine_parts.size > 0
+              assign has_routine_part_match = false
+              assign product_routine_parts = product.metafields.custom.routine_part.value
+              if product_routine_parts
+                for active_routine_part in active_routine_parts
+                  if product_routine_parts contains active_routine_part
+                    assign has_routine_part_match = true
+                    break
+                  endif
+                endfor
+              endif
+              if has_routine_part_match == false
+                assign product_matches = false
+              endif
+            endif
+
+            # Check problem solution filter
+            if product_matches and active_problem_solutions.size > 0
+              assign has_problem_solution_match = false
+              assign product_problem_solutions = product.metafields.custom.problem_solution.value
+              if product_problem_solutions
+                for active_problem_solution in active_problem_solutions
+                  if product_problem_solutions contains active_problem_solution
+                    assign has_problem_solution_match = true
+                    break
+                  endif
+                endfor
+              endif
+              if has_problem_solution_match == false
+                assign product_matches = false
+              endif
+            endif
+          endif
+
+          if product_matches
+            assign filtered_count = filtered_count | plus: 1
+          endif
+        endfor
+      %}
+
+      <div class="mb-4 text-sm opacity-75">
+        {{ filtered_count }}
+        {{ 'general.products' | t | default: 'Products' }}
+      </div>
+
+      <div
+        class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
+        data-section-id="{{ section_id }}"
+      >
+        {% liquid
+          assign products_shown = 0
+          for product in selected_collection.products
+            if products_shown >= products_per_page
+              break
+            endif
+
+            assign product_matches = true
+
+            # Apply filters
+            if has_active_filters
+              # Check skin type filter
+              if active_skin_types.size > 0
+                assign has_skin_type_match = false
+                assign product_skin_types = product.metafields.custom.skin_type.value
+                if product_skin_types
+                  for active_skin_type in active_skin_types
+                    if product_skin_types contains active_skin_type
+                      assign has_skin_type_match = true
+                      break
+                    endif
+                  endfor
+                endif
+                if has_skin_type_match == false
+                  assign product_matches = false
+                endif
+              endif
+
+              # Check routine part filter
+              if product_matches and active_routine_parts.size > 0
+                assign has_routine_part_match = false
+                assign product_routine_parts = product.metafields.custom.routine_part.value
+                if product_routine_parts
+                  for active_routine_part in active_routine_parts
+                    if product_routine_parts contains active_routine_part
+                      assign has_routine_part_match = true
+                      break
+                    endif
+                  endfor
+                endif
+                if has_routine_part_match == false
+                  assign product_matches = false
+                endif
+              endif
+
+              # Check problem solution filter
+              if product_matches and active_problem_solutions.size > 0
+                assign has_problem_solution_match = false
+                assign product_problem_solutions = product.metafields.custom.problem_solution.value
+                if product_problem_solutions
+                  for active_problem_solution in active_problem_solutions
+                    if product_problem_solutions contains active_problem_solution
+                      assign has_problem_solution_match = true
+                      break
+                    endif
+                  endfor
+                endif
+                if has_problem_solution_match == false
+                  assign product_matches = false
+                endif
+              endif
+            endif
+
+            if product_matches
+              render 'product-card', product: product
+              assign products_shown = products_shown | plus: 1
+            endif
+          endfor
+        %}
+      </div>
+
+      {% if filtered_count == 0 %}
+        <div class="text-center py-12">
+          <p class="text-lg opacity-75">
+            {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
+          </p>
+          <a
+            href="{{ selected_collection.url }}"
+            class="inline-block mt-4 px-6 py-2 border border-gray-300 rounded hover:bg-gray-50"
+          >
+            {{ 'filters.clear_all' | t | default: 'Clear all' }}
+          </a>
+        </div>
+      {% elsif filtered_count > products_per_page %}
+        <div class="text-center">
+          <button
+            class="px-8 py-3 bg-background text-foreground border border-border rounded cursor-pointer text-sm transition-all duration-200 hover:bg-foreground hover:text-background"
+            data-products-per-page="{{ products_per_page }}"
+          >
+            {{ 'general.load_more' | t | default: 'Load more products' }}
+          </button>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
 
 {% stylesheet %}
-  .shop-all {
-    padding: 2rem 0;
-    max-width: 1200px;
-    margin: 0 auto;
+  /* Collection chips */
+  .collection-chip {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    background: white;
   }
 
-  .shop-all__header {
-    text-align: center;
-    margin-bottom: 3rem;
+  .collection-chip:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
   }
 
-  .shop-all__title {
-    margin-bottom: 0.5rem;
+  .collection-chip.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
   }
 
-  .shop-all__count {
-    color: var(--color-foreground, #000);
-  }
-
-  .shop-all__controls {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 2rem;
-    gap: 1rem;
-  }
-
-  .shop-all__sorting {
+  /* Filter checkboxes */
+  .filter-checkbox-label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .shop-all__sort-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .shop-all__sort-select {
-    padding: 0.5rem;
-    border: 1px solid var(--color-border, #ddd);
-    border-radius: 4px;
-    background: var(--color-background, #fff);
-    font-size: 0.875rem;
-  }
-
-  .shop-all__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .shop-all__product {
-    width: 100%;
-  }
-
-  .product-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    /* background: var(--color-background, #fff); */
-    color: var(--color-foreground, #000);
-    text-decoration: none;
-    border-radius: 8px;
-    overflow: hidden;
-    height: 100%;
-  }
-
-  .product-card__media {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  .product-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .product-card__placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.04), rgb(0 0 0 / 0.12));
-  }
-
-  .product-card__content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0 0.5rem 0.5rem;
-  }
-
-  .product-card__title {
-    line-height: 1.4;
-    margin-bottom: 0.25rem;
-  }
-
-  .product-card__price {
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-    color: var(--color-foreground, #000);
-  }
-
-  .product-card__compare-price {
-    font-variant-numeric: tabular-nums;
-  }
-
-  .shop-all__pagination {
-    text-align: center;
-  }
-
-  .shop-all__load-more {
-    padding: 0.75rem 2rem;
-    background: var(--color-background, #fff);
-    color: var(--color-foreground, #000);
-    border: 1px solid var(--color-border, #ddd);
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
+    padding: 0.25rem 0;
   }
 
-  .shop-all__load-more:hover {
-    background: var(--color-foreground, #000);
-    color: var(--color-background, #fff);
+  .filter-checkbox-label:hover {
+    opacity: 0.8;
+  }
+
+  .filter-checkbox {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
   }
 
   @media (max-width: 768px) {
-    .shop-all {
-      padding: 1rem;
+    aside {
+      order: 2;
     }
 
-    .shop-all__grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .shop-all__controls {
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .shop-all__sorting {
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .shop-all__grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+    .flex-1 {
+      order: 1;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  // Handle filter form submission to support multiple checkbox values
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filter-form');
+
+    if (filterForm) {
+      filterForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(filterForm);
+        const params = new URLSearchParams();
+
+        // Group checkboxes by name
+        const checkboxGroups = {};
+        formData.forEach((value, key) => {
+          if (!checkboxGroups[key]) {
+            checkboxGroups[key] = [];
+          }
+          checkboxGroups[key].push(value);
+        });
+
+        // Build query string with comma-separated values
+        Object.keys(checkboxGroups).forEach((key) => {
+          params.set(key, checkboxGroups[key].join(','));
+        });
+
+        // Navigate to filtered URL
+        const queryString = params.toString();
+        window.location.href = filterForm.action + (queryString ? '?' + queryString : '');
+      });
+    }
+  });
+{% endjavascript %}
 
 {% schema %}
 {
