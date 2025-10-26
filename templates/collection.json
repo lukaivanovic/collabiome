@@ -12,9 +12,20 @@
     "main": {
       "type": "collection",
       "settings": {}
+    },
+    "shop_all_6XYGtW": {
+      "type": "shop-all",
+      "name": "Shop All",
+      "settings": {
+        "title": "Shop All Products",
+        "collection": "",
+        "products_per_page": 24,
+        "show_filters": false
+      }
     }
   },
   "order": [
+    "shop_all_6XYGtW",
     "main"
   ]
 }
