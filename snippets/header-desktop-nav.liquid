@@ -1,20 +1,18 @@
 <nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 z-10">
   <div class="container grid grid-cols-[1fr_auto_1fr] items-center justify-center py-2 px-3 relative h-16">
-    <div class="flex gap-8" data-desktop-menu>
+    <div class="flex gap-2" data-desktop-menu>
       {% if shop_menu and shop_menu.links.size > 0 %}
         {% for link in shop_menu.links %}
-          <div class="relative">
-            <a
-              href="{{ link.url }}"
-              class="block relative py-2 no-underline text-[var(--color-foreground)] hover:text-[var(--color-foreground)]"
-              {% if link.type == 'collection_link' %}
-                data-mega-menu-trigger
-                data-collection-handle="{{ link.object.handle }}"
-              {% endif %}
-            >
-              {{ link.title }}
-            </a>
-          </div>
+          <a
+            href="{{ link.url }}"
+            class="block relative py-1 px-3 no-underline text-primary hover:bg-neutral-100 rounded-full"
+            {% if link.type == 'collection_link' %}
+              data-mega-menu-trigger
+              data-collection-handle="{{ link.object.handle }}"
+            {% endif %}
+          >
+            {{ link.title }}
+          </a>
         {% endfor %}
       {% endif %}
     </div>
@@ -23,18 +21,22 @@
       {{ 'logo.svg' | inline_asset_content }}
     </a>
 
-    <div class="flex items-center gap-4 justify-end">
+    <div class="flex items-center gap-2 justify-end">
       {% if marketing_menu and marketing_menu.links.size > 0 %}
         {% for link in marketing_menu.links %}
           <a
             href="{{ link.url }}"
-            class="block relative py-2 no-underline text-[var(--color-foreground)] hover:text-[var(--color-foreground)]"
+            class="block relative py-1 px-3 no-underline text-primary hover:bg-neutral-100 rounded-full"
           >
             {{ link.title }}
           </a>
         {% endfor %}
       {% endif %}
-      <a href="account" aria-label="User" class="flex items-center justify-center size-6 rounded-full">
+      <a
+        href="account"
+        aria-label="User"
+        class="flex items-center justify-center size-9 [&>svg]:size-6 rounded-full hover:bg-neutral-100"
+      >
         {{ 'icon-account.svg' | inline_asset_content }}
       </a>
       <a
@@ -42,7 +44,7 @@
         aria-label="Cart"
         aria-haspopup="drawer"
         id="cart-icon-bubble"
-        class="flex items-center justify-center size-6 rounded-full"
+        class="flex items-center justify-center size-9 [&>svg]:size-6 rounded-full hover:bg-neutral-100"
       >
         {{ 'icon-cart.svg' | inline_asset_content }}
       </a>

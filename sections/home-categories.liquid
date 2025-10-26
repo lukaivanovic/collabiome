@@ -16,7 +16,7 @@
         class="category-card flex flex-col relative overflow-hidden rounded-xl bg-black group shadow-sm"
         {{ block.shopify_attributes }}
       >
-        {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-1' %}
+        {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-grow' %}
 
         <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-55">
           <div>

@@ -29,11 +29,9 @@
     {{ 'icon-menu.svg' | inline_asset_content }}
   </button>
 
-  <div class="h-10">
-    <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-      <img class="h-full w-auto" src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
-    </a>
-  </div>
+  <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="[&>svg]:size-12">
+    {{ 'logo.svg' | inline_asset_content }}
+  </a>
 
   <div class="flex items-center gap-4">
     <a href="account" aria-label="Account" class="flex items-center justify-center size-6">
@@ -51,56 +49,57 @@
   </div>
 
   <!-- Mobile Menu Drawer -->
-  <div
-    id="mobile-menu"
-    class="absolute inset-0 top-16 z-[9999] h-screen w-screen opacity-0 invisible transition-opacity duration-300 aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
-    aria-hidden="true"
-    data-mobile-menu
-  >
-    <!-- Overlay -->
-    <div
-      class="absolute inset-0 bg-black/50"
-      data-menu-overlay
-    ></div>
-
-    <!-- Menu Content -->
-    <nav class="w-full bg-[var(--color-background-default)] flex flex-col transform -translate-x-full  aria-[hidden=false]:translate-x-0 shadow-lg">
-      {% if shop_menu and shop_menu.links.size > 0 %}
-        <div class="mb-6">
-          <ul class="list-none m-0 p-0">
-            {% for link in shop_menu.links %}
-              <li class="border-b border-black/5">
-                <a
-                  href="{{ link.url }}"
-                  class="block px-6 py-4 text-[var(--color-foreground)] no-underline text-lg font-medium hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-[-2px]"
-                >
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-
-      {% if marketing_menu and marketing_menu.links.size > 0 %}
-        <div class="px-6">
-          <ul class="list-none m-0 p-0 flex flex-col gap-2">
-            {% for link in marketing_menu.links %}
-              <li>
-                <a
-                  href="{{ link.url }}"
-                  class="block py-2 text-[var(--color-foreground)]/64 no-underline text-base hover:text-[var(--color-foreground)] focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
-                >
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-    </nav>
-  </div>
 </nav>
+
+<div
+  id="mobile-menu"
+  class="absolute inset-0 top-16 z-[9999] h-screen w-screen opacity-0 invisible transition-opacity duration-300 aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
+  aria-hidden="true"
+  data-mobile-menu
+>
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-black/50"
+    data-menu-overlay
+  ></div>
+
+  <!-- Menu Content -->
+  <nav class="w-full bg-[var(--color-background-default)] flex flex-col transform -translate-x-full  aria-[hidden=false]:translate-x-0 shadow-lg">
+    {% if shop_menu and shop_menu.links.size > 0 %}
+      <div class="mb-6">
+        <ul class="list-none m-0 p-0">
+          {% for link in shop_menu.links %}
+            <li class="border-b border-black/5">
+              <a
+                href="{{ link.url }}"
+                class="block px-6 py-4 text-[var(--color-foreground)] no-underline text-lg font-medium hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-[-2px]"
+              >
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if marketing_menu and marketing_menu.links.size > 0 %}
+      <div class="px-6">
+        <ul class="list-none m-0 p-0 flex flex-col gap-2">
+          {% for link in marketing_menu.links %}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="block py-2 text-[var(--color-foreground)]/64 no-underline text-base hover:text-[var(--color-foreground)] focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
+              >
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </nav>
+</div>
 
 {% javascript %}
   class MobileMenu {
