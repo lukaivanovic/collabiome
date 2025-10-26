@@ -16,7 +16,7 @@
     </div>
   {% endif %}
 
-  <div class="embla embla-products-row relative overflow-hidden" data-section-id="{{ section_id }}">
+  <div class="embla embla-products-row relative md:overflow-hidden" data-section-id="{{ section_id }}">
     <div class="embla__container flex">
       {% for product in products limit: 24 %}
         <div class="embla__slide">
@@ -205,8 +205,8 @@
     }
 
     .embla__slide {
-      flex: 0 0 280px;
-      min-width: 280px;
+      flex: 0 0 calc(90% - 0.5625rem);
+      min-width: calc(90% - 0.5625rem);
     }
 
     .products-row__nav {

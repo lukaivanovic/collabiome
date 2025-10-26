@@ -1818,6 +1818,11 @@
       gap: calc(var(--spacing) * 40);
     }
   }
+  .md\:overflow-hidden {
+    @media (width >= 48rem) {
+      overflow: hidden;
+    }
+  }
   .md\:rounded-3xl {
     @media (width >= 48rem) {
       border-radius: var(--radius-3xl);
