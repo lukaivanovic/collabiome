@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "collection",
-      "settings": {}
-    },
     "shop_all_6XYGtW": {
       "type": "shop-all",
       "name": "Shop All",
@@ -20,8 +16,12 @@
         "title": "Shop All Products",
         "collection": "",
         "products_per_page": 24,
-        "show_filters": false
+        "show_filters": true
       }
+    },
+    "main": {
+      "type": "collection",
+      "settings": {}
     }
   },
   "order": [
