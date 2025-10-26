@@ -1,6 +1,11 @@
 <footer class="pt-20">
   <div
-    class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden bg-red-500"
+    class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden "
+    style="
+      {% if section.settings.newsletter_bg_color != blank %}
+        background-color: {{ section.settings.newsletter_bg_color }};
+      {% endif %}
+    "
   >
     {% if section.settings.newsletter_bg_image != blank %}
       <div class="absolute inset-0 opacity-100">
