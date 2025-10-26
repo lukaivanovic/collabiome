@@ -24,7 +24,7 @@
         "social_3": "LinkedIn",
         "show_payment_icons": false,
         "newsletter_bg_image": "shopify://shop_images/image_39.png",
-        "newsletter_bg_color": "#db4e7d",
+        "newsletter_bg_color": "#000000",
         "newsletter_description": "Be first in line to hear about new product launches, health tips and more!"
       }
     }
