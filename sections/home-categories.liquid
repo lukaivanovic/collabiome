@@ -2,7 +2,7 @@
   assign section_id = section.settings.custom_id | default: section.id
 %}
 
-<div class="container relative py-[120px]">
+<div class="container relative py-[120px] bg-[#F7E9E9]">
   {% if section.settings.title != blank %}
     <h2 class="text-xl uppercase">{{ section.settings.title | escape }}</h2>
   {% endif %}
@@ -15,15 +15,17 @@
       >
         {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-1' %}
 
-        <div class="p-6  grid gap-1 bg-white">
-          {% if block.settings.title != blank %}
-            <h3 class="text-2xl uppercase font-medium">{{ block.settings.title | escape }}</h3>
-          {% endif %}
-          {% if block.settings.description != blank %}
-            <p class="text-white/80 m-0 mb-4">{{ block.settings.description | escape }}</p>
-          {% endif %}
+        <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-55">
+          <div>
+            {% if block.settings.title != blank %}
+              <h3 class="text-3xl pb-1">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="text-black/80 ">{{ block.settings.description | escape }}</p>
+            {% endif %}
+          </div>
           {% if block.settings.button_text != blank %}
-            <div class="button button-boost">
+            <div class="button button-neutral">
               {{- block.settings.button_text | escape -}}
             </div>
           {% endif %}

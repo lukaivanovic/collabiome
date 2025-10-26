@@ -6,38 +6,38 @@
   endif
 %}
 
-<div class="products-row container">
+<div class="products-row container relative">
   {% if section.settings.title != blank %}
-    <h2 class="products-row__title text-2xl uppercase">{{ section.settings.title | escape }}</h2>
+    <div class="pb-12">
+      <h2 class="text-4xl pb-1">{{ section.settings.title | escape }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="text-secondary">{{ section.settings.description | escape }}</p>
+      {% endif %}
+    </div>
   {% endif %}
 
   <div class="embla embla-products-row relative overflow-hidden" data-section-id="{{ section_id }}">
     <div class="embla__container flex">
-      {% for product in products limit: 6 %}
-        <div class="flex-grow flex-shrink-0 basis-[320px] min-w-0">
+      {% for product in products limit: 24 %}
+        <div class="embla__slide">
           {% render 'product-card', product: product %}
         </div>
       {% endfor %}
     </div>
-
-    <button
-      class="embla__prev absolute top-1/2 -translate-y-1/2 left-2 bg-white rounded-full z-2 p-1 text-black"
-      aria-label="Previous product"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <button
-      class="embla__next absolute top-1/2 -translate-y-1/2 right-2 bg-black rounded-full z-2 p-1 text-white"
-      aria-label="Next product"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
   </div>
+  <button
+    class="embla__prev absolute top-1/2 -translate-y-1/2 left-7 bg-black hover:bg-neutral-800 flex items-center rounded-full z-2 size-8 pl-[3px] text-white"
+    aria-label="Previous product"
+  >
+    {{ 'icon-chevron-left.svg' | inline_asset_content }}
+  </button>
+
+  <button
+    class="embla__next absolute top-1/2 -translate-y-1/2 right-7 bg-black hover:bg-neutral-800 flex items-center rounded-full z-2 size-8 pl-[5px] text-white"
+    aria-label="Next product"
+  >
+    {{ 'icon-chevron-right.svg' | inline_asset_content }}
+  </button>
 
   <!-- Progress Bar -->
   <div class="products-row__progress" aria-hidden="true">
@@ -55,18 +55,26 @@
     script.onload = function () {
       // Initialize Embla Carousel for each products row
       document.querySelectorAll('.embla-products-row').forEach(function (carouselElement) {
+        // Determine slides to scroll based on screen size
+        function getSlidesToScroll() {
+          const width = window.innerWidth;
+          if (width < 768) return 1; // Mobile: 1 column
+          if (width <= 1024) return 2; // Tablet: 2 columns
+          return 4; // Desktop: 4 columns
+        }
+
         const embla = EmblaCarousel(carouselElement, {
-          loop: true,
+          loop: false,
           align: 'start',
           containScroll: 'trimSnaps',
           dragFree: false,
           skipSnaps: false,
-          slidesToScroll: 1,
+          slidesToScroll: getSlidesToScroll(),
         });
 
         // Navigation buttons
-        const prevButton = carouselElement.querySelector('.embla__prev');
-        const nextButton = carouselElement.querySelector('.embla__next');
+        const prevButton = document.querySelector('.embla__prev');
+        const nextButton = document.querySelector('.embla__next');
 
         if (prevButton) {
           prevButton.addEventListener('click', embla.scrollPrev);
@@ -110,6 +118,24 @@
         embla.on('select', updateButtons);
         embla.on('scroll', updateProgressBar);
         embla.on('pointerUp', updateProgressBar);
+
+        // Handle window resize to adjust slidesToScroll
+        let currentSlidesToScroll = getSlidesToScroll();
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            const newSlidesToScroll = getSlidesToScroll();
+
+            // Only reinitialize if the slidesToScroll changed
+            if (currentSlidesToScroll !== newSlidesToScroll) {
+              currentSlidesToScroll = newSlidesToScroll;
+              embla.reInit({ slidesToScroll: newSlidesToScroll });
+              updateButtons();
+              updateProgressBar();
+            }
+          }, 250);
+        });
       });
     };
     document.head.appendChild(script);
@@ -128,10 +154,6 @@
     padding-bottom: 200px;
   }
 
-  .products-row__title {
-    margin-bottom: 2rem;
-  }
-
   .embla-products-row {
     position: relative;
   }
@@ -142,7 +164,7 @@
   }
 
   .embla__slide {
-    flex: 0 0 320px;
+    flex: 0 0 calc(25% - 0.5625rem);
     min-width: 0;
   }
 
@@ -184,6 +206,7 @@
 
     .embla__slide {
       flex: 0 0 280px;
+      min-width: 280px;
     }
 
     .products-row__nav {
@@ -192,6 +215,13 @@
 
     .products-row__progress {
       margin-top: 1.5rem;
+    }
+  }
+
+  /* Tablet view - 2 columns */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .embla__slide {
+      flex: 0 0 calc(50% - 0.375rem);
     }
   }
 {% endstylesheet %}
@@ -203,6 +233,7 @@
   "tag": "section",
   "settings": [
     { "type": "text", "id": "title", "label": "Text", "default": "Featured products" },
+    { "type": "text", "id": "description", "label": "Description", "default": "Discover our latest products" },
     { "type": "product_list", "id": "products", "label": "Product", "limit": 24 }
   ],
   "presets": [{ "name": "Product", "category": "Main" }]

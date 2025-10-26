@@ -24,14 +24,8 @@
     {% endif %}
   </div>
   <div class="product-card__content">
-    <h3 class="text-large font-medium line-clamp-2 max-h-[2lh]">{{ product.title | escape }}</h3>
-    <p class="text-base font-regular">
-      {% if product.price_varies %}
-        From {{ product.price_min | money }}
-      {% else %}
-        {{ product.price | money }}
-      {% endif %}
-    </p>
+    <h3 class="text-lg font-semibold line-clamp-2 h-[2lh]">{{ product.title | escape }}</h3>
+
     {% render 'buy-form', product: product %}
   </div>
 </a>
