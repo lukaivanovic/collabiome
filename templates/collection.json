@@ -18,14 +18,7 @@
         "products_per_page": 24,
         "show_filters": true
       }
-    },
-    "main": {
-      "type": "collection",
-      "settings": {}
     }
   },
-  "order": [
-    "shop_all_6XYGtW",
-    "main"
-  ]
+  "order": ["shop_all_6XYGtW"]
 }

@@ -2,18 +2,9 @@
   assign section_id = section.settings.custom_id | default: section.id
   assign products_per_page = section.settings.products_per_page | default: 24
 
-  # Get collection from URL or section settings
-  # Extract collection handle from URL path, accounting for filter parameters
-  assign url_parts = request.path | split: '/'
-  assign collection_handle = url_parts[2] | default: ''
-
-  if section.settings.collection != blank
-    assign selected_collection = collections[section.settings.collection]
-  elsif collection_handle != blank and collection_handle != 'shop-all'
-    assign selected_collection = collections[collection_handle]
-  else
-    assign selected_collection = collections.all
-  endif
+  # Use collection object directly (like collection.liquid does)
+  # This automatically handles filtering context from URL parameters
+  assign selected_collection = collection
 
   # Define filter options for Kozmetika collection
   assign show_filters = false
@@ -48,10 +39,6 @@
   {% if section.settings.title != blank %}
     <div class="text-center mb-8">
       <h1 class="text-3xl uppercase mb-2">{{ selected_collection.title }}</h1>
-      {% comment %} Debug info - remove in production {% endcomment %}
-      <p class="text-sm opacity-50">
-        Collection: {{ selected_collection.handle }} | Filters: {{ selected_collection.filters.size }}
-      </p>
     </div>
   {% endif %}
 
