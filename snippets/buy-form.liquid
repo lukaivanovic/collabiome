@@ -31,16 +31,16 @@
       class="product-variant-id"
     >
     <div class="flex flex-col gap-4">
-      {% unless product.has_only_default_variant %}
-        <div class="flex flex-row gap-2">
+      <div class="flex flex-row gap-2 h-8">
+        {% unless product.has_only_default_variant %}
           {% comment %}  Variants {% endcomment %}
           {% for option in product.options_with_values %}
             {% comment %}  Options {% endcomment %}
-            <div class="flex flex-row ">
+            <div class="flex flex-row gap-2">
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option flex items-center p-2 gap-2 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-400 data-[selected=true]:border-primary data-[selected=true]:bg-primary/5 data-[selected=true]:border-2"
+                  class="variant-option flex items-center px-2 py-1 gap-2 border bg-white rounded-lg cursor-pointer transition-all border-transparent hover:border-gray-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -58,13 +58,13 @@
                     {% endif %}
                     class="sr-only"
                   >
-                  <span class="text-large text-primary">{{ value }}</span>
+                  <span class="text-sm text-primary">{{ value }}</span>
                 </label>
               {% endfor %}
             </div>
           {% endfor %}
-        </div>
-      {% endunless %}
+        {% endunless %}
+      </div>
 
       <div class="product-form__buttons">
         {%- liquid
@@ -80,7 +80,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="product-form__submit button button--full-width button-boost text-blue w-full"
+          class="product-form__submit button button--full-width button-neutral text-blue w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null

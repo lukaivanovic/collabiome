@@ -232,49 +232,6 @@ button {
   font-family: "Geist", sans-serif;
 }
 
-.text-6xl {
-  font-size: 3.5rem;
-  line-height: 1.1;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1.5;
-}
-
-.text-4xl {
-  font-size: 2.5rem;
-  line-height: 1.5;
-}
-
-.text-3xl {
-  font-size: 2rem;
-  line-height: 1.5;
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 1.2;
-}
-
-.text-large {
-  font-family: "Geist", sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.text-base {
-  font-family: "Geist", sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.text-sm {
-  font-family: "Geist", sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
 .wrap-balance {
   text-wrap: balance;
 }
@@ -300,6 +257,11 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 0.875rem;
+}
+
+.button-neutral {
+  background: color-mix(in srgb, black 95%, transparent);
+  color: white;
 }
 
 .button-boost {

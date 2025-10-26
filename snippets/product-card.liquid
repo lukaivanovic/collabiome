@@ -1,8 +1,8 @@
-<a href="{{ product.url }}" class="flex flex-col gap-2 text-foreground rounded-lg overflow-hidden p-4">
+<a href="{{ product.url }}" class="flex flex-col gap-2 text-foreground rounded-3xl overflow-hidden p-6 bg-[#F7E9E9]">
   <script id="product-data-{{ product.id }}" type="application/json">
     {{ product | json }}
   </script>
-  <div class="h-92">
+  <div class="h-80">
     {% if product.featured_media %}
       {{
         product.featured_media
@@ -24,7 +24,7 @@
     {% endif %}
   </div>
   <div class="product-card__content">
-    <h3 class="text-large font-medium">{{ product.title | escape }}</h3>
+    <h3 class="text-large font-medium line-clamp-2 max-h-[2lh]">{{ product.title | escape }}</h3>
     <p class="text-base font-regular">
       {% if product.price_varies %}
         From {{ product.price_min | money }}
