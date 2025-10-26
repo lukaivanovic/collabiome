@@ -1,18 +1,16 @@
 <footer class="pt-20">
   <div
-    class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden"
-    style="
-      {% if section.settings.newsletter_bg_color != blank %}
-        background-color: {{ section.settings.newsletter_bg_color }};
-      {% endif %}
-    "
+    class="container rounded-3xl flex-none w-full h-48 relative overflow-hidden bg-red-500"
   >
     {% if section.settings.newsletter_bg_image != blank %}
-      <div class="absolute inset-0 opacity-20">
+      <div class="absolute inset-0 opacity-100">
         {{
           section.settings.newsletter_bg_image
           | image_url: width: 600
-          | image_tag: alt: 'Newsletter background', loading: 'lazy', class: 'w-full h-full object-cover'
+          | image_tag:
+            alt: 'Newsletter background',
+            loading: 'lazy',
+            class: 'w-full h-full object-cover newsletter-image'
         }}
       </div>
     {% endif %}
@@ -63,13 +61,13 @@
 
   <div class="container flex flex-col gap-16 md:gap-40 pt-24 pb-8">
     <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-between flex-wrap">
-      <div class="px-2 mr-20 md:mr-0">
+      <div class="mr-20 md:mr-0">
         <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
           <img src="{{ 'logo.svg' | file_url }}" height="64" width="auto">
         </a>
       </div>
 
-      <div class="flex flex-row flex-1 gap-16 o">
+      <div class="flex flex-row flex-grow gap-16 ">
         <div>
           {% if section.settings.menu1_title != blank %}
             <h4 class="text-sm font-medium font-geist uppercase text-secondary">
@@ -143,6 +141,22 @@
     </div>
   </div>
 </footer>
+
+{% style %}
+  .newsletter-image {
+    mask-image: linear-gradient(
+      270deg,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 100%, 1) 14%,
+      hsla(0, 0%, 100%, 0.97) 29%,
+      hsla(0, 0%, 100%, 0.81) 43%,
+      hsla(0, 0%, 100%, 0.19) 57%,
+      hsla(0, 0%, 100%, 0.03) 71%,
+      hsla(0, 0%, 100%, 0) 86%,
+      hsla(0, 0%, 100%, 0) 100%
+    );
+  }
+{% endstyle %}
 
 {% schema %}
 {
