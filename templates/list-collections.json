@@ -9,6 +9,16 @@
  */
 {
   "sections": {
+    "shop_all_ME6z4m": {
+      "type": "shop-all",
+      "name": "Shop All",
+      "settings": {
+        "title": "Shop All Products",
+        "collection": "",
+        "products_per_page": 18,
+        "show_filters": true
+      }
+    },
     "collection_preview_NKkd7T": {
       "type": "collection-preview",
       "name": "t:sections.collection_preview.name",
@@ -41,6 +51,7 @@
     }
   },
   "order": [
+    "shop_all_ME6z4m",
     "collection_preview_NKkd7T",
     "collection_preview_fGW6Nf"
   ]
