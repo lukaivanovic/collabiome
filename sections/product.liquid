@@ -11,22 +11,22 @@
   assign headline = product.metafields.custom.headline.value
 -%}
 
-<div class="w-full max-w-[1600px] !mx-auto px-0 md:px-6 pt-10 md:pb-10 grid gap-10 lg:[grid-template-columns:1fr_640px]">
+<div class="w-full max-w-[1600px] !mx-auto px-0 md:px-6 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
   {% comment %} Product images {% endcomment %}
-  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden">
-    <div class="overflow-hidden relative rounded-2xl  w-full">
+  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden max-h-[700px]">
+    <div class="overflow-hidden relative rounded-2xl w-full flex-grow">
       <div
         class="embla embla-product flex overflow-hidden relative h-full"
         data-product-id="{{ product.id }}"
       >
         <div class="flex bg-white">
           {% for image in product.images %}
-            <div class="embla__slide h-full w-full object-cover">
+            <div class="embla__slide">
               {% render 'image', image: image %}
             </div>
           {% endfor %}
@@ -51,7 +51,7 @@
     </div>
 
     {%- if product.images.size > 1 -%}
-      <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap w-full">
+      <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap flex-shrink-0 w-full">
         {%- for image in product.images -%}
           <button
             class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
@@ -69,7 +69,7 @@
   {% comment %} Product content {% endcomment %}
   <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-10 md:rounded-3xl">
     <div>
-      <h1 class="text-3xl font-medium uppercase">{{ product.title }}</h1>
+      <h1 class="!text-4xl font-medium">{{ product.title }}</h1>
       <p class="font-geist">{{ headline }}</p>
     </div>
 
@@ -152,7 +152,12 @@
         hsla(0, 0%, 100%, 0.01) 89%,
         hsla(0, 0%, 100%, 0) 100%
       ),
-      linear-gradient(86deg, #dbeae5 -1.58%, #ede1d7 49.21%, #f6b4ca 100%);
+      linear-gradient(
+        86deg,
+        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
+        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
+        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
+      );
   }
 
   .option-value input[type='radio'] {

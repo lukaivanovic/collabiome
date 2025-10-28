@@ -14,8 +14,14 @@
 %}
 
 <div class="container mx-auto max-w-7xl px-4 py-8 md:py-16">
+  {% if section.settings.title != blank %}
+    <div class=" mb-8">
+      <h1 class="text-3xl mb-2">{{ selected_collection.title }}</h1>
+    </div>
+  {% endif %}
+
   {% comment %} Collection chips navigation {% endcomment %}
-  <div class="flex flex-wrap gap-2 mb-8 justify-center">
+  <div class="flex flex-wrap gap-2 mb-8">
     <a
       href="{{ routes.collections_url }}/all"
       class="collection-chip {% if selected_collection.handle == 'all' %}active{% endif %}"
@@ -35,12 +41,6 @@
       {{ 'collections.cosmetics' | t | default: 'Kozmetika' }}
     </a>
   </div>
-
-  {% if section.settings.title != blank %}
-    <div class="text-center mb-8">
-      <h1 class="text-3xl uppercase mb-2">{{ selected_collection.title }}</h1>
-    </div>
-  {% endif %}
 
   {% comment %} Main content area with filters and products {% endcomment %}
   <div class="flex flex-col md:flex-row gap-8">
