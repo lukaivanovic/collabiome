@@ -1,6 +1,7 @@
 {% comment %}
   Facets/filters snippet for collection filtering
   Uses Shopify native filters with URL-based filtering
+  Supports both sidebar (desktop) and drawer (mobile) contexts
 {% endcomment %}
 
 {% liquid
@@ -15,8 +16,161 @@
   endfor
 %}
 
-<facet-filter-form class="facets">
+{% comment %} Desktop sidebar version {% endcomment %}
+<facet-filter-form class="facets hidden md:block">
   <form id="FacetFiltersForm" class="facets__form">
+    {% comment %} Active filters {% endcomment %}
+    {% if has_active_filters %}
+      <div class="facets__active">
+        <h3 class="facets__heading">{{ 'filters.active_filters' | t | default: 'Active filters' }}</h3>
+        <div class="facets__active-list">
+          {% for filter in filters %}
+            {% for value in filter.active_values %}
+              <a href="{{ value.url_to_remove }}" class="facets__active-item">
+                <span>{{ filter.label }}: {{ value.label }}</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </a>
+            {% endfor %}
+          {% endfor %}
+        </div>
+        <a href="{{ collection.url }}" class="facets__clear-all">
+          {{ 'filters.clear_all' | t | default: 'Clear all' }}
+        </a>
+      </div>
+    {% endif %}
+
+    {% comment %} Filter groups {% endcomment %}
+    <div class="facets__groups">
+      {% for filter in filters %}
+        <div class="facets__group">
+          <details class="facets__details" open>
+            <summary class="facets__summary">
+              <span class="facets__label">{{ filter.label }}</span>
+              {% if filter.active_values.size > 0 %}
+                <span class="facets__count">({{ filter.active_values.size }})</span>
+              {% endif %}
+            </summary>
+
+            <div class="facets__content">
+              {% case filter.type %}
+                {% when 'list' %}
+                  <ul class="facets__list">
+                    {% for value in filter.values %}
+                      <li class="facets__item">
+                        <label class="facets__checkbox-label">
+                          <input
+                            type="checkbox"
+                            name="{{ filter.param_name }}"
+                            value="{{ value.value }}"
+                            class="facets__checkbox"
+                            {% if value.active %}
+                              checked
+                            {% endif %}
+                            {% if value.count == 0 and value.active == false %}
+                              disabled
+                            {% endif %}
+                          >
+                          <span class="facets__checkbox-text">
+                            {{ value.label }}
+                            <span class="facets__count">({{ value.count }})</span>
+                          </span>
+                        </label>
+                      </li>
+                    {% endfor %}
+                  </ul>
+
+                {% when 'price_range' %}
+                  <div class="facets__price-range">
+                    <div class="facets__price-inputs">
+                      <label class="facets__price-label">
+                        <span>{{ 'filters.price_from' | t | default: 'From' }}</span>
+                        <input
+                          type="number"
+                          name="{{ filter.min_value.param_name }}"
+                          value="{{ filter.min_value.value | default: '' }}"
+                          placeholder="{{ filter.range_min | money_without_currency }}"
+                          class="facets__price-input"
+                        >
+                      </label>
+                      <label class="facets__price-label">
+                        <span>{{ 'filters.price_to' | t | default: 'To' }}</span>
+                        <input
+                          type="number"
+                          name="{{ filter.max_value.param_name }}"
+                          value="{{ filter.max_value.value | default: '' }}"
+                          placeholder="{{ filter.range_max | money_without_currency }}"
+                          class="facets__price-input"
+                        >
+                      </label>
+                    </div>
+                    <div class="facets__price-range-display">
+                      {{ filter.range_min | money }} - {{ filter.range_max | money }}
+                    </div>
+                  </div>
+
+                {% when 'boolean' %}
+                  <ul class="facets__list">
+                    <li class="facets__item">
+                      <label class="facets__checkbox-label">
+                        <input
+                          type="checkbox"
+                          name="{{ filter.param_name }}"
+                          value="{{ filter.true_value.value }}"
+                          class="facets__checkbox"
+                          {% if filter.true_value.active %}
+                            checked
+                          {% endif %}
+                          {% if filter.true_value.count == 0 and filter.true_value.active == false %}
+                            disabled
+                          {% endif %}
+                        >
+                        <span class="facets__checkbox-text">
+                          {{ filter.true_value.label }}
+                          <span class="facets__count">({{ filter.true_value.count }})</span>
+                        </span>
+                      </label>
+                    </li>
+                    <li class="facets__item">
+                      <label class="facets__checkbox-label">
+                        <input
+                          type="checkbox"
+                          name="{{ filter.param_name }}"
+                          value="{{ filter.false_value.value }}"
+                          class="facets__checkbox"
+                          {% if filter.false_value.active %}
+                            checked
+                          {% endif %}
+                          {% if filter.false_value.count == 0 and filter.false_value.active == false %}
+                            disabled
+                          {% endif %}
+                        >
+                        <span class="facets__checkbox-text">
+                          {{ filter.false_value.label }}
+                          <span class="facets__count">({{ filter.false_value.count }})</span>
+                        </span>
+                      </label>
+                    </li>
+                  </ul>
+              {% endcase %}
+            </div>
+          </details>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="facets__footer">
+      <button type="submit" class="facets__submit">
+        {{ 'filters.apply' | t | default: 'Apply filters' }}
+      </button>
+    </div>
+  </form>
+</facet-filter-form>
+
+{% comment %} Mobile drawer version {% endcomment %}
+<facet-filter-form class="facets block md:hidden" id="FacetFiltersFormMobile">
+  <form id="FacetFiltersFormMobile" class="facets__form">
     {% comment %} Active filters {% endcomment %}
     {% if has_active_filters %}
       <div class="facets__active">

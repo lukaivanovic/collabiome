@@ -64,8 +64,19 @@ class FacetFilterForm extends HTMLElement {
       ? `${collectionUrl}?${searchParams.toString()}`
       : collectionUrl;
 
+    // Close drawer if this form is inside a drawer
+    this.closeDrawerIfInDrawer();
+
     // Navigate to filtered URL
     window.location.href = newUrl;
+  }
+
+  closeDrawerIfInDrawer() {
+    // Check if this form is inside a drawer
+    const drawer = this.closest("generic-drawer");
+    if (drawer && drawer.close) {
+      drawer.close();
+    }
   }
 
   getCollectionUrl() {

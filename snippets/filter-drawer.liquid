@@ -1,0 +1,117 @@
+{% comment %}
+  Generic Drawer Snippet
+
+  Renders a reusable drawer component that can slide from left or right
+
+  Parameters:
+  - id: Unique identifier for the drawer (required)
+  - position: 'left' or 'right' - determines slide direction (default: 'right')
+  - title: Title displayed in drawer header (optional)
+  - content_class: Additional CSS class for content area (optional)
+  - width: Drawer width (default: '400px')
+
+  Usage:
+  {% render 'drawer',
+    id: 'my-drawer',
+    position: 'right',
+    title: 'My Drawer',
+    content_class: 'my-content'
+  %}
+{% endcomment %}
+
+{% liquid
+  assign drawer_id = id | default: 'drawer'
+  assign drawer_position = position | default: 'right'
+  assign drawer_title = title | default: ''
+  assign drawer_content_class = content_class | default: ''
+  assign drawer_width = width | default: '400px'
+%}
+
+<generic-drawer
+  id="{{ drawer_id }}"
+  data-position="{{ drawer_position }}"
+  data-width="{{ drawer_width }}"
+  style="--drawer-width: {{ drawer_width }}"
+  class="fixed inset-0 z-[1000] invisible pointer-events-none transition-[visibility] duration-300 ease-in-out"
+>
+  <div
+    data-drawer-overlay
+    class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 ease-in-out"
+  ></div>
+  <div
+    data-drawer-container
+    class="absolute right-0 top-0 bottom-0 h-full bg-white shadow-lg flex flex-col transition-transform duration-300 ease-in-out"
+    style="width: var(--drawer-width, 400px);"
+  >
+    {% if drawer_title != blank %}
+      <div
+        data-drawer-header
+        class="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0"
+      >
+        <h2 data-drawer-title class="m-0 text-lg font-semibold text-gray-900">{{ drawer_title }}</h2>
+        <button
+          data-drawer-close
+          aria-label="Close drawer"
+          class="flex items-center justify-center w-8 h-8 border-0 bg-transparent cursor-pointer text-gray-500 rounded transition-all duration-200 ease-in-out hover:bg-gray-100 hover:text-gray-700"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="w-5 h-5"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    {% endif %}
+    <div
+      data-drawer-content
+      class="flex-1 overflow-y-auto p-6 {{ drawer_content_class }}"
+    >
+      {% render 'facets' %}
+    </div>
+  </div>
+</generic-drawer>
+
+{% stylesheet %}
+  /* Dynamic state changes based on data-active attribute */
+  generic-drawer[data-active='true'] {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  generic-drawer[data-active='true'] [data-drawer-overlay] {
+    opacity: 1;
+  }
+
+  generic-drawer [data-drawer-container] {
+    transform: translateX(100%);
+  }
+
+  generic-drawer[data-active='true'] [data-drawer-container] {
+    transform: translateX(0);
+  }
+
+  /* Custom scrollbar styling */
+  [data-drawer-content]::-webkit-scrollbar {
+    width: 0.375rem;
+  }
+
+  [data-drawer-content]::-webkit-scrollbar-track {
+    background-color: rgb(241 245 249);
+  }
+
+  [data-drawer-content]::-webkit-scrollbar-thumb {
+    background-color: rgb(203 213 225);
+    border-radius: 0.125rem;
+  }
+
+  [data-drawer-content]::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(148 163 184);
+  }
+{% endstylesheet %}
