@@ -9,7 +9,7 @@
       <p class="text-secondary">{{ section.settings.description | escape }}</p>
     {% endif %}
   {% endif %}
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12 z-10">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 z-10">
     {% for block in section.blocks %}
       <div
         class="flex flex-col relative overflow-hidden rounded-xl group border-1 border-black/4"
@@ -19,10 +19,10 @@
           {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-grow' %}
         </a>
 
-        <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-55">
+        <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-44">
           <div>
             {% if block.settings.title != blank %}
-              <h3 class="text-3xl pb-1">{{ block.settings.title | escape }}</h3>
+              <h3 class="text-2xl pb-1">{{ block.settings.title | escape }}</h3>
             {% endif %}
             {% if block.settings.description != blank %}
               <p class="text-black/80 ">{{ block.settings.description | escape }}</p>

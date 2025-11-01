@@ -293,7 +293,7 @@ button:disabled:hover {
 
 .button-boost {
   background: linear-gradient(var(--gradient-boost));
-  color: color-mix(in srgb, black 80%, transparent);
+  color: color-mix(in srgb, black 98%, transparent);
   transition: background 0.3s ease;
 }
 
