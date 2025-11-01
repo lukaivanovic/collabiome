@@ -4,19 +4,20 @@
 
 <div class="container relative pt-32 pb-20 ">
   {% if section.settings.title != blank %}
-    <h2 class="text-4xl text-center pb-1">{{ section.settings.title | escape }}</h2>
+    <h2 class="pb-1">{{ section.settings.title | escape }}</h2>
     {% if section.settings.description != blank %}
-      <p class="text-secondary text-center">{{ section.settings.description | escape }}</p>
+      <p class="text-secondary">{{ section.settings.description | escape }}</p>
     {% endif %}
   {% endif %}
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12 z-10">
     {% for block in section.blocks %}
-      <a
-        href="{{ block.settings.button_url }}"
-        class="category-card flex flex-col relative overflow-hidden rounded-xl bg-black group shadow-sm"
+      <div
+        class="flex flex-col relative overflow-hidden rounded-xl group border-1 border-black/4"
         {{ block.shopify_attributes }}
       >
-        {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-grow' %}
+        <a href="{{ block.settings.button_url }}" class="category-card  flex-grow">
+          {% render 'image', image: block.settings.image, width: 1200, height: 1200, class: 'w-full h-full flex-grow' %}
+        </a>
 
         <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-55">
           <div>
@@ -28,39 +29,61 @@
             {% endif %}
           </div>
           {% if block.settings.button_text != blank %}
-            <div class="button button-neutral">
+            <a href="{{ block.settings.button_url }}" class="button button-boost">
               {{- block.settings.button_text | escape -}}
-            </div>
+            </a>
           {% endif %}
         </div>
-      </a>
+      </div>
     {% endfor %}
   </div>
 </div>
 
 {% stylesheet %}
   .home-categories__section {
+    margin-top: -300px;
+    margin-bottom: -200px;
+    padding-top: 320px;
+    padding-bottom: 240px;
+    position: relative;
+  }
+
+  .home-categories__section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
     background: linear-gradient(
         0deg,
-        hsla(0, 0%, 100%, 0) 0%,
-        hsla(0, 0%, 100%, 0) 14%,
-        hsla(0, 0%, 100%, 0.02) 29%,
-        hsla(0, 0%, 100%, 0.08) 43%,
-        hsla(0, 0%, 100%, 0.19) 57%,
-        hsla(0, 0%, 100%, 0.36) 71%,
-        hsla(0, 0%, 100%, 0.63) 86%,
+        hsla(0, 0%, 100%, 1) 0%,
+        hsla(0, 0%, 100%, 0.7) 11%,
+        hsla(0, 0%, 100%, 0.47) 22%,
+        hsla(0, 0%, 100%, 0.3) 33%,
+        hsla(0, 0%, 100%, 0.17) 44%,
+        hsla(0, 0%, 100%, 0.09) 50%,
+        hsla(0, 0%, 100%, 0.17) 56%,
+        hsla(0, 0%, 100%, 0.3) 67%,
+        hsla(0, 0%, 100%, 0.47) 77%,
+        hsla(0, 0%, 100%, 0.7) 89%,
         hsla(0, 0%, 100%, 1) 100%
       ),
       linear-gradient(
         86deg,
-        color-mix(in srgb, #a2eeff 90%, transparent) -1.58%,
-        color-mix(in srgb, #b4ceff 90%, transparent) 49.21%,
-        color-mix(in srgb, #d4b9ff 90%, transparent) 100%
+        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
+        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
+        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
       );
   }
 
-  .category-card {
-    box-shadow: 0 0 0 1px rgba(246, 180, 202, 0.5) inset;
+  .category-card img {
+    transition: transform 0.3s ease;
+  }
+
+  .category-card:hover img {
+    transform: scale(1.05);
   }
 {% endstylesheet %}
 

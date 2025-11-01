@@ -58,6 +58,10 @@ class FacetSelect extends HTMLElement {
 
   open() {
     if (this.isOpen) return;
+    
+    // Close all other facet-select components
+    this.closeAllOtherDropdowns();
+    
     this.isOpen = true;
     this.button.setAttribute('aria-expanded', 'true');
     this.panel.classList.remove('hidden');
@@ -67,6 +71,17 @@ class FacetSelect extends HTMLElement {
     if (firstCheckbox) {
       setTimeout(() => firstCheckbox.focus(), 50);
     }
+  }
+
+  closeAllOtherDropdowns() {
+    // Find all facet-select components
+    const allDropdowns = document.querySelectorAll('facet-select');
+    allDropdowns.forEach((dropdown) => {
+      // Don't close this one
+      if (dropdown !== this) {
+        dropdown.close();
+      }
+    });
   }
 
   close() {

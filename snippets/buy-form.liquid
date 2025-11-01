@@ -40,7 +40,7 @@
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option flex items-center px-2 py-1 gap-2 border bg-white rounded-lg cursor-pointer transition-all border-transparent hover:border-gray-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
+                  class="variant-option flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200  hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -59,6 +59,10 @@
                     class="sr-only"
                   >
                   <span class="text-sm text-primary">{{ value }}</span>
+                  <span
+                    class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
+                    data-variant-badge
+                  ></span>
                 </label>
               {% endfor %}
             </div>
@@ -80,7 +84,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="product-form__submit button button--full-width button-neutral text-blue w-full"
+          class="product-form__submit button button--full-width button-boost text-blue w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
@@ -106,3 +110,39 @@
     </div>
   {%- endform -%}
 </product-form>
+
+{% stylesheet %}
+  .variant-savings-badge {
+    background-color: #ec4899; /* pink-500 */
+    color: white;
+    font-size: 0.625rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    padding: 0.125rem 0.375rem; /* px-1.5 py-0.5 */
+    border-radius: 9999px; /* rounded-full */
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .variant-option {
+    position: relative;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  // Prevent clicks on variant options and buttons from propagating to parent link
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('product-form').forEach(function (productForm) {
+      // Stop propagation for clicks on variant options and form buttons
+      const interactiveElements = productForm.querySelectorAll(
+        '[data-option-label], .product-form__submit, input[type="radio"], button[type="submit"]'
+      );
+
+      interactiveElements.forEach(function (element) {
+        element.addEventListener('click', function (e) {
+          // Stop propagation to prevent navigation when clicking on form controls
+          e.stopPropagation();
+        });
+      });
+    });
+  });
+{% endjavascript %}

@@ -5,7 +5,7 @@
 <div class="welcome full-width">
   <div class="welcome-content">
     <div>
-      <h1 class="text-4xl font-bold">Hello, World!</h1>
+      <h1 class="">Hello, World!</h1>
 
       <p class="welcome-description max-w-[80ch] leading-normal mt-6">
         The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
@@ -30,7 +30,12 @@
       Shopify themes are a package of template files, building blocks, and supporting assets. Use these building blocks
       to create modular, customizable themes.
     </p>
-    <p>{{ 'Learn more about key concepts' | link_to: 'https://shopify.dev/docs/storefronts/themes/architecture', class: 'highlight-link' }}</p>
+    <p>
+      {{
+        'Learn more about key concepts'
+        | link_to: 'https://shopify.dev/docs/storefronts/themes/architecture', class: 'highlight-link'
+      }}
+    </p>
   </div>
 
   <div class="highlight flex flex-col h-full p-6 rounded-lg bg-[#eef3ff] text-[rgb(92,95,98)] leading-normal space-y-4">
@@ -48,7 +53,12 @@
       To optimize your theme development experience, Shopify has established a set of best practices that you can refer
       to when developing your theme and setting up your toolchains and processes.
     </p>
-    <p>{{ 'Follow best practices' | link_to: 'https://shopify.dev/docs/storefronts/themes/best-practices', class: 'highlight-link' }}</p>
+    <p>
+      {{
+        'Follow best practices'
+        | link_to: 'https://shopify.dev/docs/storefronts/themes/best-practices', class: 'highlight-link'
+      }}
+    </p>
   </div>
 </div>
 

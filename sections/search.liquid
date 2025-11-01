@@ -6,7 +6,7 @@
 {% endcomment %}
 
 <div class="container max-w-4xl py-8">
-  <h1 class="text-4xl font-bold mb-8">Search</h1>
+  <h1 class=" mb-8">Search</h1>
 
   <form action="{{ routes.search_url }}" method="get" role="search" class="mb-8">
     <div class="flex gap-2">
@@ -17,7 +17,9 @@
         placeholder="Search articles, pages, or products"
         class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       >
-      <button type="submit" class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">Search</button>
+      <button type="submit" class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+        Search
+      </button>
     </div>
   </form>
 
@@ -34,7 +36,12 @@
               <div class="search-result bg-white rounded-lg shadow-sm overflow-hidden">
                 {% assign featured_image = result.featured_image | default: result.image %}
                 {% if featured_image %}
-                  {% render 'image', class: 'w-full aspect-square object-cover', image: featured_image, url: result.url, width: 400 %}
+                  {% render 'image',
+                    class: 'w-full aspect-square object-cover',
+                    image: featured_image,
+                    url: result.url,
+                    width: 400
+                  %}
                 {% endif %}
                 <div class="p-4">
                   <p class="font-medium mb-2">

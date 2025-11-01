@@ -1,55 +1,50 @@
-<a href="{{ product.url }}" class="flex flex-col gap-2 text-foreground rounded-3xl overflow-hidden p-6 bg-[#F7E9E9]">
+<div class="flex flex-col gap-2 text-foreground overflow-hidden">
   <script id="product-data-{{ product.id }}" type="application/json">
     {{ product | json }}
   </script>
-  <div class="h-80">
+  <a href="{{ product.url }}" class="product-card__image-wrapper h-80 overflow-hidden">
     {% if product.featured_media %}
       {{
         product.featured_media
         | image_url: width: 800, height: 800, crop: 'center'
-        | image_tag: class: 'h-full w-full object-contain'
+        | image_tag: class: 'product-card__image product-card__image--primary h-full w-full object-contain'
       }}
 
-      {% comment %}
-        {% if product.media[1] %}
-          {{
-            product.media[1]
-            | image_url: width: 800, height: 800, crop: 'center'
-            | image_tag: class: 'h-full w-full object-cover hidden'
-          }}
-        {% endif %}
-      {% endcomment %}
+      {% if product.media[1] %}
+        {{
+          product.media[1]
+          | image_url: width: 800, height: 800, crop: 'center'
+          | image_tag: class: 'product-card__image product-card__image--secondary h-full w-full object-contain'
+        }}
+      {% endif %}
     {% else %}
       <div class="product-card__placeholder"></div>
     {% endif %}
-  </div>
+  </a>
   <div class="product-card__content">
-    <h3 class="text-lg font-semibold line-clamp-2 h-[2lh]">{{ product.title | escape }}</h3>
-
+    <h3 class="text-lg font-semibold line-clamp-2">{{ product.title | escape }}</h3>
+    {% if product.metafields.custom.headline.value != blank %}
+      <p class="product-card__description text-sm text-gray-600 line-clamp-2">
+        {{ product.metafields.custom.headline.value | strip_html | truncate: 100 }}
+      </p>
+    {% endif %}
     {% render 'buy-form', product: product %}
   </div>
-</a>
+</div>
 
 {% stylesheet %}
-  .product-card__media {
+  .product-card__image-wrapper {
     position: relative;
-    aspect-ratio: 3 / 4;
-    width: 100%;
-    overflow: hidden;
+    border: 1px solid #e5e7eb; /* gray-200 border */
     border-radius: 8px;
-  }
-
-  .product-card__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    overflow: hidden;
   }
 
   .product-card__image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
+    object-fit: contain;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .product-card__image--primary {
@@ -62,14 +57,16 @@
     top: 0;
     left: 0;
     opacity: 0;
+    transform: scale(1);
   }
 
-  .product-card:hover .product-card__image--primary {
+  a:hover .product-card__image--primary {
     opacity: 0;
   }
 
-  .product-card:hover .product-card__image--secondary {
+  a:hover .product-card__image--secondary {
     opacity: 1;
+    transform: scale(1.1);
   }
 
   .product-card__placeholder {
@@ -80,7 +77,11 @@
 
   .product-card__content {
     display: grid;
-    gap: 0.25rem;
+    gap: 0.5rem;
+  }
+
+  .product-card__description {
+    line-height: 1.5;
   }
 
   .product-card__price {

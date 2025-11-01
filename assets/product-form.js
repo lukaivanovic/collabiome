@@ -225,6 +225,9 @@ if (!customElements.get("product-form")) {
         // Initial variant selection and styling
         this.updateVariantSelection();
         this.updateOptionStyles();
+
+        // Show savings badges for all options
+        this.updateSavingsBadges();
       }
 
       updateVariantSelection() {
@@ -265,6 +268,9 @@ if (!customElements.get("product-form")) {
 
           // Update price display
           this.updatePriceDisplay(matchingVariant);
+
+          // Update savings badges for all options
+          this.updateSavingsBadges();
         } else {
           // No matching variant found
           this.variantIdInput.disabled = true;
@@ -409,6 +415,71 @@ if (!customElements.get("product-form")) {
         optionLabels.forEach((label) => {
           const input = label.querySelector('input[type="radio"]');
           label.setAttribute("data-selected", input && input.checked);
+        });
+      }
+
+      updateSavingsBadges() {
+        if (!this.product || !this.product.variants) return;
+
+        // Get currently selected options (for building hypothetical selections)
+        const currentSelectedOptions = {};
+        const currentCheckedInputs = this.form.querySelectorAll(
+          'input[name^="options["]:checked'
+        );
+        currentCheckedInputs.forEach((input) => {
+          const optionName = input.name.match(/options\[(.+)\]/)[1];
+          currentSelectedOptions[optionName] = input.value;
+        });
+
+        // Get all option labels
+        const allOptionLabels = this.form.querySelectorAll(
+          "[data-option-label]"
+        );
+
+        // Process each option label
+        allOptionLabels.forEach((label) => {
+          const badge = label.querySelector("[data-variant-badge]");
+          if (!badge) return;
+
+          // Get the option value for this label
+          const input = label.querySelector('input[type="radio"]');
+          if (!input) return;
+
+          const optionName = input.name.match(/options\[(.+)\]/)[1];
+          const optionValue = input.value;
+
+          // Create a hypothetical selection: use this label's value + current selections for other options
+          const hypotheticalOptions = { ...currentSelectedOptions };
+          hypotheticalOptions[optionName] = optionValue;
+
+          // Find the variant that matches this hypothetical selection
+          const matchingVariant = this.product.variants.find((variant) => {
+            return variant.options.every((option, index) => {
+              const optionNameKey = this.product.options[index];
+              return hypotheticalOptions[optionNameKey] === option;
+            });
+          });
+
+          // Check if this variant has savings
+          if (
+            matchingVariant &&
+            matchingVariant.compare_at_price &&
+            matchingVariant.compare_at_price > matchingVariant.price
+          ) {
+            const compareAtPrice = matchingVariant.compare_at_price;
+            const currentPrice = matchingVariant.price;
+            const savingsPercent =
+              ((compareAtPrice - currentPrice) / compareAtPrice) * 100;
+
+            if (savingsPercent > 0) {
+              badge.textContent = `-${Math.round(savingsPercent)}%`;
+              badge.classList.remove("hidden");
+            } else {
+              badge.classList.add("hidden");
+            }
+          } else {
+            badge.classList.add("hidden");
+          }
         });
       }
     }

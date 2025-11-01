@@ -94,11 +94,20 @@ h1 {
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   line-height: 1.1;
   font-weight: 600;
   font-family: "Red Hat Display", sans-serif;
   letter-spacing: -0.01em;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2.25rem;
+  }
 }
 
 p:empty {
@@ -215,10 +224,6 @@ button {
   background: var(--color-gradient-recupera);
 }
 
-.text-white {
-  color: white;
-}
-
 .text-primary {
   color: var(--color-foreground-default);
 }
@@ -251,16 +256,14 @@ button {
   font-family: "Geist", sans-serif;
 }
 
-.wrap-balance {
-  text-wrap: balance;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-neutral-200);
 }
 
-.wrap-pretty {
-  text-wrap: pretty;
-}
-
-.uppercase {
-  text-transform: uppercase;
+button:disabled:hover {
+  background: var(--color-neutral-200);
 }
 
 .button {

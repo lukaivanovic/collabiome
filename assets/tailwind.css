@@ -12,7 +12,7 @@
     --color-foreground-pink: var(--color-foreground-pink);
     --color-background-blue: {{ settings.background_blue }};
     --color-foreground-blue: var(--color-foreground-blue);
-    --gradient-boost: 86deg, #DBEAE5 -1.58%, #EDE1D7 49.21%, #F6B4CA 100%;
+    --gradient-boost: var(--gradient-boost);
     --gradient-exclusive: var(--gradient-exclusive);
     --gradient-nutriage: var(--gradient-nutriage);
     --gradient-recupera: 100deg, #A2EEFF 3.17%, #B4CEFF 35.34%, #D4B9FF 103.04%;
