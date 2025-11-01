@@ -58,7 +58,7 @@
                     {% endif %}
                     class="sr-only"
                   >
-                  <span class="text-sm text-primary">{{ value }}</span>
+                  <span class=" text-primary">{{ value }}</span>
                   <span
                     class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
                     data-variant-badge
@@ -138,9 +138,28 @@
       );
 
       interactiveElements.forEach(function (element) {
-        element.addEventListener('click', function (e) {
+        // Handle both click and touch events for mobile compatibility
+        function handleInteraction(e) {
           // Stop propagation to prevent navigation when clicking on form controls
           e.stopPropagation();
+          // Prevent default only if it's a link
+          if (e.target.closest('a')) {
+            e.preventDefault();
+          }
+        }
+
+        element.addEventListener('click', handleInteraction);
+        element.addEventListener('touchend', function (e) {
+          handleInteraction(e);
+          // Trigger click for accessibility and form submission
+          if (!e.defaultPrevented) {
+            const clickEvent = new MouseEvent('click', {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            });
+            element.dispatchEvent(clickEvent);
+          }
         });
       });
     });

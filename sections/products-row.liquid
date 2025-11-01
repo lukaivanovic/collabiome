@@ -72,7 +72,27 @@
           dragFree: false,
           skipSnaps: false,
           slidesToScroll: getSlidesToScroll(),
+          watchDrag: true,
         });
+
+        // Allow interactive elements to be clickable on mobile
+        // The CSS touch-action: manipulation should handle most cases,
+        // but we add this as a safeguard to prevent drag interference
+        carouselElement.addEventListener(
+          'pointerdown',
+          function (e) {
+            const target = e.target;
+            const interactiveElement = target.closest(
+              'button, input, label, [data-option-label], .product-form__submit, product-form, .variant-option, .product-form'
+            );
+            if (interactiveElement) {
+              // Allow the interactive element's own handlers to process first
+              // Don't prevent default or stop propagation, just let it handle naturally
+              interactiveElement.style.touchAction = 'manipulation';
+            }
+          },
+          { passive: true, capture: true }
+        );
 
         // Navigation buttons
         const prevButton = document.querySelector('.embla__prev');
@@ -175,6 +195,19 @@
     height: 100%;
   }
 
+  /* Ensure interactive elements are clickable on mobile */
+  .embla__slide button,
+  .embla__slide input,
+  .embla__slide label,
+  .embla__slide [data-option-label],
+  .embla__slide .product-form__submit,
+  .embla__slide product-form {
+    touch-action: manipulation;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+  }
+
   /* Progress Bar Styles */
   .products-row__progress {
     width: 100%;
@@ -217,6 +250,19 @@
 
     .products-row__progress {
       margin-top: 1.5rem;
+    }
+
+    /* Enhanced touch handling for mobile */
+    .embla__slide button,
+    .embla__slide input,
+    .embla__slide label,
+    .embla__slide [data-option-label],
+    .embla__slide .product-form__submit,
+    .embla__slide product-form,
+    .embla__slide .product-form {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
   }
 
