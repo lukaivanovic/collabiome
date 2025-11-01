@@ -62,57 +62,59 @@
         aria-hidden="true"
       >
         <div class="container p-8">
+          {% comment %} Check if menu should be shown {% endcomment %}
+          {% liquid
+            assign show_menu = false
+            assign menu_to_show = null
+            if link.object.handle == 'kozmetika' or link.object.handle == 'cosmetics'
+              if cosmetics_menu and cosmetics_menu.links.size > 0
+                assign show_menu = true
+                assign menu_to_show = cosmetics_menu
+              endif
+            elsif link.object.handle == 'dodaci-prehrani' or link.object.handle == 'supplements'
+              if supplements_menu and supplements_menu.links.size > 0
+                assign show_menu = true
+                assign menu_to_show = supplements_menu
+              endif
+            endif
+          %}
+
           <div class="grid grid-cols-[300px_1fr] gap-8 items-start">
-            {% if link.object.image %}
-              <div class="relative rounded-lg overflow-hidden">
-                <a href="{{ link.object.url }}">
-                  {{
-                    link.object.image
-                    | image_url: width: 600, height: 600, crop: 'center'
-                    | image_tag: class: 'w-full h-full object-cover aspect-square block', alt: link.object.title
-                  }}
-                  <div class="absolute inset-0 flex items-end justify-center p-6 bg-gradient-to-t from-black/60 to-black/0 opacity-0 transition-opacity duration-200">
-                    <span class="text-white font-medium text-sm uppercase tracking-wider">
-                      View all
-                      {{ link.object.title }}
-                    </span>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-
-            <div class="grid grid-cols-3 gap-6">
-              {% comment %} Show menu links if available {% endcomment %}
-              {% liquid
-                assign show_menu = false
-                assign menu_to_show = null
-                if link.object.handle == 'kozmetika' or link.object.handle == 'cosmetics'
-                  if cosmetics_menu and cosmetics_menu.links.size > 0
-                    assign show_menu = true
-                    assign menu_to_show = cosmetics_menu
-                  endif
-                elsif link.object.handle == 'dodaci-prehrani' or link.object.handle == 'supplements'
-                  if supplements_menu and supplements_menu.links.size > 0
-                    assign show_menu = true
-                    assign menu_to_show = supplements_menu
-                  endif
-                endif
-              %}
-
-              {% if show_menu %}
-                <div class="col-span-3 mb-4">
-                  <ul class="list-none p-0 m-0 flex flex-wrap gap-4">
-                    {% for menu_link in menu_to_show.links %}
-                      <li>
-                        <a href="{{ menu_link.url }}" class="text-primary hover:text-primary/80 no-underline text-sm">
-                          {{ menu_link.title }}
-                        </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
+            {% comment %} Left column: Image and/or Menu links {% endcomment %}
+            <div class="flex flex-col gap-4">
+              {% if link.object.image %}
+                <div class="relative rounded-lg overflow-hidden">
+                  <a href="{{ link.object.url }}">
+                    {{
+                      link.object.image
+                      | image_url: width: 600, height: 600, crop: 'center'
+                      | image_tag: class: 'w-full h-full object-cover aspect-square block', alt: link.object.title
+                    }}
+                    <div class="absolute inset-0 flex items-end justify-center p-6 bg-gradient-to-t from-black/60 to-black/0 opacity-0 transition-opacity duration-200">
+                      <span class="text-white font-medium text-sm uppercase tracking-wider">
+                        View all
+                        {{ link.object.title }}
+                      </span>
+                    </div>
+                  </a>
                 </div>
               {% endif %}
 
+              {% if show_menu %}
+                <ul class="list-none p-0 m-0 flex flex-col gap-3">
+                  {% for menu_link in menu_to_show.links %}
+                    <li>
+                      <a href="{{ menu_link.url }}" class="text-primary hover:text-primary/80 no-underline text-sm">
+                        {{ menu_link.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+            {% comment %} Right column: Products in horizontal grid {% endcomment %}
+            <div class="grid grid-cols-3 gap-6">
               {% for product in link.object.products limit: 3 %}
                 {% render 'product-card', product: product, hide_buy_form: true %}
               {% endfor %}
