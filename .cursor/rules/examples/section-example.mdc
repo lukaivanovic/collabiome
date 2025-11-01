@@ -1,45 +1,14 @@
-<div class="example-section full-width">
+<div class="relative overflow-hidden w-full">
   {% if section.settings.background_image %}
-    <div class="example-section__background">
-      {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
+    <div class="absolute w-full h-full -z-10 overflow-hidden">
+      {{ section.settings.background_image | image_url: width: 2000 | image_tag: class: 'absolute w-full h-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' }}
     </div>
   {% endif %}
 
-  <div class="custom-section__content">
+  <div class="container mx-auto px-4">
     {% content_for 'blocks' %}
   </div>
 </div>
-
-{% stylesheet %}
-  .example-section {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-  .example-section__background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-  }
-  .example-section__background img {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .example-section__content {
-    display: grid;
-    grid-template-columns: var(--content-grid);
-  }
-
-  .example-section__content > * {
-    grid-column: 2;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

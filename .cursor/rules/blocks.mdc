@@ -26,18 +26,14 @@ Blocks render in the editor and storefront when they are referenced in [template
   {% content_for 'block', type: 'block-name', id: 'unique-id' %}
 {% enddoc %}
 
-<div {{ block.shopify_attributes }} class="block-name">
+<div {{ block.shopify_attributes }} class="relative">
   <!-- Block content using block.settings -->
 </div>
 
-{% stylesheet %}
-  /*
-    Scoped CSS for this block
-
-    Use BEM structure
-    CSS written in here should be for components that are exclusively in this block.  If the CSS will be used elsewhere, it should instead be written in [assets/base.css](mdc:@assets/base.css)
-  */
-{% endstylesheet %}
+{% comment %}
+  Note: Use Tailwind utility classes for all styling.
+  Avoid custom CSS stylesheets unless absolutely necessary for complex animations or unique styling.
+{% endcomment %}
 
 {% schema %}
 {
@@ -144,10 +140,10 @@ See [schemas.mdc](mdc:.cursor/rules/schemas.mdc) for rules on schemas
 
 ### Rendering nested blocks
 ```liquid
-<div class="block-container" {{ block.shopify_attributes }}>
-  <h2>{{ block.settings.heading | escape }}</h2>
+<div class="relative p-4" {{ block.shopify_attributes }}>
+  <h2 class="text-2xl font-bold mb-4">{{ block.settings.heading | escape }}</h2>
 
-  <div class="nested-blocks">
+  <div class="flex flex-col gap-4">
     {% content_for 'blocks' %}
   </div>
 </div>
@@ -156,8 +152,7 @@ See [schemas.mdc](mdc:.cursor/rules/schemas.mdc) for rules on schemas
 ### Nesting with layout control
 ```liquid
 <div
-  class="group {{ block.settings.layout_direction }}"
-  style="--gap: {{ block.settings.gap }}px;"
+  class="flex {% if block.settings.layout_direction == 'horizontal' %}flex-row justify-between items-center px-{{ block.settings.padding }}{% else %}flex-col items-{{ block.settings.alignment }} py-{{ block.settings.padding }}{% endif %}"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
@@ -195,40 +190,37 @@ See [schemas.mdc](mdc:.cursor/rules/schemas.mdc) for rules on schemas
 
 ## CSS and styling
 
-See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writing CSS
+**Use Tailwind utility classes for all styling.** Avoid custom CSS stylesheets unless absolutely necessary.
 
-### Scoped styles
-```liquid
-{% stylesheet %}
-.block-name {
-  padding: var(--block-padding, 1rem);
-  background: var(--block-background, transparent);
-}
-
-.block-name__title {
-  font-size: var(--title-size, 1.5rem);
-  color: var(--title-color, inherit);
-}
-
-.block-name--primary {
-  background-color: var(--color-primary);
-}
-
-.block-name--secondary {
-  background-color: var(--color-secondary);
-}
-{% endstylesheet %}
-```
-
-### Dynamic CSS variables
+### Styling with Tailwind
 ```liquid
 <div
-  class="custom-block"
+  class="p-4 bg-transparent rounded-lg"
+  {{ block.shopify_attributes }}
+>
+  <h2 class="text-2xl font-bold text-foreground">
+    {{ block.settings.heading | escape }}
+  </h2>
+</div>
+```
+
+### Dynamic styling with inline styles
+```liquid
+<div
+  class="p-4 rounded-lg"
   style="
-    --block-padding: {{ block.settings.padding }}px;
-    --text-align: {{ block.settings.alignment }};
-    --background: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding }}px;
+    text-align: {{ block.settings.alignment }};
+    background-color: {{ block.settings.background_color }};
   "
+  {{ block.shopify_attributes }}
+>
+```
+
+### Responsive design with Tailwind
+```liquid
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 md:p-8"
   {{ block.shopify_attributes }}
 >
 ```
@@ -265,17 +257,17 @@ See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writin
 
 ### Content block
 ```liquid
-<div class="content-block {{ block.settings.style }}" {{ block.shopify_attributes }}>
+<div class="flex flex-col gap-4 p-6 {{ block.settings.style }}" {{ block.shopify_attributes }}>
   {% if block.settings.heading != blank %}
-    <h3 class="content-block__heading">{{ block.settings.heading | escape }}</h3>
+    <h3 class="text-2xl font-bold text-foreground">{{ block.settings.heading | escape }}</h3>
   {% endif %}
 
   {% if block.settings.text != blank %}
-    <div class="content-block__text">{{ block.settings.text }}</div>
+    <div class="text-base text-foreground/80">{{ block.settings.text }}</div>
   {% endif %}
 
   {% if block.settings.button_text != blank %}
-    <a href="{{ block.settings.button_url }}" class="content-block__button">
+    <a href="{{ block.settings.button_url }}" class="button button-boost">
       {{ block.settings.button_text | escape }}
     </a>
   {% endif %}
@@ -284,18 +276,19 @@ See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writin
 
 ### Media block
 ```liquid
-<div class="media-block" {{ block.shopify_attributes }}>
+<div class="relative overflow-hidden rounded-lg" {{ block.shopify_attributes }}>
   {% if block.settings.image %}
-    <div class="media-block__image">
+    <div class="relative w-full h-auto">
       {{ block.settings.image | image_url: width: 800 | image_tag:
-         alt: block.settings.image.alt | default: block.settings.alt_text
+         alt: block.settings.image.alt | default: block.settings.alt_text,
+         class: 'w-full h-auto object-cover'
       }}
     </div>
   {% endif %}
 
   {% if block.settings.video %}
-    <div class="media-block__video">
-      {{ block.settings.video | video_tag: controls: true }}
+    <div class="relative w-full">
+      {{ block.settings.video | video_tag: controls: true, class: 'w-full h-auto' }}
     </div>
   {% endif %}
 </div>
@@ -304,11 +297,8 @@ See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writin
 ### Layout block (container)
 ```liquid
 <div
-  class="layout-block layout-block--{{ block.settings.layout_type }}"
-  style="
-    --columns: {{ block.settings.columns }};
-    --gap: {{ block.settings.gap }}px;
-  "
+  class="grid gap-{{ block.settings.gap }}"
+  style="grid-template-columns: repeat({{ block.settings.columns }}, minmax(0, 1fr));"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
@@ -327,7 +317,7 @@ See [css-standards.mdc](mdc:.cursor/rules/css-standards.mdc) for rules on writin
 %}
 
 {% if has_content %}
-  <div class="block-content" {{ block.shopify_attributes }}>
+  <div class="relative p-4" {{ block.shopify_attributes }}>
     <!-- Content here -->
   </div>
 {% endif %}

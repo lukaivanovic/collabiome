@@ -57,7 +57,7 @@
   {% for link in shop_menu.links %}
     {% if link.type == 'collection_link' %}
       <div
-        class="absolute top-full left-0 w-screen max-h-0 overflow-hidden bg-[var(--color-background-default)] opacity-0 invisible transition-all duration-[250ms] ease-in-out z-[100] aria-[hidden=false]:max-h-[600px] aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
+        class="absolute top-full left-0 w-screen max-h-0 overflow-hidden bg-[var(--color-background-default)] opacity-0 invisible transition-all duration-[250ms] ease-in-out z-[9999] border-b border-black/12 aria-[hidden=false]:max-h-[600px] aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
         data-mega-menu-panel="{{ link.object.handle }}"
         aria-hidden="true"
       >
@@ -80,27 +80,12 @@
           %}
 
           <div class="grid grid-cols-[300px_1fr] gap-8 items-start">
-            {% comment %} Left column: Image and/or Menu links {% endcomment %}
+            {% comment %} Left column: Menu title and Menu links {% endcomment %}
             <div class="flex flex-col gap-4">
-              {% if link.object.image %}
-                <div class="relative rounded-lg overflow-hidden">
-                  <a href="{{ link.object.url }}">
-                    {{
-                      link.object.image
-                      | image_url: width: 600, height: 600, crop: 'center'
-                      | image_tag: class: 'w-full h-full object-cover aspect-square block', alt: link.object.title
-                    }}
-                    <div class="absolute inset-0 flex items-end justify-center p-6 bg-gradient-to-t from-black/60 to-black/0 opacity-0 transition-opacity duration-200">
-                      <span class="text-white font-medium text-sm uppercase tracking-wider">
-                        View all
-                        {{ link.object.title }}
-                      </span>
-                    </div>
-                  </a>
-                </div>
-              {% endif %}
-
               {% if show_menu %}
+                <h3 class="text-lg font-semibold text-primary mb-2">
+                  {{ link.object.title }}
+                </h3>
                 <ul class="list-none p-0 m-0 flex flex-col gap-3">
                   {% for menu_link in menu_to_show.links %}
                     <li>

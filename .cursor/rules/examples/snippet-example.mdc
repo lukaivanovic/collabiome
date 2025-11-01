@@ -9,7 +9,7 @@
 
   @param {image} image - The image to be rendered
   @param {string} [url] - An optional destination URL for the image
-  @param {string} [css_class] - Optional class to be added to the image wrapper
+  @param {string} [css_class] - Optional Tailwind classes to be added to the image wrapper
   @param {number} [width] - The highest resolution width of the image to be rendered
   @param {number} [height] - The highest resolution height of the image to be rendered
   @param {string} [crop] - The crop position of the image
@@ -18,7 +18,7 @@
   {% render 'image', image: product.featured_image %}
   {% render 'image', image: product.featured_image, url: product.url %}
   {% render 'image',
-    css_class: 'product__image',
+    css_class: 'rounded-lg object-cover',
     image: product.featured_image,
     url: product.url,
     width: 1200,
@@ -40,28 +40,13 @@
 %}
 
 <{{ wrapper }}
-  class="image {{ css_class }}"
+  class="block relative overflow-hidden w-full h-auto {{ css_class }}"
   {% if url %}
     href="{{ url }}"
   {% endif %}
 >
-  {{ image | image_url: width: width, height: height, crop: crop | image_tag }}
+  {{ image | image_url: width: width, height: height, crop: crop | image_tag: class: 'w-full h-auto' }}
 </{{ wrapper }}>
-
-{% stylesheet %}
-  .image {
-    display: block;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: auto;
-  }
-
-  .image > img {
-    width: 100%;
-    height: auto;
-  }
-{% endstylesheet %}
 
 {% javascript %}
   function doSomething() {

@@ -267,7 +267,7 @@ button:disabled:hover {
 }
 
 .button {
-  height: 42px;
+  height: 44px;
   border-radius: 21px;
   text-decoration: none;
   padding: 0.5rem 1.35rem;
@@ -278,7 +278,7 @@ button:disabled:hover {
   font-family: "Geist", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 0.875rem;
+  font-size: 15px;
 }
 
 .button-small {

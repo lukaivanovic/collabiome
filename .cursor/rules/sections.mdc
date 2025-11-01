@@ -3,6 +3,7 @@ description: Section coding standards and best practices guide
 globs: sections/*.liquid
 alwaysApply: false
 ---
+
 # Section development standards
 
 ## Section requirements
@@ -11,7 +12,7 @@ Every section must include:
 
 - `{% schema %}` tag with valid JSON
 - Proper HTML semantic structure
-- CSS scoping with section classes
+- Tailwind utility classes for styling
 - Translation keys for all text
 
 ## Section patterns
@@ -21,28 +22,20 @@ Every section must include:
 ```liquid
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-  assign section_class = 'section-' | append: section.type
 %}
 
 <section
   id="{{ section_id }}"
-  class="{{ section_class }}"
+  class="relative"
   style="
-    --section-padding-top: {{ section.settings.padding_top }}px;
-    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="page-width">
-    {% content_for 'blocks %}
+  <div class="container mx-auto px-4">
+    {% content_for 'blocks' %}
   </div>
 </section>
-
-{% stylesheet %}
-.{{ section_class }} {
-  padding-top: var(--section-padding-top, 40px);
-  padding-bottom: var(--section-padding-bottom, 40px);
-}
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -73,12 +66,19 @@ Every section must include:
 {% endschema %}
 ```
 
+## Styling with Tailwind
+
+- Use Tailwind utility classes for all styling
+- Use inline styles for dynamic values (padding, colors, etc.)
+- Use Tailwind responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`) for responsive design
+- Use `container` class for page-width containers
+- Combine Tailwind classes for complex layouts (grid, flex, etc.)
+
 ## Performance patterns
 
 - Use `{% liquid %}` for multiline logic
 - Lazy load images with `loading="lazy"`
-- Scope CSS variables to section
-- Use `container-queries` for responsive behavior
+- Use Tailwind classes instead of custom CSS
+- Use inline styles only for dynamic values from settings
 
 [section-example.liquid](mdc:.cursor/rules/examples/section-example.liquid)
-

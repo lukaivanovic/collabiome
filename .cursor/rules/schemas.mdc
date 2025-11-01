@@ -14,17 +14,11 @@ alwaysApply: false
 
 When defining the `{% schema %}` tag on sections and blocks, follow these guidelines to use the values:
 
-**Single property settings**: For settings that correspond to a single CSS property, use CSS variables:
+**Single property settings**: For settings that correspond to a single CSS property, use inline styles:
 ```liquid
-<div class="collection" style="--gap: {{ block.settings.gap }}px">
+<div class="flex flex-wrap" style="gap: {{ block.settings.gap }}px">
   Example
 </div>
-
-{% stylesheet %}
-  .collection {
-    gap: var(--gap);
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -41,20 +35,11 @@ When defining the `{% schema %}` tag on sections and blocks, follow these guidel
 {% endschema %}
 ```
 
-**Multiple property settings**: For settings that control multiple CSS properties, use CSS classes:
+**Multiple property settings**: For settings that control multiple CSS properties, use conditional Tailwind classes:
 ```liquid
-<div class="collection {{ block.settings.layout }}">
+<div class="{% if block.settings.layout == 'full-width' %}w-full{% else %}container mx-auto{% endif %}">
   Example
 </div>
-
-{% stylesheet %}
-  .collection--full-width {
-    /* multiple styles */
-  }
-  .collection--narrow {
-    /* multiple styles */
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -62,9 +47,9 @@ When defining the `{% schema %}` tag on sections and blocks, follow these guidel
     "type": "select",
     "id": "layout",
     "label": "layout",
-    "values": [
-      { "value": "collection--full-width", "label": "t:options.full" },
-      { "value": "collection--narrow", "label": "t:options.narrow" }
+    "options": [
+      { "value": "full-width", "label": "t:options.full" },
+      { "value": "narrow", "label": "t:options.narrow" }
     ]
   }]
 }
