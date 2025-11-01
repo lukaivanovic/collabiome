@@ -7,17 +7,18 @@ class FacetFilterForm extends HTMLElement {
   constructor() {
     super();
     this.form = this.querySelector("form");
+    this.debounceTimer = null;
     this.init();
   }
 
   init() {
     if (!this.form) return;
 
-    // Handle form submission
-    this.form.addEventListener("submit", this.handleSubmit.bind(this));
-
-    // Handle checkbox changes for immediate filtering
+    // Handle checkbox changes for immediate filtering with debouncing
     this.form.addEventListener("change", this.handleChange.bind(this));
+
+    // Handle facet-select change events
+    this.addEventListener("facet-change", this.handleFacetChange.bind(this));
 
     // Handle clear all button
     const clearAllButton = this.querySelector(".facets__clear-all");
@@ -26,18 +27,31 @@ class FacetFilterForm extends HTMLElement {
     }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.applyFilters();
+  handleChange(event) {
+    if (event.target.type === "checkbox" || event.target.type === "number") {
+      this.debounceApplyFilters();
+    }
   }
 
-  handleChange(event) {
-    if (event.target.type === "checkbox") {
-      // Small delay to allow checkbox state to update
-      setTimeout(() => {
-        this.applyFilters();
-      }, 10);
+  handleFacetChange(event) {
+    // Close the dropdown when a change is made
+    const facetSelect = event.detail.filter;
+    if (facetSelect.close) {
+      facetSelect.close();
     }
+    this.debounceApplyFilters();
+  }
+
+  debounceApplyFilters() {
+    // Clear existing timer
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    // Set new timer
+    this.debounceTimer = setTimeout(() => {
+      this.applyFilters();
+    }, 300);
   }
 
   handleClearAll(event) {
@@ -64,19 +78,8 @@ class FacetFilterForm extends HTMLElement {
       ? `${collectionUrl}?${searchParams.toString()}`
       : collectionUrl;
 
-    // Close drawer if this form is inside a drawer
-    this.closeDrawerIfInDrawer();
-
     // Navigate to filtered URL
     window.location.href = newUrl;
-  }
-
-  closeDrawerIfInDrawer() {
-    // Check if this form is inside a drawer
-    const drawer = this.closest("generic-drawer");
-    if (drawer && drawer.close) {
-      drawer.close();
-    }
   }
 
   getCollectionUrl() {

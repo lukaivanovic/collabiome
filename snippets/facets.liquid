@@ -1,7 +1,7 @@
 {% comment %}
   Facets/filters snippet for collection filtering
   Uses Shopify native filters with URL-based filtering
-  Supports both sidebar (desktop) and drawer (mobile) contexts
+  Horizontal multi-select dropdown layout
 {% endcomment %}
 
 {% liquid
@@ -16,13 +16,12 @@
   endfor
 %}
 
-{% comment %} Desktop sidebar version {% endcomment %}
+{% comment %} Horizontal filters with dropdowns {% endcomment %}
 <facet-filter-form class="facets">
   <form id="FacetFiltersForm" class="facets__form">
     {% comment %} Active filters {% endcomment %}
     {% if has_active_filters %}
       <div class="facets__active">
-        <h3 class="facets__heading">{{ 'filters.active_filters' | t | default: 'Active filters' }}</h3>
         <div class="facets__active-list">
           {% for filter in filters %}
             {% for value in filter.active_values %}
@@ -41,129 +40,132 @@
       </div>
     {% endif %}
 
-    {% comment %} Filter groups {% endcomment %}
-    <div class="facets__groups">
+    {% comment %} Filter dropdowns {% endcomment %}
+    <div class="facets__dropdowns">
       {% for filter in filters %}
-        <div class="facets__group">
-          <details class="facets__details" open>
-            <summary class="facets__summary">
-              <span class="facets__label">{{ filter.label }}</span>
-              {% if filter.active_values.size > 0 %}
-                <span class="facets__count">({{ filter.active_values.size }})</span>
-              {% endif %}
-            </summary>
-
-            <div class="facets__content">
-              {% case filter.type %}
-                {% when 'list' %}
-                  <ul class="facets__list">
-                    {% for value in filter.values %}
-                      <li class="facets__item">
-                        <label class="facets__checkbox-label">
-                          <input
-                            type="checkbox"
-                            name="{{ filter.param_name }}"
-                            value="{{ value.value }}"
-                            class="facets__checkbox"
-                            {% if value.active %}
-                              checked
-                            {% endif %}
-                            {% if value.count == 0 and value.active == false %}
-                              disabled
-                            {% endif %}
-                          >
-                          <span class="facets__checkbox-text">
-                            {{ value.label }}
-                            <span class="facets__count">({{ value.count }})</span>
-                          </span>
-                        </label>
-                      </li>
-                    {% endfor %}
-                  </ul>
-
-                {% when 'price_range' %}
-                  <div class="facets__price-range">
-                    <div class="facets__price-inputs">
-                      <label class="facets__price-label">
-                        <span>{{ 'filters.price_from' | t | default: 'From' }}</span>
-                        <input
-                          type="number"
-                          name="{{ filter.min_value.param_name }}"
-                          value="{{ filter.min_value.value | default: '' }}"
-                          placeholder="{{ filter.range_min | money_without_currency }}"
-                          class="facets__price-input"
-                        >
-                      </label>
-                      <label class="facets__price-label">
-                        <span>{{ 'filters.price_to' | t | default: 'To' }}</span>
-                        <input
-                          type="number"
-                          name="{{ filter.max_value.param_name }}"
-                          value="{{ filter.max_value.value | default: '' }}"
-                          placeholder="{{ filter.range_max | money_without_currency }}"
-                          class="facets__price-input"
-                        >
-                      </label>
-                    </div>
-                    <div class="facets__price-range-display">
-                      {{ filter.range_min | money }} - {{ filter.range_max | money }}
-                    </div>
-                  </div>
-
-                {% when 'boolean' %}
-                  <ul class="facets__list">
-                    <li class="facets__item">
-                      <label class="facets__checkbox-label">
+        {% case filter.type %}
+          {% when 'list' %}
+            <facet-select class="facets__select" data-filter-label="{{ filter.label }}">
+              <button
+                type="button"
+                data-select-button
+                class="facets__select-button"
+                aria-expanded="false"
+              >
+                {{ filter.label }}
+              </button>
+              <div class="facets__select-panel hidden" data-select-panel>
+                <ul class="facets__select-list">
+                  {% for value in filter.values %}
+                    <li class="facets__select-item">
+                      <label class="facets__select-label">
                         <input
                           type="checkbox"
                           name="{{ filter.param_name }}"
-                          value="{{ filter.true_value.value }}"
-                          class="facets__checkbox"
-                          {% if filter.true_value.active %}
+                          value="{{ value.value }}"
+                          class="facets__select-checkbox"
+                          {% if value.active %}
                             checked
                           {% endif %}
-                          {% if filter.true_value.count == 0 and filter.true_value.active == false %}
+                          {% if value.count == 0 and value.active == false %}
                             disabled
                           {% endif %}
                         >
-                        <span class="facets__checkbox-text">
-                          {{ filter.true_value.label }}
-                          <span class="facets__count">({{ filter.true_value.count }})</span>
+                        <span class="facets__select-text">
+                          {{ value.label }}
+                          <span class="facets__count">({{ value.count }})</span>
                         </span>
                       </label>
                     </li>
-                    <li class="facets__item">
-                      <label class="facets__checkbox-label">
-                        <input
-                          type="checkbox"
-                          name="{{ filter.param_name }}"
-                          value="{{ filter.false_value.value }}"
-                          class="facets__checkbox"
-                          {% if filter.false_value.active %}
-                            checked
-                          {% endif %}
-                          {% if filter.false_value.count == 0 and filter.false_value.active == false %}
-                            disabled
-                          {% endif %}
-                        >
-                        <span class="facets__checkbox-text">
-                          {{ filter.false_value.label }}
-                          <span class="facets__count">({{ filter.false_value.count }})</span>
-                        </span>
-                      </label>
-                    </li>
-                  </ul>
-              {% endcase %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </facet-select>
+
+          {% when 'boolean' %}
+            <facet-select class="facets__select" data-filter-label="{{ filter.label }}">
+              <button
+                type="button"
+                data-select-button
+                class="facets__select-button"
+                aria-expanded="false"
+              >
+                {{ filter.label }}
+              </button>
+              <div class="facets__select-panel hidden" data-select-panel>
+                <ul class="facets__select-list">
+                  <li class="facets__select-item">
+                    <label class="facets__select-label">
+                      <input
+                        type="checkbox"
+                        name="{{ filter.param_name }}"
+                        value="{{ filter.true_value.value }}"
+                        class="facets__select-checkbox"
+                        {% if filter.true_value.active %}
+                          checked
+                        {% endif %}
+                        {% if filter.true_value.count == 0 and filter.true_value.active == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      <span class="facets__select-text">
+                        {{ filter.true_value.label }}
+                        <span class="facets__count">({{ filter.true_value.count }})</span>
+                      </span>
+                    </label>
+                  </li>
+                  <li class="facets__select-item">
+                    <label class="facets__select-label">
+                      <input
+                        type="checkbox"
+                        name="{{ filter.param_name }}"
+                        value="{{ filter.false_value.value }}"
+                        class="facets__select-checkbox"
+                        {% if filter.false_value.active %}
+                          checked
+                        {% endif %}
+                        {% if filter.false_value.count == 0 and filter.false_value.active == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      <span class="facets__select-text">
+                        {{ filter.false_value.label }}
+                        <span class="facets__count">({{ filter.false_value.count }})</span>
+                      </span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </facet-select>
+
+          {% when 'price_range' %}
+            <div class="facets__price-range-container">
+              <label class="facets__price-label-inline">{{ filter.label }}</label>
+              <div class="facets__price-range">
+                <label class="facets__price-label">
+                  <span>{{ 'filters.price_from' | t | default: 'From' }}</span>
+                  <input
+                    type="number"
+                    name="{{ filter.min_value.param_name }}"
+                    value="{{ filter.min_value.value | default: '' }}"
+                    placeholder="{{ filter.range_min | money_without_currency }}"
+                    class="facets__price-input"
+                  >
+                </label>
+                <label class="facets__price-label">
+                  <span>{{ 'filters.price_to' | t | default: 'To' }}</span>
+                  <input
+                    type="number"
+                    name="{{ filter.max_value.param_name }}"
+                    value="{{ filter.max_value.value | default: '' }}"
+                    placeholder="{{ filter.range_max | money_without_currency }}"
+                    class="facets__price-input"
+                  >
+                </label>
+              </div>
             </div>
-          </details>
-        </div>
+        {% endcase %}
       {% endfor %}
-    </div>
-
-    <div class="facets__footer">
-      <button type="submit" class="facets__submit">
-        {{ 'filters.apply' | t | default: 'Apply filters' }}
-      </button>
     </div>
   </form>
 </facet-filter-form>
@@ -176,28 +178,25 @@
   .facets__form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .facets__active {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     background: #f9fafb;
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;
-  }
-
-  .facets__heading {
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: #374151;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .facets__active-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
   }
 
   .facets__active-item {
@@ -221,54 +220,112 @@
     color: #6b7280;
     text-decoration: underline;
     font-size: 0.875rem;
+    white-space: nowrap;
   }
 
   .facets__clear-all:hover {
     color: #374151;
   }
 
-  .facets__groups {
+  .facets__dropdowns {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-start;
   }
 
-  .facets__group {
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
+  .facets__select {
+    position: relative;
+    display: inline-block;
   }
 
-  .facets__details {
-    display: block;
-  }
-
-  .facets__summary {
+  .facets__select-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
-    cursor: pointer;
-    list-style: none;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
   }
 
-  .facets__summary::-webkit-details-marker {
-    display: none;
+  .facets__select-button:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
   }
 
-  .facets__summary::after {
-    content: '+';
-    font-size: 1.25rem;
+  .facets__select-button::after {
+    content: '▼';
+    font-size: 0.625rem;
     transition: transform 0.2s;
   }
 
-  .facets__details[open] .facets__summary::after {
-    transform: rotate(45deg);
+  .facets__select-button[aria-expanded='true']::after {
+    transform: rotate(180deg);
   }
 
-  .facets__label {
+  .facets__select-panel {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    z-index: 50;
+    min-width: 200px;
+    max-width: 280px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .facets__select-list {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .facets__select-item {
+    display: block;
+  }
+
+  .facets__select-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.25rem;
     font-size: 0.875rem;
+    transition: background-color 0.15s;
+  }
+
+  .facets__select-label:hover {
+    background: #f3f4f6;
+  }
+
+  .facets__select-checkbox {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .facets__select-text {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #374151;
   }
 
   .facets__count {
@@ -276,72 +333,43 @@
     font-weight: normal;
   }
 
-  .facets__content {
-    padding: 0 1rem 1rem;
-    border-top: 1px solid #e5e7eb;
-  }
-
-  .facets__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .facets__item {
-    display: block;
-  }
-
-  .facets__checkbox-label {
+  .facets__price-range-container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    padding: 0.25rem 0;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+  }
+
+  .facets__price-label-inline {
     font-size: 0.875rem;
-  }
-
-  .facets__checkbox {
-    width: 1rem;
-    height: 1rem;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  .facets__checkbox-text {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+    font-weight: 500;
     color: #374151;
+    white-space: nowrap;
   }
 
   .facets__price-range {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .facets__price-inputs {
-    display: flex;
-    flex-direction: column;
     gap: 0.5rem;
+    align-items: center;
   }
 
   .facets__price-label {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 0.25rem;
     font-size: 0.875rem;
     color: #374151;
   }
 
   .facets__price-input {
-    padding: 0.5rem;
+    padding: 0.375rem 0.5rem;
     border: 1px solid #d1d5db;
     border-radius: 0.25rem;
     font-size: 0.875rem;
+    width: 80px;
   }
 
   .facets__price-input:focus {
@@ -350,41 +378,38 @@
     box-shadow: 0 0 0 1px #3b82f6;
   }
 
-  .facets__price-range-display {
-    font-size: 0.75rem;
-    color: #6b7280;
-    text-align: center;
-  }
-
-  .facets__footer {
-    padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
-  }
-
-  .facets__submit {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: #000;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .facets__submit:hover {
-    background: #374151;
+  .hidden {
+    display: none !important;
   }
 
   @media (max-width: 768px) {
-    .facets__active-list {
+    .facets__dropdowns {
       flex-direction: column;
+      gap: 0.5rem;
     }
 
-    .facets__price-inputs {
-      flex-direction: row;
+    .facets__select-button {
+      width: 100%;
+    }
+
+    .facets__select-panel {
+      width: 100%;
+      max-width: none;
+    }
+
+    .facets__price-range-container {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .facets__price-range {
+      width: 100%;
+    }
+
+    .facets__price-input {
+      flex: 1;
+      width: 100%;
     }
   }
 {% endstylesheet %}

@@ -42,90 +42,62 @@
     </a>
   </div>
 
-  {% comment %} Main content area with filters and products {% endcomment %}
-  <div class="flex flex-col md:flex-row gap-8">
-    {% comment %} Filters sidebar {% endcomment %}
-    {% if show_filters and section.settings.show_filters %}
-      <aside class="w-full md:w-64 flex-shrink-0">
-        {% render 'facets' %}
-      </aside>
-    {% endif %}
+  {% comment %} Filters {% endcomment %}
+  {% if show_filters and section.settings.show_filters %}
+    <div class="mb-6">
+      {% render 'facets' %}
+    </div>
+  {% endif %}
 
-    {% comment %} Products grid {% endcomment %}
-    <div class="flex-1">
-      {% comment %} Mobile filters button {% endcomment %}
-      {% if show_filters and section.settings.show_filters %}
-        <button
-          class="filters-trigger md:hidden mb-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg border border-gray-300 hover:bg-gray-200 transition-colors duration-200"
-          data-drawer-trigger="filters-drawer"
-        >
-          <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z"></path>
-          </svg>
-          {{ 'filters.title' | t | default: 'Filters' }}
-        </button>
-      {% endif %}
+  {% comment %} Products grid {% endcomment %}
+  <div class="mb-4 text-sm opacity-75 product-count">
+    {{ selected_collection.products_count }}
+    {{ 'general.products' | t | default: 'Products' }}
+  </div>
 
-      <div class="mb-4 text-sm opacity-75 product-count">
-        {{ selected_collection.products_count }}
-        {{ 'general.products' | t | default: 'Products' }}
-      </div>
-
-      {% if collection != blank %}
-        {% comment %} Collection context - use pagination {% endcomment %}
-        {% paginate selected_collection.products by products_per_page %}
-          {% if selected_collection.products.size == 0 %}
-            <div class="text-center py-12">
-              <p class="text-lg opacity-75">
-                {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
-              </p>
-              <a href="{{ selected_collection.url }}" class="inline-block mt-4 px-6 py-2 bg-black text-white rounded">
-                {{ 'filters.clear_all' | t | default: 'Clear all filters' }}
-              </a>
-            </div>
-          {% else %}
-            <div
-              class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
-              data-section-id="{{ section_id }}"
-            >
-              {% for product in selected_collection.products %}
-                <div class="product-card">
-                  {% render 'product-card', product: product %}
-                </div>
-              {% endfor %}
-            </div>
-
-            {% if paginate.pages > 1 %}
-              <div class="text-center">
-                {{ paginate | default_pagination }}
-              </div>
-            {% endif %}
-          {% endif %}
-        {% endpaginate %}
+  {% if collection != blank %}
+    {% comment %} Collection context - use pagination {% endcomment %}
+    {% paginate selected_collection.products by products_per_page %}
+      {% if selected_collection.products.size == 0 %}
+        <div class="text-center py-12">
+          <p class="text-lg opacity-75">
+            {{ 'filters.no_products' | t | default: 'No products found with the selected filters.' }}
+          </p>
+          <a href="{{ selected_collection.url }}" class="inline-block mt-4 px-6 py-2 bg-black text-white rounded">
+            {{ 'filters.clear_all' | t | default: 'Clear all filters' }}
+          </a>
+        </div>
       {% else %}
-        {% comment %} No collection context - show all products without pagination {% endcomment %}
         <div
           class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
           data-section-id="{{ section_id }}"
         >
-          {% for product in collections.all.products limit: products_per_page %}
+          {% for product in selected_collection.products %}
             <div class="product-card">
               {% render 'product-card', product: product %}
             </div>
           {% endfor %}
         </div>
-      {% endif %}
-    </div>
-  </div>
 
-  {% comment %} Mobile filters drawer {% endcomment %}
-  {% if show_filters and section.settings.show_filters %}
-    {% render 'filter-drawer',
-      id: 'filters-drawer',
-      position: 'right',
-      title: 'Filters',
-      content_class: 'filters-drawer-content'
-    %}
+        {% if paginate.pages > 1 %}
+          <div class="text-center">
+            {{ paginate | default_pagination }}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endpaginate %}
+  {% else %}
+    {% comment %} No collection context - show all products without pagination {% endcomment %}
+    <div
+      class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 sm:gap-6 md:gap-8 mb-12"
+      data-section-id="{{ section_id }}"
+    >
+      {% for product in collections.all.products limit: products_per_page %}
+        <div class="product-card">
+          {% render 'product-card', product: product %}
+        </div>
+      {% endfor %}
+    </div>
   {% endif %}
 </div>
 
@@ -152,57 +124,10 @@
     color: #fff;
     border-color: #000;
   }
-
-  /* Filter checkboxes */
-  .filter-checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    padding: 0.25rem 0;
-  }
-
-  .filter-checkbox-label:hover {
-    opacity: 0.8;
-  }
-
-  .filter-checkbox {
-    width: 1rem;
-    height: 1rem;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  /* Mobile responsive styles */
-  @media (max-width: 767px) {
-    aside {
-      display: none;
-    }
-
-    .filters-trigger {
-      display: block;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .filters-trigger {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    aside {
-      order: 2;
-    }
-
-    .flex-1 {
-      order: 1;
-    }
-  }
 {% endstylesheet %}
 
+<script src="{{ 'facet-select.js' | asset_url }}" defer></script>
 <script src="{{ 'facets.js' | asset_url }}" defer></script>
-<script src="{{ 'drawer.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
