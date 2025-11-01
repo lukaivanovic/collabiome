@@ -1,7 +1,9 @@
 <header class="hidden md:block">
   {% render 'header-desktop-nav',
     shop_menu: section.settings.shop_menu,
-    marketing_menu: section.settings.marketing_menu
+    marketing_menu: section.settings.marketing_menu,
+    cosmetics_menu: section.settings.cosmetics_menu,
+    supplements_menu: section.settings.supplements_menu
   %}
 </header>
 
@@ -34,6 +36,16 @@
       "type": "link_list",
       "id": "marketing_menu",
       "label": "Marketing menu"
+    },
+    {
+      "type": "link_list",
+      "id": "cosmetics_menu",
+      "label": "Cosmetics mega menu"
+    },
+    {
+      "type": "link_list",
+      "id": "supplements_menu",
+      "label": "Supplements mega menu"
     }
   ]
 }

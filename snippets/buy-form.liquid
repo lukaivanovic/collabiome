@@ -40,7 +40,7 @@
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200  hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
+                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200  hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"

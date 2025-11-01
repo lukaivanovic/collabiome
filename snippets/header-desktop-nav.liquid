@@ -61,7 +61,7 @@
         data-mega-menu-panel="{{ link.object.handle }}"
         aria-hidden="true"
       >
-        <div class="p-8 max-w-[1200px] mx-auto">
+        <div class="container p-8">
           <div class="grid grid-cols-[300px_1fr] gap-8 items-start">
             {% if link.object.image %}
               <div class="relative rounded-lg overflow-hidden">
@@ -82,8 +82,39 @@
             {% endif %}
 
             <div class="grid grid-cols-3 gap-6">
+              {% comment %} Show menu links if available {% endcomment %}
+              {% liquid
+                assign show_menu = false
+                assign menu_to_show = null
+                if link.object.handle == 'kozmetika' or link.object.handle == 'cosmetics'
+                  if cosmetics_menu and cosmetics_menu.links.size > 0
+                    assign show_menu = true
+                    assign menu_to_show = cosmetics_menu
+                  endif
+                elsif link.object.handle == 'dodaci-prehrani' or link.object.handle == 'supplements'
+                  if supplements_menu and supplements_menu.links.size > 0
+                    assign show_menu = true
+                    assign menu_to_show = supplements_menu
+                  endif
+                endif
+              %}
+
+              {% if show_menu %}
+                <div class="col-span-3 mb-4">
+                  <ul class="list-none p-0 m-0 flex flex-wrap gap-4">
+                    {% for menu_link in menu_to_show.links %}
+                      <li>
+                        <a href="{{ menu_link.url }}" class="text-primary hover:text-primary/80 no-underline text-sm">
+                          {{ menu_link.title }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
               {% for product in link.object.products limit: 3 %}
-                {% render 'product-card', product: product %}
+                {% render 'product-card', product: product, hide_buy_form: true %}
               {% endfor %}
             </div>
           </div>

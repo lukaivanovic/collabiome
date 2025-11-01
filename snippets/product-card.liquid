@@ -28,7 +28,9 @@
         {{ product.metafields.custom.headline.value | strip_html | truncate: 100 }}
       </p>
     {% endif %}
-    {% render 'buy-form', product: product %}
+    {% unless hide_buy_form %}
+      {% render 'buy-form', product: product %}
+    {% endunless %}
   </div>
 </div>
 

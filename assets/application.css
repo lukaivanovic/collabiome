@@ -381,6 +381,9 @@
   .z-\[9999\] {
     z-index: 9999;
   }
+  .col-span-3 {
+    grid-column: span 3 / span 3;
+  }
   .col-span-full {
     grid-column: 1 / -1;
   }
