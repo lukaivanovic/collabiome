@@ -4,8 +4,9 @@
 
 <div class="container-small text-center py-30">
   <h2 class="text-4xl uppercase font-medium">{{ comparisons.title | default: 'Comparison' }}</h2>
-
-  {% if comparisons.description %}
+  {% if section.settings.description %}
+    <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
+  {% elsif comparisons.description %}
     <p class="text-base opacity-70 mt-2">{{ comparisons.description }}</p>
   {% endif %}
 
@@ -14,25 +15,35 @@
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="border-b border-gray-200">
-            <th class="px-3 py-2 font-medium h-14">Category</th>
+            <th class="px-3 py-2 font-medium h-14 align-middle">Category</th>
             {% for p in comparisons.products %}
-              <th class="px-3 py-2 h-14 border-l border-gray-200 {% if forloop.first %}bg-blue-100{% endif %}">{{ p.label }}</th>
+              <th class="px-3 py-2 h-14 border-l border-gray-200 align-middle text-center {% if forloop.first %}bg-white rounded-lg{% endif %}">
+                {{ p.label }}
+              </th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for c in comparisons.categories %}
             <tr class="border-b border-gray-200 last:border-b-0">
-              <td class="px-3 py-2 align-top font-medium h-14">{{ c.label }}</td>
+              <td class="px-3 py-2 align-middle font-medium h-14">{{ c.label }}</td>
               {% assign category_values = comparisons.values[c.key] %}
               {% for p in comparisons.products %}
                 {% assign val = category_values[p.id] %}
-                <td class="px-3 py-2 align-top h-14 border-l border-gray-200 {% if forloop.first %}bg-blue-100{% endif %}">
-                  {% if val %}
-                    <img src="{{ 'icon-check.svg' | asset_url }}" alt="Yes" width="16" height="16">
-                  {% else %}
-                    <span class="opacity-60">&mdash;</span>
-                  {% endif %}
+                <td class="px-3 py-2 align-middle h-14 border-l border-gray-200 text-center {% if forloop.first %}bg-white rounded-lg{% endif %}">
+                  <div class="flex items-center justify-center">
+                    {% if val %}
+                      <img
+                        src="{{ 'icon-check.svg' | asset_url }}"
+                        alt="Yes"
+                        width="16"
+                        height="16"
+                        class="inline-block"
+                      >
+                    {% else %}
+                      <span class="opacity-60">&mdash;</span>
+                    {% endif %}
+                  </div>
                 </td>
               {% endfor %}
             </tr>
@@ -49,7 +60,10 @@
 {
   "name": "Product Comparison",
   "tag": "section",
-  "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "Comparison" }],
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Comparison" },
+    { "type": "richtext", "id": "description", "label": "Description" }
+  ],
   "presets": [
     {
       "name": "Product Comparison",

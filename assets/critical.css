@@ -3,7 +3,6 @@
 /* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
 * {
   box-sizing: border-box;
-  margin: 0;
 }
 
 html {
@@ -188,7 +187,7 @@ button {
 }
 
 .container-small {
-  max-width: 920px;
+  max-width: 980px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 48px;
