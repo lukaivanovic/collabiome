@@ -6,28 +6,23 @@
   id="{{ section_id }}"
   class="product-reviews container-small py-30"
 >
-  <div
-    class="bg-white rounded-3xl p-8"
-    style="background-color: {{ section.settings.background_color }};"
-  >
-    {% if section.settings.title != blank %}
-      <h2 class="text-4xl uppercase font-bold text-black mb-8">
-        {{ section.settings.title }}
-      </h2>
-    {% endif %}
+  {% if section.settings.title != blank %}
+    <h2 class="text-4xl uppercase font-bold text-black mb-8">
+      {{ section.settings.title }}
+    </h2>
+  {% endif %}
 
-    <!-- Start of Judge.me code -->
-    <div style="clear:both"></div>
-    <div
-      id="judgeme_product_reviews"
-      class="jdgm-widget jdgm-review-widget"
-      data-product-title="{{ product.title | escape }}"
-      data-id="{{ product.id }}"
-    >
-      {{ product.metafields.judgeme.widget }}
-    </div>
-    <!-- End of Judge.me code -->
+  <!-- Start of Judge.me code -->
+  <div style="clear:both"></div>
+  <div
+    id="judgeme_product_reviews"
+    class="jdgm-widget jdgm-review-widget"
+    data-product-title="{{ product.title | escape }}"
+    data-id="{{ product.id }}"
+  >
+    {{ product.metafields.judgeme.widget }}
   </div>
+  <!-- End of Judge.me code -->
 </div>
 
 {% schema %}

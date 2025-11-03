@@ -1407,6 +1407,9 @@
   .text-neutral-700 {
     color: var(--color-neutral-700);
   }
+  .text-neutral-900 {
+    color: var(--color-neutral-900);
+  }
   .text-pink-900 {
     color: var(--color-pink-900);
   }
