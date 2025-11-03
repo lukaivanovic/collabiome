@@ -41,7 +41,7 @@
 
 <div
   id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-  class="cart-item-card bg-white border-b border-neutral-200 last:border-b-0 p-4 relative{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
+  class="cart-item-card bg-white border-b border-neutral-200 last:border-b-0 relative{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
   {% if item.parent_relationship.parent != null %}
     aria-label="{{ item.product.title | escape }} part of {{ item.parent_relationship.parent.title | escape }}"
   {% endif %}
@@ -52,7 +52,7 @@
       {% if item.image %}
         <a href="{{ item.url }}" class="block">
           <img
-            class="cart-item__image w-24 h-24 object-contain"
+            class="cart-item__image w-24 h-24 object-contain rounded-lg"
             src="{{ item.image | image_url: width: 300 }}"
             alt="{{ item.image.alt | escape }}"
             loading="lazy"
@@ -78,7 +78,7 @@
         <quantity-input class="quantity cart-quantity flex items-center gap-2">
           {%- comment -%} Minus Button {%- endcomment -%}
           <button
-            class="quantity__button w-10 h-10 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center hover:bg-pink-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="quantity__button w-6 h-6 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center hover:bg-pink-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             name="minus"
             type="button"
             aria-label="Decrease quantity for {{ item.product.title | escape }}"
@@ -92,9 +92,9 @@
           </button>
 
           {%- comment -%} Quantity Display {%- endcomment -%}
-          <div class="quantity__display w-10 h-10 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center">
+          <div class="quantity__display w-6 h-6 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center">
             <input
-              class="quantity__input w-6 text-center text-pink-900 font-medium bg-transparent border-none p-0 text-sm"
+              class="quantity__input w-6 h-6 text-center text-pink-900 font-medium bg-transparent border-none p-0 leading-none text-sm"
               type="number"
               data-quantity-variant-id="{{ item.variant.id }}"
               name="updates[]"
@@ -119,7 +119,7 @@
 
           {%- comment -%} Plus Button {%- endcomment -%}
           <button
-            class="quantity__button w-10 h-10 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center hover:bg-pink-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="quantity__button w-6 h-6 rounded-full bg-pink-50 border border-pink-800/30 flex items-center justify-center hover:bg-pink-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             name="plus"
             type="button"
             aria-label="Increase quantity for {{ item.product.title | escape }}"
@@ -232,7 +232,7 @@
     </div>
 
     {%- comment -%} Delete Button (Top Right) {%- endcomment -%}
-    <cart-remove-button
+  <cart-remove-button
       id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
       data-index="{{ item.index | plus: 1 }}"
       class="absolute top-4 right-4"
@@ -246,7 +246,7 @@
           class="hidden"
         {% endif %}
       >
-        {{- 'icon-close.svg' | inline_asset_content -}}
+        {{- 'icon-minus.svg' | inline_asset_content -}}
       </button>
     </cart-remove-button>
   </div>

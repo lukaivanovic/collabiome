@@ -2,7 +2,7 @@
   assign before_after = product.metafields.custom.before_after.value
 -%}
 
-<div class="container-small text-center py-30">
+<div class="container-small text-center py-30 relative">
   <h2 class="text-4xl uppercase font-medium">{{ before_after.title | default: 'Before & After' }}</h2>
 
   {% if before_after.description %}
@@ -33,10 +33,51 @@
   </div>
 </div>
 
+{% stylesheet %}
+  .product-before-after__section {
+    position: relative;
+  }
+
+  .product-before-after__section::before {
+    margin-top: -300px;
+    margin-bottom: -200px;
+    padding-top: 320px;
+    padding-bottom: 240px;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(
+        0deg,
+        hsla(0, 0%, 100%, 1) 0%,
+        hsla(0, 0%, 100%, 0.7) 11%,
+        hsla(0, 0%, 100%, 0.47) 22%,
+        hsla(0, 0%, 100%, 0.3) 33%,
+        hsla(0, 0%, 100%, 0.17) 44%,
+        hsla(0, 0%, 100%, 0.09) 50%,
+        hsla(0, 0%, 100%, 0.17) 56%,
+        hsla(0, 0%, 100%, 0.3) 67%,
+        hsla(0, 0%, 100%, 0.47) 77%,
+        hsla(0, 0%, 100%, 0.7) 89%,
+        hsla(0, 0%, 100%, 1) 100%
+      ),
+      linear-gradient(
+        86deg,
+        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
+        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
+        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
+      );
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Product Before & After",
   "tag": "section",
+  "class": "product-before-after__section",
   "settings": [],
   "presets": [
     {

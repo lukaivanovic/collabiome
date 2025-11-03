@@ -18,6 +18,9 @@
     novalidate: 'novalidate',
     data-type: 'add-to-cart-form'
   -%}
+    {%- liquid
+      assign variant_layout = variant_layout | default: 'horizontal'
+    -%}
     <input
       type="hidden"
       name="id"
@@ -31,16 +34,16 @@
       class="product-variant-id"
     >
     <div class="flex flex-col gap-4">
-      <div class="flex flex-row gap-2 h-8">
+      {% if variant_layout == 'grid' %}
         {% unless product.has_only_default_variant %}
-          {% comment %}  Variants {% endcomment %}
+          {% comment %}  Variants (Grid Layout) {% endcomment %}
           {% for option in product.options_with_values %}
             {% comment %}  Options {% endcomment %}
-            <div class="flex flex-row gap-2">
+            <div class="variant-options-grid grid grid-cols-3 gap-2">
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200  hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5 "
+                  class="variant-option variant-option--grid relative flex flex-col items-center p-4 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -58,7 +61,7 @@
                     {% endif %}
                     class="sr-only"
                   >
-                  <span class=" text-primary">{{ value }}</span>
+                  <span class="text-primary text-center">{{ value }}</span>
                   <span
                     class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
                     data-variant-badge
@@ -68,7 +71,46 @@
             </div>
           {% endfor %}
         {% endunless %}
-      </div>
+      {% else %}
+        <div class="flex flex-row gap-2 h-8">
+          {% unless product.has_only_default_variant %}
+            {% comment %}  Variants (Horizontal Layout) {% endcomment %}
+            {% for option in product.options_with_values %}
+              {% comment %}  Options {% endcomment %}
+              <div class="flex flex-row gap-2">
+                {% for value in option.values %}
+                  <label
+                    for="options[{{ option.name }}]-{{ forloop.index }}"
+                    class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
+                    data-option-label
+                    {% if option.selected_value == value %}
+                      data-selected="true"
+                    {% else %}
+                      data-selected="false"
+                    {% endif %}
+                  >
+                    <input
+                      type="radio"
+                      id="options[{{ option.name }}]-{{ forloop.index }}"
+                      name="options[{{ option.name }}]"
+                      value="{{ value }}"
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
+                      class="sr-only"
+                    >
+                    <span class="text-primary">{{ value }}</span>
+                    <span
+                      class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
+                      data-variant-badge
+                    ></span>
+                  </label>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          {% endunless %}
+        </div>
+      {% endif %}
 
       <div class="product-form__buttons">
         {%- liquid

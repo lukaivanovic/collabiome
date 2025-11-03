@@ -11,14 +11,14 @@
   assign headline = product.metafields.custom.headline.value
 -%}
 
-<div class="w-full max-w-[1600px] !mx-auto px-0 md:px-6 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
+<div class="w-full container pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_560px]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
   {% comment %} Product images {% endcomment %}
-  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden max-h-[700px]">
+  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden max-h-[700px] lg:sticky lg:top-20">
     <div class="overflow-hidden relative rounded-2xl w-full flex-grow">
       <div
         class="embla embla-product flex overflow-hidden relative h-full"
@@ -68,18 +68,23 @@
 
   {% comment %} Product content {% endcomment %}
   <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-10 md:rounded-3xl">
-    <div>
+    <div class="flex flex-col gap-4">
       <h1 class="!text-4xl font-medium">{{ product.title }}</h1>
-      <p class="font-geist">{{ headline }}</p>
+      <!-- Start of Judge.me code -->
+      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+        {{ product.metafields.judgeme.badge }}
+      </div>
+      <!-- End of Judge.me code -->
+      <p class="font-geist text-secondary">{{ headline }}</p>
     </div>
 
     {% comment %} Buy form{% endcomment %}
-    {% render 'buy-form', product: product, section_id: section.id %}
+    {% render 'buy-form', product: product, section_id: section.id, variant_layout: 'grid' %}
 
     {% comment %} Description {% endcomment %}
     <div>
-      <h3 class="text-base uppercase">Description</h3>
-      <div class="flex flex-col gap-2">
+      <h3 class="text-sm uppercase text-secondary">Description</h3>
+      <div class="flex flex-col gap-2 pt-2">
         {{ product.description }}
       </div>
     </div>
@@ -96,7 +101,7 @@
 
     {% comment %} Benefits {% endcomment %}
     <div class="flex flex-col gap-4">
-      <h3 class="text-base uppercase">Benefits</h3>
+      <h3 class="text-sm uppercase text-secondary">Benefits</h3>
       <div class="flex flex-col  gap-2">
         {%- for benefit in benefits -%}
           <div class="flex items-center gap-3 bg-white rounded-lg">
@@ -109,7 +114,7 @@
 
     {% comment %} Accordions {% endcomment %}
     <div class="flex flex-col gap-4">
-      <h3 class="text-base uppercase">More information</h3>
+      <h3 class="text-sm uppercase text-secondary">More information</h3>
       <div class="product-accordion flex flex-col">
         {%- for accordion_item in accordion_items -%}
           <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">

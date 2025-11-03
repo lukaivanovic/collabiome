@@ -141,6 +141,11 @@ cart-drawer-items.is-empty + .drawer__footer {
   padding: 1.5rem 2.8rem 1.5rem 0;
 }
 
+/* Add vertical spacing between totals and checkout button */
+.drawer__footer .cart__ctas {
+  margin-top: 1.25rem;
+}
+
 .drawer__footer > details + .cart-drawer__footer {
   padding-top: 1.5rem;
 }
@@ -314,7 +319,7 @@ cart-drawer-items {
 }
 
 .cart-drawer__footer > * + * {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .cart-drawer .totals {

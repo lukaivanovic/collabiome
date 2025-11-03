@@ -34,20 +34,21 @@
         </div>
         {% form 'customer', class: 'w-full' %}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="flex gap-2">
+          <div class="relative w-full">
             <input
               type="email"
               name="contact[email]"
               placeholder="Your email"
               required
-              class="flex-grow px-3 py-2 rounded-full bg-black/60 backdrop-blur-2xl border border-black/20 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              class="w-full pr-16 pl-4 py-3 rounded-full bg-black/60 backdrop-blur-2xl border border-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-primary"
             >
             <button
               type="submit"
               aria-label="Subscribe"
-              class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+              class="absolute top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white text-black flex items-center justify-center transition-all duration-200 hover:bg-black hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 hover:shadow-md hover:scale-105"
+              style="right: 0.25rem;"
             >
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-colors">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>

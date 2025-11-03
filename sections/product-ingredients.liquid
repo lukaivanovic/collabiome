@@ -4,8 +4,9 @@
 
 <div class="container-small text-center py-30">
   <h2 class="text-4xl uppercase font-medium">{{ ingredients.title | default: 'Ingredients' }}</h2>
-
-  {% if ingredients.description %}
+  {% if section.settings.description %}
+    <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
+  {% elsif ingredients.description %}
     <p class="text-base opacity-70 mt-2">{{ ingredients.description }}</p>
   {% endif %}
 
@@ -39,8 +40,9 @@
   {% endfor %}
 
   {% if other_ingredients != '' %}
-    <div class="h-px bg-neutral-300"></div>
+    <div class="h-px bg-neutral-300 mt-16"></div>
     <div class="mt-20">
+      <div class="text-sm uppercase tracking-wide opacity-70 mb-2">Other ingredients</div>
       <p>{{ other_ingredients }}</p>
     </div>
   {% endif %}
@@ -50,7 +52,10 @@
 {
   "name": "Product Ingredients",
   "tag": "section",
-  "settings": [{ "type": "text", "id": "title", "label": "Title" }],
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title" },
+    { "type": "richtext", "id": "description", "label": "Description" }
+  ],
   "presets": [
     {
       "name": "Product Ingredients",

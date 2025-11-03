@@ -11,23 +11,23 @@
 
   {% if comparisons and comparisons.products and comparisons.categories and comparisons.values %}
     <div class="overflow-x-auto pt-12">
-      <table class="w-full text-left">
+      <table class="w-full text-left border-collapse">
         <thead>
-          <tr>
-            <th class="py-2 pr-4">Category</th>
+          <tr class="border-b border-gray-200">
+            <th class="px-3 py-2 font-medium h-14">Category</th>
             {% for p in comparisons.products %}
-              <th class="py-2 pr-4">{{ p.label }}</th>
+              <th class="px-3 py-2 h-14 border-l border-gray-200 {% if forloop.first %}bg-blue-100{% endif %}">{{ p.label }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for c in comparisons.categories %}
-            <tr>
-              <td class="py-2 pr-4 align-top font-medium">{{ c.label }}</td>
+            <tr class="border-b border-gray-200 last:border-b-0">
+              <td class="px-3 py-2 align-top font-medium h-14">{{ c.label }}</td>
               {% assign category_values = comparisons.values[c.key] %}
               {% for p in comparisons.products %}
                 {% assign val = category_values[p.id] %}
-                <td class="py-2 pr-4 align-top">
+                <td class="px-3 py-2 align-top h-14 border-l border-gray-200 {% if forloop.first %}bg-blue-100{% endif %}">
                   {% if val %}
                     <img src="{{ 'icon-check.svg' | asset_url }}" alt="Yes" width="16" height="16">
                   {% else %}
