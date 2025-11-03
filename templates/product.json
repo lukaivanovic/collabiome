@@ -32,7 +32,8 @@
       "type": "product-ingredients",
       "name": "Product Ingredients",
       "settings": {
-        "title": ""
+        "title": "Ingredients",
+        "description": "<p>Only the best for our customers</p>"
       }
     },
     "product_science_nfrBbH": {
