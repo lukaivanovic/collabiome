@@ -97,7 +97,7 @@ h2 {
   line-height: 1.1;
   font-weight: 600;
   font-family: "Red Hat Display", sans-serif;
-  letter-spacing: -0.01em;
+  letter-spacing: 0em;
 }
 
 @media (max-width: 768px) {
@@ -186,16 +186,6 @@ button {
   width: 100%;
 }
 
-/** Container utility class */
-.container-medium {
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 64px;
-  padding-right: 64px;
-  width: 100%;
-}
-
 .container-small {
   max-width: 980px;
   margin-left: auto;
@@ -238,7 +228,7 @@ button {
 }
 
 .text-secondary {
-  color: color-mix(in srgb, var(--color-foreground-default) 64%, transparent);
+  color: color-mix(in srgb, var(--color-foreground-default) 88%, transparent);
 }
 
 .text-accent {

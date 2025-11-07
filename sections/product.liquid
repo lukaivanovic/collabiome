@@ -9,9 +9,10 @@
   assign benefits = product.metafields.custom.benefits.value
   assign accordion_items = product.metafields.custom.accordion.value
   assign headline = product.metafields.custom.headline.value
+  assign product_form_identifier = 'product-form-' | append: product.id
 -%}
 
-<div class="w-full container-medium !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_560px]">
+<div class="w-full container !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
@@ -67,19 +68,27 @@
   </div>
 
   {% comment %} Product content {% endcomment %}
-  <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-10 md:rounded-3xl">
-    <div class="flex flex-col gap-4">
-      <h1 class="!text-4xl font-medium">{{ product.title }}</h1>
+  <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-12 md:rounded-3xl">
+    <div class="flex flex-col gap-2">
+      <h1 class="!text-[40px] font-medium uppercase text-balance">{{ product.title }}</h1>
       <!-- Start of Judge.me code -->
       <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
         {{ product.metafields.judgeme.badge }}
       </div>
       <!-- End of Judge.me code -->
-      <p class="font-geist text-secondary">{{ headline }}</p>
+      <p class="font-geist font-medium">{{ headline }}</p>
     </div>
 
     {% comment %} Buy form{% endcomment %}
-    {% render 'buy-form', product: product, section_id: section.id, variant_layout: 'grid' %}
+    {% render 'buy-form',
+      product: product,
+      section_id: section.id,
+      variant_layout: 'grid',
+      large_button: true,
+      show_dynamic_checkout: false,
+      gift_card_recipient_feature_active: false,
+      product_form_id: product_form_identifier
+    %}
 
     {% comment %} Description {% endcomment %}
     <div>
@@ -145,6 +154,22 @@
 </div>
 
 {% stylesheet %}
+  .jdgm-prev-badge {
+    font-size: 12px !important;
+  }
+
+  .jdgm-prev-badge__stars {
+    display: inline !important;
+    align-items: center !important;
+    gap: 0px !important;
+    height: 16px !important;
+  }
+
+  .jdgm-prev-badge__text {
+    font-size: 14px !important;
+    margin-left: 4px !important;
+  }
+
   .product-background {
     background: linear-gradient(
         0deg,
@@ -160,10 +185,10 @@
         hsla(0, 0%, 100%, 0) 100%
       ),
       linear-gradient(
-        86deg,
-        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
-        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
-        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
+        160deg,
+        color-mix(in srgb, #dbeae5 100%, transparent) -1.58%,
+        color-mix(in srgb, #ede1d7 100%, transparent) 49.21%,
+        color-mix(in srgb, #f6b4ca 100%, transparent) 100%
       );
   }
 

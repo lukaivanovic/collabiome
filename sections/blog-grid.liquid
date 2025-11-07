@@ -12,7 +12,7 @@
   {% endif %}
 
   {% if selected_blog != blank and selected_blog.articles_count > 0 %}
-    <div class="embla relative pt-8" data-section-id="{{ section_id }}">
+    <div class="embla blog-grid__carousel relative pt-8" data-section-id="{{ section_id }}">
       <div class="embla__container">
         {% for article in selected_blog.articles limit: 6 %}
           <div class="embla__slide">
@@ -146,6 +146,33 @@
 {% endjavascript %}
 
 {% stylesheet %}
+  .blog-grid__section::before {
+    margin-bottom: -200px;
+    padding-bottom: 240px;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(
+        0deg,
+        hsla(0, 0%, 100%, 1) 0%,
+        hsla(0, 0%, 100%, 0.7) 11%,
+        hsla(0, 0%, 100%, 0.47) 22%,
+        hsla(0, 0%, 100%, 0.3) 33%,
+        hsla(0, 0%, 100%, 0.17) 44%,
+        hsla(0, 0%, 100%, 0.09) 50%,
+        hsla(0, 0%, 100%, 0.17) 56%,
+        hsla(0, 0%, 100%, 0.3) 67%,
+        hsla(0, 0%, 100%, 0.47) 77%,
+        hsla(0, 0%, 100%, 0.7) 89%,
+        hsla(0, 0%, 100%, 1) 100%
+      ),
+      linear-gradient(var(--gradient-recupera));
+  }
+
   .blog-grid {
     padding-top: 120px;
     padding-bottom: 120px;
@@ -160,13 +187,13 @@
     position: relative;
   }
 
-  .embla__container {
+  .blog-grid .embla__container {
     display: flex;
-    gap: 0.75rem;
+    gap: 1.5rem;
   }
 
-  .embla__slide {
-    flex: 0 0 320px;
+  .blog-grid .embla__slide {
+    flex: 0 0 calc((100% - 3rem) / 3);
     min-width: 0;
   }
 
@@ -247,7 +274,7 @@
       padding: 0 16px;
     }
 
-    .embla__slide {
+    .blog-grid .embla__slide {
       flex: 0 0 280px;
     }
 
@@ -338,6 +365,7 @@
 {
   "name": "Blog grid",
   "tag": "section",
+  "class": "blog-grid__section",
   "settings": [
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "heading", "label": "Text", "default": "Latest articles" },

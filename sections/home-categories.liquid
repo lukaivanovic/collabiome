@@ -9,10 +9,10 @@
       <p class="text-secondary">{{ section.settings.description | escape }}</p>
     {% endif %}
   {% endif %}
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 z-10">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-12 z-10">
     {% for block in section.blocks %}
       <div
-        class="flex flex-col relative overflow-hidden rounded-xl group border-1 border-black/4"
+        class="flex flex-col relative overflow-hidden rounded-2xl group "
         {{ block.shopify_attributes }}
       >
         <a href="{{ block.settings.button_url }}" class="category-card  flex-grow">
@@ -22,10 +22,10 @@
         <div class="p-6 flex flex-col items-center justify-between text-center gap-1 bg-white h-44">
           <div>
             {% if block.settings.title != blank %}
-              <h3 class="text-2xl pb-1">{{ block.settings.title | escape }}</h3>
+              <h3 class="text-2xl pb-1 line-clamp-1">{{ block.settings.title | escape }}</h3>
             {% endif %}
             {% if block.settings.description != blank %}
-              <p class="text-black/80 ">{{ block.settings.description | escape }}</p>
+              <p class="text-black/80 line-clamp-1">{{ block.settings.description | escape }}</p>
             {% endif %}
           </div>
           {% if block.settings.button_text != blank %}
@@ -71,10 +71,10 @@
         hsla(0, 0%, 100%, 1) 100%
       ),
       linear-gradient(
-        86deg,
-        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
-        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
-        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
+        180deg,
+        color-mix(in srgb, #dbeae5 90%, transparent) -1.58%,
+        color-mix(in srgb, #ede1d7 90%, transparent) 20%,
+        color-mix(in srgb, #f6b4ca 90%, transparent) 100%
       );
   }
 
