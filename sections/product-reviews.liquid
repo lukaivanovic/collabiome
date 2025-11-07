@@ -25,6 +25,63 @@
   <!-- End of Judge.me code -->
 </div>
 
+{% style %}
+  .jdgm-rev-widg {
+    padding: 0 !important;
+  }
+
+  .jdgm-rev-widg__title {
+    font-size: 2.75rem !important;
+    text-align: left !important;
+    font-weight: 600;
+    line-height: 32px;
+    color: #000;
+  }
+
+  .jdgm-row-stars {
+    justify-content: space-between !important;
+  }
+
+  .jdgm-rev-widg__summary {
+    width: auto !important;
+  }
+
+  .jdgm-rev-widg__summary-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .jdgm-rev-widg__summary-text {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    line-height: 16px !important;
+    color: #666 !important;
+  }
+
+  .jdgm-rev__reply {
+    background-color: var(--color-neutral-100) !important;
+    border-radius: 12px !important;
+  }
+
+  .jdgm-star {
+    color: var(--color-pink-500) !important;
+  }
+
+  .jdgm-histogram {
+    display: none !important;
+  }
+
+  .jdgm-write-rev-link {
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    padding: 8px 16px !important;
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "Product Reviews",

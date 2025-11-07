@@ -181,8 +181,18 @@ button {
   max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 80px;
-  padding-right: 80px;
+  padding-left: 64px;
+  padding-right: 64px;
+  width: 100%;
+}
+
+/** Container utility class */
+.container-medium {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 64px;
+  padding-right: 64px;
   width: 100%;
 }
 

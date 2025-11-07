@@ -2,10 +2,10 @@
   assign faq_data = product.metafields.custom.faq.value
 -%}
 
-<div class="container-small py-30">
+<div class="container-small py-20">
   <div class="flex flex-col gap-12">
-    <div class="flex flex-col gap-3">
-      <h2 class="text-6xl uppercase font-bold text-black">{{ section.settings.title | default: 'FAQ' }}</h2>
+    <div class="flex flex-col gap-2">
+      <h2 class=" uppercase font-bold text-black">{{ section.settings.title | default: 'FAQ' }}</h2>
 
       {% if section.settings.description != blank %}
         <p class=" text-neutral-700">
@@ -22,7 +22,7 @@
             data-collapsible-trigger
             type="button"
           >
-            <span class="text-xl font-red-hat font-medium text-black pr-4">{{ item.title }}</span>
+            <span class="text-lg font-red-hat font-medium text-black pr-4">{{ item.title }}</span>
             <div class="w-7 h-7 bg-blue-50 text-blue-800 rounded-full flex items-center justify-center [&>svg]:size-4 group-has-[aria-expanded=true]:rotate-90 transition-transform duration-300">
               {{ 'icon-plus.svg' | inline_asset_content }}
             </div>

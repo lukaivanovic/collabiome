@@ -4,8 +4,8 @@
   assign science_studies = product.metafields.custom.science_studies.value
 -%}
 
-<div class="container text-center py-30 text-white">
-  <div class="bg-blue-950 rounded-3xl p-6">
+<div class="bg-pink-950">
+  <div class="container text-center py-30 text-white">
     <h2 class="text-4xl uppercase font-medium">{{ science_title | default: 'Science' }}</h2>
 
     {% if science_description %}

@@ -11,7 +11,7 @@
   assign headline = product.metafields.custom.headline.value
 -%}
 
-<div class="w-full container pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_560px]">
+<div class="w-full container-medium !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_560px]">
   <script id="product-data" type="application/json">
     {{ product | json }}
   </script>
@@ -165,6 +165,68 @@
         color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
         color-mix(in srgb, #f6b4ca 50%, transparent) 100%
       );
+  }
+
+  .rebuy-widget-content > .primary-title {
+    text-align: left !important;
+  }
+
+  .rebuy-product-block {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+  }
+
+  .rebuy-product-media {
+    width: 72px !important;
+    height: 72px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+  }
+
+  .rebuy-product-title {
+    margin-top: 0 !important;
+  }
+
+  .rebuy-product-info {
+    flex-grow: 1 !important;
+    margin-top: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0px !important;
+    justify-content: center !important;
+  }
+
+  .rebuy-button {
+    background-color: black !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    padding: 8px 16px !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    text-align: center !important;
+    display: flex !important;
+    width: fit-content !important;
+    border: none !important;
+  }
+
+  .rebuy-product-actions {
+    width: auto !important;
+    margin-top: 0px !important;
+  }
+
+  .rebuy-money {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    line-height: 16px !important;
+    color: #666 !important;
+    text-align: left !important;
+    display: block !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .option-value input[type='radio'] {
