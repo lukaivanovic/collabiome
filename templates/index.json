@@ -78,7 +78,7 @@
         "category_card_xYa3bG": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/Collabiome_Simona_Svalina-3.jpg",
+            "image": "shopify://shop_images/Respiracijski_ultra_hidratantni_serum_model.png",
             "title": "Imunitet i zaštita od sunca",
             "description": "Sunce više nije problem uz naš lineup",
             "button_text": "Shop all",
@@ -88,7 +88,7 @@
         "category_card_CqrEwP": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/a-moutain-biker-on-a-hillside.jpg",
+            "image": "shopify://shop_images/nutri_spf.png",
             "title": "Bol u zglobovima, kostima i tetivama",
             "description": "Pomažemo kod kroničnih bolova",
             "button_text": "Shop all",
@@ -160,6 +160,7 @@
       "name": "Blog posts",
       "settings": {
         "heading": "Latest articles",
+        "description": "Describe this category",
         "blog": "news",
         "show_date": true,
         "show_author": false,
