@@ -85,28 +85,23 @@
       section_id: section.id,
       variant_layout: 'grid',
       large_button: true,
+      button_variant: 'neutral_large',
       show_dynamic_checkout: false,
       gift_card_recipient_feature_active: false,
       product_form_id: product_form_identifier
     %}
 
-    {% comment %} Description {% endcomment %}
-    <div>
-      <h3 class="text-sm uppercase text-secondary">Description</h3>
-      <div class="flex flex-col gap-2 pt-2">
-        {{ product.description }}
-      </div>
-    </div>
-
     {% comment %} Benefits icons {% endcomment %}
-    <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-      {%- for benefit in benefits -%}
-        <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
-          {{ 'icon-check.svg' | inline_asset_content }}
-          <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
-        </div>
-      {%- endfor -%}
-    </div>
+    {% comment %}
+      <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+        {%- for benefit in benefits -%}
+          <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
+            {{ 'icon-check.svg' | inline_asset_content }}
+            <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {% endcomment %}
 
     {% comment %} Benefits {% endcomment %}
     <div class="flex flex-col gap-4">
@@ -115,7 +110,7 @@
         {%- for benefit in benefits -%}
           <div class="flex items-center gap-3 bg-white rounded-lg">
             {{ 'icon-check.svg' | inline_asset_content }}
-            <span>{{ benefit | strip }}</span>
+            <span>{{ benefit | default: 'Benefit' | strip }}</span>
           </div>
         {%- endfor -%}
       </div>
@@ -125,6 +120,28 @@
     <div class="flex flex-col gap-4">
       <h3 class="text-sm uppercase text-secondary">More information</h3>
       <div class="product-accordion flex flex-col">
+        {% if product.description != blank %}
+          <collapsible-item
+            class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors active"
+            data-open
+          >
+            <button
+              class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
+              data-collapsible-trigger
+              type="button"
+            >
+              <span class="accordion-title  font-medium text-primary">
+                {{- 'Description' -}}
+              </span>
+              {{ 'icon-plus.svg' | inline_asset_content }}
+            </button>
+            <div class="accordion-content" data-collapsible-content>
+              <div class="text-[15px] leading-[1.6] text-gray-600">
+                {{ product.description }}
+              </div>
+            </div>
+          </collapsible-item>
+        {% endif %}
         {%- for accordion_item in accordion_items -%}
           <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
             <button
@@ -138,7 +155,7 @@
               {{ 'icon-plus.svg' | inline_asset_content }}
             </button>
             <div class="accordion-content" data-collapsible-content>
-              <div class=" px-4 pb-4 text-[15px] leading-[1.6] text-gray-600">
+              <div class="text-[15px] leading-[1.6] text-gray-600">
                 {{ accordion_item.content | metafield_tag }}
               </div>
             </div>

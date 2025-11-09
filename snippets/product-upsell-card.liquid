@@ -1,0 +1,88 @@
+{% doc %}
+  Product Upsell Card
+
+  Renders a single upsell product card with image, description, and add to cart button.
+
+  @param {product} upsell_product - Product object to display (required)
+  @param {number} step_index - Position of the product within the flow (default: 1)
+  @param {string} class - Additional Tailwind classes for the root element
+{% enddoc %}
+
+{%- liquid
+  assign step_index = step_index | default: 1
+
+  assign step_name_value = ''
+  if upsell_product.metafields.custom.step_name
+    assign step_name_value = upsell_product.metafields.custom.step_name.value
+  endif
+
+  assign short_description_value = ''
+  if upsell_product.metafields.custom.short_description
+    assign short_description_value = upsell_product.metafields.custom.short_description.value
+  endif
+
+  assign upsell_variant = upsell_product.selected_or_first_available_variant
+  assign additional_classes = class | default: ''
+
+  assign description_fallback = short_description_value
+  if description_fallback == blank
+    assign description_fallback = upsell_product.description
+  endif
+-%}
+
+<div class="product-upsell-card flex h-full flex-col items-center gap-6 {{ additional_classes | strip }}">
+  <div class="relative w-full max-w-xs sm:max-w-sm">
+    <div class="relative aspect-square overflow-hidden rounded-full bg-gray-100">
+      {% if upsell_product.featured_image %}
+        {% render 'image', image: upsell_product.featured_image, class: 'absolute inset-0 h-full w-full object-cover' %}
+      {% else %}
+        <div class="absolute inset-0 flex items-center justify-center bg-gray-200 text-sm text-gray-400">
+          {{ 'sections.product_upsell.image_placeholder' | t }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="absolute -top-2 -left-2 flex h-8 w-8 items-center justify-center rounded-full bg-pink-500 text-sm font-bold text-white">
+      {{ step_index }}
+    </div>
+
+    <div class="absolute bottom-4 right-4 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+      {%- assign step_default_label = 'sections.product_upsell.step_label_default' | t -%}
+      {{ step_index }} | {{ step_name_value | default: step_default_label }}
+    </div>
+
+    {% if upsell_product.images.first %}
+      <div class="absolute -bottom-4 -left-4 h-20 w-20 overflow-hidden rounded-full border-4 border-white bg-amber-50 shadow-lg">
+        {% render 'image', image: upsell_product.images.first, class: 'h-full w-full object-cover' %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="w-full max-w-sm text-center">
+    <h3 class="mb-2 text-xl font-semibold">{{ upsell_product.title }}</h3>
+    {% if description_fallback != blank %}
+      <p class="mx-auto mb-4 text-sm text-gray-600">
+        {{ description_fallback | strip_html | truncate: 100 }}
+      </p>
+    {% endif %}
+
+    {% if upsell_variant and upsell_variant.available %}
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="w-full">
+        <input type="hidden" name="id" value="{{ upsell_variant.id }}">
+        <button
+          type="submit"
+          class="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 px-6 py-3 font-semibold text-white transition-all duration-200 hover:from-blue-500 hover:to-purple-500"
+        >
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+          <span>&middot;</span>
+          <span>{{ upsell_variant.price | money }}</span>
+        </button>
+      </form>
+    {% else %}
+      <span class="inline-block rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-500">
+        {{ 'products.product.sold_out' | t }}
+      </span>
+    {% endif %}
+  </div>
+</div>
+

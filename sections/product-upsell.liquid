@@ -1,135 +1,87 @@
 {%- liquid
-  assign upsell_products = product.metafields.custom.upsell_products.value
-  assign section_title = section.settings.title | default: 'Complete Your Routine'
+  assign upsell_metafield = product.metafields.custom.upsell_products
+  assign upsell_products = blank
+
+  if upsell_metafield != blank
+    assign upsell_products = upsell_metafield.value
+
+    if upsell_products == blank and upsell_metafield.references != blank
+      if upsell_metafield.references.products != blank
+        assign upsell_products = upsell_metafield.references.products
+      endif
+    endif
+  endif
+
+  assign has_upsell_products = false
+  if upsell_products != blank
+    for upsell_product in upsell_products
+      if upsell_product != blank
+        assign has_upsell_products = true
+        break
+      endif
+    endfor
+  endif
+
+  assign section_title = section.settings.title | default: 'Complete your routine'
   assign section_description = section.settings.description
 -%}
 
-<div class="container-small text-center py-30">
-  <h2 class="text-4xl uppercase font-medium">{{ section_title }}</h2>
+{% if has_upsell_products %}
+  <section class="py-30">
+    <div class="container mx-auto px-4">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-medium">{{ section_title }}</h2>
 
-  {% if section_description %}
-    <p class="text-base opacity-70 mt-2">{{ section_description }}</p>
-  {% endif %}
+        {% if section_description != blank %}
+          <p class="mt-3 text-base text-gray-600">{{ section_description }}</p>
+        {% endif %}
+      </div>
 
-  <div class="pt-12">
-    <div class="embla embla-upsell overflow-hidden" data-upsell-id="{{ section.id }}">
-      <div class="embla__container flex">
+      <div class="mt-12 hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-4">
         {% for upsell_product in upsell_products %}
-          <div class="embla__slide flex-shrink-0 w-full">
-            <div class="flex flex-col items-center gap-6 max-w-sm mx-auto">
-              {% comment %} Main product image with overlay elements {% endcomment %}
-              <div class="relative w-80 h-80 mx-auto">
-                {% comment %} Main circular image {% endcomment %}
-                <div class="w-full h-full rounded-full overflow-hidden bg-gray-100 relative">
-                  {% if upsell_product.featured_image %}
-                    {% render 'image', image: upsell_product.featured_image, class: 'w-full h-full object-cover' %}
-                  {% else %}
-                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                      <span class="text-gray-400">No image</span>
-                    </div>
-                  {% endif %}
-                </div>
+          {% render 'product-upsell-card', upsell_product: upsell_product, step_index: forloop.index %}
+        {% endfor %}
+      </div>
 
-                {% comment %} Step indicator (L icon) {% endcomment %}
-                <div class="absolute -top-2 -left-2 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                  <span class="text-white font-bold text-sm">{{ forloop.index }}</span>
-                </div>
-
-                {% comment %} Step tag (1 | PREP) {% endcomment %}
-                <div class="absolute bottom-4 right-4 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                  {{ forloop.index }} | {{ upsell_product.metafields.custom.step_name.value | default: 'STEP' }}
-                </div>
-
-                {% comment %} Product inset image {% endcomment %}
-                <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full overflow-hidden bg-amber-50 border-4 border-white shadow-lg">
-                  {% if upsell_product.images.first %}
-                    {% render 'image', image: upsell_product.images.first, class: 'w-full h-full object-cover' %}
-                  {% endif %}
-                </div>
+      <div class="mt-12 md:hidden">
+        <div class="embla embla-upsell overflow-hidden" data-section-id="{{ section.id }}">
+          <div class="embla__container flex">
+            {% for upsell_product in upsell_products %}
+              <div class="embla__slide w-full flex-shrink-0 px-4">
+                {% render 'product-upsell-card', upsell_product: upsell_product, step_index: forloop.index %}
               </div>
-
-              {% comment %} Product details {% endcomment %}
-              <div class="text-center">
-                <h3 class="text-xl font-semibold mb-2">{{ upsell_product.title }}</h3>
-                <p class="text-sm text-gray-600 mb-4 max-w-xs">
-                  {{
-                    upsell_product.metafields.custom.short_description.value
-                    | default: upsell_product.description
-                    | truncate: 100
-                  }}
-                </p>
-
-                {% comment %} Add to cart button {% endcomment %}
-                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="w-full">
-                  <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
-                  <button
-                    type="submit"
-                    class="w-full bg-gradient-to-r from-blue-400 to-purple-400 text-white font-semibold py-3 px-6 rounded-full hover:from-blue-500 hover:to-purple-500 transition-all duration-200 flex items-center justify-center gap-2"
-                  >
-                    <span>ADD TO CART</span>
-                    <span>·</span>
-                    <span>{{ upsell_product.selected_or_first_available_variant.price | money }}</span>
-                  </button>
-                </form>
-              </div>
-            </div>
+            {% endfor %}
           </div>
-        {% endfor %}
-      </div>
+        </div>
 
-      {% comment %} Navigation arrows {% endcomment %}
-      <button
-        class="embla__prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all"
-        aria-label="Previous product"
-      >
-        {{ 'icon-chevron-left.svg' | inline_asset_content }}
-      </button>
-      <button
-        class="embla__next absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all"
-        aria-label="Next product"
-      >
-        {{ 'icon-chevron-right.svg' | inline_asset_content }}
-      </button>
+        {% if upsell_products.size > 1 %}
+          <div class="mt-6 flex justify-center gap-2">
+            {% for upsell_product in upsell_products %}
+              <button
+                class="embla__dot h-2 w-2 rounded-full bg-gray-300 transition-all"
+                data-slide="{{ forloop.index0 }}"
+                aria-label="{{ 'sections.product_upsell.dot_aria_label' | t: slide: forloop.index }}"
+              ></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
     </div>
-
-    {% comment %} Slider pagination dots {% endcomment %}
-    {% if upsell_products.size > 1 %}
-      <div class="flex justify-center gap-2 mt-8">
-        {% for upsell_product in upsell_products %}
-          <button
-            class="embla__dot w-2 h-2 rounded-full transition-all {% if forloop.first %}bg-gray-600{% else %}bg-gray-300{% endif %}"
-            data-slide="{{ forloop.index0 }}"
-            aria-label="Go to slide {{ forloop.index }}"
-          ></button>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-</div>
+  </section>
+{% endif %}
 
 {% stylesheet %}
   .embla-upsell {
     position: relative;
   }
 
-  .embla__container {
+  .embla-upsell .embla__container {
     display: flex;
   }
 
-  .embla__slide {
+  .embla-upsell .embla__slide {
     flex: 0 0 100%;
     min-width: 0;
-  }
-
-  .embla__prev,
-  .embla__next {
-    z-index: 10;
-  }
-
-  .embla__prev:disabled,
-  .embla__next:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
   }
 
   .embla__dot {
@@ -139,81 +91,175 @@
   .embla__dot.active {
     background-color: #4b5563;
   }
-
-  @media (max-width: 768px) {
-    .embla__prev,
-    .embla__next {
-      display: none;
-    }
-  }
 {% endstylesheet %}
 
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function () {
-    // Load Embla Carousel from CDN
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
-    script.onload = function () {
-      // Initialize Embla Carousel for upsell products
-      const carouselElement = document.querySelector('.embla-upsell');
-      if (carouselElement) {
-        const embla = EmblaCarousel(carouselElement, {
-          loop: true,
-          align: 'center',
-          containScroll: 'trimSnaps',
-        });
+    const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
+    const SCRIPT_SELECTOR = 'script[data-embla-carousel]';
 
-        // Navigation buttons
-        const prevButton = carouselElement.querySelector('.embla__prev');
-        const nextButton = carouselElement.querySelector('.embla__next');
-        const dots = carouselElement.querySelectorAll('.embla__dot');
+    const mobileMediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
 
-        if (prevButton) {
-          prevButton.addEventListener('click', embla.scrollPrev);
+    const getCarouselDots = (carouselElement) => {
+      const parent = carouselElement.parentElement;
+      if (!parent) {
+        return [];
+      }
+
+      return Array.from(parent.querySelectorAll('.embla__dot'));
+    };
+
+    const bindDotHandlers = (carouselElement, embla, dots) => {
+      dots.forEach((dot, index) => {
+        const handler = () => {
+          embla.scrollTo(index);
+        };
+
+        const handlers = dot.__emblaHandlers || [];
+        handlers.push({ carousel: carouselElement, handler });
+        dot.__emblaHandlers = handlers;
+
+        dot.addEventListener('click', handler);
+      });
+    };
+
+    const unbindDotHandlers = (carouselElement, dots) => {
+      dots.forEach((dot) => {
+        if (!dot.__emblaHandlers) {
+          return;
         }
-        if (nextButton) {
-          nextButton.addEventListener('click', embla.scrollNext);
-        }
 
-        // Update button states
-        function updateButtons() {
-          if (prevButton) {
-            prevButton.disabled = !embla.canScrollPrev();
+        dot.__emblaHandlers = dot.__emblaHandlers.filter((binding) => {
+          if (binding.carousel === carouselElement) {
+            dot.removeEventListener('click', binding.handler);
+            return false;
           }
-          if (nextButton) {
-            nextButton.disabled = !embla.canScrollNext();
-          }
-        }
 
-        // Update dot active state
-        function updateDots() {
-          const selectedIndex = embla.selectedScrollSnap();
-          dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === selectedIndex);
-            dot.classList.toggle('bg-gray-600', index === selectedIndex);
-            dot.classList.toggle('bg-gray-300', index !== selectedIndex);
-          });
-        }
-
-        // Add click handlers to dots
-        dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => {
-            embla.scrollTo(index);
-          });
+          return true;
         });
 
-        // Initial states
-        updateButtons();
-        updateDots();
+        if (!dot.__emblaHandlers.length) {
+          delete dot.__emblaHandlers;
+        }
+      });
+    };
 
-        // Update on scroll
-        embla.on('select', () => {
-          updateButtons();
-          updateDots();
-        });
+    const updateDotState = (dots, embla) => {
+      const selectedIndex = embla.selectedScrollSnap();
+
+      dots.forEach((dot, index) => {
+        const isActive = index === selectedIndex;
+        dot.classList.toggle('active', isActive);
+        dot.classList.toggle('bg-gray-600', isActive);
+        dot.classList.toggle('bg-gray-300', !isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    };
+
+    const initializeCarousel = (carouselElement) => {
+      if (carouselElement.dataset.emblaInitialized === 'true') {
+        return;
+      }
+
+      const dots = getCarouselDots(carouselElement);
+      const embla = EmblaCarousel(carouselElement, {
+        align: 'start',
+        loop: false,
+        containScroll: 'trimSnaps',
+      });
+
+      carouselElement.__embla = embla;
+      carouselElement.dataset.emblaInitialized = 'true';
+
+      bindDotHandlers(carouselElement, embla, dots);
+      updateDotState(dots, embla);
+
+      embla.on('select', () => {
+        updateDotState(dots, embla);
+      });
+    };
+
+    const destroyCarousel = (carouselElement) => {
+      if (!carouselElement.__embla) {
+        return;
+      }
+
+      const dots = getCarouselDots(carouselElement);
+      unbindDotHandlers(carouselElement, dots);
+
+      carouselElement.__embla.destroy();
+      delete carouselElement.__embla;
+      carouselElement.dataset.emblaInitialized = '';
+
+      dots.forEach((dot) => {
+        dot.classList.remove('active', 'bg-gray-600');
+        dot.classList.add('bg-gray-300');
+        dot.removeAttribute('aria-current');
+      });
+    };
+
+    const initializeAllCarousels = () => {
+      if (!window.EmblaCarousel || !mobileMediaQuery.matches) {
+        return;
+      }
+
+      document.querySelectorAll('.embla-upsell').forEach((carouselElement) => {
+        if (carouselElement.offsetParent === null) {
+          return;
+        }
+
+        initializeCarousel(carouselElement);
+      });
+    };
+
+    const destroyAllCarousels = () => {
+      document.querySelectorAll('.embla-upsell').forEach(destroyCarousel);
+    };
+
+    const loadEmblaAndInit = () => {
+      if (!document.querySelector('.embla-upsell')) {
+        return;
+      }
+
+      if (window.EmblaCarousel) {
+        initializeAllCarousels();
+        return;
+      }
+
+      const existingScript = document.querySelector(SCRIPT_SELECTOR);
+      if (existingScript) {
+        existingScript.addEventListener('load', initializeAllCarousels, { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
+      script.async = true;
+      script.dataset.emblaCarousel = 'true';
+      script.addEventListener('load', initializeAllCarousels, { once: true });
+      document.head.appendChild(script);
+    };
+
+    loadEmblaAndInit();
+
+    const handleViewportChange = (event) => {
+      if (event.matches) {
+        loadEmblaAndInit();
+      } else {
+        destroyAllCarousels();
       }
     };
-    document.head.appendChild(script);
+
+    if (mobileMediaQuery.addEventListener) {
+      mobileMediaQuery.addEventListener('change', handleViewportChange);
+    } else if (mobileMediaQuery.addListener) {
+      mobileMediaQuery.addListener(handleViewportChange);
+    }
+
+    document.addEventListener('shopify:section:load', loadEmblaAndInit);
+    document.addEventListener('shopify:section:unload', (event) => {
+      event.target.querySelectorAll('.embla-upsell').forEach(destroyCarousel);
+    });
   });
 {% endjavascript %}
 
@@ -226,7 +272,7 @@
       "type": "text",
       "id": "title",
       "label": "Section Title",
-      "default": "Complete Your Routine"
+      "default": "Complete your routine"
     },
     {
       "type": "textarea",

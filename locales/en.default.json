@@ -54,5 +54,12 @@
       "redness": "Redness",
       "dark_spots": "Dark Spots"
     }
+  },
+  "sections": {
+    "product_upsell": {
+      "image_placeholder": "Image not available",
+      "step_label_default": "Step",
+      "dot_aria_label": "Go to slide {{ slide }}"
+    }
   }
 }

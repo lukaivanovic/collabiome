@@ -10,10 +10,22 @@ class Collapsible extends HTMLElement {
 
     if (!this.trigger || !this.content) return;
 
+    const shouldStartOpen =
+      this.hasAttribute("data-open") || this.classList.contains("active");
+
     // Setup ARIA
-    this.trigger.setAttribute("aria-expanded", "false");
+    this.trigger.setAttribute(
+      "aria-expanded",
+      shouldStartOpen ? "true" : "false"
+    );
     this.trigger.setAttribute("role", "button");
     this.trigger.setAttribute("tabindex", "0");
+
+    if (shouldStartOpen) {
+      this.classList.add("active");
+    } else {
+      this.classList.remove("active");
+    }
 
     // Event listeners
     this.trigger.addEventListener("click", this.toggle);
@@ -24,7 +36,7 @@ class Collapsible extends HTMLElement {
     event?.preventDefault();
     const isExpanded = this.trigger.getAttribute("aria-expanded") === "true";
 
-    this.trigger.setAttribute("aria-expanded", !isExpanded);
+    this.trigger.setAttribute("aria-expanded", (!isExpanded).toString());
     this.classList.toggle("active");
   }
 

@@ -19,11 +19,11 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {% for ingredient in ingredients limit: 3 %}
-      <div class=" flex flex-col gap-4">
-        <div class="w-full aspect-square">
+      <div class="flex flex-row items-center gap-4 md:flex-col md:items-stretch">
+        <div class="shrink-0 w-24 h-24 md:w-full md:h-auto md:aspect-square">
           {% render 'image', image: ingredient.image, class: 'rounded-2xl w-full h-full object-cover' %}
         </div>
-        <div>
+        <div class="text-left md:text-center">
           <h3 class="text-lg font-medium">{{ ingredient.name }}</h3>
           <p class="text-sm text-secondary">{{ ingredient.description }}</p>
         </div>

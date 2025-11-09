@@ -1,3 +1,19 @@
+{% liquid
+  assign button_variant = button_variant | default: 'default'
+  assign large_button = large_button | default: false
+
+  assign button_classes = 'product-form__submit button button--full-width w-full rounded-full'
+
+  if button_variant == 'neutral_large'
+    assign button_classes = button_classes | append: ' button-neutral text-white button-large'
+  else
+    assign button_classes = button_classes | append: ' button-boost text-blue'
+    if large_button
+      assign button_classes = button_classes | append: ' button-large'
+    endif
+  endif
+%}
+
 <product-form
   class="product-form"
   data-hide-errors="{{ gift_card_recipient_feature_active }}"
@@ -18,9 +34,6 @@
     novalidate: 'novalidate',
     data-type: 'add-to-cart-form'
   -%}
-    {%- liquid
-      assign variant_layout = variant_layout | default: 'horizontal'
-    -%}
     <input
       type="hidden"
       name="id"
@@ -34,16 +47,16 @@
       class="product-variant-id"
     >
     <div class="flex flex-col gap-4">
-      {% if variant_layout == 'grid' %}
-        {% unless product.has_only_default_variant %}
-          {% comment %}  Variants (Grid Layout) {% endcomment %}
+      {% unless product.has_only_default_variant %}
+        {% comment %}  Variants {% endcomment %}
+        <div class="flex flex-row gap-2 h-8">
           {% for option in product.options_with_values %}
             {% comment %}  Options {% endcomment %}
-            <div class="variant-options-grid grid grid-cols-3 gap-2">
+            <div class="flex flex-row gap-2">
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option variant-option--grid relative flex flex-col items-center p-4 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
+                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -61,7 +74,7 @@
                     {% endif %}
                     class="sr-only"
                   >
-                  <span class="text-primary text-center">{{ value }}</span>
+                  <span class="text-primary">{{ value }}</span>
                   <span
                     class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
                     data-variant-badge
@@ -70,47 +83,8 @@
               {% endfor %}
             </div>
           {% endfor %}
-        {% endunless %}
-      {% else %}
-        <div class="flex flex-row gap-2 h-8">
-          {% unless product.has_only_default_variant %}
-            {% comment %}  Variants (Horizontal Layout) {% endcomment %}
-            {% for option in product.options_with_values %}
-              {% comment %}  Options {% endcomment %}
-              <div class="flex flex-row gap-2">
-                {% for value in option.values %}
-                  <label
-                    for="options[{{ option.name }}]-{{ forloop.index }}"
-                    class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
-                    data-option-label
-                    {% if option.selected_value == value %}
-                      data-selected="true"
-                    {% else %}
-                      data-selected="false"
-                    {% endif %}
-                  >
-                    <input
-                      type="radio"
-                      id="options[{{ option.name }}]-{{ forloop.index }}"
-                      name="options[{{ option.name }}]"
-                      value="{{ value }}"
-                      {% if option.selected_value == value %}
-                        checked
-                      {% endif %}
-                      class="sr-only"
-                    >
-                    <span class="text-primary">{{ value }}</span>
-                    <span
-                      class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
-                      data-variant-badge
-                    ></span>
-                  </label>
-                {% endfor %}
-              </div>
-            {% endfor %}
-          {% endunless %}
         </div>
-      {% endif %}
+      {% endunless %}
 
       <div class="product-form__buttons">
         {%- liquid
@@ -126,7 +100,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="product-form__submit button button--full-width button-boost text-blue w-full"
+          class="{{ button_classes }}"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
@@ -167,6 +141,12 @@
 
   .variant-option {
     position: relative;
+  }
+
+  .button-large {
+    height: 56px;
+    padding: 0.75rem 1.75rem;
+    font-size: 16px;
   }
 {% endstylesheet %}
 
