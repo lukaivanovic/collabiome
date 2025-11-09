@@ -18,6 +18,14 @@
         font-style: normal;
         font-display: swap;
       }
+
+      @font-face {
+        font-family: 'Red Hat Text';
+        src: url("{{ 'RedHatText-VariableFont_wght.ttf' | file_url }}") format('ttf');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
     </style>
 
     {%- if settings.cart_type == 'drawer' -%}

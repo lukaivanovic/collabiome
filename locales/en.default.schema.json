@@ -7,4 +7,11 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{}
+{
+  "sections": {
+    "product_science": {
+      "name": "Product science",
+      "category": "Product"
+    }
+  }
+}

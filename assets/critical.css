@@ -57,11 +57,11 @@ dialog {
 }
 
 a {
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
 }
 
 p {
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
   text-wrap: pretty;
 }
 p,
@@ -125,7 +125,7 @@ p:empty {
 
 /** Theme styles below */
 body {
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-size: 1rem;
@@ -252,7 +252,7 @@ button {
 }
 
 .font-geist {
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
 }
 
 button:disabled {
@@ -274,7 +274,7 @@ button:disabled:hover {
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 15px;
@@ -312,7 +312,7 @@ button:disabled:hover {
   justify-content: center;
   width: fit-content;
   font-weight: 500;
-  font-family: "Geist", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 13px;

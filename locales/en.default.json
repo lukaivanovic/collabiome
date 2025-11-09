@@ -60,6 +60,15 @@
       "image_placeholder": "Image not available",
       "step_label_default": "Step",
       "dot_aria_label": "Go to slide {{ slide }}"
+    },
+    "product_science": {
+      "name": "Product science",
+      "category": "Product",
+      "default_title": "Science spotlight",
+      "default_description": "Discover the research powering this formula.",
+      "link_label": "Read study",
+      "source_prefix": "Source: {{ source }}",
+      "image_alt": "Illustration of product science for {{ title }}"
     }
   }
 }
