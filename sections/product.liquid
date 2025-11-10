@@ -45,14 +45,14 @@
 
           <div class="absolute bottom-2 right-2">
             <button
-              class="embla__prev  bg-black rounded-full z-2 p-1 text-white"
+              class="embla__prev bg-[var(--product-foreground)] rounded-full z-2 p-1 text-white"
               aria-label="Previous image"
             >
               {{ 'icon-chevron-left.svg' | inline_asset_content }}
             </button>
 
             <button
-              class="embla__next   bg-black rounded-full z-2 p-1 text-white"
+              class="embla__next bg-[var(--product-foreground)] rounded-full z-2 p-1 text-white"
               aria-label="Next image"
             >
               {{ 'icon-chevron-right.svg' | inline_asset_content }}
@@ -65,7 +65,7 @@
         <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap flex-shrink-0 w-full">
           {%- for image in product.images -%}
             <button
-              class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
+              class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border! border-transparent! bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-[var(--product-foreground)]! data-[active=true]:opacity-100"
               type="button"
               aria-label="View image {{ forloop.index }}"
               data-active="false"
@@ -115,7 +115,7 @@
 
       {% comment %} Benefits {% endcomment %}
       <div class="flex flex-col gap-4">
-        <h3 class="text-xs font-regular uppercase text-neutral-500 tracking-wider">Benefits</h3>
+        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Benefits</h3>
         <div class="flex flex-col  gap-2">
           {%- for benefit in benefits -%}
             <div class="flex items-center gap-3 bg-white rounded-lg">
@@ -128,32 +128,20 @@
 
       {% comment %} Accordions {% endcomment %}
       <div class="flex flex-col gap-4">
-        <h3 class="text-xs font-regular uppercase text-neutral-500 tracking-wider">Additional information</h3>
-        <div class="product-accordion flex flex-col">
+        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Description</h3>
+        <div class="flex flex-col">
           {% if product.description != blank %}
-            <collapsible-item
-              class="accordion-item border-b border-neutral-100 bg-white transition-colors active"
-              data-open
-            >
-              <button
-                class="accordion-trigger w-full flex items-center justify-between py-3 text-left "
-                data-collapsible-trigger
-                type="button"
-              >
-                <span class="font-[550] text-primary">
-                  {{- 'Description' -}}
-                </span>
-                <div class="w-6 h-6 flex items-center justify-center bg-pink rounded-full text-pink-950">
-                  {{ 'icon-plus.svg' | inline_asset_content }}
-                </div>
-              </button>
-              <div class="accordion-content " data-collapsible-content>
-                <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
-                  {{ product.description }}
-                </div>
-              </div>
-            </collapsible-item>
+            <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
+              {{ product.description }}
+            </div>
           {% endif %}
+        </div>
+      </div>
+
+      {% comment %} Accordions {% endcomment %}
+      <div class="flex flex-col gap-4">
+        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Additional information</h3>
+        <div class="product-accordion flex flex-col">
           {%- for accordion_item in accordion_items -%}
             <collapsible-item class="accordion-item border-b border-neutral-100 bg-white transition-colors">
               <button
