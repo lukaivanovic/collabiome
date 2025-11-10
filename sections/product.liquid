@@ -22,7 +22,7 @@
   endcase
 -%}
 <div class="product-background {{ product_theme_class }}">
-  <div class="w-full container !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
+  <div class="w-full container !px-0 md:!px-16 pt-6 md:pb-20 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
     <script id="product-data" type="application/json">
       {{ product | json }}
     </script>
@@ -78,7 +78,7 @@
     </div>
 
     {% comment %} Product content {% endcomment %}
-    <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-12 md:rounded-3xl">
+    <div class="flex flex-col gap-10 bg-white rounded-t-3xl px-6 pb-6 pt-12 md:p-12 md:rounded-3xl">
       <div class="flex flex-col">
         <h1 class="text-4xl! font-medium text-balance max-w-100 mb-2">{{ product.title }}</h1>
         <!-- Start of Judge.me code -->
@@ -120,7 +120,7 @@
           {%- for benefit in benefits -%}
             <div class="flex items-center gap-3 bg-white rounded-lg">
               <span class="text-[var(--product-foreground)]">{{ 'icon-check.svg' | inline_asset_content }}</span>
-              <span>{{ benefit | default: 'Benefit' | strip }}</span>
+              <span class="font-[550]">{{ benefit | default: 'Benefit' | strip }}</span>
             </div>
           {%- endfor -%}
         </div>
@@ -136,7 +136,7 @@
               data-open
             >
               <button
-                class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left "
+                class="accordion-trigger w-full flex items-center justify-between py-3 text-left "
                 data-collapsible-trigger
                 type="button"
               >
@@ -148,26 +148,28 @@
                 </div>
               </button>
               <div class="accordion-content " data-collapsible-content>
-                <div class="px-1 pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
+                <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
                   {{ product.description }}
                 </div>
               </div>
             </collapsible-item>
           {% endif %}
           {%- for accordion_item in accordion_items -%}
-            <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
+            <collapsible-item class="accordion-item border-b border-neutral-100 bg-white transition-colors">
               <button
-                class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
+                class="accordion-trigger w-full flex items-center justify-between py-3 text-left "
                 data-collapsible-trigger
                 type="button"
               >
-                <span class="accordion-title  font-medium text-primary">
+                <span class="font-[550] text-primary">
                   {{- accordion_item.title | strip -}}
                 </span>
-                {{ 'icon-plus.svg' | inline_asset_content }}
+                <div class="w-6 h-6 flex items-center justify-center bg-pink rounded-full text-pink-950">
+                  {{ 'icon-plus.svg' | inline_asset_content }}
+                </div>
               </button>
               <div class="accordion-content" data-collapsible-content>
-                <div class="text-[15px] leading-[1.6] text-gray-600">
+                <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
                   {{ accordion_item.content | metafield_tag }}
                 </div>
               </div>
