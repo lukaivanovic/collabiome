@@ -100,7 +100,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="{{ button_classes }}"
+          class="button [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null

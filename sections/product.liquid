@@ -10,163 +10,176 @@
   assign accordion_items = product.metafields.custom.accordion.value
   assign headline = product.metafields.custom.headline.value
   assign product_form_identifier = 'product-form-' | append: product.id
+  assign product_theme = product.metafields.custom.theme.value | default: 'default'
+
+  case product_theme
+    when 'recupera'
+      assign product_theme_class = 'product-theme-recupera'
+    when 'boost'
+      assign product_theme_class = 'product-theme-boost'
+    else
+      assign product_theme_class = 'product-theme-default'
+  endcase
 -%}
+<div class="product-background {{ product_theme_class }}">
+  <div class="w-full container !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
+    <script id="product-data" type="application/json">
+      {{ product | json }}
+    </script>
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-<div class="w-full container !px-0 md:!px-16 pt-6 md:pb-10 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
-  <script id="product-data" type="application/json">
-    {{ product | json }}
-  </script>
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+    {% comment %} Product images {% endcomment %}
+    <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden max-h-[700px] lg:sticky lg:top-20">
+      <div class="overflow-hidden relative rounded-2xl w-full flex-grow">
+        <div
+          class="embla embla-product flex overflow-hidden relative h-full"
+          data-product-id="{{ product.id }}"
+        >
+          <div class="flex bg-white">
+            {% for image in product.images %}
+              <div class="embla__slide">
+                {% render 'image', image: image %}
+              </div>
+            {% endfor %}
+          </div>
 
-  {% comment %} Product images {% endcomment %}
-  <div class="flex flex-col md:items-center gap-3 px-4 md:px-0 w-full overflow-x-hidden max-h-[700px] lg:sticky lg:top-20">
-    <div class="overflow-hidden relative rounded-2xl w-full flex-grow">
-      <div
-        class="embla embla-product flex overflow-hidden relative h-full"
-        data-product-id="{{ product.id }}"
-      >
-        <div class="flex bg-white">
-          {% for image in product.images %}
-            <div class="embla__slide">
+          <div class="absolute bottom-2 right-2">
+            <button
+              class="embla__prev  bg-black rounded-full z-2 p-1 text-white"
+              aria-label="Previous image"
+            >
+              {{ 'icon-chevron-left.svg' | inline_asset_content }}
+            </button>
+
+            <button
+              class="embla__next   bg-black rounded-full z-2 p-1 text-white"
+              aria-label="Next image"
+            >
+              {{ 'icon-chevron-right.svg' | inline_asset_content }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- if product.images.size > 1 -%}
+        <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap flex-shrink-0 w-full">
+          {%- for image in product.images -%}
+            <button
+              class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
+              type="button"
+              aria-label="View image {{ forloop.index }}"
+              data-active="false"
+            >
               {% render 'image', image: image %}
-            </div>
-          {% endfor %}
-        </div>
-
-        <div class="absolute bottom-2 right-2">
-          <button
-            class="embla__prev  bg-black rounded-full z-2 p-1 text-white"
-            aria-label="Previous image"
-          >
-            {{ 'icon-chevron-left.svg' | inline_asset_content }}
-          </button>
-
-          <button
-            class="embla__next   bg-black rounded-full z-2 p-1 text-white"
-            aria-label="Next image"
-          >
-            {{ 'icon-chevron-right.svg' | inline_asset_content }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    {%- if product.images.size > 1 -%}
-      <div class="embla-thumbs flex gap-2 overflow-x-auto flex-nowrap flex-shrink-0 w-full">
-        {%- for image in product.images -%}
-          <button
-            class="embla-thumbs__slide flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 bg-white opacity-60 hover:opacity-80 transition-all data-[active=true]:border-black data-[active=true]:opacity-100"
-            type="button"
-            aria-label="View image {{ forloop.index }}"
-            data-active="false"
-          >
-            {% render 'image', image: image %}
-          </button>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-  </div>
-
-  {% comment %} Product content {% endcomment %}
-  <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-12 md:rounded-3xl">
-    <div class="flex flex-col gap-2">
-      <h1 class="!text-[40px] font-medium uppercase text-balance">{{ product.title }}</h1>
-      <!-- Start of Judge.me code -->
-      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
-        {{ product.metafields.judgeme.badge }}
-      </div>
-      <!-- End of Judge.me code -->
-      <p class=" font-medium">{{ headline }}</p>
-    </div>
-
-    {% comment %} Buy form{% endcomment %}
-    {% render 'buy-form',
-      product: product,
-      section_id: section.id,
-      variant_layout: 'grid',
-      large_button: true,
-      button_variant: 'neutral_large',
-      show_dynamic_checkout: false,
-      gift_card_recipient_feature_active: false,
-      product_form_id: product_form_identifier
-    %}
-
-    {% comment %} Benefits icons {% endcomment %}
-    {% comment %}
-      <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-        {%- for benefit in benefits -%}
-          <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
-            {{ 'icon-check.svg' | inline_asset_content }}
-            <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
-    {% endcomment %}
-
-    {% comment %} Benefits {% endcomment %}
-    <div class="flex flex-col gap-4">
-      <h3 class="text-sm uppercase text-secondary">Benefits</h3>
-      <div class="flex flex-col  gap-2">
-        {%- for benefit in benefits -%}
-          <div class="flex items-center gap-3 bg-white rounded-lg">
-            {{ 'icon-check.svg' | inline_asset_content }}
-            <span>{{ benefit | default: 'Benefit' | strip }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
-    </div>
-
-    {% comment %} Accordions {% endcomment %}
-    <div class="flex flex-col gap-4">
-      <h3 class="text-sm uppercase text-secondary">More information</h3>
-      <div class="product-accordion flex flex-col">
-        {% if product.description != blank %}
-          <collapsible-item
-            class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors active"
-            data-open
-          >
-            <button
-              class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
-              data-collapsible-trigger
-              type="button"
-            >
-              <span class="accordion-title  font-medium text-primary">
-                {{- 'Description' -}}
-              </span>
-              {{ 'icon-plus.svg' | inline_asset_content }}
             </button>
-            <div class="accordion-content" data-collapsible-content>
-              <div class="text-[15px] leading-[1.6] text-gray-600">
-                {{ product.description }}
-              </div>
-            </div>
-          </collapsible-item>
-        {% endif %}
-        {%- for accordion_item in accordion_items -%}
-          <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
-            <button
-              class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
-              data-collapsible-trigger
-              type="button"
-            >
-              <span class="accordion-title  font-medium text-primary">
-                {{- accordion_item.title | strip -}}
-              </span>
-              {{ 'icon-plus.svg' | inline_asset_content }}
-            </button>
-            <div class="accordion-content" data-collapsible-content>
-              <div class="text-[15px] leading-[1.6] text-gray-600">
-                {{ accordion_item.content | metafield_tag }}
-              </div>
-            </div>
-          </collapsible-item>
-        {%- endfor -%}
-      </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
 
-    <div data-rebuy-id="247488" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    {% comment %} Product content {% endcomment %}
+    <div class="flex flex-col gap-10 bg-white rounded-t-3xl p-6 md:p-12 md:rounded-3xl">
+      <div class="flex flex-col">
+        <h1 class="text-4xl! font-medium text-balance max-w-100 mb-2">{{ product.title }}</h1>
+        <!-- Start of Judge.me code -->
+        <div class="jdgm-widget jdgm-preview-badge mb-4" data-id="{{ product.id }}">
+          {{ product.metafields.judgeme.badge }}
+        </div>
+        <!-- End of Judge.me code -->
+        <p class=" font-medium">{{ headline }}</p>
+      </div>
 
-    <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
+      {% comment %} Buy form{% endcomment %}
+      {% render 'buy-form',
+        product: product,
+        section_id: section.id,
+        variant_layout: 'grid',
+        large_button: true,
+        button_variant: 'neutral_large',
+        show_dynamic_checkout: false,
+        gift_card_recipient_feature_active: false,
+        product_form_id: product_form_identifier
+      %}
+
+      {% comment %} Benefits icons {% endcomment %}
+      {% comment %}
+        <div class="product-benefits__list grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+          {%- for benefit in benefits -%}
+            <div class="product-benefits__item flex items-start gap-3 bg-white rounded-lg">
+              {{ 'icon-check.svg' | inline_asset_content }}
+              <span class="product-benefits__text text-base leading-6 text-gray-700">{{ benefit | strip }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {% endcomment %}
+
+      {% comment %} Benefits {% endcomment %}
+      <div class="flex flex-col gap-4">
+        <h3 class="text-xs font-regular uppercase text-neutral-500 tracking-wider">Benefits</h3>
+        <div class="flex flex-col  gap-2">
+          {%- for benefit in benefits -%}
+            <div class="flex items-center gap-3 bg-white rounded-lg">
+              <span class="text-[var(--product-foreground)]">{{ 'icon-check.svg' | inline_asset_content }}</span>
+              <span>{{ benefit | default: 'Benefit' | strip }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {% comment %} Accordions {% endcomment %}
+      <div class="flex flex-col gap-4">
+        <h3 class="text-xs font-regular uppercase text-neutral-500 tracking-wider">Additional information</h3>
+        <div class="product-accordion flex flex-col">
+          {% if product.description != blank %}
+            <collapsible-item
+              class="accordion-item border-b border-neutral-100 bg-white transition-colors active"
+              data-open
+            >
+              <button
+                class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left "
+                data-collapsible-trigger
+                type="button"
+              >
+                <span class="font-[550] text-primary">
+                  {{- 'Description' -}}
+                </span>
+                <div class="w-6 h-6 flex items-center justify-center bg-pink rounded-full text-pink-950">
+                  {{ 'icon-plus.svg' | inline_asset_content }}
+                </div>
+              </button>
+              <div class="accordion-content " data-collapsible-content>
+                <div class="px-1 pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
+                  {{ product.description }}
+                </div>
+              </div>
+            </collapsible-item>
+          {% endif %}
+          {%- for accordion_item in accordion_items -%}
+            <collapsible-item class="accordion-item border-b border-gray-200 bg-white hover:border-gray-300 transition-colors">
+              <button
+                class="accordion-trigger w-full flex items-center justify-between py-3 px-1 text-left hover:bg-gray-50"
+                data-collapsible-trigger
+                type="button"
+              >
+                <span class="accordion-title  font-medium text-primary">
+                  {{- accordion_item.title | strip -}}
+                </span>
+                {{ 'icon-plus.svg' | inline_asset_content }}
+              </button>
+              <div class="accordion-content" data-collapsible-content>
+                <div class="text-[15px] leading-[1.6] text-gray-600">
+                  {{ accordion_item.content | metafield_tag }}
+                </div>
+              </div>
+            </collapsible-item>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div data-rebuy-id="247488" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+
+      <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
+    </div>
   </div>
 </div>
 
@@ -188,25 +201,7 @@
   }
 
   .product-background {
-    background: linear-gradient(
-        0deg,
-        hsla(0, 0%, 100%, 1) 0%,
-        hsla(0, 0%, 100%, 0.79) 11%,
-        hsla(0, 0%, 100%, 0.6) 22%,
-        hsla(0, 0%, 100%, 0.44) 33%,
-        hsla(0, 0%, 100%, 0.31) 44%,
-        hsla(0, 0%, 100%, 0.2) 56%,
-        hsla(0, 0%, 100%, 0.11) 67%,
-        hsla(0, 0%, 100%, 0.05) 78%,
-        hsla(0, 0%, 100%, 0.01) 89%,
-        hsla(0, 0%, 100%, 0) 100%
-      ),
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, #dbeae5 100%, transparent) -1.58%,
-        color-mix(in srgb, #ede1d7 100%, transparent) 49.21%,
-        color-mix(in srgb, #f6b4ca 100%, transparent) 100%
-      );
+    background: var(--product-background);
   }
 
   .rebuy-widget-content > .primary-title {
@@ -427,7 +422,6 @@
 {
   "name": "Product",
   "settings": [],
-  "class": "product-background",
   "disabled_on": {
     "groups": ["header", "footer"]
   }

@@ -1,37 +1,121 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+{% liquid
+  assign section_title = section.settings.title | default: 'Your cart'
+  assign section_description = section.settings.description | default: ''
+%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="mx-auto max-w-4xl space-y-10">
+      <div class="space-y-4 text-center sm:text-left">
+        <h1 class="text-3xl font-semibold text-neutral-900">{{ section_title | escape }}</h1>
+        {% if section_description != blank %}
+          <p class="text-base text-neutral-600">{{ section_description | escape }}</p>
+        {% endif %}
+      </div>
 
-<h1>Cart</h1>
+      {% if cart == empty %}
+        <div class="rounded-3xl border border-dashed border-neutral-300 bg-white p-10 text-center space-y-4">
+          <h2 class="text-2xl font-medium text-neutral-900">Your cart is empty</h2>
+          <p class="text-neutral-600">Browse our collections and add something special.</p>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-neutral-800"
+          >
+            Continue shopping
+          </a>
+        </div>
+      {% else %}
+        <form
+          action="{{ routes.cart_url }}"
+          method="post"
+          id="CartPage-Form"
+          class="space-y-8"
+        >
+          <div class="space-y-6 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium uppercase tracking-wide text-neutral-500">Cart summary</p>
+              <span class="text-sm text-neutral-500">
+                {{ cart.item_count }}
+                {% if cart.item_count == 1 %}item{% else %}items{% endif %}
+              </span>
+            </div>
+            <div class="space-y-6">
+              {% for item in cart.items %}
+                {% render 'cart-drawer-item', item: item %}
+              {% endfor %}
+            </div>
+          </div>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'Remove' | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="Update">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-
-  <input type="submit" name="checkout" value="Checkout">
-</form>
+          <div class="space-y-6 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-lg font-medium text-neutral-900">Estimated total</span>
+              <span class="text-lg font-semibold text-neutral-900">{{ cart.total_price | money_with_currency }}</span>
+            </div>
+            {% if cart.cart_level_discount_applications.size > 0 %}
+              <ul class="space-y-2 text-sm text-green-600" role="list" aria-label="Discounts">
+                {% for discount in cart.cart_level_discount_applications %}
+                  <li class="flex items-center gap-2">
+                    <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-700">
+                      {{- 'icon-check.svg' | inline_asset_content -}}
+                    </span>
+                    {{ discount.title | escape }} (-{{ discount.total_allocated_amount | money }})
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            <p class="text-sm text-neutral-500">Taxes, discounts, and shipping are calculated at checkout.</p>
+            <div class="flex flex-wrap gap-3">
+              <button
+                type="submit"
+                name="update"
+                class="inline-flex h-12 items-center justify-center rounded-full border border-neutral-900 px-6 text-sm font-medium uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+              >
+                Update cart
+              </button>
+              <button
+                type="submit"
+                name="checkout"
+                class="inline-flex h-12 flex-1 basis-48 items-center justify-center rounded-full bg-neutral-900 px-6 text-sm font-medium uppercase tracking-wide text-white transition hover:bg-neutral-800"
+              >
+                Check out
+              </button>
+              <a
+                href="{{ routes.all_products_collection_url }}"
+                class="inline-flex h-12 items-center justify-center rounded-full border border-transparent px-6 text-sm font-medium uppercase tracking-wide text-neutral-600 transition hover:text-neutral-900"
+              >
+                Continue shopping
+              </a>
+            </div>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Cart",
-  "settings": []
+  "tag": "section",
+  "class": "cart-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Your cart"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Review your items before checking out."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
 }
 {% endschema %}
