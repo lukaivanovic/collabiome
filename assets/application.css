@@ -1576,6 +1576,9 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .\[background\:var\(--product-accent\)\] {
+    background: var(--product-accent);
+  }
   .\[background\:var\(--product-button-background\)\] {
     background: var(--product-button-background);
   }

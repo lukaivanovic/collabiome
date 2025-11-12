@@ -46,14 +46,14 @@
 
           <div class="absolute bottom-2 right-2">
             <button
-              class="embla__prev bg-[var(--product-accent)] rounded-full z-2 p-1 text-white"
+              class="embla__prev [background:var(--product-accent)] rounded-full z-2 p-1 text-white"
               aria-label="Previous image"
             >
               {{ 'icon-chevron-left.svg' | inline_asset_content }}
             </button>
 
             <button
-              class="embla__next bg-[var(--product-accent)] rounded-full z-2 p-1 text-white"
+              class="embla__next [background:var(--product-accent)] rounded-full z-2 p-1 text-white"
               aria-label="Next image"
             >
               {{ 'icon-chevron-right.svg' | inline_asset_content }}
@@ -189,7 +189,22 @@
   }
 
   .product-background {
-    background: var(--product-background);
+    background: linear-gradient(
+        0deg,
+        hsla(0, 0%, 100%, 1) 0%,
+        hsla(0, 0%, 100%, 0.75) 9%,
+        hsla(0, 0%, 100%, 0.55) 18%,
+        hsla(0, 0%, 100%, 0.38) 27%,
+        hsla(0, 0%, 100%, 0.26) 36%,
+        hsla(0, 0%, 100%, 0.16) 45%,
+        hsla(0, 0%, 100%, 0.09) 55%,
+        hsla(0, 0%, 100%, 0.05) 64%,
+        hsla(0, 0%, 100%, 0.02) 73%,
+        hsla(0, 0%, 100%, 0.01) 82%,
+        hsla(0, 0%, 100%, 0) 91%,
+        hsla(0, 0%, 100%, 0) 100%
+      ),
+      var(--product-background);
   }
 
   .rebuy-widget-content > .primary-title {
