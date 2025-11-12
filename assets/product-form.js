@@ -292,7 +292,7 @@ if (!customElements.get("product-form")) {
         } else {
           this.submitButton.disabled = false;
           const formattedPrice = this.formatMoney(variant.price);
-          this.submitButtonText.textContent = `Add to cart - ${formattedPrice}`;
+          this.submitButtonText.textContent = `Add to cart (${formattedPrice})`;
         }
       }
 

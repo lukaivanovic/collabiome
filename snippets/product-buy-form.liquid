@@ -16,10 +16,6 @@
   assign section_id_value = section_id | default: 'main-product'
   assign product_form_id = product_form_id | default: section_id_value | append: '-product-form'
   assign quantity_rule_soldout = quantity_rule_soldout | default: false
-
-  assign variant_grid_wrapper_classes = 'flex flex-col gap-4'
-  assign variant_grid_classes = 'grid grid-cols-3 gap-3 w-full'
-  assign variant_option_label_classes = 'variant-option relative flex items-center justify-center px-3 py-3 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black/16 data-[selected=true]:[background:var(--product-background)]'
 %}
 
 <product-form
@@ -56,13 +52,13 @@
     >
     <div class="flex flex-col gap-4">
       {% unless product.has_only_default_variant %}
-        <div class="{{ variant_grid_wrapper_classes }}">
+        <div class="flex flex-col gap-4">
           {% for option in product.options_with_values %}
-            <div class="{{ variant_grid_classes }}">
+            <div class="grid grid-cols-3 gap-3 w-full">
               {% for value in option.values %}
                 <label
                   for="product-options[{{ option.name }}]-{{ forloop.index }}"
-                  class="{{ variant_option_label_classes }}"
+                  class="relative flex items-center justify-center px-3 py-3 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black/16 data-[selected=true]:[background:var(--product-background)]"
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -106,7 +102,7 @@
           id="ProductSubmitButton-{{ section_id_value }}"
           type="submit"
           name="add"
-          class="button button-large flex items-center gap-2 [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
+          class="button flex items-center gap-2 h-14 px-7 text-base [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
@@ -123,12 +119,10 @@
             {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
               Sold out
             {%- else -%}
-              Add to cart
+              Add to cart ({{ product.selected_or_first_available_variant.price | money }})
             {%- endif -%}
           </span>
-          <span class="text-base font-medium text-white/">
-            {{ product.selected_or_first_available_variant.price | money }}
-          </span>
+          <span class="text-base font-medium text-white/"> </span>
           {% comment %} {%- render 'loading-spinner' -%} {% endcomment %}
         </button>
         {%- if show_dynamic_checkout -%}
@@ -138,18 +132,6 @@
     </div>
   {%- endform -%}
 </product-form>
-
-{% stylesheet %}
-  .variant-option {
-    position: relative;
-  }
-
-  .button-large {
-    height: 56px;
-    padding: 0.75rem 1.75rem;
-    font-size: 16px;
-  }
-{% endstylesheet %}
 
 {% javascript %}
   // Prevent clicks on variant options and buttons from propagating to parent link
