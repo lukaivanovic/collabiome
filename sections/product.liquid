@@ -21,8 +21,9 @@
       assign product_theme_class = 'product-theme-default'
   endcase
 -%}
+
 <div class="product-background {{ product_theme_class }}">
-  <div class="w-full container !px-0 md:!px-16 pt-6 md:pb-20 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
+  <div class="w-full container !px-0 md:!px-16 pt-6 md:pb-30 grid gap-5 lg:[grid-template-columns:1fr_1fr]">
     <script id="product-data" type="application/json">
       {{ product | json }}
     </script>
@@ -80,9 +81,9 @@
     {% comment %} Product content {% endcomment %}
     <div class="flex flex-col gap-10 bg-white rounded-t-3xl px-6 pb-6 pt-12 md:p-12 md:rounded-3xl">
       <div class="flex flex-col">
-        <h1 class="text-4xl! font-medium text-balance max-w-100 mb-2">{{ product.title }}</h1>
+        <h1 class="text-5xl! font-medium text-balance max-w-140 mb-3">{{ product.title }}</h1>
         <!-- Start of Judge.me code -->
-        <div class="jdgm-widget jdgm-preview-badge mb-4" data-id="{{ product.id }}">
+        <div class="jdgm-widget jdgm-preview-badge mb-3" data-id="{{ product.id }}">
           {{ product.metafields.judgeme.badge }}
         </div>
         <!-- End of Judge.me code -->
@@ -90,15 +91,12 @@
       </div>
 
       {% comment %} Buy form{% endcomment %}
-      {% render 'buy-form',
-        product: product,
+      {% render 'product-buy-form',
         section_id: section.id,
-        variant_layout: 'grid',
-        large_button: true,
-        button_variant: 'neutral_large',
         show_dynamic_checkout: false,
         gift_card_recipient_feature_active: false,
-        product_form_id: product_form_identifier
+        product_form_id: product_form_identifier,
+        quantity_rule_soldout: false
       %}
 
       {% comment %} Benefits icons {% endcomment %}
@@ -115,23 +113,23 @@
 
       {% comment %} Benefits {% endcomment %}
       <div class="flex flex-col gap-4">
-        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Benefits</h3>
-        <div class="flex flex-col  gap-2">
+        <span class="text-xs font-semibold uppercase text-neutral-500 tracking-wider">Benefits</span>
+        <div class="flex flex-col gap-2">
           {%- for benefit in benefits -%}
             <div class="flex items-center gap-3 bg-white rounded-lg">
               <span class="text-[var(--product-foreground)]">{{ 'icon-check.svg' | inline_asset_content }}</span>
-              <span class="font-[550]">{{ benefit | default: 'Benefit' | strip }}</span>
+              <span class="font-medium">{{ benefit | default: 'Benefit' | strip }}</span>
             </div>
           {%- endfor -%}
         </div>
       </div>
 
-      {% comment %} Accordions {% endcomment %}
-      <div class="flex flex-col gap-4">
-        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Description</h3>
+      {% comment %} Description {% endcomment %}
+      <div class="flex flex-col gap-3">
+        <span class="text-xs font-medium uppercase text-neutral-500 tracking-widest">Description</span>
         <div class="flex flex-col">
           {% if product.description != blank %}
-            <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
+            <div class="leading-[1.6] text-neutral-950 font-medium gap-4 flex flex-col line-clamp-5">
               {{ product.description }}
             </div>
           {% endif %}
@@ -140,7 +138,7 @@
 
       {% comment %} Accordions {% endcomment %}
       <div class="flex flex-col gap-4">
-        <h3 class="text-sm font-medium uppercase text-neutral-500 tracking-wider">Additional information</h3>
+        <span class="text-xs font-medium uppercase text-neutral-500 tracking-widest">Additional information</span>
         <div class="product-accordion flex flex-col">
           {%- for accordion_item in accordion_items -%}
             <collapsible-item class="accordion-item border-b border-neutral-100 bg-white transition-colors">

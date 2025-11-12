@@ -1,19 +1,31 @@
+{% doc %}
+  Product Buy Form
+
+  Renders the product purchase form with variant options displayed in a three-column grid and support for a larger primary button.
+
+  @param {boolean} show_dynamic_checkout - Display dynamic checkout buttons (default: false)
+  @param {boolean} gift_card_recipient_feature_active - Hide errors when gift card recipient feature is active (default: false)
+  @param {string} section_id - Section identifier used for DOM scoping (optional)
+  @param {string} product_form_id - Explicit form identifier (optional)
+  @param {boolean} quantity_rule_soldout - Flag from parent context indicating quantity rule sold out (default: false)
+{% enddoc %}
+
 {% liquid
-  assign button_variant = button_variant | default: 'default'
+  assign show_dynamic_checkout = show_dynamic_checkout | default: false
+  assign gift_card_recipient_feature_active = gift_card_recipient_feature_active | default: false
+  assign section_id_value = section_id | default: 'main-product'
+  assign product_form_id = product_form_id | default: section_id_value | append: '-product-form'
+  assign quantity_rule_soldout = quantity_rule_soldout | default: false
 
-  assign button_classes = 'product-form__submit button button--full-width w-full rounded-full'
-
-  if button_variant == 'neutral_large'
-    assign button_classes = button_classes | append: ' button-neutral text-white'
-  else
-    assign button_classes = button_classes | append: ' button-boost text-blue'
-  endif
+  assign variant_grid_wrapper_classes = 'flex flex-col gap-4'
+  assign variant_grid_classes = 'grid grid-cols-3 gap-3 w-full'
+  assign variant_option_label_classes = 'variant-option relative flex items-center justify-center px-3 py-3 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black/16 data-[selected=true]:[background:var(--product-background)]'
 %}
 
 <product-form
   class="product-form"
   data-hide-errors="{{ gift_card_recipient_feature_active }}"
-  data-section-id="{{ section.id }}"
+  data-section-id="{{ section_id_value }}"
   data-product-id="{{ product.id }}"
 >
   <div class="product-form__error-message-wrapper" role="alert" hidden>
@@ -44,15 +56,13 @@
     >
     <div class="flex flex-col gap-4">
       {% unless product.has_only_default_variant %}
-        {% comment %}  Variants {% endcomment %}
-        <div class="flex flex-row gap-2 h-8">
+        <div class="{{ variant_grid_wrapper_classes }}">
           {% for option in product.options_with_values %}
-            {% comment %}  Options {% endcomment %}
-            <div class="flex flex-row gap-2">
+            <div class="{{ variant_grid_classes }}">
               {% for value in option.values %}
                 <label
-                  for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
+                  for="product-options[{{ option.name }}]-{{ forloop.index }}"
+                  class="{{ variant_option_label_classes }}"
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -62,7 +72,7 @@
                 >
                   <input
                     type="radio"
-                    id="options[{{ option.name }}]-{{ forloop.index }}"
+                    id="product-options[{{ option.name }}]-{{ forloop.index }}"
                     name="options[{{ option.name }}]"
                     value="{{ value }}"
                     {% if option.selected_value == value %}
@@ -72,7 +82,7 @@
                   >
                   <span class="text-primary">{{ value }}</span>
                   <span
-                    class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
+                    class="hidden text-xs font-medium px-1.5 py-0.5 tabular-nums rounded-full bg-[var(--product-foreground)] text-[var(--product-button-text-color)] whitespace-nowrap"
                     data-variant-badge
                   ></span>
                 </label>
@@ -93,10 +103,10 @@
           endif
         -%}
         <button
-          id="ProductSubmitButton-{{ section_id | default: 'main' }}"
+          id="ProductSubmitButton-{{ section_id_value }}"
           type="submit"
           name="add"
-          class="button [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
+          class="button button-large flex items-center gap-2 [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
@@ -104,14 +114,20 @@
             disabled
           {% endif %}
         >
+          <div class="size-6">
+            {{ 'icon-cart.svg' | inline_asset_content }}
+          </div>
           <span>
             {%- if product.selected_or_first_available_variant == null -%}
               Unavailable
             {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
               Sold out
             {%- else -%}
-              Add to cart - {{ product.selected_or_first_available_variant.price | money }}
+              Add to cart
             {%- endif -%}
+          </span>
+          <span class="text-base font-medium text-white/">
+            {{ product.selected_or_first_available_variant.price | money }}
           </span>
           {% comment %} {%- render 'loading-spinner' -%} {% endcomment %}
         </button>
@@ -124,17 +140,14 @@
 </product-form>
 
 {% stylesheet %}
-  .variant-savings-badge {
-    font-size: 0.625rem; /* text-xs */
-    font-weight: 500; /* font-medium */
-    padding: 0.125rem 0.375rem; /* px-1.5 py-0.5 */
-    border-radius: 9999px; /* rounded-full */
-    white-space: nowrap;
-    line-height: 1.2;
-  }
-
   .variant-option {
     position: relative;
+  }
+
+  .button-large {
+    height: 56px;
+    padding: 0.75rem 1.75rem;
+    font-size: 16px;
   }
 {% endstylesheet %}
 

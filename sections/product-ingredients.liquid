@@ -4,7 +4,10 @@
 
 <div class="container-small mx-auto max-w-4xl px-4 text-center py-20 flex flex-col gap-10">
   <div>
-    <h2 class="text-4xl uppercase font-medium">{{ ingredients.title | default: 'Ingredients' }}</h2>
+    <p class="text-sm font-medium uppercase text-neutral-500 tracking-wider">
+      {{ section.settings.eyebrow | default: 'Ingredients' }}
+    </p>
+    <h2 class="text-4xl font-medium">{{ ingredients.title | default: 'Ingredients' }}</h2>
     {% if section.settings.description %}
       <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
     {% elsif ingredients.description %}
@@ -58,7 +61,8 @@
   "tag": "section",
   "settings": [
     { "type": "text", "id": "title", "label": "Title" },
-    { "type": "richtext", "id": "description", "label": "Description" }
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" }
   ],
   "presets": [
     {

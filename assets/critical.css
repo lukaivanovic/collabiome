@@ -376,14 +376,47 @@ button:disabled:hover {
 }
 
 .product-theme-default {
-  --product-background: #f9f1f3;
-  --product-foreground: #996540;
-  --product-button-background: #996540;
+  --product-background:
+    linear-gradient(
+      0deg,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 100%, 0.75) 9%,
+      hsla(0, 0%, 100%, 0.55) 18%,
+      hsla(0, 0%, 100%, 0.38) 27%,
+      hsla(0, 0%, 100%, 0.26) 36%,
+      hsla(0, 0%, 100%, 0.16) 45%,
+      hsla(0, 0%, 100%, 0.09) 55%,
+      hsla(0, 0%, 100%, 0.05) 64%,
+      hsla(0, 0%, 100%, 0.02) 73%,
+      hsla(0, 0%, 100%, 0.01) 82%,
+      hsla(0, 0%, 100%, 0) 91%,
+      hsla(0, 0%, 100%, 0) 100%
+    ),
+    #f9f1f3;
+  --product-foreground: #783047;
+
+  --product-button-background: #783047;
   --product-button-text-color: #f9f1f3;
 }
 
 .product-theme-recupera {
-  --product-background: linear-gradient(var(--gradient-recupera));
+  --product-background:
+    linear-gradient(
+      0deg,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 100%, 0.75) 9%,
+      hsla(0, 0%, 100%, 0.55) 18%,
+      hsla(0, 0%, 100%, 0.38) 27%,
+      hsla(0, 0%, 100%, 0.26) 36%,
+      hsla(0, 0%, 100%, 0.16) 45%,
+      hsla(0, 0%, 100%, 0.09) 55%,
+      hsla(0, 0%, 100%, 0.05) 64%,
+      hsla(0, 0%, 100%, 0.02) 73%,
+      hsla(0, 0%, 100%, 0.01) 82%,
+      hsla(0, 0%, 100%, 0) 91%,
+      hsla(0, 0%, 100%, 0) 100%
+    ),
+    linear-gradient(100deg, #a2eeff 3.17%, #b4ceff 35.34%, #d4b9ff 103.04%);
   --product-foreground: var(--color-foreground-default);
   --product-button-background: linear-gradient(var(--gradient-recupera));
   --product-button-text-color: black;
