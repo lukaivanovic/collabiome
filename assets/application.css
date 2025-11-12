@@ -72,15 +72,12 @@
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
-    --text-5xl: 3rem;
-    --text-5xl--line-height: 1;
-    --text-6xl: 3.75rem;
-    --text-6xl--line-height: 1;
+    --text-5xl: 2.75rem;
+    --text-5xl--line-height: 1.2;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
-    --tracking-tight: -0.025em;
     --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
     --tracking-widest: 0.1em;
@@ -622,9 +619,6 @@
   .w-14 {
     width: calc(var(--spacing) * 14);
   }
-  .w-16 {
-    width: calc(var(--spacing) * 16);
-  }
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
@@ -651,9 +645,6 @@
   }
   .max-w-95 {
     max-width: calc(var(--spacing) * 95);
-  }
-  .max-w-100 {
-    max-width: calc(var(--spacing) * 100);
   }
   .max-w-140 {
     max-width: calc(var(--spacing) * 140);
@@ -901,17 +892,9 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border\! {
-    border-style: var(--tw-border-style) !important;
-    border-width: 1px !important;
-  }
   .border-0 {
     border-style: var(--tw-border-style);
     border-width: 0px;
-  }
-  .border-2 {
-    border-style: var(--tw-border-style);
-    border-width: 2px;
   }
   .border-2\! {
     border-style: var(--tw-border-style) !important;
@@ -999,9 +982,6 @@
   }
   .bg-\[var\(--product-accent\)\] {
     background-color: var(--product-accent);
-  }
-  .bg-\[var\(--product-foreground\)\] {
-    background-color: var(--product-foreground);
   }
   .bg-amber-50 {
     background-color: var(--color-amber-50);
@@ -1279,10 +1259,6 @@
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
   }
-  .text-4xl\! {
-    font-size: var(--text-4xl) !important;
-    line-height: var(--tw-leading, var(--text-4xl--line-height)) !important;
-  }
   .text-5xl {
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
@@ -1343,10 +1319,6 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
-  .font-medium\! {
-    --tw-font-weight: var(--font-weight-medium) !important;
-    font-weight: var(--font-weight-medium) !important;
-  }
   .font-normal {
     --tw-font-weight: var(--font-weight-normal);
     font-weight: var(--font-weight-normal);
@@ -1399,9 +1371,6 @@
   }
   .text-\[var\(--product-button-text-color\)\] {
     color: var(--product-button-text-color);
-  }
-  .text-\[var\(--product-foreground\)\] {
-    color: var(--product-foreground);
   }
   .text-black {
     color: var(--color-black);
@@ -1475,18 +1444,6 @@
   .text-white {
     color: var(--color-white);
   }
-  .text-white\/64 {
-    color: color-mix(in srgb, #fff 64%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-white) 64%, transparent);
-    }
-  }
-  .text-white\/72 {
-    color: color-mix(in srgb, #fff 72%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-white) 72%, transparent);
-    }
-  }
   .text-white\/80 {
     color: color-mix(in srgb, #fff 80%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1537,9 +1494,6 @@
   }
   .opacity-75 {
     opacity: 75%;
-  }
-  .opacity-80 {
-    opacity: 80%;
   }
   .opacity-90 {
     opacity: 90%;
@@ -1658,11 +1612,6 @@
   .group-data-\[selected\=true\]\:text-\[var\(--product-accent\)\] {
     &:is(:where(.group)[data-selected="true"] *) {
       color: var(--product-accent);
-    }
-  }
-  .group-data-\[selected\=true\]\:text-\[var\(--product-accent-foreground\)\] {
-    &:is(:where(.group)[data-selected="true"] *) {
-      color: var(--product-accent-foreground);
     }
   }
   .last\:border-b-0 {
@@ -1840,13 +1789,6 @@
       }
     }
   }
-  .hover\:opacity-80 {
-    &:hover {
-      @media (hover: hover) {
-        opacity: 80%;
-      }
-    }
-  }
   .hover\:opacity-100 {
     &:hover {
       @media (hover: hover) {
@@ -1986,11 +1928,6 @@
       border-color: var(--product-accent) !important;
     }
   }
-  .data-\[active\=true\]\:border-\[var\(--product-foreground\)\]\! {
-    &[data-active="true"] {
-      border-color: var(--product-foreground) !important;
-    }
-  }
   .data-\[active\=true\]\:opacity-100 {
     &[data-active="true"] {
       opacity: 100%;
@@ -2001,69 +1938,9 @@
       border-color: var(--product-accent);
     }
   }
-  .data-\[selected\=true\]\:border-\[var\(--product-background\)\] {
-    &[data-selected="true"] {
-      border-color: var(--product-background);
-    }
-  }
-  .data-\[selected\=true\]\:border-\[var\(--product-foreground\)\] {
-    &[data-selected="true"] {
-      border-color: var(--product-foreground);
-    }
-  }
   .data-\[selected\=true\]\:border-black {
     &[data-selected="true"] {
       border-color: var(--color-black);
-    }
-  }
-  .data-\[selected\=true\]\:border-black\/16 {
-    &[data-selected="true"] {
-      border-color: color-mix(in srgb, #000 16%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        border-color: color-mix(in oklab, var(--color-black) 16%, transparent);
-      }
-    }
-  }
-  .data-\[selected\=true\]\:border-black\/50 {
-    &[data-selected="true"] {
-      border-color: color-mix(in srgb, #000 50%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        border-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-      }
-    }
-  }
-  .data-\[selected\=true\]\:bg-\[var\(--product-background\)\] {
-    &[data-selected="true"] {
-      background-color: var(--product-background);
-    }
-  }
-  .data-\[selected\=true\]\:bg-\[var\(--product-foreground\)\]\/5 {
-    &[data-selected="true"] {
-      background-color: var(--product-foreground);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--product-foreground) 5%, transparent);
-      }
-    }
-  }
-  .data-\[selected\=true\]\:bg-\[var\(--product-foreground\)\]\/16 {
-    &[data-selected="true"] {
-      background-color: var(--product-foreground);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--product-foreground) 16%, transparent);
-      }
-    }
-  }
-  .data-\[selected\=true\]\:bg-\[var\(--product-foreground\)\]\/50 {
-    &[data-selected="true"] {
-      background-color: var(--product-foreground);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--product-foreground) 50%, transparent);
-      }
-    }
-  }
-  .data-\[selected\=true\]\:text-\[var\(--product-accent\)\] {
-    &[data-selected="true"] {
-      color: var(--product-accent);
     }
   }
   .data-\[selected\=true\]\:\[background\:var\(--product-background\)\] {
@@ -2269,11 +2146,6 @@
   .md\:py-16 {
     @media (width >= 48rem) {
       padding-block: calc(var(--spacing) * 16);
-    }
-  }
-  .md\:pb-20 {
-    @media (width >= 48rem) {
-      padding-bottom: calc(var(--spacing) * 20);
     }
   }
   .md\:pb-30 {

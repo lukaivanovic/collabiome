@@ -17,4 +17,6 @@
     --gradient-nutriage: var(--gradient-nutriage);
     --gradient-recupera: 100deg, #A2EEFF 3.17%, #B4CEFF 35.34%, #D4B9FF 103.04%;
     --style-border-radius-inputs: var(--style-border-radius-inputs);
+    --text-5xl: 2.75rem;
+    --text-5xl--line-height: 1.2;
   }
