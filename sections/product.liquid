@@ -81,7 +81,7 @@
     {% comment %} Product content {% endcomment %}
     <div class="flex flex-col gap-10 bg-white rounded-t-3xl px-6 pb-6 pt-12 md:p-12 md:rounded-3xl">
       <div class="flex flex-col">
-        <h1 class="text-5xl! font-medium text-balance max-w-140 mb-3">{{ product.title }}</h1>
+        <h1 class="text-5xl! text-balance max-w-140 mb-3">{{ product.title }}</h1>
         <!-- Start of Judge.me code -->
         <div class="jdgm-widget jdgm-preview-badge mb-3" data-id="{{ product.id }}">
           {{ product.metafields.judgeme.badge }}
@@ -129,7 +129,7 @@
         <span class="text-xs font-medium uppercase text-neutral-500 tracking-widest">Description</span>
         <div class="flex flex-col">
           {% if product.description != blank %}
-            <div class="leading-[1.6] text-neutral-950 font-medium gap-4 flex flex-col line-clamp-5">
+            <div class="leading-[1.6] text-black font-medium gap-4 flex flex-col line-clamp-5">
               {{ product.description }}
             </div>
           {% endif %}
@@ -147,15 +147,15 @@
                 data-collapsible-trigger
                 type="button"
               >
-                <span class="font-[550] text-primary">
+                <span class=" text-black font-medium">
                   {{- accordion_item.title | strip -}}
                 </span>
-                <div class="w-6 h-6 flex items-center justify-center bg-pink rounded-full text-pink-950">
+                <div class="w-6 h-6 flex items-center justify-center [background:var(--product-background)] rounded-full text-[var(--product-accent)]">
                   {{ 'icon-plus.svg' | inline_asset_content }}
                 </div>
               </button>
               <div class="accordion-content" data-collapsible-content>
-                <div class="pt-3 pb-8 leading-[1.6] text-neutral-800 gap-4 flex flex-col">
+                <div class="pt-3 pb-8 leading-[1.6] text-black gap-4 flex flex-col">
                   {{ accordion_item.content | metafield_tag }}
                 </div>
               </div>

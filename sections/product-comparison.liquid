@@ -1,14 +1,30 @@
 {%- liquid
   assign comparisons = product.metafields.custom.comparison.value
+
+  assign product_theme = product.metafields.custom.theme.value | default: 'default'
+
+  case product_theme
+    when 'recupera'
+      assign product_theme_class = 'product-theme-recupera'
+    when 'boost'
+      assign product_theme_class = 'product-theme-boost'
+    else
+      assign product_theme_class = 'product-theme-default'
+  endcase
 -%}
 
-<div class="container-small text-center py-30">
-  <h2 class="text-4xl uppercase font-medium">{{ comparisons.title | default: 'Comparison' }}</h2>
-  {% if section.settings.description %}
-    <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
-  {% elsif comparisons.description %}
-    <p class="text-base opacity-70 mt-2">{{ comparisons.description }}</p>
-  {% endif %}
+<div class="container-small text-center py-30 {{ product_theme_class }}">
+  <div>
+    <p class="text-sm font-medium uppercase text-neutral-500 tracking-wider">
+      {{ section.settings.eyebrow | default: 'Comparison' }}
+    </p>
+    <h2 class="text-4xl font-medium">{{ comparisons.title | default: 'Comparison' }}</h2>
+    {% if section.settings.description %}
+      <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
+    {% elsif comparisons.description %}
+      <p class="text-base opacity-70 mt-2">{{ comparisons.description }}</p>
+    {% endif %}
+  </div>
 
   {% if comparisons and comparisons.products and comparisons.categories and comparisons.values %}
     <div class="overflow-x-auto pt-12">
@@ -30,16 +46,11 @@
               {% assign category_values = comparisons.values[c.key] %}
               {% for p in comparisons.products %}
                 {% assign val = category_values[p.id] %}
-                <td class="px-3 py-2 align-middle h-14 border-l border-gray-200 text-center {% if forloop.first %}bg-white rounded-lg{% endif %}">
+                <td class="px-3 py-2 align-middle h-14 border-l border-neutral-200 text-center {% if forloop.first %}[background:var(--product-background)] text-[var(--product-accent)]{% endif %}">
                   <div class="flex items-center justify-center">
                     {% if val %}
-                      <img
-                        src="{{ 'icon-check.svg' | asset_url }}"
-                        alt="Yes"
-                        width="16"
-                        height="16"
-                        class="inline-block"
-                      >
+                      {{ 'icon-check.svg' | inline_asset_content }}
+
                     {% else %}
                       <span class="opacity-60">&mdash;</span>
                     {% endif %}

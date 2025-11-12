@@ -1369,6 +1369,9 @@
   .text-\[var\(--product-accent\)\] {
     color: var(--product-accent);
   }
+  .text-\[var\(--product-accent-foreground\)\] {
+    color: var(--product-accent-foreground);
+  }
   .text-\[var\(--product-button-text-color\)\] {
     color: var(--product-button-text-color);
   }
@@ -1578,6 +1581,9 @@
   }
   .\[background\:var\(--product-accent\)\] {
     background: var(--product-accent);
+  }
+  .\[background\:var\(--product-background\)\] {
+    background: var(--product-background);
   }
   .\[background\:var\(--product-button-background\)\] {
     background: var(--product-button-background);
