@@ -1,4 +1,4 @@
-<header class="hidden md:block">
+<header class="hidden md:block bg-white z-99 border-b border-black/8 h-16 ">
   {% render 'header-desktop-nav',
     shop_menu: section.settings.shop_menu,
     marketing_menu: section.settings.marketing_menu,
@@ -7,7 +7,7 @@
   %}
 </header>
 
-<header class="relative block md:hidden">
+<header class="relative block md:hidden bg-white z-99 border-b border-black/8 h-16">
   {% render 'header-mobile-menu',
     shop_menu: section.settings.shop_menu,
     marketing_menu: section.settings.marketing_menu
@@ -18,7 +18,7 @@
   .header-section {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 99;
   }
 {% endstylesheet %}
 

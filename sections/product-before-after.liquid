@@ -1,15 +1,29 @@
 {%- liquid
   assign before_after = product.metafields.custom.before_after.value
+  assign product_theme = product.metafields.custom.theme.value | default: 'default'
+
+  case product_theme
+    when 'recupera'
+      assign product_theme_class = 'product-theme-recupera'
+    when 'boost'
+      assign product_theme_class = 'product-theme-boost'
+    else
+      assign product_theme_class = 'product-theme-default'
+  endcase
 -%}
 
-<div class="container-small text-center py-30 relative">
-  <h2 class="text-4xl uppercase font-medium">{{ before_after.title | default: 'Before & After' }}</h2>
+<section class="product-before-after__section {{ product_theme_class }}">
+  <div class="container-small text-center py-30 relative flex flex-col gap-3">
+    <p class="text-sm font-medium uppercase text-neutral-500 tracking-wider">
+      {{ section.settings.eyebrow | default: 'Before & after' }}
+    </p>
+    <h2 class="text-4xl font-medium">{{ before_after.title | default: 'Before & after' }}</h2>
 
-  {% if before_after.description %}
-    <p class="text-base opacity-70 mt-2">{{ before_after.description }}</p>
-  {% endif %}
+    {% if before_after.description %}
+      <p class="text-base opacity-70">{{ before_after.description }}</p>
+    {% endif %}
 
-  <div class="grid grid-cols-2 gap-2 md:gap-6 pt-12">
+    <div class="grid grid-cols-2 gap-2 md:gap-6 pt-12">
     {% comment %}
       <div class="flex flex-col">
         <h3 class="text-lg font-medium mb-4">{{ before_after.before_title | default: 'Before' }}</h3>
@@ -17,21 +31,22 @@
       </div>
     {% endcomment %}
 
-    <div class="flex flex-col relative rounded-xl w-full">
-      {% render 'image', image: before_after.before, class: 'aspect-[3/4] w-full h-full object-cover rounded-3xl' %}
-      <h3 class="text-large font-regular mb-4 px-2 py-1 absolute bottom-2 left-2 bg-white rounded-2xl">
-        {{ before_after.before_title | default: 'Before' }}
-      </h3>
-    </div>
+      <div class="flex flex-col relative rounded-xl w-full">
+        {% render 'image', image: before_after.before, class: 'aspect-[3/4] w-full h-full object-cover rounded-3xl' %}
+        <h3 class="text-large font-medium px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent-foreground)] [background:var(--product-accent)]">
+          {{ before_after.before_title | default: 'Before' }}
+        </h3>
+      </div>
 
-    <div class="flex flex-col relative rounded-xl w-full">
-      {% render 'image', image: before_after.after, class: 'aspect-[3/4] rounded-3xl' %}
-      <h3 class="text-large font-regular mb-4 px-2 py-1 absolute bottom-2 left-2 bg-white rounded-2xl">
-        {{ before_after.after_title | default: 'After' }}
-      </h3>
+      <div class="flex flex-col relative rounded-xl w-full">
+        {% render 'image', image: before_after.after, class: 'aspect-[3/4] rounded-3xl' %}
+        <h3 class="text-large font-medium px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent-foreground)] [background:var(--product-accent)]">
+          {{ before_after.after_title | default: 'After' }}
+        </h3>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 {% stylesheet %}
   .product-before-after__section {
@@ -64,12 +79,7 @@
         hsla(0, 0%, 100%, 0.7) 89%,
         hsla(0, 0%, 100%, 1) 100%
       ),
-      linear-gradient(
-        86deg,
-        color-mix(in srgb, #dbeae5 50%, transparent) -1.58%,
-        color-mix(in srgb, #ede1d7 50%, transparent) 49.21%,
-        color-mix(in srgb, #f6b4ca 50%, transparent) 100%
-      );
+      var(--product-background);
   }
 {% endstylesheet %}
 
@@ -78,7 +88,13 @@
   "name": "Product Before & After",
   "tag": "section",
   "class": "product-before-after__section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    }
+  ],
   "presets": [
     {
       "name": "Product Before & After",

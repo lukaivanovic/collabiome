@@ -1,42 +1,54 @@
 {%- liquid
   assign faq_data = product.metafields.custom.faq.value
+  assign product_theme = product.metafields.custom.theme.value | default: 'default'
+
+  case product_theme
+    when 'recupera'
+      assign product_theme_class = 'product-theme-recupera'
+    when 'boost'
+      assign product_theme_class = 'product-theme-boost'
+    else
+      assign product_theme_class = 'product-theme-default'
+  endcase
 -%}
 
-<div class="container-small py-20">
-  <div class="flex flex-col gap-12">
-    <div class="flex flex-col gap-2">
-      <h2 class=" uppercase font-bold text-black">{{ section.settings.title | default: 'FAQ' }}</h2>
+<div class="product-faq {{ product_theme_class }}">
+  <div class="container-small py-20">
+    <div class="flex flex-col gap-12">
+      <div class="flex flex-col gap-2">
+        <h2 class=" uppercase font-bold text-black">{{ section.settings.title | default: 'FAQ' }}</h2>
 
-      {% if section.settings.description != blank %}
-        <p class=" text-neutral-700">
-          {{ section.settings.description }}
-        </p>
-      {% endif %}
-    </div>
+        {% if section.settings.description != blank %}
+          <p class=" text-neutral-700">
+            {{ section.settings.description }}
+          </p>
+        {% endif %}
+      </div>
 
-    <div>
-      {% for item in faq_data %}
-        <collapsible-item class="block faq-item border-b border-blue-100 last:border-b-0 transition-colors">
-          <button
-            class="group faq-question cursor-pointer outline-none w-full text-left py-5 flex items-center justify-between hover:bg-gray-50 transition-colors focus:outline-none focus:ring-0"
-            data-collapsible-trigger
-            type="button"
-          >
-            <span class="text-lg font-red-hat font-medium text-black pr-4">{{ item.title }}</span>
-            <div class="w-7 h-7 bg-blue-50 text-blue-800 rounded-full flex items-center justify-center [&>svg]:size-4 group-has-[aria-expanded=true]:rotate-90 transition-transform duration-300">
-              {{ 'icon-plus.svg' | inline_asset_content }}
+      <div>
+        {% for item in faq_data %}
+          <collapsible-item class="block faq-item border-b border-neutral-200 last:border-b-0 transition-colors">
+            <button
+              class="group faq-question cursor-pointer outline-none w-full text-left py-5 flex items-center justify-between focus:outline-none focus:ring-0"
+              data-collapsible-trigger
+              type="button"
+            >
+              <span class="text-lg font-red-hat font-medium text-black pr-4">{{ item.title }}</span>
+              <div class="faq-icon w-7 h-7 rounded-full flex items-center justify-center [&>svg]:size-4 group-has-[aria-expanded=true]:rotate-90 transition-transform duration-300">
+                {{ 'icon-plus.svg' | inline_asset_content }}
+              </div>
+            </button>
+            <div class="faq-answer" data-collapsible-content>
+              <div class=" text-gray-700 py-4">
+                {{ item.answer }}
+              </div>
             </div>
-          </button>
-          <div class="faq-answer" data-collapsible-content>
-            <div class=" text-gray-700 py-4">
-              {{ item.answer }}
-            </div>
-          </div>
-        </collapsible-item>
-      {% endfor %}
-    </div>
+          </collapsible-item>
+        {% endfor %}
+      </div>
 
-    <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
+      <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
+    </div>
   </div>
 </div>
 
@@ -49,6 +61,17 @@
 
   .faq-item.active .faq-answer {
     max-height: 500px;
+  }
+
+  .product-faq .faq-icon {
+    background: var(--product-background, rgba(0, 0, 0, 0.05));
+    color: var(--product-accent, #1f2937);
+  }
+
+  .product-faq .faq-item.active .faq-icon,
+  .product-faq .faq-question[aria-expanded='true'] .faq-icon {
+    background: var(--product-accent, #1f2937);
+    color: var(--product-accent-foreground, #ffffff);
   }
 {% endstylesheet %}
 

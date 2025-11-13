@@ -1,6 +1,10 @@
-<nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 z-10">
+<mega-menu
+  class="bg-white border-b border-black/12 h-16"
+  role="navigation"
+  data-mega-menu-root
+>
   <div class="container grid grid-cols-[1fr_auto_1fr] items-center justify-center py-2 px-3 relative h-16">
-    <div class="flex gap-2" data-desktop-menu>
+    <div class="flex gap-2" data-desktop-menu data-mega-menu-triggers>
       {% if shop_menu and shop_menu.links.size > 0 %}
         {% for link in shop_menu.links %}
           <a
@@ -9,6 +13,8 @@
             {% if link.type == 'collection_link' %}
               data-mega-menu-trigger
               data-collection-handle="{{ link.object.handle }}"
+              aria-haspopup="true"
+              aria-expanded="false"
             {% endif %}
           >
             {{ link.title }}
@@ -52,170 +58,45 @@
       </a>
     </div>
   </div>
-</nav>
 
-<!-- Mega Menu Panels - pre-rendered for each collection -->
-{% if shop_menu and shop_menu.links.size > 0 %}
-  {% for link in shop_menu.links %}
-    {% if link.type == 'collection_link' %}
-      <div
-        class="absolute top-full left-0 w-full max-h-0 overflow-hidden opacity-0 invisible transition-all duration-[250ms] ease-in-out z-[9999] aria-[hidden=false]:max-h-[600px] aria-[hidden=false]:opacity-100 aria-[hidden=false]:visible"
-        data-mega-menu-panel="{{ link.object.handle }}"
-        aria-hidden="true"
-      >
-        <div class="container py-2">
-          <div class="w-full rounded-2xl border border-black/12 bg-[var(--color-background-default)] shadow-lg p-8 -mt-4">
-            {% comment %} Check if menu should be shown {% endcomment %}
-            {% liquid
-              assign show_menu = false
-              assign menu_to_show = null
-              if link.object.handle == 'kozmetika' or link.object.handle == 'cosmetics'
-                if cosmetics_menu and cosmetics_menu.links.size > 0
-                  assign show_menu = true
-                  assign menu_to_show = cosmetics_menu
-                endif
-              elsif link.object.handle == 'dodaci-prehrani' or link.object.handle == 'supplements'
-                if supplements_menu and supplements_menu.links.size > 0
-                  assign show_menu = true
-                  assign menu_to_show = supplements_menu
-                endif
-              endif
-            %}
-
-            <div class="grid grid-cols-[300px_1fr] gap-8 items-start">
-              {% comment %} Left column: Menu title and Menu links {% endcomment %}
-              <div class="flex flex-col gap-4">
-                {% if show_menu %}
-                  <h3 class="text-lg font-semibold text-primary mb-2">
-                    {{ link.object.title }}
-                  </h3>
-                  <ul class="list-none p-0 m-0 flex flex-col gap-3">
-                    {% for menu_link in menu_to_show.links %}
-                      <li>
-                        <a href="{{ menu_link.url }}" class="text-primary hover:text-primary/80 no-underline text-sm">
-                          {{ menu_link.title }}
-                        </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              </div>
-
-              {% comment %} Right column: Products in horizontal grid {% endcomment %}
-              <div class="grid grid-cols-3 gap-6">
-                {% for product in link.object.products limit: 3 %}
-                  {% render 'product-card', product: product, hide_buy_form: true %}
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endif %}
-  {% endfor %}
-{% endif %}
+  {% render 'header-mega-menu',
+    shop_menu: shop_menu,
+    cosmetics_menu: cosmetics_menu,
+    supplements_menu: supplements_menu
+  %}
+</mega-menu>
 
 {% stylesheet %}
-  .site-header__menu-link[data-mega-menu-trigger]:hover::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: currentColor;
+  [data-mega-menu-root] {
+    position: relative;
+  }
+
+  .mega-menu-panel {
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 200ms ease, transform 220ms ease;
+  }
+
+  .mega-menu-panel[data-state='open'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mega-menu-card {
+    width: 100%;
+    transition: box-shadow 200ms ease;
+  }
+
+  .mega-menu-card:hover {
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.25);
+  }
+
+  [data-mega-menu-trigger].is-active {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  [data-mega-menu-trigger]:hover {
+    text-decoration: none;
   }
 {% endstylesheet %}
-
-{% javascript %}
-  class MegaMenu {
-    constructor() {
-      this.menu = document.querySelector('[data-desktop-menu]');
-      this.triggers = document.querySelectorAll('[data-mega-menu-trigger]');
-      this.panels = document.querySelectorAll('[data-mega-menu-panel]');
-      this.currentPanel = null;
-      this.hoverTimeout = null;
-
-      this.init();
-    }
-
-    init() {
-      if (!this.menu || this.triggers.length === 0) {
-        return;
-      }
-
-      this.bindEvents();
-    }
-
-    bindEvents() {
-      // Add hover listeners to each trigger
-      this.triggers.forEach((trigger) => {
-        trigger.addEventListener('mouseenter', (e) => this.handleTriggerEnter(e));
-        trigger.addEventListener('mouseleave', () => this.scheduleClose());
-      });
-
-      // Keep mega menu open when hovering over it
-      this.panels.forEach((panel) => {
-        panel.addEventListener('mouseenter', () => this.cancelClose());
-        panel.addEventListener('mouseleave', () => this.scheduleClose());
-      });
-
-      // Close on escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.currentPanel) {
-          this.closeAll();
-        }
-      });
-    }
-
-    handleTriggerEnter(e) {
-      this.cancelClose();
-      const handle = e.currentTarget.dataset.collectionHandle;
-
-      if (!handle) return;
-
-      // Close current panel if different
-      if (this.currentPanel && this.currentPanel !== handle) {
-        this.closeAll();
-      }
-
-      // Show the panel for this collection
-      this.showPanel(handle);
-    }
-
-    showPanel(handle) {
-      const panel = document.querySelector(`[data-mega-menu-panel="${handle}"]`);
-
-      if (panel) {
-        panel.setAttribute('aria-hidden', 'false');
-        this.currentPanel = handle;
-      }
-    }
-
-    scheduleClose() {
-      // Delay closing to allow moving mouse to mega menu
-      this.hoverTimeout = setTimeout(() => this.closeAll(), 150);
-    }
-
-    cancelClose() {
-      if (this.hoverTimeout) {
-        clearTimeout(this.hoverTimeout);
-        this.hoverTimeout = null;
-      }
-    }
-
-    closeAll() {
-      this.panels.forEach((panel) => {
-        panel.setAttribute('aria-hidden', 'true');
-      });
-      this.currentPanel = null;
-    }
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new MegaMenu());
-  } else {
-    new MegaMenu();
-  }
-{% endjavascript %}

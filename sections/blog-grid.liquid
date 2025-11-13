@@ -78,67 +78,74 @@
 
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function () {
-    // Load Embla Carousel from CDN
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/embla-carousel/embla-carousel.umd.js';
     script.onload = function () {
-      // Initialize Embla Carousel for each blog grid
       document.querySelectorAll('.blog-grid__carousel').forEach(function (carouselElement) {
+        function getSlidesToScroll() {
+          const width = window.innerWidth;
+          if (width < 768) return 1;
+          if (width <= 1024) return 2;
+          return 4;
+        }
+
         const embla = EmblaCarousel(carouselElement, {
-          loop: true,
+          loop: false,
           align: 'start',
           containScroll: 'trimSnaps',
-          dragFree: false,
-          skipSnaps: false,
-          slidesToScroll: 1,
+          slidesToScroll: getSlidesToScroll(),
         });
 
-        // Navigation buttons
+        const carouselParent = carouselElement.closest('.blog-grid');
         const prevButton = carouselElement.querySelector('.embla__prev');
         const nextButton = carouselElement.querySelector('.embla__next');
+        const progressBar = carouselParent?.querySelector('.blog-grid__progress-bar');
+
+        function updateUI() {
+          if (prevButton) prevButton.disabled = !embla.canScrollPrev();
+          if (nextButton) nextButton.disabled = !embla.canScrollNext();
+          if (progressBar) {
+            const progress = Math.min(Math.max(embla.scrollProgress() * 100, 0), 100);
+            progressBar.style.width = `${progress}%`;
+          }
+        }
 
         if (prevButton) {
-          prevButton.addEventListener('click', embla.scrollPrev);
+          prevButton.addEventListener('click', function () {
+            embla.scrollPrev();
+          });
         }
+
         if (nextButton) {
-          nextButton.addEventListener('click', embla.scrollNext);
+          nextButton.addEventListener('click', function () {
+            embla.scrollNext();
+          });
         }
 
-        // Update button states and progress bar
-        function updateButtons() {
-          if (prevButton) {
-            prevButton.disabled = !embla.canScrollPrev();
-          }
-          if (nextButton) {
-            nextButton.disabled = !embla.canScrollNext();
-          }
-        }
+        embla.on('scroll', updateUI);
+        embla.on('select', updateUI);
+        embla.on('reInit', updateUI);
 
-        // Update progress bar
-        function updateProgressBar() {
-          const progressBar = carouselElement.parentElement.querySelector('.blog-grid__progress-bar');
-          if (progressBar) {
-            const scrollProgress = embla.scrollProgress();
-            const progressPercentage = Math.min(Math.max(scrollProgress * 100, 0), 100);
-            progressBar.style.width = `${progressPercentage}%`;
-            console.log('Progress:', progressPercentage + '%'); // Debug log
-          } else {
-            console.log('Progress bar not found'); // Debug log
-          }
-        }
+        let currentSlidesToScroll = getSlidesToScroll();
+        let resizeTimer;
+        window.addEventListener(
+          'resize',
+          function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+              const newSlidesToScroll = getSlidesToScroll();
+              if (currentSlidesToScroll !== newSlidesToScroll) {
+                currentSlidesToScroll = newSlidesToScroll;
+                embla.reInit({ slidesToScroll: newSlidesToScroll });
+              } else {
+                embla.reInit();
+              }
+            }, 250);
+          },
+          { passive: true },
+        );
 
-        // Initial button state and progress bar
-        updateButtons();
-
-        // Initialize progress bar with a small delay to ensure DOM is ready
-        setTimeout(() => {
-          updateProgressBar();
-        }, 100);
-
-        // Update buttons and progress bar on scroll
-        embla.on('select', updateButtons);
-        embla.on('scroll', updateProgressBar);
-        embla.on('pointerUp', updateProgressBar);
+        updateUI();
       });
     };
     document.head.appendChild(script);
@@ -193,7 +200,7 @@
   }
 
   .blog-grid .embla__slide {
-    flex: 0 0 calc((100% - 3rem) / 3);
+    flex: 0 0 calc((100% - 4.5rem) / 4);
     min-width: 0;
   }
 
@@ -275,7 +282,8 @@
     }
 
     .blog-grid .embla__slide {
-      flex: 0 0 280px;
+      flex: 0 0 calc(90% - 0.5625rem);
+      min-width: calc(90% - 0.5625rem);
     }
 
     .blog-grid__nav {
@@ -298,6 +306,12 @@
 
     .blog-grid__progress {
       margin-top: 1.5rem;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .blog-grid .embla__slide {
+      flex: 0 0 calc((100% - 1.5rem) / 2);
     }
   }
 
