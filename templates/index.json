@@ -47,13 +47,9 @@
         "description": "Discover our latest products",
         "products": [
           "complete-collagen-nocna-krema",
-          "kolagen-boost",
-          "2xkolagen-boost-gel-za-ciscenje-lica-gratis",
           "collagen-anti-pollution-moisturizer",
           "essential-collagen-gel-za-ciscenje-lica-i-respiracijski-ultra-hidratantni-serum",
-          "kolagen-boost-nutriage-1",
-          "kolagen-exclusive",
-          "kolagen-nutriage"
+          "collagen-biome-moistureizer-spf30-multibiome-complex"
         ]
       }
     },
@@ -68,7 +64,6 @@
         "category_card_W4ApcV": {
           "type": "category_card",
           "settings": {
-            "image": "shopify://shop_images/d9e48aef642b49ef61c191556a9951ab.png",
             "title": "Koža, kosa i nokti",
             "description": "Uz kolagen proizvode preporodite svoje najbolje vrline",
             "button_text": "Shop all",
