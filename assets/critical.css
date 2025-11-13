@@ -367,8 +367,9 @@ button:disabled:hover {
 
 :root {
   --product-background: #f9f1f3;
-  --product-foreground: #996540;
-  --product-button-background: #996540;
+  --product-accent: #783047;
+  --product-accent-foreground: #f9f1f3;
+  --product-button-background: #783047;
   --product-button-text-color: #f9f1f3;
 }
 

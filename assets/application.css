@@ -47,7 +47,6 @@
     --color-neutral-700: oklch(37.1% 0 0);
     --color-neutral-800: oklch(26.9% 0 0);
     --color-neutral-900: oklch(20.5% 0 0);
-    --color-neutral-950: oklch(14.5% 0 0);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -920,6 +919,9 @@
     --tw-border-style: none;
     border-style: none;
   }
+  .border-\[var\(--product-accent\)\] {
+    border-color: var(--product-accent);
+  }
   .border-black\/5 {
     border-color: color-mix(in srgb, #000 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1307,10 +1309,6 @@
     --tw-leading: var(--leading-tight);
     line-height: var(--leading-tight);
   }
-  .font-\[550\] {
-    --tw-font-weight: 550;
-    font-weight: 550;
-  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -1369,9 +1367,6 @@
   .text-\[var\(--product-accent\)\] {
     color: var(--product-accent);
   }
-  .text-\[var\(--product-accent-foreground\)\] {
-    color: var(--product-accent-foreground);
-  }
   .text-\[var\(--product-button-text-color\)\] {
     color: var(--product-button-text-color);
   }
@@ -1423,14 +1418,8 @@
   .text-neutral-700 {
     color: var(--color-neutral-700);
   }
-  .text-neutral-800 {
-    color: var(--color-neutral-800);
-  }
   .text-neutral-900 {
     color: var(--color-neutral-900);
-  }
-  .text-neutral-950 {
-    color: var(--color-neutral-950);
   }
   .text-pink-800 {
     color: var(--color-pink-800);
@@ -1950,6 +1939,11 @@
   .data-\[selected\=true\]\:border-black {
     &[data-selected="true"] {
       border-color: var(--color-black);
+    }
+  }
+  .data-\[selected\=true\]\:text-black {
+    &[data-selected="true"] {
+      color: var(--color-black);
     }
   }
   .data-\[selected\=true\]\:\[background\:var\(--product-background\)\] {

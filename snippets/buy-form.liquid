@@ -52,7 +52,7 @@
               {% for value in option.values %}
                 <label
                   for="options[{{ option.name }}]-{{ forloop.index }}"
-                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 data-[selected=true]:border-black data-[selected=true]:bg-primary/5"
+                  class="variant-option relative flex items-center px-2 py-1 gap-2 border bg-white rounded-md cursor-pointer transition-all border-neutral-200 hover:bg-neutral-100 text-neutral-700 data-[selected=true]:text-black data-[selected=true]:border-[var(--product-accent)] data-[selected=true]:bg-primary/5"
                   data-option-label
                   {% if option.selected_value == value %}
                     data-selected="true"
@@ -70,9 +70,9 @@
                     {% endif %}
                     class="sr-only"
                   >
-                  <span class="text-primary">{{ value }}</span>
+                  <span class="font-medium text-sm">{{ value }}</span>
                   <span
-                    class="variant-savings-badge hidden text-xs font-medium px-1.5 py-0.5 rounded-full bg-pink-500 text-white whitespace-nowrap"
+                    class="hidden text-xs font-medium px-1.5 py-0.5 tabular-nums rounded-full bg-[var(--product-accent)] text-[var(--product-button-text-color)] whitespace-nowrap"
                     data-variant-badge
                   ></span>
                 </label>
@@ -96,7 +96,7 @@
           id="ProductSubmitButton-{{ section_id | default: 'main' }}"
           type="submit"
           name="add"
-          class="button [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
+          class="button flex items-center gap-2 h-12 px-7 text-base [background:var(--product-button-background)] [color:var(--product-button-text-color)] w-full"
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
@@ -104,13 +104,16 @@
             disabled
           {% endif %}
         >
+          <div class="size-6">
+            {{ 'icon-cart.svg' | inline_asset_content }}
+          </div>
           <span>
             {%- if product.selected_or_first_available_variant == null -%}
               Unavailable
             {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
               Sold out
             {%- else -%}
-              Add to cart - {{ product.selected_or_first_available_variant.price | money }}
+              Add to cart ({{ product.selected_or_first_available_variant.price | money }})
             {%- endif -%}
           </span>
           {% comment %} {%- render 'loading-spinner' -%} {% endcomment %}
