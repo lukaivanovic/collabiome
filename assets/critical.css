@@ -255,6 +255,7 @@ button {
 
 button:disabled {
   opacity: 0.5;
+  color: var(--color-neutral-700);
   cursor: not-allowed;
   background: var(--color-neutral-200);
 }
@@ -275,6 +276,11 @@ button:disabled:hover {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 15px;
+}
+
+.text-xxs {
+  font-size: 10px;
+  line-height: 1.2;
 }
 
 .button-small {

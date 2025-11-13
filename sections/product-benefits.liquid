@@ -3,10 +3,20 @@
   assign benefits_image = product.metafields.custom.benefits_image.value
   assign benefits_title = product.metafields.custom.benefits_title.value
   assign benefits_description = product.metafields.custom.benefits_description.value
+  assign product_theme = product.metafields.custom.theme.value | default: 'default'
+
+  case product_theme
+    when 'recupera'
+      assign product_theme_class = 'product-theme-recupera'
+    when 'boost'
+      assign product_theme_class = 'product-theme-boost'
+    else
+      assign product_theme_class = 'product-theme-default'
+  endcase
 -%}
 
-<div class="container py-30">
-  <div class="bg-blue grid grid-cols-2 gap-10 rounded-3xl overflow-hidden p-8">
+<div class="container py-30 {{ product_theme_class }}">
+  <div class="bg-[var(--product-background)] grid grid-cols-2 gap-10 rounded-3xl overflow-hidden p-8">
     {% if benefits_image %}
       <div class="mb-12">
         {% render 'image', image: benefits_image, class: 'rounded-3xl w-full' %}
