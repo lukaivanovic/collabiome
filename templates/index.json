@@ -64,6 +64,7 @@
         "category_card_W4ApcV": {
           "type": "category_card",
           "settings": {
+            "image": "shopify://shop_images/image_2.jpg",
             "title": "Koža, kosa i nokti",
             "description": "Uz kolagen proizvode preporodite svoje najbolje vrline",
             "button_text": "Shop all",
