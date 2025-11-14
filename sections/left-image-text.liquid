@@ -3,9 +3,9 @@
   assign has_button = section.settings.show_button
   assign button_style = section.settings.button_style | default: 'solid'
   assign button_target = section.settings.button_link_target | default: '_self'
-  {% if section.settings.button_label == blank or section.settings.button_link == blank %}
+  if section.settings.button_label == blank or section.settings.button_link == blank
     assign has_button = false
-  {% endif %}
+  endif
 %}
 
 <section
@@ -29,7 +29,9 @@
                 decoding: 'async',
                 sizes: '(max-width: 1024px) 100vw, 50vw',
                 class: 'w-full h-full object-cover',
-                alt: section.settings.image_alt | default: section.settings.title | escape
+                alt: section.settings.image_alt
+              | default: section.settings.title
+              | escape
             }}
           </div>
         {% endif %}
@@ -77,7 +79,7 @@
       "id": "padding_top",
       "label": "Padding top",
       "min": 0,
-      "max": 160,
+      "max": 100,
       "unit": "px",
       "default": 60
     },
@@ -86,7 +88,7 @@
       "id": "padding_bottom",
       "label": "Padding bottom",
       "min": 0,
-      "max": 160,
+      "max": 100,
       "unit": "px",
       "default": 60
     },
@@ -99,7 +101,7 @@
       "type": "text",
       "id": "image_alt",
       "label": "Image alt text",
-      "default": ""
+      "default": "Image alt text"
     },
     {
       "type": "header",
@@ -163,4 +165,3 @@
   ]
 }
 {% endschema %}
-

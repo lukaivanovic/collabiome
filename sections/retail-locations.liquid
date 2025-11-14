@@ -1,6 +1,6 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-  assign retailer_entries = section.settings.retailers | default: []
+  assign retailer_entries = section.settings.retailers
   assign large_retailers = retailer_entries | where: 'importance', 'large'
   assign default_retailers = retailer_entries | reject: 'importance', 'large'
 %}
@@ -104,13 +104,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": ""
+      "default": "Heading"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": ""
+      "default": "Description"
     },
     {
       "type": "checkbox",

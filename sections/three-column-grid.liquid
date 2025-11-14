@@ -4,7 +4,6 @@
   assign fallback_description = 'sections.three_column_grid.default_description' | t
   assign section_title = section.settings.title | default: fallback_title
   assign section_description = section.settings.description | default: fallback_description
-  assign show_description = section_description != blank
 %}
 
 <section id="{{ section_id }}" class="border-b border-slate-200 py-16">
