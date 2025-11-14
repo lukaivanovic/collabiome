@@ -1,22 +1,16 @@
-{% liquid
-  assign section_id = section.settings.custom_id | default: section.id
-%}
+<div class="container-small flex flex-col gap-10 text-base leading-relaxed text-neutral-800">
+  <header class="flex flex-col gap-2 text-center">
+    <h1 class="text-3xl font-semibold text-black tracking-tight">
+      {{ page.title }}
+    </h1>
+  </header>
 
-<section id="{{ section_id }}" class="legal-page-section py-16 md:py-24">
-  <div class="container-small flex flex-col gap-10 text-base leading-relaxed text-neutral-800">
-    <header class="flex flex-col gap-2 text-center">
-      <h1 class="text-3xl font-semibold text-black tracking-tight">
-        {{ page.title }}
-      </h1>
-    </header>
-
-    <div class="flex flex-col gap-10">
-      <div class="prose prose-lg max-w-none">
-        {{ page.content }}
-      </div>
+  <div class="flex flex-col gap-10">
+    <div class="prose prose-lg max-w-none">
+      {{ page.content }}
     </div>
   </div>
-</section>
+</div>
 
 {% schema %}
 {
@@ -26,8 +20,7 @@
   "settings": [],
   "presets": [
     {
-      "name": "Legal section",
-      "category": "Legal"
+      "name": "Legal"
     }
   ]
 }
