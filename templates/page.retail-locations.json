@@ -23,7 +23,10 @@
         "description": "Description",
         "show_large_retailers": true,
         "retailers": [
-          "tommy"
+          "tommy",
+          "ribola",
+          "biobio",
+          "tvornica-zdrave-hrane"
         ]
       }
     }
