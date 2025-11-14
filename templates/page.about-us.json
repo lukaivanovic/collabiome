@@ -13,9 +13,26 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "hero_KRUWjG": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "kicker": "",
+        "title": "Hero title",
+        "description": "",
+        "show_buttons": true,
+        "button_label": "Button label",
+        "button_link": "",
+        "button_2_label": "",
+        "button_2_link": "",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "hero_KRUWjG"
   ]
 }
