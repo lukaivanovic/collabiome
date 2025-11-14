@@ -28,7 +28,7 @@
               {% assign retailer_alt = retailer.name | default: '' | escape %}
               <div class="aspect-[4/3] w-full overflow-hidden rounded-[28px] bg-slate-100">
                 {{
-                  retailer.image
+                  retailer.logo
                   | image_url: width: 900, height: 675, crop: 'center'
                   | image_tag:
                     class: 'h-full w-full object-cover transition duration-300 group-hover:scale-105',
