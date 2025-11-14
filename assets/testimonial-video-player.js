@@ -18,6 +18,11 @@ if (!customElements.get("testimonial-video-player")) {
       this.dialogVideo = this.querySelector("[data-dialog-video] video");
       this.supportsNativeDialog =
         this.dialog && typeof this.dialog.showModal === "function";
+      this.isFallback = !this.supportsNativeDialog;
+
+      if (this.isFallback) {
+        this.dialog.classList.add("testimonial-video-player__dialog--fallback");
+      }
 
       if (!this.trigger || !this.dialog) return;
 
@@ -41,6 +46,7 @@ if (!customElements.get("testimonial-video-player")) {
         this.dialog?.removeEventListener("close", this.handleDialogClose);
       } else {
         document.removeEventListener("keydown", this.handleKeydown);
+        this.unlockScroll();
       }
     }
 
@@ -54,6 +60,7 @@ if (!customElements.get("testimonial-video-player")) {
       } else {
         this.dialog.setAttribute("open", "true");
         document.addEventListener("keydown", this.handleKeydown);
+        this.lockScroll();
       }
 
       this.pauseInlineVideo();
@@ -70,6 +77,7 @@ if (!customElements.get("testimonial-video-player")) {
       } else if (this.dialog.hasAttribute("open")) {
         this.dialog.removeAttribute("open");
         document.removeEventListener("keydown", this.handleKeydown);
+        this.unlockScroll();
         this.handleDialogClose();
       }
 
@@ -126,6 +134,19 @@ if (!customElements.get("testimonial-video-player")) {
       if (playPromise?.catch) {
         playPromise.catch(() => {});
       }
+    }
+
+    lockScroll() {
+      if (this.scrollLocked) return;
+      this.previousOverflow = document.documentElement.style.overflow;
+      document.documentElement.style.overflow = "hidden";
+      this.scrollLocked = true;
+    }
+
+    unlockScroll() {
+      if (!this.scrollLocked) return;
+      document.documentElement.style.overflow = this.previousOverflow || "";
+      this.scrollLocked = false;
     }
   }
 

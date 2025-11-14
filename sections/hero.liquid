@@ -48,14 +48,14 @@
   </div>
 
   <div class="container relative flex items-end" style="min-height: 80svh;">
-    <div class="grid gap-3 max-w-[min(64ch,90%)] md:max-w-[min(64ch,90%)] pb-12" data-align="bottom-left">
+    <div class="grid gap-3 max-w-[min(64ch,90%)] md:max-w-[min(72ch,90%)] pb-12" data-align="bottom-left">
       {% if section.settings.kicker != blank %}
         <p class="text-white text-sm tracking-wider uppercase opacity-90">
           {{ section.settings.kicker | escape }}
         </p>
       {% endif %}
       {% if section.settings.title != blank %}
-        <h1 class=" uppercase text-white leading-tight font-bold">{{ section.settings.title | escape }}</h1>
+        <h1 class=" text-white leading-tight">{{ section.settings.title | escape }}</h1>
       {% endif %}
       {% if section.settings.description != blank %}
         <div class=" text-white/80">{{ section.settings.description }}</div>

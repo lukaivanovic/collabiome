@@ -39,27 +39,29 @@
       aria-label="{{ 'sections.testimonial_grid.video_dialog_label' | t }}"
       data-video-dialog
     >
-      <button
-        type="button"
-        class="testimonial-video-player__close"
-        data-video-close
-        aria-label="{{ 'sections.testimonial_grid.close_video' | t }}"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <div class="testimonial-video-player__dialog-inner">
+        <button
+          type="button"
+          class="testimonial-video-player__close"
+          data-video-close
+          aria-label="{{ 'sections.testimonial_grid.close_video' | t }}"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
 
-      <div class="testimonial-video-player__dialog-media" data-dialog-video>
-        {{
-          video_media
-          | video_tag:
-            autoplay: false,
-            muted: false,
-            loop: false,
-            controls: true,
-            playsinline: true,
-            class: 'testimonial-grid__video',
-            preload: 'metadata'
-        }}
+        <div class="testimonial-video-player__dialog-media" data-dialog-video>
+          {{
+            video_media
+            | video_tag:
+              autoplay: false,
+              muted: false,
+              loop: false,
+              controls: true,
+              playsinline: true,
+              class: 'testimonial-grid__video',
+              preload: 'metadata'
+          }}
+        </div>
       </div>
     </dialog>
   </testimonial-video-player>

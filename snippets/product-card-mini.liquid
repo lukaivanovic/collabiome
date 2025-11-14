@@ -1,0 +1,95 @@
+{% doc %}
+  Product Card Mini
+
+  Renders a compact horizontal product card with the image on the left and
+  textual details plus a simplified buy form on the right.
+
+  @param {product} product - Product object to render (required)
+  @param {boolean} hide_buy_form - Hide the mini buy form (default: false)
+  @param {string} card_class - Additional utility classes for the wrapper
+{% enddoc %}
+
+{% liquid
+  assign product = product | default: empty
+  assign hide_buy_form = hide_buy_form | default: false
+  assign card_class = card_class | default: ''
+  assign headline_text = ''
+
+  if product != empty
+    assign headline_metafield = product.metafields.custom.headline
+    if headline_metafield and headline_metafield != blank
+      assign headline_text = headline_metafield | metafield_text | strip_html
+    endif
+  endif
+%}
+
+{% unless product != empty %}
+  <!-- Error: product parameter required for product-card-mini snippet -->
+  {% break %}
+{% endunless %}
+
+<div class="product-card-mini flex flex-col gap-5 rounded-2xl border border-neutral-200 bg-white p-5 md:flex-row {{ card_class }}">
+  <a
+    href="{{ product.url }}"
+    class="product-card-mini__media relative overflow-hidden rounded-xl bg-neutral-50 md:w-5/12"
+  >
+    {% if product.featured_media %}
+      {% liquid
+        assign media_alt = product.featured_media.alt | default: product.title
+      %}
+      {{
+        product.featured_media
+        | image_url: width: 640, height: 640, crop: 'center'
+        | image_tag: class: 'product-card-mini__image h-full w-full object-cover', alt: media_alt, loading: 'lazy'
+      }}
+    {% else %}
+      <div class="product-card-mini__placeholder" aria-hidden="true"></div>
+    {% endif %}
+  </a>
+
+  <div class="flex flex-1 flex-col gap-4 md:w-7/12">
+    <div class="space-y-2">
+      <h3 class="text-lg font-semibold text-foreground">
+        <a href="{{ product.url }}" class="transition hover:opacity-80">
+          {{ product.title | escape }}
+        </a>
+      </h3>
+      {% if headline_text != blank %}
+        <p class="text-sm text-gray-600">
+          {{ headline_text | truncate: 120 }}
+        </p>
+      {% endif %}
+    </div>
+
+    {% render 'product-mini-buy-form',
+      product: product,
+      show_dynamic_checkout: true,
+      gift_card_recipient_feature_active: true,
+      section_id: 'product-card-mini',
+      product_form_id: 'product-card-mini-form',
+      button_full_width: true,
+      quantity_rule_soldout: false
+    %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .product-card-mini__media {
+    min-height: 220px;
+  }
+
+  .product-card-mini__image {
+    transition: transform 0.3s ease;
+  }
+
+  .product-card-mini:hover .product-card-mini__image {
+    transform: scale(1.03);
+  }
+
+  .product-card-mini__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.12));
+  }
+{% endstylesheet %}

@@ -1,0 +1,98 @@
+{% doc %}
+  Product Mini Buy Form
+
+  Simplified add-to-cart form intended for compact product cards. Displays a
+  single submit button without variant selectors.
+
+  @param {product} product - Product object (required)
+  @param {boolean} show_dynamic_checkout - Display accelerated checkout button (default: false)
+  @param {boolean} gift_card_recipient_feature_active - Hide errors when gift card features are active (default: false)
+  @param {string} section_id - Section identifier for DOM scoping (default: 'mini-product')
+  @param {string} product_form_id - Override for the form ID (optional)
+  @param {boolean} button_full_width - Stretch the button to full width (default: true)
+  @param {boolean} quantity_rule_soldout - Flag from parent context when quantity rules forbid purchase (default: false)
+{% enddoc %}
+
+{% liquid
+  assign product = product | default: empty
+  assign show_dynamic_checkout = show_dynamic_checkout | default: false
+  assign gift_card_recipient_feature_active = gift_card_recipient_feature_active | default: false
+  assign section_id_value = section_id | default: 'mini-product'
+  assign product_form_id = product_form_id | default: section_id_value | append: '-mini-product-form'
+  assign button_full_width = button_full_width | default: true
+  assign quantity_rule_soldout = quantity_rule_soldout | default: false
+%}
+
+{% unless product != empty %}
+  <!-- Error: product parameter required for product-mini-buy-form snippet -->
+  {% break %}
+{% endunless %}
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign check_against_inventory = true
+
+  if selected_variant and selected_variant.quantity_rule.min > selected_variant.inventory_quantity and check_against_inventory
+    assign quantity_rule_soldout = true
+  endif
+
+  assign button_classes = 'button flex items-center justify-center gap-2 h-12 px-6 text-sm font-semibold [background:var(--product-button-background)] [color:var(--product-button-text-color)]'
+  if button_full_width
+    assign button_classes = button_classes | append: ' w-full'
+  endif
+%}
+
+<product-form
+  class="product-mini-buy-form"
+  data-hide-errors="{{ gift_card_recipient_feature_active }}"
+  data-section-id="{{ section_id_value }}"
+  data-product-id="{{ product.id }}"
+>
+  <div class="product-form__error-message-wrapper" role="alert" hidden>
+    <span class="svg-wrapper">
+      {{- 'icon-error.svg' | inline_asset_content -}}
+    </span>
+    <span class="product-form__error-message"></span>
+  </div>
+
+  {%- form 'product',
+    product,
+    id: product_form_id,
+    class: 'form form--mini',
+    novalidate: 'novalidate',
+    data-type: 'add-to-cart-form'
+  -%}
+    <input
+      type="hidden"
+      name="id"
+      value="{{ selected_variant.id }}"
+      {% if selected_variant == null or selected_variant.available == false or quantity_rule_soldout %}
+        disabled
+      {% endif %}
+      class="product-variant-id"
+    >
+
+    <button
+      type="submit"
+      name="add"
+      class="{{ button_classes }}"
+      {% if selected_variant == null or selected_variant.available == false or quantity_rule_soldout %}
+        disabled
+      {% endif %}
+    >
+      <span>
+        {%- if selected_variant == null -%}
+          Unavailable
+        {%- elsif selected_variant.available == false or quantity_rule_soldout -%}
+          Sold out
+        {%- else -%}
+          Add to cart ({{ selected_variant.price | money }})
+        {%- endif -%}
+      </span>
+    </button>
+
+    {% if show_dynamic_checkout %}
+      {{ form | payment_button }}
+    {% endif %}
+  {%- endform -%}
+</product-form>

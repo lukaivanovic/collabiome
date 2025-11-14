@@ -720,6 +720,12 @@
   .max-w-\[min\(64ch\,90\%\)\] {
     max-width: min(64ch, 90%);
   }
+  .max-w-\[min\(80ch\,90\%\)\] {
+    max-width: min(80ch, 90%);
+  }
+  .max-w-\[min\(120ch\,90\%\)\] {
+    max-width: min(120ch, 90%);
+  }
   .max-w-none {
     max-width: none;
   }
@@ -1166,6 +1172,9 @@
   .bg-green-100 {
     background-color: var(--color-green-100);
   }
+  .bg-neutral-50 {
+    background-color: var(--color-neutral-50);
+  }
   .bg-neutral-100 {
     background-color: var(--color-neutral-100);
   }
@@ -1271,6 +1280,9 @@
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
@@ -2112,6 +2124,13 @@
       }
     }
   }
+  .hover\:opacity-80 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 80%;
+      }
+    }
+  }
   .hover\:opacity-100 {
     &:hover {
       @media (hover: hover) {
@@ -2418,6 +2437,16 @@
       min-height: auto;
     }
   }
+  .md\:w-5\/12 {
+    @media (width >= 48rem) {
+      width: calc(5/12 * 100%);
+    }
+  }
+  .md\:w-7\/12 {
+    @media (width >= 48rem) {
+      width: calc(7/12 * 100%);
+    }
+  }
   .md\:w-20 {
     @media (width >= 48rem) {
       width: calc(var(--spacing) * 20);
@@ -2436,6 +2465,21 @@
   .md\:max-w-\[min\(64ch\,90\%\)\] {
     @media (width >= 48rem) {
       max-width: min(64ch, 90%);
+    }
+  }
+  .md\:max-w-\[min\(72ch\,90\%\)\] {
+    @media (width >= 48rem) {
+      max-width: min(72ch, 90%);
+    }
+  }
+  .md\:max-w-\[min\(80ch\,90\%\)\] {
+    @media (width >= 48rem) {
+      max-width: min(80ch, 90%);
+    }
+  }
+  .md\:max-w-\[min\(90ch\,90\%\)\] {
+    @media (width >= 48rem) {
+      max-width: min(90ch, 90%);
     }
   }
   .md\:flex-initial {
