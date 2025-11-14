@@ -13,9 +13,23 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "retail_locations_ppbyEX": {
+      "type": "retail-locations",
+      "name": "Retail locations",
+      "settings": {
+        "custom_id": "",
+        "heading": "Heading",
+        "description": "Description",
+        "show_large_retailers": true,
+        "retailers": [
+          "tommy"
+        ]
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "retail_locations_ppbyEX"
   ]
 }
