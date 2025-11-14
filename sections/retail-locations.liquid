@@ -1,8 +1,8 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-  assign retailers_list = section.settings.retailers | default: []
-  assign large_retailers = retailers_list | where: 'importance', 'large'
-  assign default_retailers = retailers_list | reject: 'importance', 'large'
+  assign retailer_entries = section.settings.retailers | default: []
+  assign large_retailers = retailer_entries | where: 'importance', 'large'
+  assign default_retailers = retailer_entries | reject: 'importance', 'large'
 %}
 
 <section id="{{ section_id }}" class="retail-locations py-16">
@@ -16,19 +16,25 @@
       </div>
     {% endif %}
 
-    {% if large_retailers.size > 0 %}
+    {% if section.settings.show_large_retailers %}
       <div class="mt-12 grid gap-6 lg:grid-cols-3">
         {% for retailer in large_retailers %}
           {% assign retailer_link = retailer.link | default: '#' %}
-          <a href="{{ retailer_link }}" class="group flex h-full flex-col rounded-[32px] border border-slate-200 bg-white p-6 transition hover:shadow-lg">
+          <a
+            href="{{ retailer_link }}"
+            class="group flex h-full flex-col rounded-[32px] border border-slate-200 bg-white p-6 transition hover:shadow-lg"
+          >
             {% if retailer.image %}
+              {% assign retailer_alt = retailer.name | default: '' | escape %}
               <div class="aspect-[4/3] w-full overflow-hidden rounded-[28px] bg-slate-100">
-                <img
-                  src="{{ retailer.image | image_url: width: 900, height: 675, crop: center }}"
-                  alt="{{ retailer.name | escape }}"
-                  loading="lazy"
-                  class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                />
+                {{
+                  retailer.image
+                  | image_url: width: 900, height: 675, crop: 'center'
+                  | image_tag:
+                    class: 'h-full w-full object-cover transition duration-300 group-hover:scale-105',
+                    alt: retailer_alt,
+                    loading: 'lazy'
+                }}
               </div>
             {% else %}
               <div class="aspect-[4/3] w-full rounded-[28px] bg-slate-100"></div>
@@ -50,15 +56,21 @@
     {% if default_retailers.size > 0 %}
       <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {% for retailer in default_retailers %}
-          <a href="{{ retailer.link | default: '#' }}" class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-900">
+          <a
+            href="{{ retailer.link | default: '#' }}"
+            class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-900"
+          >
             {% if retailer.image %}
+              {% assign retailer_alt = retailer.name | default: '' | escape %}
               <div class="h-32 w-full overflow-hidden rounded-2xl bg-slate-100">
-                <img
-                  src="{{ retailer.image | image_url: width: 400, height: 320, crop: center }}"
-                  alt="{{ retailer.name | escape }}"
-                  loading="lazy"
-                  class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                />
+                {{
+                  retailer.image
+                  | image_url: width: 400, height: 320, crop: 'center'
+                  | image_tag:
+                    class: 'h-full w-full object-cover transition duration-300 group-hover:scale-105',
+                    alt: retailer_alt,
+                    loading: 'lazy'
+                }}
               </div>
             {% else %}
               <div class="h-32 w-full rounded-2xl bg-slate-100"></div>
@@ -101,10 +113,16 @@
       "default": ""
     },
     {
+      "type": "checkbox",
+      "id": "show_large_retailers",
+      "label": "Show large retailers grid",
+      "default": true
+    },
+    {
       "type": "metaobject_list",
       "id": "retailers",
       "label": "Retailers",
-      "object_type": "retailers"
+      "metaobject_type": "retailers"
     }
   ],
   "presets": [
@@ -114,4 +132,3 @@
   ]
 }
 {% endschema %}
-
