@@ -145,6 +145,7 @@
     width: 100%;
     overflow: hidden;
     border-radius: var(--style-border-radius-cards, 12px);
+    position: relative;
   }
   .testimonial-grid__media video,
   .testimonial-grid__media iframe {
@@ -152,6 +153,106 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .testimonial-video-player {
+    width: 100%;
+    display: block;
+    position: relative;
+  }
+
+  .testimonial-video-player__trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: inherit;
+  }
+
+  .testimonial-video-player__trigger:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  .testimonial-video-player__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, black 55%, transparent);
+    opacity: 0;
+    transition: opacity 150ms ease;
+    pointer-events: none;
+  }
+
+  .testimonial-video-player__trigger:hover .testimonial-video-player__overlay,
+  .testimonial-video-player__trigger:focus-visible .testimonial-video-player__overlay {
+    opacity: 1;
+  }
+
+  .testimonial-video-player__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.75);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .testimonial-video-player__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .testimonial-video-player__dialog {
+    border: none;
+    padding: 0;
+    background: transparent;
+    width: min(90vw, 900px);
+    max-width: 100%;
+    position: relative;
+  }
+
+  .testimonial-video-player__dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .testimonial-video-player__dialog-media video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--style-border-radius-cards, 12px);
+    background: black;
+  }
+
+  .testimonial-video-player__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .testimonial-video-player__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .testimonial-video-player__dialog:not([open]) {
+    display: none;
   }
 
   /* Product badge pinned to bottom */

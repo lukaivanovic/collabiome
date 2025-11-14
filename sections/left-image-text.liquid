@@ -3,6 +3,7 @@
   assign has_button = section.settings.show_button
   assign button_style = section.settings.button_style | default: 'solid'
   assign button_target = section.settings.button_link_target | default: '_self'
+  assign image_position = section.settings.image_position | default: 'left'
   if section.settings.button_label == blank or section.settings.button_link == blank
     assign has_button = false
   endif
@@ -17,7 +18,7 @@
   "
 >
   <div class="container mx-auto px-4">
-    <div class="flex flex-col gap-10 lg:flex-row lg:items-center">
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-center {% if image_position == 'right' %}lg:flex-row-reverse{% endif %}">
       <div class="w-full lg:w-1/2">
         {% if section.settings.image != blank %}
           <div class="overflow-hidden rounded-[28px] bg-slate-100 shadow-lg shadow-slate-900/5 transition duration-500 lg:hover:-translate-y-1 lg:hover:shadow-2xl">
@@ -70,9 +71,9 @@
 
 {% schema %}
 {
-  "name": "Generic #1",
+  "name": "Image and Text",
   "tag": "section",
-  "class": "section-left-image-text",
+  "class": "section-image-text",
   "settings": [
     {
       "type": "range",
@@ -93,6 +94,10 @@
       "default": 60
     },
     {
+      "type": "header",
+      "content": "Image"
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "Image"
@@ -102,6 +107,16 @@
       "id": "image_alt",
       "label": "Image alt text",
       "default": "Image alt text"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "header",
@@ -159,7 +174,7 @@
   ],
   "presets": [
     {
-      "name": "Generic #1",
+      "name": "Image and Text",
       "category": "Layout"
     }
   ]

@@ -77,6 +77,11 @@
     }
   },
   "sections": {
+    "testimonial_grid": {
+      "play_video": "Play testimonial video",
+      "close_video": "Close video dialog",
+      "video_dialog_label": "Testimonial video dialog"
+    },
     "three_column_grid": {
       "name": "Three column grid",
       "category": "Layout",

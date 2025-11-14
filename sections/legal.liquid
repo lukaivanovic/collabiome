@@ -1,23 +1,50 @@
-<div class="container-small flex flex-col gap-10 text-base leading-relaxed text-neutral-800">
-  <header class="flex flex-col gap-2 text-center">
-    <h1 class="text-3xl font-semibold text-black tracking-tight">
-      {{ page.title }}
-    </h1>
-  </header>
+<section
+  class="legal-page-section"
+  style="
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="container-small flex flex-col gap-10 text-base leading-relaxed text-neutral-800">
+    <header class="flex flex-col gap-2 text-center">
+      <h1 class="text-3xl font-semibold text-black tracking-tight">
+        {{ page.title }}
+      </h1>
+    </header>
 
-  <div class="flex flex-col gap-10">
-    <div class="prose prose-lg max-w-none">
-      {{ page.content }}
+    <div class="flex flex-col gap-10">
+      <div class="prose prose-lg max-w-none">
+        {{ page.content }}
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 {% schema %}
 {
   "name": "Legal section",
   "tag": "section",
   "class": "legal-page-section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
   "presets": [
     {
       "name": "Legal"

@@ -1,15 +1,66 @@
-<div class="testimonial-grid__media testimonial-grid__media--full-width">
-  {% liquid
-    assign video_media = video.value | default: video
-  %}
-  {{
-    video_media
-    | video_tag:
-      autoplay: true,
-      muted: true,
-      loop: true,
-      controls: false,
-      playsinline: true,
-      class: 'testimonial-grid__video'
-  }}
-</div>
+{% liquid
+  assign video_media = video.value | default: video
+%}
+
+{% if video_media %}
+  <testimonial-video-player class="testimonial-video-player">
+    <button
+      type="button"
+      class="testimonial-video-player__trigger"
+      data-video-trigger
+      aria-label="{{ 'sections.testimonial_grid.play_video' | t }}"
+    >
+      <div class="testimonial-grid__media testimonial-grid__media--full-width" data-inline-video>
+        {{
+          video_media
+          | video_tag:
+            autoplay: true,
+            muted: true,
+            loop: true,
+            controls: false,
+            playsinline: true,
+            class: 'testimonial-grid__video'
+        }}
+        <span class="testimonial-video-player__overlay" aria-hidden="true">
+          <span class="testimonial-video-player__icon">
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+              <path
+                d="M8 5v14l11-7z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </span>
+      </div>
+    </button>
+
+    <dialog
+      class="testimonial-video-player__dialog"
+      aria-label="{{ 'sections.testimonial_grid.video_dialog_label' | t }}"
+      data-video-dialog
+    >
+      <button
+        type="button"
+        class="testimonial-video-player__close"
+        data-video-close
+        aria-label="{{ 'sections.testimonial_grid.close_video' | t }}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <div class="testimonial-video-player__dialog-media" data-dialog-video>
+        {{
+          video_media
+          | video_tag:
+            autoplay: false,
+            muted: false,
+            loop: false,
+            controls: true,
+            playsinline: true,
+            class: 'testimonial-grid__video',
+            preload: 'metadata'
+        }}
+      </div>
+    </dialog>
+  </testimonial-video-player>
+{% endif %}

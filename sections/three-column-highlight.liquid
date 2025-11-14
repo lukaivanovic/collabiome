@@ -31,12 +31,12 @@
           >
             <div class="flex h-32 w-32 items-center justify-center rounded-full border border-slate-200 bg-slate-50 p-1 sm:h-36 sm:w-36">
               {% if block.settings.image %}
-                <img
-                  src="{{ block.settings.image | image_url: width: 840, height: 840, crop: 'center' }}"
-                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                  class="h-full w-full rounded-full object-cover"
-                  loading="lazy"
-                />
+                {% assign image_alt = block.settings.title | default: '' | escape %}
+                {{
+                  block.settings.image
+                  | image_url: width: 840, height: 840, crop: 'center'
+                  | image_tag: class: 'h-full w-full rounded-full object-cover', alt: image_alt, loading: 'lazy'
+                }}
               {% else %}
                 <div class="h-full w-full rounded-full bg-slate-100"></div>
               {% endif %}
@@ -109,15 +109,10 @@
   ],
   "presets": [
     {
-      "name": "t:sections.three_column_highlight.name",
-      "category": "t:sections.three_column_highlight.category",
-      "blocks": [
-        { "type": "column" },
-        { "type": "column" },
-        { "type": "column" }
-      ]
+      "name": "Three Column Images",
+      "category": "Layout",
+      "blocks": [{ "type": "column" }, { "type": "column" }, { "type": "column" }]
     }
   ]
 }
 {% endschema %}
-
