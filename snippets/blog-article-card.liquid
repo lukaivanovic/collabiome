@@ -1,0 +1,33 @@
+<div class="embla__slide">
+  <a href="{{ article.url }}" class="group block">
+    <article class="blog-card bg-white hover:bg-neutral-50 group-hover:shadow-lg transition-shadow duration-300">
+      <div class="blog-card__media overflow-hidden">
+        {% if article.image %}
+          {{
+            article.image
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+              alt: article.title,
+              class: 'group-hover:scale-105 transition-transform duration-300'
+            | escape
+          }}
+        {% else %}
+          <div class="blog-card__placeholder" aria-hidden="true"></div>
+        {% endif %}
+      </div>
+      <div class="flex flex-col items-start gap-4 p-6">
+        <h3 class="blog-card__title h-[2lh] line-clamp-2 text-lg font-medium">
+          {{ article.title | escape }}
+        </h3>
+
+        <span
+          class="uppercase text-sm underline underline-offset-4 decoration-neutral-200 text-neutral-700 group-hover:text-neutral-900 transition-colors duration-300"
+          >Read more</span
+        >
+      </div>
+    </article>
+  </a>
+</div>
+

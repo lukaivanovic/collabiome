@@ -55,6 +55,27 @@
       "dark_spots": "Dark Spots"
     }
   },
+  "blogs": {
+    "article": {
+      "back_link": "Back to {{ blog }}",
+      "meta": {
+        "author_html": "By {{ author }}",
+        "reading_time": "{{ minutes }} min read"
+      },
+      "tags_label": "Filed under",
+      "comments": {
+        "title": "Comments",
+        "empty": "Be the first to share your thoughts.",
+        "form_title": "Add a comment",
+        "name_label": "Name",
+        "email_label": "Email",
+        "body_label": "Comment",
+        "submit": "Post comment",
+        "success": "Thanks! Your comment has been submitted for review.",
+        "moderation_notice": "Comments are published after moderation."
+      }
+    }
+  },
   "sections": {
     "product_upsell": {
       "image_placeholder": "Image not available",

@@ -5,35 +5,68 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
 {% endcomment %}
 
-<div class="container max-w-4xl py-8">
-  <h1 class=" mb-8">{{ blog.title }}</h1>
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
 
-  {% paginate blog.articles by 5 %}
-    <div class="space-y-8 mb-8">
-      {% for article in blog.articles %}
-        <article class="bg-white rounded-lg shadow-sm overflow-hidden">
-          {% if article.image %}
-            <div class="aspect-video overflow-hidden">
-              {{ article.image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover' }}
+<section id="{{ section_id }}" class="py-16 bg-slate-50">
+  <div class="container mx-auto px-4">
+    <header class="max-w-5xl space-y-3 lg:space-y-4">
+      <p class="text-xs font-semibold tracking-[0.5em] text-gray-500 uppercase">
+        {{ blog.title }}
+      </p>
+      {% if blog.description != blank %}
+        <p class="text-lg text-gray-600">
+          {{ blog.description }}
+        </p>
+      {% endif %}
+    </header>
+
+    {% paginate blog.articles by 15 %}
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for article in blog.articles %}
+          <article class="flex h-full flex-col rounded-[28px] border border-white/0 bg-white shadow-lg shadow-slate-900/5 transition hover:-translate-y-1 hover:border-gray-200 hover:shadow-lg">
+            <div class="relative h-56 overflow-hidden rounded-t-[28px] bg-slate-100">
+              {% if article.image %}
+                {{ article.image | image_url: width: 1200 | image_tag: class: 'h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105' }}
+              {% else %}
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300"></div>
+              {% endif %}
             </div>
-          {% endif %}
-          <div class="p-6">
-            <h2 class="text-2xl font-bold mb-2">
-              {{ article.title | link_to: article.url, class: 'hover:text-gray-600' }}
-            </h2>
-            {% assign date = article.published_at | time_tag: format: 'date' %}
-            <p class="text-sm text-gray-500 mb-4">{{ date }} by {{ article.author }}</p>
-            <p class="text-gray-700">{{ article.excerpt }}</p>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
 
-    {%- if paginate.pages > 1 -%}
-      {{- paginate | default_pagination -}}
-    {%- endif -%}
-  {% endpaginate %}
-</div>
+            <div class="flex flex-1 flex-col gap-3 p-6">
+              <div class="text-xs font-medium uppercase tracking-[0.4em] text-indigo-500">
+                {{ article.published_at | date: "%b %d, %Y" }}
+              </div>
+
+              <h2 class="text-xl font-semibold leading-snug text-slate-900">
+                <a class="transition hover:text-indigo-600" href="{{ article.url }}">
+                  {{ article.title }}
+                </a>
+              </h2>
+
+              {% if article.author %}
+                <p class="text-sm text-gray-500">
+                  {{ article.author }}
+                </p>
+              {% endif %}
+
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {{ article.excerpt | strip_html | truncatewords: 30 }}
+              </p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <div class="mt-12">
+          {{- paginate | default_pagination -}}
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</section>
 
 {% schema %}
 {
