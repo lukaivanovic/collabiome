@@ -13,7 +13,7 @@
       "type": "shop-all",
       "name": "Shop All",
       "settings": {
-        "title": "Shop All Products",
+        "title": "Svi proizvodi",
         "collection": "",
         "products_per_page": 18,
         "show_filters": true
