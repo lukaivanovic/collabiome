@@ -9,9 +9,25 @@
  */
 {
   "sections": {
+    "three_column_grid": {
+      "name": "Three column grid",
+      "category": "Layout"
+    },
     "product_science": {
       "name": "Product science",
       "category": "Product"
+    }
+    ,
+    "three_column_highlight": {
+      "name": "Three column highlights",
+      "category": "Custom",
+      "section_heading": "Heading",
+      "section_description": "Description",
+      "custom_id": "Section ID",
+      "column_name": "Column",
+      "column_image": "Image",
+      "column_title": "Title",
+      "column_description": "Description"
     }
   }
 }

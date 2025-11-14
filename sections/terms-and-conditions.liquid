@@ -1,0 +1,30 @@
+<section class="terms-and-conditions-section py-16 md:py-24">
+  <div class="container-small flex flex-col gap-10 text-base leading-relaxed text-neutral-800">
+    <header class="flex flex-col gap-2 text-center">
+      <h1 class="text-3xl font-semibold text-black tracking-tight">
+        {{ page.title }}
+      </h1>
+    </header>
+
+    <div class="flex flex-col gap-10">
+      <div class="prose prose-lg max-w-none">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Terms and conditions",
+  "tag": "section",
+  "class": "terms-and-conditions-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Terms and conditions"
+    }
+  ]
+}
+{% endschema %}
+

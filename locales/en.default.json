@@ -77,6 +77,29 @@
     }
   },
   "sections": {
+    "three_column_grid": {
+      "name": "Three column grid",
+      "category": "Layout",
+      "default_title": "Three column grid",
+      "default_description": "Add a short description to explain this section.",
+      "item_default_title": "Item title",
+      "item_default_description": "Add a short summary for this item.",
+      "settings": {
+        "custom_id": "Custom section ID",
+        "custom_id_info": "Optional anchor to link directly to this block.",
+        "title": "Title",
+        "description": "Description"
+      },
+      "blocks": {
+        "item": {
+          "name": "Grid item",
+          "settings": {
+            "title": "Title",
+            "description": "Description"
+          }
+        }
+      }
+    },
     "product_upsell": {
       "image_placeholder": "Image not available",
       "step_label_default": "Step",
@@ -90,6 +113,17 @@
       "link_label": "Read study",
       "source_prefix": "Source: {{ source }}",
       "image_alt": "Illustration of product science for {{ title }}"
+    },
+    "three_column_highlight": {
+      "name": "Three column highlights",
+      "category": "Custom",
+      "section_heading": "Heading",
+      "section_description": "Description",
+      "custom_id": "Section ID",
+      "column_name": "Column",
+      "column_image": "Image",
+      "column_title": "Title",
+      "column_description": "Description"
     }
   }
 }

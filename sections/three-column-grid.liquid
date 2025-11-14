@@ -1,0 +1,91 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign fallback_title = 'sections.three_column_grid.default_title' | t
+  assign fallback_description = 'sections.three_column_grid.default_description' | t
+  assign section_title = section.settings.title | default: fallback_title
+  assign section_description = section.settings.description | default: fallback_description
+  assign show_description = section_description != blank
+%}
+
+<section id="{{ section_id }}" class="border-b border-slate-200 py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl">
+      <h2 class="text-3xl font-semibold text-slate-900">{{ section_title | escape }}</h2>
+      {% if show_description %}
+        <p class="mt-3 text-base text-slate-600">{{ section_description | escape }}</p>
+      {% endif %}
+    </div>
+
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      {% for block in section.blocks %}
+        {% liquid
+          assign item_title = block.settings.title | default: 'sections.three_column_grid.item_default_title' | t
+          assign item_description = block.settings.description | default: 'sections.three_column_grid.item_default_description' | t
+        %}
+        <article class="flex flex-col gap-2 border-b border-slate-200 pb-6 last:border-b-0 last:pb-0">
+          <h3 class="text-lg font-semibold text-slate-900">{{ item_title | escape }}</h3>
+          {% if item_description != blank %}
+            <p class="text-sm text-slate-500">{{ item_description | escape }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.three_column_grid.name",
+  "tag": "section",
+  "class": "three-column-grid",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.three_column_grid.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.three_column_grid.blocks.item.settings.title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.three_column_grid.blocks.item.settings.description"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "t:sections.three_column_grid.settings.custom_id",
+      "info": "t:sections.three_column_grid.settings.custom_id_info"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.three_column_grid.settings.title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:sections.three_column_grid.settings.description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.three_column_grid.name",
+      "category": "t:sections.three_column_grid.category",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

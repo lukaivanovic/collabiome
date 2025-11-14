@@ -15,7 +15,9 @@
     <div class="embla blog-grid__carousel relative pt-8" data-section-id="{{ section_id }}">
       <div class="embla__container">
         {% for article in selected_blog.articles limit: 6 %}
-          {% render 'blog-article-card', article: article %}
+          <div class="embla__slide">
+            {% render 'blog-article-card', article: article %}
+          </div>
         {% endfor %}
       </div>
 

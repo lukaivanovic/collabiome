@@ -1,0 +1,123 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="three-column-highlight relative py-16"
+>
+  <div class="container mx-auto px-4">
+    {% if section.settings.heading != blank or section.settings.description != blank %}
+      <div class="mx-auto max-w-3xl text-center">
+        {% if section.settings.heading != blank %}
+          <h2 class="text-3xl font-semibold text-slate-900">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <p class="mt-3 text-base text-slate-600">
+            {{ section.settings.description | escape }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks != empty %}
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for block in section.blocks %}
+          <article
+            class="flex flex-col items-center gap-4 rounded-3xl border border-slate-100 bg-white/80 p-7 text-center shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur"
+            {{ block.shopify_attributes }}
+          >
+            <div class="flex h-32 w-32 items-center justify-center rounded-full border border-slate-200 bg-slate-50 p-1 sm:h-36 sm:w-36">
+              {% if block.settings.image %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 840, height: 840, crop: 'center' }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  class="h-full w-full rounded-full object-cover"
+                  loading="lazy"
+                />
+              {% else %}
+                <div class="h-full w-full rounded-full bg-slate-100"></div>
+              {% endif %}
+            </div>
+
+            {% if block.settings.title != blank %}
+              <h3 class="text-lg font-semibold text-slate-900">
+                {{ block.settings.title | escape }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <p class="text-sm leading-relaxed text-slate-600">
+                {{ block.settings.description | escape }}
+              </p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.three_column_highlight.name",
+  "tag": "section",
+  "class": "three-column-highlight",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "t:sections.three_column_highlight.custom_id"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.three_column_highlight.section_heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:sections.three_column_highlight.section_description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "t:sections.three_column_highlight.column_name",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.three_column_highlight.column_image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.three_column_highlight.column_title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.three_column_highlight.column_description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.three_column_highlight.name",
+      "category": "t:sections.three_column_highlight.category",
+      "blocks": [
+        { "type": "column" },
+        { "type": "column" },
+        { "type": "column" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
