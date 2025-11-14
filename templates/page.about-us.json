@@ -26,13 +26,125 @@
         "button_link": "",
         "button_2_label": "",
         "button_2_link": "",
+        "video_url": "",
         "overlay_color": "#000000",
         "overlay_opacity": 30
+      }
+    },
+    "left_image_text_VmJYhQ": {
+      "type": "left-image-text",
+      "name": "Generic #1",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/image_2.jpg",
+        "image_alt": "Image alt text",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "three_column_grid_T4VJij": {
+      "type": "three-column-grid",
+      "blocks": {
+        "item_d4xnQg": {
+          "type": "item",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        },
+        "item_bBhEMF": {
+          "type": "item",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        },
+        "item_6PXMqh": {
+          "type": "item",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_d4xnQg",
+        "item_bBhEMF",
+        "item_6PXMqh"
+      ],
+      "name": "t:sections.three_column_grid.name",
+      "settings": {
+        "custom_id": "",
+        "title": "",
+        "description": ""
+      }
+    },
+    "left_image_text_wknBME": {
+      "type": "left-image-text",
+      "name": "Generic #1",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image_alt": "Image alt text",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "three_column_highlight_jzxGVT": {
+      "type": "three-column-highlight",
+      "blocks": {
+        "column_6Xz4xA": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        },
+        "column_AX7V6w": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        },
+        "column_pdWJFb": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_6Xz4xA",
+        "column_AX7V6w",
+        "column_pdWJFb"
+      ],
+      "name": "t:sections.three_column_highlight.name",
+      "settings": {
+        "custom_id": "",
+        "heading": "",
+        "description": ""
       }
     }
   },
   "order": [
     "main",
-    "hero_KRUWjG"
+    "hero_KRUWjG",
+    "left_image_text_VmJYhQ",
+    "three_column_grid_T4VJij",
+    "left_image_text_wknBME",
+    "three_column_highlight_jzxGVT"
   ]
 }
