@@ -1,7 +1,5 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-
-  echo section.settings.retailers | json
 %}
 
 <section id="{{ section_id }}" class="retail-locations py-16">
@@ -21,14 +19,14 @@
           {% unless retailer.importance == 'large' %}
             {% continue %}
           {% endunless %}
-          <div class="flex h-full flex-col rounded-[32px] bg-white p-6">
+          <div class="flex h-full flex-col rounded-[32px] bg-white p-12">
             {% if retailer.logo %}
               {% assign retailer_alt = retailer.name | default: '' | escape %}
-              <div class="aspect-[4/3] w-full overflow-hidden rounded-[28px] bg-slate-100">
+              <div class="aspect-[5/2] max-w-100 overflow-hidden rounded-[28px] ">
                 {{
                   retailer.logo
                   | image_url: width: 900, height: 675, crop: 'center'
-                  | image_tag: class: 'h-full w-full object-cover', alt: retailer_alt, loading: 'lazy'
+                  | image_tag: class: 'h-full w-full object-contain', alt: retailer_alt, loading: 'lazy'
                 }}
               </div>
             {% else %}
@@ -37,10 +35,18 @@
 
             <div class="mt-6">
               {% if retailer.name != blank %}
-                <h3 class="text-xl font-semibold text-slate-900">{{ retailer.name }}</h3>
+                <h3 class="text-xl font-semibold text-slate-900 text-center">{{ retailer.name }}</h3>
               {% endif %}
               {% if retailer.desc != blank %}
-                <p class="mt-2 text-sm text-slate-600">{{ retailer.desc }}</p>
+                <p class="mt-2 text-sm text-slate-600 text-center">{{ retailer.desc }}</p>
+              {% endif %}
+              {% if retailer.link != blank %}
+                <a
+                  href="{{ retailer.link }}"
+                  class="mt-4 text-sm font-medium text-slate-700 underline-offset-2 hover:underline"
+                >
+                  {{ section.settings.link_label | default: 'Visit retailer' }}
+                </a>
               {% endif %}
             </div>
           </div>
@@ -53,24 +59,32 @@
         {% if retailer.importance == 'large' %}
           {% continue %}
         {% endif %}
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white p-4 text-left">
+        <div class="flex flex-col overflow-hidden rounded-2xl bg-white p-12 text-left">
           {% if retailer.logo %}
             {% assign retailer_alt = retailer.name | default: '' | escape %}
-            <div class="h-32 w-full overflow-hidden rounded-2xl bg-slate-100">
+            <div class="aspect-[4/2] w-full overflow-hidden rounded-2xl ">
               {{
                 retailer.logo
                 | image_url: width: 400, height: 320, crop: 'center'
-                | image_tag: class: 'h-full w-full object-cover', alt: retailer_alt, loading: 'lazy'
+                | image_tag: class: 'h-full w-full object-contain', alt: retailer_alt, loading: 'lazy'
               }}
             </div>
           {% else %}
             <div class="h-32 w-full rounded-2xl bg-slate-100"></div>
           {% endif %}
           {% if retailer.name != blank %}
-            <h3 class="mt-3 text-sm font-semibold text-slate-900">{{ retailer.name }}</h3>
+            <h3 class="mt-3 text-sm font-semibold text-slate-900 text-center">{{ retailer.name }}</h3>
           {% endif %}
           {% if retailer.desc != blank %}
-            <p class="mt-1 text-xs text-slate-500">{{ retailer.desc }}</p>
+            <p class="mt-1 text-xs text-slate-500 text-center">{{ retailer.desc }}</p>
+          {% endif %}
+          {% if retailer.link != blank %}
+            <a
+              href="{{ retailer.link }}"
+              class="mt-3 text-xs font-medium text-slate-700 underline-offset-2 hover:underline"
+            >
+              {{ section.settings.link_label | default: 'Visit retailer' }}
+            </a>
           {% endif %}
         </div>
       {% endfor %}
@@ -107,6 +121,12 @@
       "id": "show_large_retailers",
       "label": "Show large retailers grid",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Sales link label",
+      "default": "Visit retailer"
     },
     {
       "type": "metaobject_list",

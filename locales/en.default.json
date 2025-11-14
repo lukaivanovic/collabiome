@@ -124,6 +124,10 @@
       "column_image": "Image",
       "column_title": "Title",
       "column_description": "Description"
+    },
+    "legal_page": {
+      "name": "Legal page",
+      "category": "Pages"
     }
   }
 }
