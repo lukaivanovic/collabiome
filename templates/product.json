@@ -21,19 +21,13 @@
         "description": ""
       }
     },
-    "product_benefits_FBPNrK": {
-      "type": "product-benefits",
-      "name": "Product Benefits",
-      "settings": {
-        "title": ""
-      }
-    },
     "product_ingredients_Mhp7N3": {
       "type": "product-ingredients",
       "name": "Product Ingredients",
       "settings": {
         "title": "Ingredients",
-        "description": "<p>Only the best for our customers</p>"
+        "description": "<p>Only the best for our customers</p>",
+        "eyebrow": ""
       }
     },
     "product_science_nfrBbH": {
@@ -45,13 +39,16 @@
       "type": "product-comparison",
       "name": "Product Comparison",
       "settings": {
-        "title": "Comparison"
+        "title": "Comparison",
+        "description": ""
       }
     },
     "product_before_after_RheAtk": {
       "type": "product-before-after",
       "name": "Product Before & After",
-      "settings": {}
+      "settings": {
+        "eyebrow": ""
+      }
     },
     "product_faq_jmHdaa": {
       "type": "product-faq",
@@ -72,7 +69,6 @@
   "order": [
     "main",
     "product_upsell_RFhKfi",
-    "product_benefits_FBPNrK",
     "product_ingredients_Mhp7N3",
     "product_science_nfrBbH",
     "product_comparison_YHCngK",
