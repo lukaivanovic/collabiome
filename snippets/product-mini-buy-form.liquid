@@ -30,9 +30,19 @@
 
 {% liquid
   assign selected_variant = product.selected_or_first_available_variant
+
+  # Fallback to first variant if no available variant found
+  unless selected_variant
+    assign selected_variant = product.variants.first
+  endunless
+
   assign check_against_inventory = true
 
-  if selected_variant and selected_variant.quantity_rule.min > selected_variant.inventory_quantity and check_against_inventory
+  if selected_variant.inventory_management != 'shopify' or selected_variant.inventory_policy == 'continue'
+    assign check_against_inventory = false
+  endif
+
+  if selected_variant.quantity_rule.min > selected_variant.inventory_quantity and check_against_inventory
     assign quantity_rule_soldout = true
   endif
 
@@ -96,3 +106,39 @@
     {% endif %}
   {%- endform -%}
 </product-form>
+
+{% javascript %}
+  // Prevent clicks on form buttons from propagating to parent link
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('product-form.product-mini-buy-form').forEach(function (productForm) {
+      // Stop propagation for clicks on form buttons
+      const interactiveElements = productForm.querySelectorAll('button[type="submit"]');
+
+      interactiveElements.forEach(function (element) {
+        // Handle both click and touch events for mobile compatibility
+        function handleInteraction(e) {
+          // Stop propagation to prevent navigation when clicking on form controls
+          e.stopPropagation();
+          // Prevent default only if it's a link
+          if (e.target.closest('a')) {
+            e.preventDefault();
+          }
+        }
+
+        element.addEventListener('click', handleInteraction);
+        element.addEventListener('touchend', function (e) {
+          handleInteraction(e);
+          // Trigger click for accessibility and form submission
+          if (!e.defaultPrevented) {
+            const clickEvent = new MouseEvent('click', {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            });
+            element.dispatchEvent(clickEvent);
+          }
+        });
+      });
+    });
+  });
+{% endjavascript %}

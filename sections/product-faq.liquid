@@ -27,7 +27,10 @@
 
       <div>
         {% for item in faq_data %}
-          <collapsible-item class="block faq-item border-b border-neutral-200 last:border-b-0 transition-colors">
+          <collapsible-item
+            class="block faq-item border-b last:border-b-0 transition-colors"
+            style="border-color: var(--product-background, rgba(0, 0, 0, 0.05));"
+          >
             <button
               class="group faq-question cursor-pointer outline-none w-full text-left py-5 flex items-center justify-between focus:outline-none focus:ring-0"
               data-collapsible-trigger
@@ -39,8 +42,8 @@
               </div>
             </button>
             <div class="faq-answer" data-collapsible-content>
-              <div class=" text-gray-700 py-4">
-                {{ item.answer }}
+              <div class="pt-3 pb-8 leading-[1.6] text-black gap-4 flex flex-col">
+                {{ item.answer | metafield_tag }}
               </div>
             </div>
           </collapsible-item>
@@ -66,12 +69,6 @@
   .product-faq .faq-icon {
     background: var(--product-background, rgba(0, 0, 0, 0.05));
     color: var(--product-accent, #1f2937);
-  }
-
-  .product-faq .faq-item.active .faq-icon,
-  .product-faq .faq-question[aria-expanded='true'] .faq-icon {
-    background: var(--product-accent, #1f2937);
-    color: var(--product-accent-foreground, #ffffff);
   }
 {% endstylesheet %}
 

@@ -38,7 +38,7 @@
   {% break %}
 {% endunless %}
 
-<div class="product-card-mini flex flex-col gap-5 rounded-2xl [background:var(--product-background)] p-3 md:flex-row {{ card_class }}">
+<div class="product-card-mini flex items-center gap-4 rounded-2xl [background:var(--product-background)] p-3 {{ card_class }}">
   <a
     href="{{ product.url }}"
     class="w-20 h-20 shrink-0 relative overflow-hidden rounded-xl"
@@ -57,27 +57,38 @@
     {% endif %}
   </a>
 
-  <div class="flex flex-1 flex-col gap-4 text-left">
-    <div class="space-y-2">
-      <h3 class=" text-foreground">
-        <a href="{{ product.url }}" class="transition hover:opacity-80">
-          {{ product.title | escape }}
-        </a>
-      </h3>
-      {% if headline_text != blank %}
-        <p class="text-sm text-gray-600">
-          {{ headline_text | truncate: 120 }}
-        </p>
-      {% endif %}
-    </div>
+  <div class="flex flex-1 flex-col gap-1 text-left min-w-0">
+    <h3 class="text-foreground">
+      <a href="{{ product.url }}" class="transition hover:opacity-80">
+        {{ product.title | escape }}
+      </a>
+    </h3>
+    {% if headline_text != blank %}
+      <p class="text-sm text-gray-600 truncate">
+        {{ headline_text | truncate: 120 }}
+      </p>
+    {% endif %}
+    {% liquid
+      assign selected_variant = product.selected_or_first_available_variant
+    %}
+    {% if selected_variant %}
+      <div class="text-sm font-medium text-foreground">
+        {{ selected_variant.price | money }}
+        {% if selected_variant.compare_at_price > selected_variant.price %}
+          <span class="text-gray-500 line-through ml-1">{{ selected_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
 
+  <div class="shrink-0">
     {% render 'product-mini-buy-form',
       product: product,
       show_dynamic_checkout: show_dynamic_checkout,
       gift_card_recipient_feature_active: true,
       section_id: 'product-card-mini',
       product_form_id: 'product-card-mini-form',
-      button_full_width: true,
+      button_full_width: false,
       quantity_rule_soldout: false
     %}
   </div>
