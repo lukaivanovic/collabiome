@@ -164,11 +164,6 @@
         "excerpt_words": 20,
         "show_view_all": true
       }
-    },
-    "terms_and_conditions_hHX6aM": {
-      "type": "terms-and-conditions",
-      "name": "Terms and conditions",
-      "settings": {}
     }
   },
   "order": [
@@ -177,7 +172,6 @@
     "rotating_text_DjiUXD",
     "home_categories_WxnjY8",
     "testimonial_grid_zcUike",
-    "blog_grid_GDkRNF",
-    "terms_and_conditions_hHX6aM"
+    "blog_grid_GDkRNF"
   ]
 }
