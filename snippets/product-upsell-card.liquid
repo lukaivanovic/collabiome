@@ -16,21 +16,19 @@
       {% render 'image', image: image, class: 'absolute inset-0 h-full w-full object-cover' %}
     </div>
 
-    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full [background:var(--product-background)] px-3 py-1 text-[var(--product-accent)] font-medium">
       {%- assign step_default_label = 'sections.product_upsell.step_label_default' | t -%}
-      {{ step_index }} | {{ description | default: step_default_label }}
+      {{ step_index }}
     </div>
-
-    {% if product.images.first %}
-      <div class="absolute bottom-1 left-1 h-20 w-20 overflow-hidden rounded-full border-1 border-neutral-200 bg-white">
-        {% render 'image', image: product.images.first, class: 'h-full w-full object-cover' %}
-      </div>
-    {% endif %}
   </div>
 
   <div class="w-full max-w-sm text-center">
     <h3 class="mb-2 text-xl font-semibold">{{ title }}</h3>
 
-    {% render 'product-card-mini', product: product, headline_text: description %}
+    <p class="text-sm text-gray-600">
+      {{ description }}
+    </p>
+
+    {% render 'product-card-mini', product: product, show_dynamic_checkout: false, hide_buy_form: true %}
   </div>
 </div>

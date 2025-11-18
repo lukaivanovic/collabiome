@@ -15,7 +15,7 @@
 
 {% liquid
   assign product = product | default: empty
-  assign show_dynamic_checkout = show_dynamic_checkout | default: false
+  assign show_dynamic_checkout = false
   assign gift_card_recipient_feature_active = gift_card_recipient_feature_active | default: false
   assign section_id_value = section_id | default: 'mini-product'
   assign product_form_id = product_form_id | default: section_id_value | append: '-mini-product-form'
@@ -36,7 +36,7 @@
     assign quantity_rule_soldout = true
   endif
 
-  assign button_classes = 'button flex items-center justify-center gap-2 h-12 px-6 text-sm font-semibold [background:var(--product-button-background)] [color:var(--product-button-text-color)]'
+  assign button_classes = 'button flex items-center justify-center gap-2 h-8 px-6 text-sm font-semibold [background:var(--product-button-background)] [color:var(--product-button-text-color)]'
   if button_full_width
     assign button_classes = button_classes | append: ' w-full'
   endif
@@ -91,7 +91,7 @@
       </span>
     </button>
 
-    {% if show_dynamic_checkout %}
+    {% if show_dynamic_checkout == true %}
       {{ form | payment_button }}
     {% endif %}
   {%- endform -%}
