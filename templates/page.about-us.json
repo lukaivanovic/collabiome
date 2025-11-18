@@ -18,17 +18,18 @@
       "type": "hero",
       "name": "Hero",
       "settings": {
-        "kicker": "",
-        "title": "Hero title",
-        "description": "",
+        "kicker": "O nama",
+        "title": "Ispod površine: Koja je tajna naših proizvoda",
+        "description": "<p>Pročitaj više o našem putu do najboljih kolagen proizvoda.</p>",
         "show_buttons": true,
         "button_label": "Button label",
         "button_link": "",
         "button_2_label": "",
         "button_2_link": "",
         "video_url": "",
+        "image": "shopify://shop_images/image_2.jpg",
         "overlay_color": "#000000",
-        "overlay_opacity": 30
+        "overlay_opacity": 50
       }
     },
     "left_image_text_VmJYhQ": {
@@ -37,11 +38,11 @@
       "settings": {
         "padding_top": 60,
         "padding_bottom": 60,
-        "image": "shopify://shop_images/image_2.jpg",
+        "image": "shopify://shop_images/woman-cosmetologist-making-beauty-procedures.webp",
         "image_alt": "Image alt text",
         "image_position": "left",
-        "title": "Stunning feature title",
-        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "title": "Nismo pristalice pseudoznanosti i poluistina",
+        "description": "<p>Zdravstveni trendovi koji nisu utemeljeni na čvrstim dokazima izazivaju našu sumnju.<br/><br/>Stoga, kada smo odlučili razviti Forever Young liniju dodataka prehrani i Collabiomé™ liniju kozmetike za žene koje ne pristaju na poluistine, željeli smo nešto jednostavno, čisto i znanstveno dokazano.</p><p><br/>Okupili smo neke od najboljih znanstvenika da iznova osmisle linije proizvoda koje su učinkovite i zadovoljavaju svakodnevne potrebe.</p>",
         "show_button": true,
         "button_label": "Learn more",
         "button_link": "",
