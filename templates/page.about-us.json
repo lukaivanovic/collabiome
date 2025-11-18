@@ -74,35 +74,59 @@
         "item_d4xnQg": {
           "type": "item",
           "settings": {
-            "title": "",
-            "description": ""
+            "title": "Kvaliteta proizvoda",
+            "description": "GMP certifikat potvrđuje da su proizvodi proizvedeni u kontroliranim uvjetima, prema preciznim specifikacijama i standardima kvalitete."
           }
         },
         "item_bBhEMF": {
           "type": "item",
           "settings": {
-            "title": "",
-            "description": ""
+            "title": "Sigurnost proizvoda",
+            "description": "GMP certifikat osigurava da su proizvodi proizvedeni prema najvišim standardima sigurnosti, čime se smanjuje rizik od štetnih ili opasnih tvari."
+          }
+        },
+        "item_jnechf": {
+          "type": "item",
+          "settings": {
+            "title": "Usklađenost s regulativama",
+            "description": "GMP certifikat potvrđuje da je proizvodnja u skladu s međunarodnim i nacionalnim zakonodavnim standardima, što daje dodatnu sigurnost kupcima"
           }
         },
         "item_6PXMqh": {
           "type": "item",
           "settings": {
-            "title": "",
-            "description": ""
+            "title": "Higijena proizvodnih prostora",
+            "description": "Osiguranje da su prostori čisti i da se održavaju u skladu sa standardima kako bi se spriječila kontaminacija proizvoda."
+          }
+        },
+        "item_VJDpbq": {
+          "type": "item",
+          "settings": {
+            "title": "Pouzdanost proizvođača",
+            "description": "GMP certifikat naglašava da proizvođač ozbiljno shvaća kontrolu kvalitete i sigurnost, što povećava povjerenje kupaca u proizvod i brend"
+          }
+        },
+        "item_PQYPVz": {
+          "type": "item",
+          "settings": {
+            "title": "Transparentnost i sljedivost",
+            "description": "Svi procesi u GMP certificiranim postrojenjima su dokumentirani i sljedivi, što omogućuje brzu reakciju u slučaju bilo kakvih problema s proizvodom."
           }
         }
       },
       "block_order": [
         "item_d4xnQg",
         "item_bBhEMF",
-        "item_6PXMqh"
+        "item_jnechf",
+        "item_6PXMqh",
+        "item_VJDpbq",
+        "item_PQYPVz"
       ],
       "name": "t:sections.three_column_grid.name",
       "settings": {
         "custom_id": "",
-        "title": "",
-        "description": ""
+        "title": "Hello",
+        "description": "Test"
       }
     },
     "left_image_text_wknBME": {
@@ -128,8 +152,9 @@
         "column_6Xz4xA": {
           "type": "column",
           "settings": {
-            "title": "",
-            "description": ""
+            "image": "shopify://shop_images/woman-cosmetologist-making-beauty-procedures.webp",
+            "title": "Iva Tokić",
+            "description": "M.Sc nutricionozima"
           }
         },
         "column_AX7V6w": {
@@ -155,8 +180,8 @@
       "name": "t:sections.three_column_highlight.name",
       "settings": {
         "custom_id": "",
-        "heading": "",
-        "description": ""
+        "heading": "Postavljanje novog standarda u istraživanju",
+        "description": "Podizanje ljestvice u istraživanju znači posvećivanje izvrsnosti, preciznosti i inovacijama.\n\n\nNaša predanost znanstvenoj metodologiji i rigoroznim standardima osigurava da svaki korak istraživačkog procesa zadovoljava najviše kriterije.\n\n\nKombinirajući napredne tehnologije s interdisciplinarnim pristupima, težimo postavljanju novih mjerila u istraživanju koja će voditi prema značajnim otkrićima i poboljšanju kvalitete života."
       }
     }
   },
