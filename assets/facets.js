@@ -20,15 +20,27 @@ class FacetFilterForm extends HTMLElement {
     // Handle facet-select change events
     this.addEventListener("facet-change", this.handleFacetChange.bind(this));
 
-    // Handle clear all button
-    const clearAllButton = this.querySelector(".facets__clear-all");
-    if (clearAllButton) {
-      clearAllButton.addEventListener("click", this.handleClearAll.bind(this));
-    }
+    // Update clear all button state
+    this.updateClearAllButton();
+
+    // Handle clear all button click
+    this.form.addEventListener("click", (e) => {
+      const target = e.target.closest('a');
+      if (target && (target.textContent.trim().toLowerCase().includes("clear all") || target.textContent.trim().toLowerCase().includes("clear"))) {
+        // Check if it's disabled
+        if (target.hasAttribute('aria-disabled') || target.classList.contains('pointer-events-none')) {
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        this.handleClearAll(e);
+      }
+    });
   }
 
   handleChange(event) {
     if (event.target.type === "checkbox" || event.target.type === "number") {
+      this.updateClearAllButton();
       this.debounceApplyFilters();
     }
   }
@@ -39,6 +51,7 @@ class FacetFilterForm extends HTMLElement {
     if (facetSelect.close) {
       facetSelect.close();
     }
+    this.updateClearAllButton();
     this.debounceApplyFilters();
   }
 
@@ -96,6 +109,42 @@ class FacetFilterForm extends HTMLElement {
     const countElement = document.querySelector(".product-count");
     if (countElement) {
       countElement.textContent = `${count} ${this.getTranslation("general.products", "Products")}`;
+    }
+  }
+
+  // Update clear all button state based on active filters
+  updateClearAllButton() {
+    const checkboxes = this.form.querySelectorAll('input[type="checkbox"]:checked');
+    const numberInputs = this.form.querySelectorAll('input[type="number"]');
+    let hasActiveFilters = checkboxes.length > 0;
+    
+    // Check if any number inputs have values
+    if (!hasActiveFilters) {
+      numberInputs.forEach(input => {
+        if (input.value && input.value.trim() !== '') {
+          hasActiveFilters = true;
+        }
+      });
+    }
+
+    // Find clear all button (look for link with "clear all" text)
+    const clearAllButton = Array.from(this.form.querySelectorAll('a')).find(
+      link => {
+        const text = link.textContent.trim().toLowerCase();
+        return text.includes('clear all') || text.includes('clear');
+      }
+    );
+
+    if (clearAllButton) {
+      if (hasActiveFilters) {
+        clearAllButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        clearAllButton.removeAttribute('aria-disabled');
+        clearAllButton.removeAttribute('tabindex');
+      } else {
+        clearAllButton.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        clearAllButton.setAttribute('aria-disabled', 'true');
+        clearAllButton.setAttribute('tabindex', '-1');
+      }
     }
   }
 

@@ -19,32 +19,8 @@
 {% comment %} Horizontal filters with dropdowns {% endcomment %}
 <facet-filter-form>
   <form id="FacetFiltersForm" class="flex flex-col gap-4">
-    {% comment %} Active filters {% endcomment %}
-    {% if has_active_filters %}
-      <div class="flex justify-between items-center flex-wrap gap-3 px-4 py-3 bg-gray-50 rounded-lg border border-gray-200">
-        <div class="flex flex-wrap gap-2">
-          {% for filter in filters %}
-            {% for value in filter.active_values %}
-              <a
-                href="{{ value.url_to_remove }}"
-                class="flex items-center gap-1 px-2 py-1 bg-gray-700 text-white rounded text-xs no-underline transition-colors hover:bg-gray-800"
-              >
-                <span>{{ filter.label }}: {{ value.label }}</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            {% endfor %}
-          {% endfor %}
-        </div>
-        <a href="{{ collection.url }}" class="text-gray-500 underline text-sm whitespace-nowrap hover:text-gray-700">
-          {{ 'filters.clear_all' | t | default: 'Clear all' }}
-        </a>
-      </div>
-    {% endif %}
-
     {% comment %} Filter dropdowns {% endcomment %}
-    <div class="flex flex-wrap md:flex-row flex-col md:gap-3 gap-2 items-start">
+    <div class="flex flex-wrap md:flex-row gap-2 items-start">
       {% for filter in filters %}
         {% case filter.type %}
           {% when 'list' %}
@@ -52,13 +28,16 @@
               <button
                 type="button"
                 data-select-button
-                class="flex items-center justify-between gap-2 px-4 py-2.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 cursor-pointer transition-all hover:border-gray-400 hover:bg-gray-50 whitespace-nowrap w-full md:w-auto"
+                class="flex items-center justify-between gap-2 px-4 h-8 bg-white border border-neutral-200 rounded-full text-sm font-medium text-black cursor-pointer transition-all hover:border-neutral-300 hover:bg-gray-50 whitespace-nowrap w-full md:w-auto"
                 aria-expanded="false"
               >
-                {{ filter.label }}
+                <span>{{ filter.label }}</span>
+                <span class="flex-shrink-0 transition-transform duration-200" data-chevron-icon>
+                  {{ 'icon-chevron-down.svg' | inline_asset_content }}
+                </span>
               </button>
               <div
-                class="absolute top-[calc(100%+0.25rem)] left-0 z-50 min-w-[200px] max-w-[280px] w-full md:w-auto max-h-[300px] overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg hidden"
+                class="absolute top-[calc(100%+0.25rem)] left-0 z-50 min-w-[200px] max-w-[280px] w-full md:w-auto max-h-[300px] overflow-y-auto bg-white border border-neutral-200 rounded-md shadow-lg hidden"
                 data-select-panel
               >
                 <ul class="list-none p-2 m-0 flex flex-col gap-1">
@@ -77,7 +56,7 @@
                             disabled
                           {% endif %}
                         >
-                        <span class="flex items-center gap-1 text-gray-700">
+                        <span class="flex items-center gap-1 text-black">
                           {{ value.label }}
                           <span class="text-gray-500 font-normal">({{ value.count }})</span>
                         </span>
@@ -93,13 +72,16 @@
               <button
                 type="button"
                 data-select-button
-                class="flex items-center justify-between gap-2 px-4 py-2.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 cursor-pointer transition-all hover:border-gray-400 hover:bg-gray-50 whitespace-nowrap w-full md:w-auto"
+                class="flex items-center justify-between gap-2 px-4 py-2.5 bg-white border border-neutral-200 rounded-full text-sm font-medium text-black cursor-pointer transition-all hover:border-neutral-300 hover:bg-gray-50 whitespace-nowrap w-full md:w-auto"
                 aria-expanded="false"
               >
-                {{ filter.label }}
+                <span>{{ filter.label }}</span>
+                <span class="flex-shrink-0 transition-transform duration-200" data-chevron-icon>
+                  {{ 'icon-chevron-down.svg' | inline_asset_content }}
+                </span>
               </button>
               <div
-                class="absolute top-[calc(100%+0.25rem)] left-0 z-50 min-w-[200px] max-w-[280px] w-full md:w-auto max-h-[300px] overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg hidden"
+                class="absolute top-[calc(100%+0.25rem)] left-0 z-50 min-w-[200px] max-w-[280px] w-full md:w-auto max-h-[300px] overflow-y-auto bg-white border border-neutral-200 rounded-md shadow-lg hidden"
                 data-select-panel
               >
                 <ul class="list-none p-2 m-0 flex flex-col gap-1">
@@ -117,7 +99,7 @@
                           disabled
                         {% endif %}
                       >
-                      <span class="flex items-center gap-1 text-gray-700">
+                      <span class="flex items-center gap-1 text-black">
                         {{ filter.true_value.label }}
                         <span class="text-gray-500 font-normal">({{ filter.true_value.count }})</span>
                       </span>
@@ -137,7 +119,7 @@
                           disabled
                         {% endif %}
                       >
-                      <span class="flex items-center gap-1 text-gray-700">
+                      <span class="flex items-center gap-1 text-black">
                         {{ filter.false_value.label }}
                         <span class="text-gray-500 font-normal">({{ filter.false_value.count }})</span>
                       </span>
@@ -148,10 +130,10 @@
             </facet-select>
 
           {% when 'price_range' %}
-            <div class="flex flex-col md:flex-row md:items-center items-start gap-3 px-4 py-2.5 bg-white border border-gray-300 rounded-md w-full">
-              <label class="text-sm font-medium text-gray-700 whitespace-nowrap">{{ filter.label }}</label>
+            <div class="flex flex-col md:flex-row md:items-center items-start gap-3 px-4 py-2.5 bg-white border border-neutral-200 rounded-full w-full">
+              <label class="text-sm font-medium text-black whitespace-nowrap">{{ filter.label }}</label>
               <div class="flex gap-2 items-center w-full md:w-auto">
-                <label class="flex items-center gap-1 text-sm text-gray-700">
+                <label class="flex items-center gap-1 text-sm text-black">
                   <span>{{ 'filters.price_from' | t | default: 'From' }}</span>
                   <input
                     type="number"
@@ -161,7 +143,7 @@
                     class="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-20 md:w-20 flex-1 md:flex-initial"
                   >
                 </label>
-                <label class="flex items-center gap-1 text-sm text-gray-700">
+                <label class="flex items-center gap-1 text-sm text-black">
                   <span>{{ 'filters.price_to' | t | default: 'To' }}</span>
                   <input
                     type="number"
@@ -175,19 +157,30 @@
             </div>
         {% endcase %}
       {% endfor %}
+
+      {% comment %} Clear all button {% endcomment %}
+      <a
+        href="{{ collection.url }}"
+        class="px-4 h-8 flex items-center justify-center bg-white rounded-full text-sm font-medium text-black no-underline transition-all hover:bg-gray-50 whitespace-nowrap {% unless has_active_filters %}opacity-50 cursor-not-allowed pointer-events-none{% endunless %}"
+        {% unless has_active_filters %}
+          aria-disabled="true" tabindex="-1"
+        {% endunless %}
+      >
+        {{ 'filters.clear_all' | t | default: 'Očisti sve' }}
+      </a>
     </div>
   </form>
 </facet-filter-form>
 
 {% stylesheet %}
-  /* Dropdown chevron icon */
-  [data-select-button]::after {
-    content: '▼';
-    font-size: 0.625rem;
-    transition: transform 0.2s;
+  /* Dropdown chevron icon rotation */
+  [data-select-button][aria-expanded='true'] [data-chevron-icon] {
+    transform: rotate(180deg);
   }
 
-  [data-select-button][aria-expanded='true']::after {
-    transform: rotate(180deg);
+  [data-chevron-icon] svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
   }
 {% endstylesheet %}

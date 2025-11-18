@@ -101,10 +101,21 @@ class FacetSelect extends HTMLElement {
     const selectedCount = this.checkboxes.filter(cb => cb.checked).length;
     const filterLabel = this.getAttribute('data-filter-label') || 'Filter';
     
-    if (selectedCount === 0) {
-      this.button.textContent = filterLabel;
+    // Find the text span (exclude the icon span) and update only that, preserving the icon
+    const textSpan = this.button.querySelector('span:not([data-chevron-icon])');
+    if (textSpan) {
+      if (selectedCount === 0) {
+        textSpan.textContent = filterLabel;
+      } else {
+        textSpan.textContent = `${filterLabel} (${selectedCount})`;
+      }
     } else {
-      this.button.textContent = `${filterLabel} (${selectedCount})`;
+      // Fallback if span structure is not found
+      if (selectedCount === 0) {
+        this.button.textContent = filterLabel;
+      } else {
+        this.button.textContent = `${filterLabel} (${selectedCount})`;
+      }
     }
   }
 
