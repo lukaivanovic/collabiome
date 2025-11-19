@@ -21,6 +21,20 @@
         "description": ""
       }
     },
+    "product_benefits_HE6ycF": {
+      "type": "product-benefits",
+      "name": "Product Benefits",
+      "settings": {
+        "title": ""
+      }
+    },
+    "product_before_after_RheAtk": {
+      "type": "product-before-after",
+      "name": "Product Before & After",
+      "settings": {
+        "eyebrow": ""
+      }
+    },
     "product_ingredients_Mhp7N3": {
       "type": "product-ingredients",
       "name": "Product Ingredients",
@@ -43,13 +57,6 @@
         "description": ""
       }
     },
-    "product_before_after_RheAtk": {
-      "type": "product-before-after",
-      "name": "Product Before & After",
-      "settings": {
-        "eyebrow": ""
-      }
-    },
     "product_faq_jmHdaa": {
       "type": "product-faq",
       "name": "Product FAQ",
@@ -69,10 +76,11 @@
   "order": [
     "main",
     "product_upsell_RFhKfi",
+    "product_benefits_HE6ycF",
+    "product_before_after_RheAtk",
     "product_ingredients_Mhp7N3",
     "product_science_nfrBbH",
     "product_comparison_YHCngK",
-    "product_before_after_RheAtk",
     "product_faq_jmHdaa",
     "product_reviews_APUjTe"
   ]
