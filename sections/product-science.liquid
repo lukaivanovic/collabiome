@@ -14,17 +14,27 @@
   assign science_title = ''
   assign science_description = ''
   assign science_studies = null
+  assign science_image = null
 
   if science
     assign science_title = science.title
     assign science_description = science.desc | default: science.description
     assign studies_field = science.studies
+    assign image_field = science.image
 
     if studies_field != blank
       if studies_field.value != blank
         assign science_studies = studies_field.value
       else
         assign science_studies = studies_field
+      endif
+    endif
+
+    if image_field != blank
+      if image_field.value != blank
+        assign science_image = image_field.value
+      else
+        assign science_image = image_field
       endif
     endif
   endif
@@ -42,79 +52,96 @@
   if science_studies != blank
     assign has_studies = true
   endif
+
+  assign has_image = false
+  if science_image != blank
+    assign has_image = true
+  endif
 -%}
 
 <section class="py-30">
   <div class="container">
-    <div class="flex flex-col gap-12 px-8 py-16 lg:px-20 lg:py-24">
-      <div class="max-w-140">
-        <h2 class="text-4xl font-medium">{{ section_title }}</h2>
-        {% if has_description %}
-          <p class="mt-4 text-base">{{ section_description }}</p>
-        {% endif %}
-      </div>
+    <div class="px-8 py-16 lg:px-20 lg:py-24">
+      <div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
+        <div class="flex-1">
+          <div class="max-w-140">
+            <h2 class="text-4xl font-medium">{{ section_title }}</h2>
+            {% if has_description %}
+              <p class="mt-4 text-base">{{ section_description }}</p>
+            {% endif %}
+          </div>
 
-      {% if has_studies %}
-        <div class="flex flex-wrap gap-4">
-          {% for study in science_studies %}
-            {% liquid
-              assign study_metric = study.metric | default: study.title
-              assign study_text = study.description | default: study.desc
-              assign study_source = study.source
-              assign study_link = study.link
-              assign study_link_url = ''
-              assign study_link_label = ''
+          {% if has_studies %}
+            <div class="mt-12 flex flex-wrap gap-4">
+              {% for study in science_studies %}
+                {% liquid
+                  assign study_metric = study.metric | default: study.title
+                  assign study_text = study.description | default: study.desc
+                  assign study_source = study.source
+                  assign study_link = study.link
+                  assign study_link_url = ''
+                  assign study_link_label = ''
 
-              if study_link != blank
-                if study_link.url
-                  assign study_link_url = study_link.url
-                  assign study_link_label = study_link.title
-                else
-                  assign study_link_url = study_link
-                endif
-              endif
+                  if study_link != blank
+                    if study_link.url
+                      assign study_link_url = study_link.url
+                      assign study_link_label = study_link.title
+                    else
+                      assign study_link_url = study_link
+                    endif
+                  endif
 
-              assign computed_link_label = study_link_label
-              if computed_link_label == blank
-                assign computed_link_label = 'sections.product_science.link_label' | t
-              endif
-            %}
+                  assign computed_link_label = study_link_label
+                  if computed_link_label == blank
+                    assign computed_link_label = 'sections.product_science.link_label' | t
+                  endif
+                %}
 
-            <div class="rounded-2xl border border-white/10 bg-[var(--product-background)] p-6">
-              {% if study_metric %}
-                <p class="text-5xl font-semibold text-[var(--product-accent)]">
-                  {{ study_metric }}
-                </p>
-              {% endif %}
+                <div class="rounded-2xl border border-white/10 bg-[var(--product-background)] p-6">
+                  {% if study_metric %}
+                    <p class="text-5xl font-semibold text-[var(--product-accent)]">
+                      {{ study_metric }}
+                    </p>
+                  {% endif %}
 
-              {% if study_text %}
-                <p class="mt-3 text-sm text-[var(--product-accent)]">{{ study_text }}</p>
-              {% endif %}
+                  {% if study_text %}
+                    <p class="mt-3 text-sm text-[var(--product-accent)]">{{ study_text }}</p>
+                  {% endif %}
 
-              {% if study_source or study_link_url %}
-                <div class="mt-5 flex flex-col gap-2 text-xs text-[var(--product-accent)]/60">
-                  {% if study_source %}
-                    {% if study_link_url != blank %}
-                      <a
-                        href="{{ study_link_url }}"
-                        class="font-medium text-[var(--product-accent)] underline"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {{- 'sections.product_science.source_prefix' | t: source: study_source -}}
-                      </a>
-                    {% else %}
-                      <span class="font-medium text-[var(--product-accent)]">
-                        {{- 'sections.product_science.source_prefix' | t: source: study_source -}}
-                      </span>
-                    {% endif %}
+                  {% if study_source or study_link_url %}
+                    <div class="mt-5 flex flex-col gap-2 text-xs text-[var(--product-accent)]/60">
+                      {% if study_source %}
+                        {% if study_link_url != blank %}
+                          <a
+                            href="{{ study_link_url }}"
+                            class="font-medium text-[var(--product-accent)] underline"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            {{- 'sections.product_science.source_prefix' | t: source: study_source -}}
+                          </a>
+                        {% else %}
+                          <span class="font-medium text-[var(--product-accent)]">
+                            {{- 'sections.product_science.source_prefix' | t: source: study_source -}}
+                          </span>
+                        {% endif %}
+                      {% endif %}
+                    </div>
                   {% endif %}
                 </div>
-              {% endif %}
+              {% endfor %}
             </div>
-          {% endfor %}
+          {% endif %}
         </div>
-      {% endif %}
+
+        {% if has_image %}
+          <div class="flex-shrink-0 lg:w-1/2">
+            <div class="max-h-[600px] overflow-hidden rounded-2xl">
+              {% render 'image', image: science_image, class: 'w-full rounded-2xl' %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 </section>

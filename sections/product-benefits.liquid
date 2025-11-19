@@ -1,6 +1,5 @@
 {%- liquid
   assign benefits = product.metafields.custom.benefits_content.value
-  assign benefits_image = product.metafields.custom.benefits_image.value
   assign benefits_title = product.metafields.custom.benefits_title.value
   assign benefits_description = product.metafields.custom.benefits_description.value
   assign product_theme = product.metafields.custom.theme.value | default: 'default'
@@ -16,47 +15,39 @@
 -%}
 
 <div class="container py-30 {{ product_theme_class }}">
-  <div class="bg-[var(--product-background)] grid grid-cols-2 gap-10 rounded-3xl overflow-hidden p-8">
-    {% if benefits_image %}
-      <div class="mb-12">
-        {% render 'image', image: benefits_image, class: 'rounded-3xl w-full' %}
-      </div>
-    {% endif %}
+  <div class="bg-[var(--product-background)] rounded-3xl overflow-hidden p-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl uppercase font-medium">{{ benefits_title | default: 'Product Benefits' }}</h2>
 
-    <div class="flex flex-col justify-center">
-      <div class=" mb-12">
-        <h2 class="text-4xl uppercase font-medium">{{ benefits_title | default: 'Product Benefits' }}</h2>
+      {% if benefits_description %}
+        <p class="text-base opacity-70 mt-2">{{ benefits_description }}</p>
+      {% endif %}
+    </div>
 
-        {% if benefits_description %}
-          <p class="text-base opacity-70 mt-2">{{ benefits_description }}</p>
-        {% endif %}
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% for benefit in benefits %}
+        <div class="flex flex-col items-center text-center">
+          {% if benefit.icon %}
+            <div class="mb-4">
+              {% render 'image', image: benefit.icon, class: 'size-8 [&>img]:size-8' %}
+            </div>
+          {% else %}
+            <div class="mb-4 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <div class="w-4 h-4 bg-white rounded-full"></div>
+            </div>
+          {% endif %}
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {% for benefit in benefits %}
-          <div class="flex items-start gap-4">
-            {% if benefit.icon %}
-              <div class="flex-shrink-0">
-                {% render 'image', image: benefit.icon, class: 'size-4 [&>img]:size-4' %}
-              </div>
-            {% else %}
-              <div class="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <div class="w-4 h-4 bg-white rounded-full"></div>
-              </div>
+          <div>
+            {% if benefit.title %}
+              <h3 class="font-semibold text-lg mb-2">{{ benefit.title }}</h3>
             {% endif %}
 
-            <div class="flex-1">
-              {% if benefit.title %}
-                <h3 class="font-semibold text-lg mb-2">{{ benefit.title }}</h3>
-              {% endif %}
-
-              {% if benefit.description %}
-                <p class="text-sm opacity-70">{{ benefit.description }}</p>
-              {% endif %}
-            </div>
+            {% if benefit.description %}
+              <p class="text-sm opacity-70">{{ benefit.description }}</p>
+            {% endif %}
           </div>
-        {% endfor %}
-      </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </div>

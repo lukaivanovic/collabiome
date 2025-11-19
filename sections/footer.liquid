@@ -67,8 +67,8 @@
   <div class="container flex flex-col gap-16 md:gap-40 pt-24 pb-8">
     <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-between flex-wrap">
       <div class="mr-20 md:mr-0">
-        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-          <img src="{{ 'logo-full.svg' | file_url }}" height="64" width="auto">
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="[&>svg]:h-12 [&>svg]:w-auto">
+          {{ 'logo-full.svg' | inline_asset_content }}
         </a>
       </div>
 
