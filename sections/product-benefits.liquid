@@ -14,8 +14,8 @@
   endcase
 -%}
 
-<div class="container py-30 {{ product_theme_class }}">
-  <div class="bg-[var(--product-background)] rounded-3xl overflow-hidden p-8">
+<div class="container-small py-20 {{ product_theme_class }}">
+  <div class="p-8">
     <div class="text-center mb-12">
       <h2 class="text-4xl uppercase font-medium">{{ benefits_title | default: 'Product Benefits' }}</h2>
 
@@ -29,7 +29,7 @@
         <div class="flex flex-col items-center text-center">
           {% if benefit.icon %}
             <div class="mb-4">
-              {% render 'image', image: benefit.icon, class: 'size-8 [&>img]:size-8' %}
+              {% render 'image', image: benefit['image-icon'], class: 'size-8 [&>img]:size-8' %}
             </div>
           {% else %}
             <div class="mb-4 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
