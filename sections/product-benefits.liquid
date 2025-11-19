@@ -27,15 +27,9 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {% for benefit in benefits %}
         <div class="flex flex-col items-center text-center">
-          {% if benefit.icon %}
-            <div class="mb-4">
-              {% render 'image', image: benefit.image_icon, class: 'size-8 [&>img]:size-8' %}
-            </div>
-          {% else %}
-            <div class="mb-4 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <div class="w-4 h-4 bg-white rounded-full"></div>
-            </div>
-          {% endif %}
+          <div class="mb-4 size-30">
+            {% render 'image', image: benefit.image_icon, class: 'w-full h-full object-cover' %}
+          </div>
 
           <div>
             {% if benefit.title %}
