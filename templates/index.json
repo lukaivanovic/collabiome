@@ -164,6 +164,21 @@
         "excerpt_words": 20,
         "show_view_all": true
       }
+    },
+    "17639956021ad1c42b": {
+      "type": "apps",
+      "blocks": {
+        "face_age_skincare_analyzer_tVD7Gz": {
+          "type": "shopify://apps/face-age/blocks/skincare_analyzer/043acb67-6ee1-4433-bc05-31a4f8d134e0",
+          "settings": {
+            "minHeight": 500
+          }
+        }
+      },
+      "block_order": [
+        "face_age_skincare_analyzer_tVD7Gz"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -172,6 +187,7 @@
     "rotating_text_DjiUXD",
     "home_categories_WxnjY8",
     "testimonial_grid_zcUike",
-    "blog_grid_GDkRNF"
+    "blog_grid_GDkRNF",
+    "17639956021ad1c42b"
   ]
 }
