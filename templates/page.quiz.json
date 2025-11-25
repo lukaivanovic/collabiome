@@ -26,10 +26,46 @@
         "face_age_skincare_analyzer_dGjmae"
       ],
       "settings": {}
+    },
+    "1764103745be642a4f": {
+      "type": "apps",
+      "blocks": {
+        "tangent_quiz_tangent_iframe_RQd98a": {
+          "type": "shopify://apps/tangent-quiz/blocks/tangent-iframe/51b4f65b-1bd1-4373-a212-7af0ce5a9774",
+          "settings": {
+            "form_id": "692616171dbd7121161b0b58",
+            "width": 80,
+            "scroll_margin": 120
+          }
+        }
+      },
+      "block_order": [
+        "tangent_quiz_tangent_iframe_RQd98a"
+      ],
+      "settings": {}
+    },
+    "1764103757e4d2daba": {
+      "type": "apps",
+      "blocks": {
+        "tangent_quiz_tangent_product_recommendation_t4Lxhh": {
+          "type": "shopify://apps/tangent-quiz/blocks/tangent-product-recommendation/51b4f65b-1bd1-4373-a212-7af0ce5a9774",
+          "settings": {
+            "width": 100,
+            "show_variants": true,
+            "custom_css_text_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "tangent_quiz_tangent_product_recommendation_t4Lxhh"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "17641036397d4a5ace"
+    "17641036397d4a5ace",
+    "1764103745be642a4f",
+    "1764103757e4d2daba"
   ]
 }
