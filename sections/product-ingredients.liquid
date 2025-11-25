@@ -1,17 +1,22 @@
 {%- liquid
   assign ingredients = product.metafields.custom.ingredients.value
+  assign fallback_title = 'sections.product_ingredients.title' | t
+  assign section_title = ingredients.title | default: fallback_title
+  assign fallback_description = 'sections.product_ingredients.description' | t
 -%}
 
 <div class="container-small mx-auto max-w-4xl px-4 text-center py-20 flex flex-col gap-10">
   <div>
     <p class="text-sm font-medium uppercase text-neutral-500 tracking-wider">
-      {{ section.settings.eyebrow | default: 'Ingredients' }}
+      {{ section.settings.eyebrow | default: fallback_title }}
     </p>
-    <h2 class="text-4xl font-medium">{{ ingredients.title | default: 'Ingredients' }}</h2>
+    <h2 class="text-4xl font-medium">{{ section_title }}</h2>
     {% if section.settings.description %}
       <div class="text-base opacity-70 mt-2">{{ section.settings.description }}</div>
     {% elsif ingredients.description %}
       <p class="text-base opacity-70 mt-2">{{ ingredients.description }}</p>
+    {% elsif fallback_description != blank %}
+      <p class="text-base opacity-70 mt-2">{{ fallback_description }}</p>
     {% endif %}
   </div>
 
@@ -49,7 +54,7 @@
   {% if other_ingredients != '' %}
     <div>
       <div class="h-px bg-neutral-100"></div>
-      <div class="text-sm uppercase tracking-wide opacity-70 mb-2 mt-6">Other ingredients</div>
+      <div class="text-sm uppercase tracking-wide opacity-70 mb-2 mt-6">{{ 'sections.product_ingredients.list' | t }}</div>
       <p>{{ other_ingredients }}</p>
     </div>
   {% endif %}
@@ -57,17 +62,17 @@
 
 {% schema %}
 {
-  "name": "Product Ingredients",
+  "name": "t:sections.product_ingredients.name",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title" },
-    { "type": "richtext", "id": "description", "label": "Description" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow" }
+    { "type": "text", "id": "title", "label": "t:sections.product_ingredients.settings.title" },
+    { "type": "richtext", "id": "description", "label": "t:sections.product_ingredients.settings.description" },
+    { "type": "text", "id": "eyebrow", "label": "t:sections.product_ingredients.settings.eyebrow" }
   ],
   "presets": [
     {
-      "name": "Product Ingredients",
-      "category": "Product"
+      "name": "t:sections.product_ingredients.name",
+      "category": "t:sections.product_ingredients.category"
     }
   ]
 }

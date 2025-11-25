@@ -1,5 +1,4 @@
 {%- liquid
-  assign before_after = product.metafields.custom.before_after.value
   assign product_theme = product.metafields.custom.theme.value | default: 'default'
 
   case product_theme
@@ -17,25 +16,29 @@
     <p class="text-xs font-medium uppercase text-neutral-500 tracking-wider">
       {{ section.settings.eyebrow | default: 'Before & after' }}
     </p>
-    <h2 class="text-4xl font-medium">{{ before_after.title | default: 'Before & after' }}</h2>
+    <h2 class="text-4xl font-medium">
+      {{ product.metafields.custom.section_before_after_title.value | default: 'Before & after' }}
+    </h2>
 
-    {% if before_after.description %}
-      <p class="text-base opacity-70">{{ before_after.description }}</p>
+    {% if product.metafields.custom.section_before_after_description.value %}
+      <p class="text-base opacity-70">{{ product.metafields.custom.section_before_after_description.value }}</p>
     {% endif %}
 
     <div class="grid grid-cols-2 gap-3 pt-12 max-w-2xl">
       <div class="flex flex-col relative rounded-xl w-full">
-        {% render 'image', image: before_after.before, class: 'aspect-[3/4] w-full h-full object-cover rounded-3xl' %}
-        <p class="px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent)] bg-white">
-          {{ before_after.before_title | default: 'Before' }}
-        </p>
+        {% render 'image',
+          image: product.metafields.custom.section_before_after_before_photo.value,
+          class: 'aspect-[3/4] w-full h-full object-cover rounded-3xl'
+        %}
+        <p class="px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent)] bg-white">Before</p>
       </div>
 
       <div class="flex flex-col relative rounded-xl w-full">
-        {% render 'image', image: before_after.after, class: 'aspect-[3/4] rounded-3xl' %}
-        <p class="px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent)] bg-white">
-          {{ before_after.after_title | default: 'After' }}
-        </p>
+        {% render 'image',
+          image: product.metafields.custom.section_before_after_after_photo.value,
+          class: 'aspect-[3/4] rounded-3xl'
+        %}
+        <p class="px-3 py-1 absolute bottom-3 left-3 rounded-2xl text-[var(--product-accent)] bg-white">After</p>
       </div>
     </div>
   </div>

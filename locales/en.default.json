@@ -119,6 +119,18 @@
       "source_prefix": "Source: {{ source }}",
       "image_alt": "Illustration of product science for {{ title }}"
     },
+    "product_ingredients": {
+      "name": "Product ingredients",
+      "category": "Product",
+      "title": "Ingredients",
+      "description": "",
+      "list": "Other ingredients",
+      "settings": {
+        "title": "Title",
+        "description": "Description",
+        "eyebrow": "Eyebrow"
+      }
+    },
     "three_column_highlight": {
       "name": "Three column highlights",
       "category": "Custom",
