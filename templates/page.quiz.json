@@ -13,9 +13,23 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "17641036397d4a5ace": {
+      "type": "apps",
+      "blocks": {
+        "face_age_skincare_analyzer_dGjmae": {
+          "type": "shopify://apps/face-age/blocks/skincare_analyzer/043acb67-6ee1-4433-bc05-31a4f8d134e0",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "face_age_skincare_analyzer_dGjmae"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "17641036397d4a5ace"
   ]
 }
