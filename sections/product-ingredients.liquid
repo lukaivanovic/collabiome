@@ -1,13 +1,20 @@
 {%- liquid
-  assign ingredients = product.metafields.custom.section_ingredients_list.value
-  assign section_title = product.metafields.custom.section_ingredients_title.value | default: 'Ingredients'
-  assign section_description = product.metafields.custom.section_ingredients_description.value | default: 'Only the best for our customers'
+  if section.settings.product != blank
+    assign selected_product = section.settings.product
+  else
+    assign selected_product = product
+  endif
+
+  assign ingredients = selected_product.metafields.custom.section_ingredients_list.value
+  assign section_title = selected_product.metafields.custom.section_ingredients_title.value | default: 'Ingredients'
+  assign section_description = selected_product.metafields.custom.section_ingredients_description.value | default: 'Only the best for our customers'
+  assign section_eyebrow = selected_product.metafields.custom.section_ingredients_eyebrow.value | default: 'Ingredients'
 -%}
 
 <div class="container-small mx-auto max-w-4xl px-4 text-center py-20 flex flex-col gap-10">
   <div>
     <p class="text-sm font-medium uppercase text-neutral-500 tracking-wider">
-      {{ product.metafields.custom.section_ingredients_eyebrow.value | default: 'Ingredients' }}
+      {{ section_eyebrow }}
     </p>
     <h2 class="text-4xl font-medium">{{ section_title }}</h2>
     {% if section_description != blank %}
@@ -60,6 +67,14 @@
 {% schema %}
 {
   "name": "Product Ingredients",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Select a product to display. If no product is selected, the current page product will be used."
+    }
+  ],
   "tag": "section",
   "presets": [
     {
