@@ -1,0 +1,62 @@
+{% doc %}
+  Header Mega Menu - Cosmetics Panel
+
+  Renders the cosmetics collection mega menu panel for the desktop header.
+
+  @param {link} link - Main navigation link pointing to a cosmetics collection (required)
+  @param {linklist} submenu - Secondary menu with cosmetics sub-collections or links
+{% enddoc %}
+
+{% liquid
+  assign link = link | default: empty
+  assign submenu = submenu | default: empty
+
+  unless link != empty
+    echo '<!-- Error: link parameter required for header-mega-menu-cosmetics snippet -->'
+    break
+  endunless
+%}
+
+<div
+  class="mega-menu-panel pointer-events-none absolute left-0 top-[calc(100%-16px)] w-full aria-[hidden=false]:pointer-events-auto"
+  data-mega-menu-panel="{{ link.object.handle }}"
+  aria-hidden="true"
+>
+  <div class="container py-3">
+    <div
+      class="mega-menu-card rounded-2xl border border-black/12 bg-[var(--color-background-default)]"
+      data-mega-menu-card
+    >
+      <div class="grid gap-8 p-8 md:grid-cols-[minmax(260px,320px)_1fr]">
+        <div class="flex flex-col gap-4">
+          {% if submenu and submenu.links.size > 0 %}
+            <h3 class="text-lg font-semibold text-primary">
+              {{ link.object.title }}
+            </h3>
+
+            <ul class="m-0 list-none space-y-2 p-0">
+              {% for menu_link in submenu.links %}
+                <li>
+                  <a
+                    href="{{ menu_link.url }}"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    {{ menu_link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          {% for product in link.object.products limit: 3 %}
+            {% render 'product-card', product: product, hide_buy_form: true %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
