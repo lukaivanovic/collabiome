@@ -13,12 +13,38 @@
   "sections": {
     "announcement_bar_PamLDR": {
       "type": "announcement-bar",
+      "blocks": {
+        "announcement_pBhDC9": {
+          "type": "announcement",
+          "settings": {
+            "message": "Free shipping on orders over $50",
+            "link_url": "",
+            "enable_countdown": false,
+            "countdown_target": ""
+          }
+        },
+        "announcement_bBJARR": {
+          "type": "announcement",
+          "settings": {
+            "message": "Hello world",
+            "link_url": "",
+            "enable_countdown": false,
+            "countdown_target": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_pBhDC9",
+        "announcement_bBJARR"
+      ],
       "name": "Announcement bar",
       "settings": {
         "message": "Free shipping on orders over $50",
         "link_url": "",
         "enable_countdown": false,
-        "countdown_target": "2025-09-20T23:59:59Z"
+        "countdown_target": "2025-09-20T23:59:59Z",
+        "enable_multiple": true,
+        "rotate_interval": 5000
       }
     },
     "header": {
