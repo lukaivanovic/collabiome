@@ -133,6 +133,43 @@
         "button_link_target": "_self"
       }
     },
+    "three_column_grid_kTYPA9": {
+      "type": "three-column-grid",
+      "blocks": {
+        "item_kxxxrJ": {
+          "type": "item",
+          "settings": {
+            "title": "Test",
+            "description": "Test"
+          }
+        },
+        "item_6QLAtG": {
+          "type": "item",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        },
+        "item_meyhxn": {
+          "type": "item",
+          "settings": {
+            "title": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_kxxxrJ",
+        "item_6QLAtG",
+        "item_meyhxn"
+      ],
+      "name": "Three Column Grid",
+      "settings": {
+        "custom_id": "",
+        "title": "Mediji o nama",
+        "description": ""
+      }
+    },
     "1764343605254a222f": {
       "type": "apps",
       "blocks": {
@@ -198,6 +235,7 @@
     "left_image_text_LywwXY",
     "left_image_text_6itCjX",
     "left_image_text_mPdDV7",
+    "three_column_grid_kTYPA9",
     "1764343605254a222f",
     "faq_rrgXj7"
   ]
