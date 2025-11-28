@@ -1,16 +1,12 @@
 {% doc %}
   Header Mega Menu - Cosmetics
 
-  Renders a custom mega menu panel for the cosmetics collection.
-
-  @param {linklist} cosmetics_menu - Secondary menu for cosmetics collections
+  Renders a custom mega menu panel for the cosmetics collection with hardcoded filter links.
 {% enddoc %}
 
 {% liquid
-  assign cosmetics_menu = cosmetics_menu | default: empty
-
   # Prefer explicit cosmetics collection handles, fall back if needed
-  assign cosmetics_collection = collections.kozmetika | default: collections.cosmetics
+  assign cosmetics_collection = collections.kozmetika
 
   # Use featured_products metafield when available, otherwise fall back to collection products
   assign featured_products = blank
@@ -38,30 +34,166 @@
       class="mega-menu-card rounded-2xl border border-black/12 bg-[var(--color-background-default)]"
       data-mega-menu-card
     >
-      <div class="grid gap-8 p-8 md:grid-cols-[minmax(260px,320px)_1fr]">
+      <div class="flex flex-row gap-8 p-8">
         <div class="flex flex-col gap-4">
-          {% if cosmetics_menu and cosmetics_menu.links.size > 0 %}
-            <h3 class="text-lg font-semibold text-primary">
-              {{ cosmetics_collection.title }}
-            </h3>
+          <h3 class="text-lg font-semibold text-primary">
+            {{ cosmetics_collection.title }}
+          </h3>
 
-            <ul class="m-0 list-none space-y-2 p-0">
-              {% for menu_link in cosmetics_menu.links %}
+          <div class="flex flex-row gap-3">
+            {% comment %} Tip kože {% endcomment %}
+            <div class="flex flex-col gap-1 ">
+              <p class="m-0 text-xs font-medium uppercase tracking-wide text-primary/70">Tip kože</p>
+              <ul class="m-0 list-none space-y-1 p-0">
                 <li>
                   <a
-                    href="{{ menu_link.url }}"
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.skin_type=dry"
                     class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
                   >
-                    {{ menu_link.title }}
+                    Suha
                   </a>
                 </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.skin_type=oily"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Masna
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.skin_type=combination"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Mješovita
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.skin_type=normal"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Normalna
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.skin_type=sensitive"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Osjetljiva
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {% comment %} Dio rutine {% endcomment %}
+            <div class="flex flex-col gap-1">
+              <p class="m-0 text-xs font-medium uppercase tracking-wide text-primary/70">Dio rutine</p>
+              <ul class="m-0 list-none space-y-1 p-0">
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.routine_part=cleanser"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Čišćenje lica
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.routine_part=exfoliation"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Eksfolacija lica
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.routine_part=serum"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Serumi
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.routine_part=moisturizer"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Hidratantne kreme
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.routine_part=night_care"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Noćna njega
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {% comment %} Kožni problemi {% endcomment %}
+            <div class="flex flex-col gap-1 ">
+              <p class="m-0 text-xs font-medium uppercase tracking-wide text-primary/70">Kožni problemi</p>
+              <ul class="m-0 list-none space-y-1 p-0">
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=acne"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Nečista koža
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=redness"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Crvenilo i nadraženost
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=clogged_pores"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Začepljene pore
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=enlarged_pores"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Proširene pore
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=discoloration"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Diskoloracija
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{{ cosmetics_collection.url }}?filter.p.m.custom.problem_solution=aging"
+                    class="text-sm text-primary transition-colors duration-200 hover:text-primary/80 no-underline"
+                  >
+                    Bore
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div class="grid gap-6 md:grid-cols-3">
-          {% for product in featured_products limit: 3 %}
+          {% for product in featured_products limit: 2 %}
             {% render 'product-card', product: product, hide_buy_form: true %}
           {% endfor %}
         </div>

@@ -1,0 +1,162 @@
+{%- liquid
+  assign section_id = section.settings.custom_id | default: section.id
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="faq-section"
+  style="
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="container-small py-20">
+    <div class="flex flex-col gap-12">
+      {% if section.settings.title != blank or section.settings.description != blank %}
+        <div class="flex flex-col gap-2">
+          {% if section.settings.title != blank %}
+            <h2 class="uppercase font-bold text-black">{{ section.settings.title | escape }}</h2>
+          {% endif %}
+
+          {% if section.settings.description != blank %}
+            <div class="text-neutral-700">
+              {{ section.settings.description }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div>
+        {% for block in section.blocks %}
+          <collapsible-item
+            class="block faq-item border-b last:border-b-0 transition-colors"
+            style="border-color: rgba(0, 0, 0, 0.05);"
+            {{ block.shopify_attributes }}
+          >
+            <button
+              class="group faq-question cursor-pointer outline-none w-full text-left py-5 flex items-center justify-between focus:outline-none focus:ring-0"
+              data-collapsible-trigger
+              type="button"
+            >
+              <span class="text-lg font-red-hat font-medium text-black pr-4">{{ block.settings.question | escape }}</span>
+              <div class="faq-icon w-7 h-7 rounded-full flex items-center justify-center [&>svg]:size-4 group-has-[aria-expanded=true]:rotate-90 transition-transform duration-300">
+                {{ 'icon-plus.svg' | inline_asset_content }}
+              </div>
+            </button>
+            <div class="faq-answer" data-collapsible-content>
+              <div class="pt-3 pb-8 leading-[1.6] text-black gap-4 flex flex-col">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </collapsible-item>
+        {% endfor %}
+      </div>
+
+      <script src="{{ 'collapsible.js' | asset_url }}" defer></script>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+
+  .faq-section .faq-icon {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1f2937;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "faq-section",
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Frequently asked question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>This is the answer to the frequently asked question.</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FAQ"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional anchor to link directly to this section."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Frequently asked question?",
+            "answer": "<p>This is the answer to the frequently asked question.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Another frequently asked question?",
+            "answer": "<p>This is another answer to a frequently asked question.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
