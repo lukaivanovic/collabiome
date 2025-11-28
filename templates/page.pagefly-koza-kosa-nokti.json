@@ -148,6 +148,60 @@
         "description": ""
       }
     },
+    "left_image_text_rKXn9C": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/nokti_prije_poslije.webp",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Nokti postaju tanki i krhki,",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_YxhUCd": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/nokti_prije_poslije.webp",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Nokti postaju tanki i krhki,",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_zdFHpi": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/nokti_prije_poslije.webp",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Nokti postaju tanki i krhki,",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
     "three_column_grid_yBPDLg": {
       "type": "three-column-grid",
       "blocks": {
@@ -282,6 +336,9 @@
     "product_fKj34x",
     "product_generic_gjNk98",
     "three_column_grid_hpMCwn",
+    "left_image_text_rKXn9C",
+    "left_image_text_YxhUCd",
+    "left_image_text_zdFHpi",
     "three_column_grid_yBPDLg",
     "faq_rE4mRK"
   ]
