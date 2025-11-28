@@ -55,7 +55,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "shop_menu": "main-navigation-shop-menu",
+        "shop_menu": "main-menu",
         "marketing_menu": "main-navigation-marketing-menu",
         "cosmetics_menu": "footer-company",
         "supplements_menu": "footer"
