@@ -829,6 +829,9 @@
   .justify-end {
     justify-content: flex-end;
   }
+  .justify-start {
+    justify-content: flex-start;
+  }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
@@ -1236,9 +1239,6 @@
   }
   .\!px-0 {
     padding-inline: calc(var(--spacing) * 0) !important;
-  }
-  .px-1 {
-    padding-inline: calc(var(--spacing) * 1);
   }
   .px-1\.5 {
     padding-inline: calc(var(--spacing) * 1.5);
@@ -2636,14 +2636,14 @@
       height: calc(var(--spacing) * 12);
     }
   }
-  .\[\&\>svg\]\:h-8 {
+  .\[\&\>svg\]\:h-10 {
     &>svg {
-      height: calc(var(--spacing) * 8);
+      height: calc(var(--spacing) * 10);
     }
   }
-  .\[\&\>svg\]\:h-12 {
+  .\[\&\>svg\]\:h-16 {
     &>svg {
-      height: calc(var(--spacing) * 12);
+      height: calc(var(--spacing) * 16);
     }
   }
   .\[\&\>svg\]\:w-auto {

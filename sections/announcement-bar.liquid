@@ -1,8 +1,19 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-  assign section_class = 'section-' | append: section.type
-  assign has_blocks = section.blocks.size > 0
-  assign use_multiple = has_blocks and section.settings.enable_multiple
+  if section.blocks.size > 0
+    assign has_blocks = true
+  else
+    assign has_blocks = false
+  endif
+  if has_blocks
+    if section.settings.enable_multiple
+      assign use_multiple = true
+    else
+      assign use_multiple = false
+    endif
+  else
+    assign use_multiple = false
+  endif
 %}
 
 <script defer src="{{ 'countdown.js.liquid' | asset_url }}"></script>
