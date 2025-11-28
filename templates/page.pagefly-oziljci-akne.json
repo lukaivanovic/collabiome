@@ -13,9 +13,23 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "product_generic_K3qddY": {
+      "type": "product-generic",
+      "name": "Product",
+      "settings": {
+        "product": ""
+      }
+    },
+    "product_ingredients_pDKGG7": {
+      "type": "product-ingredients",
+      "name": "Ingredients",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "product_generic_K3qddY",
+    "product_ingredients_pDKGG7"
   ]
 }
