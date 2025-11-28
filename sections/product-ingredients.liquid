@@ -1,6 +1,7 @@
 {%- liquid
-  if section.settings.product != blank
+  if section.settings.use_current_product == false
     assign selected_product = section.settings.product
+    echo selected_product | json
   else
     assign selected_product = product
   endif
@@ -68,6 +69,12 @@
 {
   "name": "Product Ingredients",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_current_product",
+      "label": "Use current product",
+      "default": true
+    },
     {
       "type": "product",
       "id": "product",
