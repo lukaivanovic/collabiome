@@ -1,25 +1,36 @@
 {% doc %}
-  Header Mega Menu - Supplements Panel
+  Header Mega Menu - Supplements
 
-  Renders the supplements collection mega menu panel for the desktop header.
+  Renders a custom mega menu panel for the supplements collection.
 
-  @param {link} link - Main navigation link pointing to a supplements collection (required)
-  @param {linklist} submenu - Secondary menu with supplements sub-collections or links
+  @param {linklist} supplements_menu - Secondary menu for supplements collections
 {% enddoc %}
 
 {% liquid
-  assign link = link | default: empty
-  assign submenu = submenu | default: empty
+  assign supplements_menu = supplements_menu | default: empty
 
-  unless link != empty
-    echo '<!-- Error: link parameter required for header-mega-menu-supplements snippet -->'
+  # Prefer explicit supplements collection handles, fall back if needed
+  assign supplements_collection = collections['dodaci-prehrani'] | default: collections['supplements']
+
+  # Use featured_products metafield when available, otherwise fall back to collection products
+  assign featured_products = blank
+
+  if supplements_collection.metafields.custom and supplements_collection.metafields.custom.featured_products
+    assign featured_products = supplements_collection.metafields.custom.featured_products.value
+  endif
+
+  if featured_products == blank
+    assign featured_products = supplements_collection.products
+  endif
+
+  unless supplements_collection and supplements_collection != empty
     break
   endunless
 %}
 
 <div
   class="mega-menu-panel pointer-events-none absolute left-0 top-[calc(100%-16px)] w-full aria-[hidden=false]:pointer-events-auto"
-  data-mega-menu-panel="{{ link.object.handle }}"
+  data-mega-menu-panel="{{ supplements_collection.handle }}"
   aria-hidden="true"
 >
   <div class="container py-3">
@@ -29,13 +40,13 @@
     >
       <div class="grid gap-8 p-8 md:grid-cols-[minmax(260px,320px)_1fr]">
         <div class="flex flex-col gap-4">
-          {% if submenu and submenu.links.size > 0 %}
+          {% if supplements_menu and supplements_menu.links.size > 0 %}
             <h3 class="text-lg font-semibold text-primary">
-              {{ link.object.title }}
+              {{ supplements_collection.title }}
             </h3>
 
             <ul class="m-0 list-none space-y-2 p-0">
-              {% for menu_link in submenu.links %}
+              {% for menu_link in supplements_menu.links %}
                 <li>
                   <a
                     href="{{ menu_link.url }}"
@@ -50,7 +61,7 @@
         </div>
 
         <div class="grid gap-6 md:grid-cols-3">
-          {% for product in link.object.products limit: 3 %}
+          {% for product in featured_products limit: 3 %}
             {% render 'product-card', product: product, hide_buy_form: true %}
           {% endfor %}
         </div>

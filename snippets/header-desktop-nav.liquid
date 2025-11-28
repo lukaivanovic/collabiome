@@ -57,11 +57,11 @@
     </div>
   </div>
 
-  {% render 'header-mega-menu',
-    shop_menu: shop_menu,
-    cosmetics_menu: cosmetics_menu,
-    supplements_menu: supplements_menu
-  %}
+  <div data-mega-menu-panels>
+    {% render 'header-mega-menu-cosmetics', cosmetics_menu: cosmetics_menu %}
+
+    {% render 'header-mega-menu-supplements', supplements_menu: supplements_menu %}
+  </div>
 </mega-menu>
 
 {% stylesheet %}
