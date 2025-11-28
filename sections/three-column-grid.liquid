@@ -2,6 +2,17 @@
   assign section_id = section.settings.custom_id | default: section.id
   assign section_title = section.settings.title
   assign section_description = section.settings.description
+  assign columns = section.settings.columns | default: 3
+
+  if columns == 3
+    assign grid_cols_class = 'md:grid-cols-3'
+  elsif columns == 4
+    assign grid_cols_class = 'md:grid-cols-4'
+  elsif columns == 5
+    assign grid_cols_class = 'md:grid-cols-5'
+  else
+    assign grid_cols_class = 'md:grid-cols-3'
+  endif
 %}
 
 <section id="{{ section_id }}" class="border-b border-slate-200 py-16">
@@ -13,7 +24,7 @@
       {% endif %}
     </div>
 
-    <div class="mt-12 grid gap-8 md:grid-cols-3">
+    <div class="mt-12 grid gap-8 {{ grid_cols_class }}">
       {% for block in section.blocks %}
         {% liquid
           assign item_title = block.settings.title
@@ -124,6 +135,16 @@
       "type": "textarea",
       "id": "description",
       "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Number of columns (desktop)",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "info": "Mobile will always display 1 column"
     }
   ],
   "presets": [

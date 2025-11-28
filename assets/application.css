@@ -2505,6 +2505,16 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+  .md\:grid-cols-4 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .md\:grid-cols-5 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
   .md\:grid-cols-\[minmax\(0\,1\.1fr\)_minmax\(0\,1fr\)\] {
     @media (width >= 48rem) {
       grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
