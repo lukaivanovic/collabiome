@@ -145,7 +145,8 @@
       "settings": {
         "custom_id": "",
         "title": "Kako konzumirati kolagen",
-        "description": ""
+        "description": "",
+        "columns": 3
       }
     },
     "left_image_text_rKXn9C": {
@@ -242,7 +243,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/estetica.webp",
-            "title": "Estetica",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
@@ -253,7 +254,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/dnevnik.webp",
-            "title": "Dnevnik.hr",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
@@ -264,7 +265,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/slobodna.webp",
-            "title": "Slobodna Dalmacija",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
@@ -284,7 +285,8 @@
       "settings": {
         "custom_id": "",
         "title": "Mediji o nama",
-        "description": ""
+        "description": "",
+        "columns": 5
       }
     },
     "faq_rE4mRK": {
