@@ -1918,6 +1918,13 @@
       }
     }
   }
+  .group-hover\:text-slate-700 {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--color-slate-700);
+      }
+    }
+  }
   .group-hover\:shadow-lg {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {

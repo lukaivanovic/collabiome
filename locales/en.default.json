@@ -99,8 +99,12 @@
         "item": {
           "name": "Grid item",
           "settings": {
+            "image": "Image",
             "title": "Title",
-            "description": "Description"
+            "description": "Description",
+            "link": "Link",
+            "show_button": "Show link button",
+            "button_label": "Button label"
           }
         }
       }

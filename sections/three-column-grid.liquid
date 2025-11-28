@@ -18,13 +18,45 @@
         {% liquid
           assign item_title = block.settings.title
           assign item_description = block.settings.description
+          assign item_image = block.settings.image
+          assign item_link = block.settings.link
+          assign show_button = block.settings.show_button
+          assign button_label = block.settings.button_label
         %}
-        <article class="flex flex-col gap-2 border-b border-slate-200 pb-6 last:border-b-0 last:pb-0">
-          <h3 class="text-lg font-semibold text-slate-900">{{ item_title | escape }}</h3>
-          {% if item_description != blank %}
-            <p class="text-sm text-slate-500">{{ item_description | escape }}</p>
-          {% endif %}
-        </article>
+        {% if item_link != blank %}
+          <a
+            href="{{ item_link }}"
+            class="flex flex-col gap-2 border-b border-slate-200 pb-6 last:border-b-0 last:pb-0 group"
+          >
+        {% else %}
+          <article class="flex flex-col gap-2 border-b border-slate-200 pb-6 last:border-b-0 last:pb-0">
+        {% endif %}
+        {% if item_image != blank %}
+          <div class="mb-4 overflow-hidden rounded-lg">
+            {{
+              item_image
+              | image_url: width: 600, height: 400, crop: 'center'
+              | image_tag:
+                class: 'w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105',
+                alt: item_title,
+                loading: 'lazy'
+            }}
+          </div>
+        {% endif %}
+        <h3 class="text-lg font-semibold text-slate-900 group-hover:text-slate-700">{{ item_title | escape }}</h3>
+        {% if item_description != blank %}
+          <p class="text-sm text-slate-500">{{ item_description | escape }}</p>
+        {% endif %}
+        {% if show_button and button_label != blank %}
+          <span class="mt-2 text-sm font-medium text-slate-900 underline group-hover:text-slate-700">
+            {{ button_label | escape }}
+          </span>
+        {% endif %}
+        {% if item_link != blank %}
+          </a>
+        {% else %}
+          </article>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -32,24 +64,46 @@
 
 {% schema %}
 {
-  "name": "Three Column Grid",
+  "name": "t:sections.three_column_grid.name",
   "tag": "section",
   "class": "three-column-grid",
   "max_blocks": 6,
   "blocks": [
     {
       "type": "item",
-      "name": "Item",
+      "name": "t:sections.three_column_grid.blocks.item.name",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.three_column_grid.blocks.item.settings.image"
+        },
         {
           "type": "text",
           "id": "title",
-          "label": "Title"
+          "label": "t:sections.three_column_grid.blocks.item.settings.title"
         },
         {
           "type": "textarea",
           "id": "description",
-          "label": "Description"
+          "label": "t:sections.three_column_grid.blocks.item.settings.description"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.three_column_grid.blocks.item.settings.link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "label": "t:sections.three_column_grid.blocks.item.settings.show_button",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.three_column_grid.blocks.item.settings.button_label",
+          "default": "Learn more"
         }
       ]
     }
@@ -58,24 +112,24 @@
     {
       "type": "text",
       "id": "custom_id",
-      "label": "Custom ID",
-      "info": "Add a custom ID to this section"
+      "label": "t:sections.three_column_grid.settings.custom_id",
+      "info": "t:sections.three_column_grid.settings.custom_id_info"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Title"
+      "label": "t:sections.three_column_grid.settings.title"
     },
     {
       "type": "textarea",
       "id": "description",
-      "label": "Description"
+      "label": "t:sections.three_column_grid.settings.description"
     }
   ],
   "presets": [
     {
-      "name": "Three Column Grid",
-      "category": "Layout",
+      "name": "t:sections.three_column_grid.name",
+      "category": "t:sections.three_column_grid.category",
       "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }]
     }
   ]
