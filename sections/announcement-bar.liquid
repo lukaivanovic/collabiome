@@ -10,7 +10,9 @@
 <div
   class="announcement-bar__inner text-sm py-2"
   data-section-id="{{ section_id }}"
-  {% if use_multiple %}data-auto-rotate="true" data-rotate-interval="{{ section.settings.rotate_interval | default: 5000 }}"{% endif %}
+  {% if use_multiple %}
+    data-auto-rotate="true" data-rotate-interval="{{ section.settings.rotate_interval | default: 5000 }}"
+  {% endif %}
 >
   {% if use_multiple %}
     {% comment %} Multiple announcements with auto-shuffle {% endcomment %}
@@ -18,7 +20,9 @@
       <div
         class="announcement-bar__item {% unless forloop.first %}hidden{% endunless %}"
         data-block-id="{{ block.id }}"
-        {% if block.settings.link_url != blank %}data-link-url="{{ block.settings.link_url }}"{% endif %}
+        {% if block.settings.link_url != blank %}
+          data-link-url="{{ block.settings.link_url }}"
+        {% endif %}
         {% if block.settings.enable_countdown and block.settings.countdown_target != blank %}
           data-countdown-target="{{ block.settings.countdown_target | escape }}"
         {% endif %}
@@ -38,8 +42,8 @@
                 {% endif %}
                 <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
                   Ends in
-                  <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-                  <span class="time seconds">00</span>s
+                  <span class="time days">00</span>d <span class="time hours">00</span>h
+                  <span class="time minutes">00</span>m <span class="time seconds">00</span>s
                 </span>
               </div>
             {% else %}
@@ -60,8 +64,8 @@
               {% endif %}
               <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
                 Ends in
-                <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-                <span class="time seconds">00</span>s
+                <span class="time days">00</span>d <span class="time hours">00</span>h
+                <span class="time minutes">00</span>m <span class="time seconds">00</span>s
               </span>
             </div>
           {% else %}
@@ -87,8 +91,8 @@
             {% endif %}
             <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
               Ends in
-              <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-              <span class="time seconds">00</span>s
+              <span class="time days">00</span>d <span class="time hours">00</span>h
+              <span class="time minutes">00</span>m <span class="time seconds">00</span>s
             </span>
           </div>
         {% else %}
@@ -158,7 +162,7 @@
 {% endstylesheet %}
 
 {% javascript %}
-  (function() {
+  (function () {
     function pad(n) {
       return String(n).padStart(2, '0');
     }
@@ -234,22 +238,21 @@
       function showNext() {
         // Hide current item
         items[currentIndex].classList.add('hidden');
-        
+
         // Stop countdown for current item
         const currentCountdown = items[currentIndex].querySelector('.announcement-bar__countdown');
         if (currentCountdown && currentCountdown.__countdownTimer) {
           clearInterval(currentCountdown.__countdownTimer);
           currentCountdown.__countdownTimer = null;
         }
-        
+
         // Move to next item (with shuffle)
-        const availableIndices = Array.from({ length: items.length }, (_, i) => i)
-          .filter(i => i !== currentIndex);
+        const availableIndices = Array.from({ length: items.length }, (_, i) => i).filter((i) => i !== currentIndex);
         currentIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-        
+
         // Show next item
         items[currentIndex].classList.remove('hidden');
-        
+
         // Initialize countdown for new item if needed
         const countdownEl = items[currentIndex].querySelector('.announcement-bar__countdown');
         if (countdownEl) {
@@ -262,7 +265,7 @@
       container.__rotationTimer = rotationTimer;
 
       // Cleanup on page unload
-      window.addEventListener('beforeunload', function() {
+      window.addEventListener('beforeunload', function () {
         clearInterval(rotationTimer);
       });
     }
@@ -275,7 +278,7 @@
       }
     }
 
-    ready(function() {
+    ready(function () {
       const containers = document.querySelectorAll('.announcement-bar__inner[data-auto-rotate="true"]');
       containers.forEach(initAnnouncementRotation);
     });
@@ -318,7 +321,7 @@
       "label": "Countdown target",
       "info": "Countdown target info",
       "placeholder": "2025-12-31T23:59:59Z",
-      "visible_if": "enable_countdown == true"
+      "visible_if": "{{ section.settings.enable_countdown == true }}"
     },
     {
       "type": "header",
@@ -341,7 +344,7 @@
       "default": 5000,
       "unit": "ms",
       "info": "Time between announcement rotations",
-      "visible_if": "enable_multiple == true"
+      "visible_if": "{{ section.settings.enable_multiple == true }}"
     }
   ],
   "blocks": [
@@ -372,7 +375,7 @@
           "label": "Countdown target",
           "info": "Countdown target info",
           "placeholder": "2025-12-31T23:59:59Z",
-          "visible_if": "enable_countdown == true"
+          "visible_if": "{{ block.settings.enable_countdown == true }}"
         }
       ]
     }
