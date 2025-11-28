@@ -88,8 +88,16 @@
     },
     "product_fKj34x": {
       "type": "product",
+      "disabled": true,
       "name": "Product",
       "settings": {}
+    },
+    "product_generic_gjNk98": {
+      "type": "product-generic",
+      "name": "Product",
+      "settings": {
+        "product": "boostx3"
+      }
     }
   },
   "order": [
@@ -98,6 +106,7 @@
     "left_image_text_KwRcBJ",
     "left_image_text_p8MWz9",
     "left_image_text_KnKbnn",
-    "product_fKj34x"
+    "product_fKj34x",
+    "product_generic_gjNk98"
   ]
 }
