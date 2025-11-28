@@ -64,45 +64,45 @@
 
 {% schema %}
 {
-  "name": "t:sections.three_column_grid.name",
+  "name": "Three Column Grid",
   "tag": "section",
   "class": "three-column-grid",
   "max_blocks": 6,
   "blocks": [
     {
       "type": "item",
-      "name": "t:sections.three_column_grid.blocks.item.name",
+      "name": "Item",
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
-          "label": "t:sections.three_column_grid.blocks.item.settings.image"
+          "label": "Image"
         },
         {
           "type": "text",
           "id": "title",
-          "label": "t:sections.three_column_grid.blocks.item.settings.title"
+          "label": "Title"
         },
         {
           "type": "textarea",
           "id": "description",
-          "label": "t:sections.three_column_grid.blocks.item.settings.description"
+          "label": "Description"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "t:sections.three_column_grid.blocks.item.settings.link"
+          "label": "Link"
         },
         {
           "type": "checkbox",
           "id": "show_button",
-          "label": "t:sections.three_column_grid.blocks.item.settings.show_button",
+          "label": "Show link button",
           "default": false
         },
         {
           "type": "text",
           "id": "button_label",
-          "label": "t:sections.three_column_grid.blocks.item.settings.button_label",
+          "label": "Button label",
           "default": "Learn more"
         }
       ]
@@ -112,24 +112,24 @@
     {
       "type": "text",
       "id": "custom_id",
-      "label": "t:sections.three_column_grid.settings.custom_id",
-      "info": "t:sections.three_column_grid.settings.custom_id_info"
+      "label": "Custom ID",
+      "info": "Add a custom ID to this section"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "t:sections.three_column_grid.settings.title"
+      "label": "Title"
     },
     {
       "type": "textarea",
       "id": "description",
-      "label": "t:sections.three_column_grid.settings.description"
+      "label": "Description"
     }
   ],
   "presets": [
     {
-      "name": "t:sections.three_column_grid.name",
-      "category": "t:sections.three_column_grid.category",
+      "name": "Three Column Grid",
+      "category": "Layout",
       "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }]
     }
   ]
