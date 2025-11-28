@@ -13,9 +13,84 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "hero_TbVw4R": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "kicker": "",
+        "title": "Hero title",
+        "description": "",
+        "show_buttons": true,
+        "button_label": "",
+        "button_link": "",
+        "button_2_label": "",
+        "button_2_link": "",
+        "video": "shopify://files/videos/9743ef8918a34ec79231453c01211ec2.mp4",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "left_image_text_KwRcBJ": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/kosa_563af865-2fe1-461a-b3b3-bd1576bcdfca.webp",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Sve počinje gotovo neprimjetno… kosa postane tanja i beživotna…",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_p8MWz9": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/koza.webp",
+        "image_alt": "Image alt text",
+        "image_position": "right",
+        "title": "Sve počinje gotovo neprimjetno… kosa postane tanja i beživotna…",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_KnKbnn": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/nokti_prije_poslije.webp",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Nokti postaju tanki i krhki, pucaju već pri najmanjem udarcu ili kućanskom poslu.Lak se više ne drži kako treba, a površina nokta izgleda neravna i beživotna.S vremenom počinješ skrivati ruke, jer svaki pogled na nokte podsjeća koliko su izgubili čvrstoću i zdrav izgled.Zato je važno njegovati nokte i iznutra – jer prava čvrstoća dolazi iznutra, a ne samo s površine.",
+        "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "hero_TbVw4R",
+    "left_image_text_KwRcBJ",
+    "left_image_text_p8MWz9",
+    "left_image_text_KnKbnn"
   ]
 }
