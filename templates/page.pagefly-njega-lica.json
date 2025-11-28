@@ -27,6 +27,7 @@
         "button_2_label": "",
         "button_2_link": "",
         "video": "shopify://files/videos/0910.mp4",
+        "video_url": "",
         "overlay_color": "#000000",
         "overlay_opacity": 0
       }
@@ -124,12 +125,35 @@
         "button_link_target": "_self"
       }
     },
-    "product_faq_LfXUQk": {
-      "type": "product-faq",
-      "name": "Product FAQ",
+    "faq_rrgXj7": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_yWMBrR": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Frequently asked question?",
+            "answer": "<p>This is the answer to the frequently asked question.</p>"
+          }
+        },
+        "faq_item_icRkeK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Another frequently asked question?",
+            "answer": "<p>This is another answer to a frequently asked question.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_yWMBrR",
+        "faq_item_icRkeK"
+      ],
+      "name": "FAQ",
       "settings": {
         "title": "FAQ",
-        "description": "<p>Got a less-frequently asked question?</p>"
+        "description": "",
+        "custom_id": "",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     }
   },
@@ -141,6 +165,6 @@
     "left_image_text_LywwXY",
     "left_image_text_6itCjX",
     "left_image_text_mPdDV7",
-    "product_faq_LfXUQk"
+    "faq_rrgXj7"
   ]
 }
