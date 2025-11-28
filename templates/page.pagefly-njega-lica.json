@@ -131,21 +131,29 @@
         "faq_item_yWMBrR": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question?",
-            "answer": "<p>This is the answer to the frequently asked question.</p>"
+            "question": "Koja je prikladna dob za korištenje Collabiomé linije?",
+            "answer": "<p>Collabiomé je formulirana tako da odgovara potrebama kože odraslih, a posebno je namijenjen ženama koje žele očuvati vitalnost, elastičnost i zdrav izgled kože. Preporučuje se za dob od 25 godina nadalje, kada prirodna proizvodnja kolagena počinje opadati.</p>"
           }
         },
         "faq_item_icRkeK": {
           "type": "faq_item",
           "settings": {
-            "question": "Another frequently asked question?",
-            "answer": "<p>This is another answer to a frequently asked question.</p>"
+            "question": "Jesu li proizvodi sigurni za osjetljivu kožu?",
+            "answer": "<p>Da. Formule sadrže pažljivo odabrane biljne i morske sastojke visoke čistoće i bez agresivnih dodataka, što ih čini pogodnima i za osjetljivu kožu.</p>"
+          }
+        },
+        "faq_item_XDNQ64": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Koliko brzo se mogu očekivati vidljivi rezultati?",
+            "answer": "<p>Rezultati variraju ovisno o tipu kože i rutini, no već nakon nekoliko tjedana redovite upotrebe može se primijetiti poboljšana hidratacija, elastičnost i osjećaj svježine, dok su učinci na kolagen i čvrstoću kože vidljiviji kroz dužu uporabu.</p>"
           }
         }
       },
       "block_order": [
         "faq_item_yWMBrR",
-        "faq_item_icRkeK"
+        "faq_item_icRkeK",
+        "faq_item_XDNQ64"
       ],
       "name": "FAQ",
       "settings": {
