@@ -77,7 +77,7 @@
         "image": "shopify://shop_images/nokti_prije_poslije.webp",
         "image_alt": "Image alt text",
         "image_position": "left",
-        "title": "Nokti postaju tanki i krhki, pucaju već pri najmanjem udarcu ili kućanskom poslu.Lak se više ne drži kako treba, a površina nokta izgleda neravna i beživotna.S vremenom počinješ skrivati ruke, jer svaki pogled na nokte podsjeća koliko su izgubili čvrstoću i zdrav izgled.Zato je važno njegovati nokte i iznutra – jer prava čvrstoća dolazi iznutra, a ne samo s površine.",
+        "title": "Nokti postaju tanki i krhki,",
         "description": "<p>Pod prstima više nije mekana kao prije, kao da je izgubila sjaj i hidrataciju.</p><p>Svako češljanje završava s nekoliko vlasi na četki, a bojenje i feniranje ostavljaju je još lomljivijom.</p><p>Frizura više ne traje kao nekada, a vrhovi izgledaju suho i ispucano.</p><p>Tada shvatiš da ti je kosa izgubila snagu iznutra.</p>",
         "show_button": true,
         "button_label": "Learn more",
@@ -98,6 +98,179 @@
       "settings": {
         "product": "boostx3"
       }
+    },
+    "three_column_grid_hpMCwn": {
+      "type": "three-column-grid",
+      "blocks": {
+        "item_ekbf98": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design.webp",
+            "title": "Ulij",
+            "description": "Kolagen se može konzumirati u dozi od 25 ml ili 50 ml dnevno. Jedna boca je dovoljna za 10-20 dana.",
+            "link": "",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_acQtLR": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_2_463f425f-27ca-4387-9fa4-2a7f2a5c94a8.webp",
+            "title": "Popij",
+            "description": "Svakodnevno popij svoju dozu, možeš pomiješati u omiljeni napitak, sok ili smoothie.",
+            "link": "",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_Ttk3Nh": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/okus_narance_1.webp",
+            "title": "Blistaj",
+            "description": "Nakon 30 dana korištenja uživaj u prekrasnoj kosi, sjajnoj koži i čvrstim noktima!",
+            "link": "",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        }
+      },
+      "block_order": [
+        "item_ekbf98",
+        "item_acQtLR",
+        "item_Ttk3Nh"
+      ],
+      "name": "Three Column Grid",
+      "settings": {
+        "custom_id": "",
+        "title": "Kako konzumirati kolagen",
+        "description": ""
+      }
+    },
+    "three_column_grid_yBPDLg": {
+      "type": "three-column-grid",
+      "blocks": {
+        "item_WeWVn8": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/jutarnji.webp",
+            "title": "Jutarnji List",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_je3x3k": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/index.webp",
+            "title": "Index",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_qhzjCx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/tportal_cbb19fc7-659d-41d6-a37d-ec1b002707a6.webp",
+            "title": "tportal",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_Vmp8cN": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/estetica.webp",
+            "title": "Estetica",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_gADFVU": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/dnevnik.webp",
+            "title": "Dnevnik.hr",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        },
+        "item_xMGyfY": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/slobodna.webp",
+            "title": "Slobodna Dalmacija",
+            "description": "",
+            "link": "https://google.com",
+            "show_button": false,
+            "button_label": "Learn more"
+          }
+        }
+      },
+      "block_order": [
+        "item_WeWVn8",
+        "item_je3x3k",
+        "item_qhzjCx",
+        "item_Vmp8cN",
+        "item_gADFVU",
+        "item_xMGyfY"
+      ],
+      "name": "Three Column Grid",
+      "settings": {
+        "custom_id": "",
+        "title": "Mediji o nama",
+        "description": ""
+      }
+    },
+    "faq_rE4mRK": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_pece7t": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Koja je prikladna dob za korištenje Collabiomé linije?",
+            "answer": "<p>Collabiomé je formulirana tako da odgovara potrebama kože odraslih, a posebno je namijenjen ženama koje žele očuvati vitalnost, elastičnost i zdrav izgled kože. Preporučuje se za dob od 25 godina nadalje, kada prirodna proizvodnja kolagena počinje opadati.</p>"
+          }
+        },
+        "faq_item_cCgekC": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Jesu li proizvodi sigurni za osjetljivu kožu?",
+            "answer": "<p>Da. Formule sadrže pažljivo odabrane biljne i morske sastojke visoke čistoće i bez agresivnih dodataka, što ih čini pogodnima i za osjetljivu kožu.</p>"
+          }
+        },
+        "faq_item_pAPwhh": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Koliko brzo se mogu očekivati vidljivi rezultati?",
+            "answer": "<p>Rezultati variraju ovisno o tipu kože i rutini, no već nakon nekoliko tjedana redovite upotrebe može se primijetiti poboljšana hidratacija, elastičnost i osjećaj svježine, dok su učinci na kolagen i čvrstoću kože vidljiviji kroz dužu uporabu.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_pece7t",
+        "faq_item_cCgekC",
+        "faq_item_pAPwhh"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "title": "Najčešća pitanja",
+        "description": "",
+        "custom_id": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -107,6 +280,9 @@
     "left_image_text_p8MWz9",
     "left_image_text_KnKbnn",
     "product_fKj34x",
-    "product_generic_gjNk98"
+    "product_generic_gjNk98",
+    "three_column_grid_hpMCwn",
+    "three_column_grid_yBPDLg",
+    "faq_rE4mRK"
   ]
 }
