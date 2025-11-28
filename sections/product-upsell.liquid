@@ -1,8 +1,8 @@
 {%- liquid
   assign upsell_metafield = product.metafields.custom.upsell_products.value
 
-  assign section_title = section.settings.title | default: 'Complete your routine'
-  assign section_description = section.settings.description
+  assign section_title = product.metafields.custom.section_upsell_title.value | default: 'Complete your routine'
+  assign section_description = product.metafields.custom.section_upsell_description.value
 -%}
 
 <section class="py-30">
@@ -256,19 +256,6 @@
 {
   "name": "Product Upsell",
   "tag": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Complete your routine"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Section Description"
-    }
-  ],
   "presets": [
     {
       "name": "Product Upsell",
