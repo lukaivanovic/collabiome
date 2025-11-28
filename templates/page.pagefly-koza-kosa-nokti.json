@@ -27,6 +27,7 @@
         "button_2_label": "",
         "button_2_link": "",
         "video": "shopify://files/videos/9743ef8918a34ec79231453c01211ec2.mp4",
+        "video_url": "",
         "overlay_color": "#000000",
         "overlay_opacity": 0
       }
@@ -84,6 +85,11 @@
         "button_style": "solid",
         "button_link_target": "_self"
       }
+    },
+    "product_fKj34x": {
+      "type": "product",
+      "name": "Product",
+      "settings": {}
     }
   },
   "order": [
@@ -91,6 +97,7 @@
     "hero_TbVw4R",
     "left_image_text_KwRcBJ",
     "left_image_text_p8MWz9",
-    "left_image_text_KnKbnn"
+    "left_image_text_KnKbnn",
+    "product_fKj34x"
   ]
 }
