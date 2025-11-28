@@ -1,0 +1,197 @@
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
+
+<section id="{{ section_id }}" class="border-b border-slate-200 py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl">
+      {% if section.settings.title != blank %}
+        <h2 class="text-3xl font-semibold text-slate-900">
+          {{ section.settings.title | escape }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="mt-3 text-base text-slate-600">
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+    </div>
+
+    <div class="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-start">
+      <div class="space-y-4 text-sm text-slate-600">
+        {% if section.settings.contact_text != blank %}
+          <p>{{ section.settings.contact_text }}</p>
+        {% endif %}
+
+        {% if section.settings.show_email and section.settings.display_email != blank %}
+          <p>
+            <span class="font-medium text-slate-900">Email</span>
+            <br>
+            <a href="mailto:{{ section.settings.display_email | escape }}" class="text-slate-900 underline">
+              {{ section.settings.display_email | escape }}
+            </a>
+          </p>
+        {% endif %}
+
+        {% if section.settings.show_phone and section.settings.display_phone != blank %}
+          <p>
+            <span class="font-medium text-slate-900">Phone</span>
+            <br>
+            <span class="text-slate-900">
+              {{ section.settings.display_phone | escape }}
+            </span>
+          </p>
+        {% endif %}
+      </div>
+
+      <div>
+        {% form 'contact', id: 'ContactForm-' | append: section_id %}
+          {% if form.posted_successfully? %}
+            <div class="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+              {{ section.settings.success_message | default: 'Thanks for reaching out. We will get back to you soon.' }}
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900">
+              <p class="font-medium">There was a problem submitting your message.</p>
+            </div>
+          {% endif %}
+
+          {% if section.settings.email_subject != blank %}
+            <input
+              type="hidden"
+              name="contact[tags]"
+              value="Contact form - {{ section.settings.email_subject | escape }}"
+            >
+          {% endif %}
+
+          <div class="space-y-4">
+            <div>
+              <label for="ContactForm-name-{{ section_id }}" class="mb-1 block text-sm font-medium text-slate-800">
+                Name
+              </label>
+              <input
+                id="ContactForm-name-{{ section_id }}"
+                type="text"
+                name="contact[name]"
+                class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+                autocomplete="name"
+              >
+            </div>
+
+            <div>
+              <label for="ContactForm-email-{{ section_id }}" class="mb-1 block text-sm font-medium text-slate-800">
+                Email
+              </label>
+              <input
+                id="ContactForm-email-{{ section_id }}"
+                type="email"
+                name="contact[email]"
+                class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+                autocomplete="email"
+                required
+              >
+            </div>
+
+            <div>
+              <label for="ContactForm-message-{{ section_id }}" class="mb-1 block text-sm font-medium text-slate-800">
+                Message
+              </label>
+              <textarea
+                id="ContactForm-message-{{ section_id }}"
+                name="contact[body]"
+                rows="4"
+                class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 focus:ring-offset-white"
+              >
+                Send message
+              </button>
+            </div>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "class": "contact-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID",
+      "info": "Add a custom ID to this section"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Contact us"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Contact details text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_email",
+      "label": "Show email",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "display_email",
+      "label": "Display email"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone"
+    },
+    {
+      "type": "text",
+      "id": "display_phone",
+      "label": "Display phone"
+    },
+    {
+      "type": "text",
+      "id": "email_subject",
+      "label": "Email subject tag",
+      "info": "Optional label added as a tag to messages from this form"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for reaching out. We will get back to you soon."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact",
+      "category": "Contact"
+    }
+  ]
+}
+{% endschema %}
+
+

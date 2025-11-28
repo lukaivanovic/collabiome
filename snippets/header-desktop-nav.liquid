@@ -28,18 +28,16 @@
     </a>
 
     <div class="flex items-center gap-2 justify-end">
-      {% comment %}
-        {% if marketing_menu and marketing_menu.links.size > 0 %}
-          {% for link in marketing_menu.links %}
-            <a
-              href="{{ link.url }}"
-              class="block relative py-1 px-3 no-underline text-primary hover:bg-neutral-100 rounded-full"
-            >
-              {{ link.title }}
-            </a>
-          {% endfor %}
-        {% endif %}
-      {% endcomment %}
+      {% if marketing_menu and marketing_menu.links.size > 0 %}
+        {% for link in marketing_menu.links %}
+          <a
+            href="{{ link.url }}"
+            class="block relative py-1 px-3 no-underline text-primary hover:bg-neutral-100 rounded-full"
+          >
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      {% endif %}
       <a
         href="account"
         aria-label="User"
