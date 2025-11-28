@@ -24,7 +24,9 @@
     "product_ingredients_pDKGG7": {
       "type": "product-ingredients",
       "name": "Ingredients",
-      "settings": {}
+      "settings": {
+        "product": "kolagen-boost"
+      }
     }
   },
   "order": [
