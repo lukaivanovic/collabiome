@@ -40,7 +40,7 @@
       "name": "Announcement bar",
       "settings": {
         "message": "Free shipping on orders over $50",
-        "link_url": "",
+        "link_url": "shopify://blogs/news",
         "enable_countdown": false,
         "countdown_target": "2025-09-20T23:59:59Z",
         "enable_multiple": true,
