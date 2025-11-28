@@ -32,6 +32,10 @@ if (!customElements.get("testimonial-video-player")) {
         return;
       }
 
+      // Prevent default button behavior
+      event?.preventDefault();
+      event?.stopPropagation();
+
       // Start playing with sound
       this.inlineVideo.muted = false;
       this.inlineVideo.loop = false;
