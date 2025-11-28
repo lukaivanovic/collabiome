@@ -1,48 +1,14 @@
 {%- liquid
-  assign science_field = product.metafields.custom.science
-  assign science = null
-
-  if science_field != blank
-    assign science_value = science_field.value
-    if science_value != blank
-      assign science = science_value
-    else
-      assign science = science_field
-    endif
-  endif
-
-  assign science_title = ''
-  assign science_description = ''
-  assign science_studies = null
-  assign science_image = null
-
-  if science
-    assign science_title = science.title
-    assign science_description = science.desc | default: science.description
-    assign studies_field = science.studies
-    assign image_field = science.image
-
-    if studies_field != blank
-      if studies_field.value != blank
-        assign science_studies = studies_field.value
-      else
-        assign science_studies = studies_field
-      endif
-    endif
-
-    if image_field != blank
-      if image_field.value != blank
-        assign science_image = image_field.value
-      else
-        assign science_image = image_field
-      endif
-    endif
-  endif
+  assign science_title = product.metafields.custom.section_science_title.value | default: product.metafields.custom.section_science_title
+  assign science_description = product.metafields.custom.section_science_description.value | default: product.metafields.custom.section_science_description
+  assign science_studies = product.metafields.custom.section_science_studies.value | default: product.metafields.custom.section_science_studies
+  assign science_image = product.metafields.custom.section_science_image.value | default: product.metafields.custom.section_science_image
 
   assign fallback_title = 'sections.product_science.default_title' | t
   assign section_title = science_title | default: fallback_title
   assign fallback_description = 'sections.product_science.default_description' | t
   assign section_description = science_description | default: fallback_description
+
   assign has_description = false
   if section_description != blank
     assign has_description = true

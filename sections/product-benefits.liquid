@@ -3,6 +3,7 @@
   assign benefits_title = product.metafields.custom.benefits_title.value
   assign benefits_description = product.metafields.custom.benefits_description.value
   assign product_theme = product.metafields.custom.theme.value | default: 'default'
+  assign benefits_count = benefits.size
 
   case product_theme
     when 'recupera'
@@ -12,6 +13,12 @@
     else
       assign product_theme_class = 'product-theme-default'
   endcase
+
+  if benefits_count == 2
+    assign container_class = 'flex flex-col md:flex-row justify-center items-start gap-8 max-w-4xl mx-auto'
+  else
+    assign container_class = 'grid grid-cols-1 md:grid-cols-3 gap-8'
+  endif
 -%}
 
 <div class="container-small py-20 {{ product_theme_class }}">
@@ -24,9 +31,9 @@
       {% endif %}
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="{{ container_class }}">
       {% for benefit in benefits %}
-        <div class="flex flex-col items-center text-center">
+        <div class="flex flex-col items-center text-center{% if benefits_count == 2 %} md:w-1/2{% endif %}">
           <div class="mb-4 size-30">
             {% render 'image', image: benefit.image_icon, class: 'w-full h-full object-cover' %}
           </div>
