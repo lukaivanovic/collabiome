@@ -209,7 +209,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/jutarnji.webp",
-            "title": "Jutarnji List",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
@@ -220,7 +220,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/index.webp",
-            "title": "Index",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
@@ -231,7 +231,7 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/tportal_cbb19fc7-659d-41d6-a37d-ec1b002707a6.webp",
-            "title": "tportal",
+            "title": "",
             "description": "",
             "link": "https://google.com",
             "show_button": false,
