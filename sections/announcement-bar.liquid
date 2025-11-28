@@ -1,16 +1,104 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
   assign section_class = 'section-' | append: section.type
+  assign has_blocks = section.blocks.size > 0
+  assign use_multiple = has_blocks and section.settings.enable_multiple
 %}
 
-<script defer src="{{ 'countdown.js' | asset_url }}"></script>
+<script defer src="{{ 'countdown.js.liquid' | asset_url }}"></script>
 
-<div class="announcement-bar__inner text-sm py-2">
-  {% if section.settings.link_url != blank %}
-    <a
-      class="announcement-bar__link flex items-center justify-center gap-2 no-underline w-full"
-      href="{{ section.settings.link_url }}"
-    >
+<div
+  class="announcement-bar__inner text-sm py-2"
+  data-section-id="{{ section_id }}"
+  {% if use_multiple %}data-auto-rotate="true" data-rotate-interval="{{ section.settings.rotate_interval | default: 5000 }}"{% endif %}
+>
+  {% if use_multiple %}
+    {% comment %} Multiple announcements with auto-shuffle {% endcomment %}
+    {% for block in section.blocks %}
+      <div
+        class="announcement-bar__item {% unless forloop.first %}hidden{% endunless %}"
+        data-block-id="{{ block.id }}"
+        {% if block.settings.link_url != blank %}data-link-url="{{ block.settings.link_url }}"{% endif %}
+        {% if block.settings.enable_countdown and block.settings.countdown_target != blank %}
+          data-countdown-target="{{ block.settings.countdown_target | escape }}"
+        {% endif %}
+      >
+        {% if block.settings.link_url != blank %}
+          <a
+            class="announcement-bar__link flex items-center justify-center gap-2 no-underline w-full"
+            href="{{ block.settings.link_url }}"
+          >
+            {% if block.settings.enable_countdown and block.settings.countdown_target != blank %}
+              <div
+                class="announcement-bar__countdown flex items-center justify-center gap-2"
+                data-target="{{ block.settings.countdown_target | escape }}"
+              >
+                {% if block.settings.message != blank %}
+                  <span class="announcement-bar__text text-center m-0">{{ block.settings.message }}</span>
+                {% endif %}
+                <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
+                  Ends in
+                  <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
+                  <span class="time seconds">00</span>s
+                </span>
+              </div>
+            {% else %}
+              <span class="announcement-bar__text text-center m-0">{{ block.settings.message }}</span>
+            {% endif %}
+            <span class="announcement-bar__cta flex items-center">
+              {{ 'icon-chevron-right.svg' | inline_asset_content }}
+            </span>
+          </a>
+        {% else %}
+          {% if block.settings.enable_countdown and block.settings.countdown_target != blank %}
+            <div
+              class="announcement-bar__countdown flex items-center justify-center gap-2"
+              data-target="{{ block.settings.countdown_target | escape }}"
+            >
+              {% if block.settings.message != blank %}
+                <span class="announcement-bar__text text-center m-0">{{ block.settings.message }}</span>
+              {% endif %}
+              <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
+                Ends in
+                <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
+                <span class="time seconds">00</span>s
+              </span>
+            </div>
+          {% else %}
+            <p class="announcement-bar__text text-center m-0">{{ block.settings.message }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    {% comment %} Single announcement (backward compatibility) {% endcomment %}
+    {% if section.settings.link_url != blank %}
+      <a
+        class="announcement-bar__link flex items-center justify-center gap-2 no-underline w-full"
+        href="{{ section.settings.link_url }}"
+      >
+        {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
+          <div
+            class="announcement-bar__countdown flex items-center justify-center gap-2"
+            data-target="{{ section.settings.countdown_target | escape }}"
+          >
+            {% if section.settings.message != blank %}
+              <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
+            {% endif %}
+            <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
+              Ends in
+              <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
+              <span class="time seconds">00</span>s
+            </span>
+          </div>
+        {% else %}
+          <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
+        {% endif %}
+        <span class="announcement-bar__cta flex items-center">
+          {{ 'icon-chevron-right.svg' | inline_asset_content }}
+        </span>
+      </a>
+    {% else %}
       {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
         <div
           class="announcement-bar__countdown flex items-center justify-center gap-2"
@@ -26,27 +114,8 @@
           </span>
         </div>
       {% else %}
-        <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
+        <p class="announcement-bar__text text-center m-0">{{ section.settings.message }}</p>
       {% endif %}
-      <span class="announcement-bar__cta underline">Click here</span>
-    </a>
-  {% else %}
-    {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-      <div
-        class="announcement-bar__countdown flex items-center justify-center gap-2"
-        data-target="{{ section.settings.countdown_target | escape }}"
-      >
-        {% if section.settings.message != blank %}
-          <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
-        {% endif %}
-        <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
-          Ends in
-          <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-          <span class="time seconds">00</span>s
-        </span>
-      </div>
-    {% else %}
-      <p class="announcement-bar__text text-center m-0">{{ section.settings.message }}</p>
     {% endif %}
   {% endif %}
 </div>
@@ -60,6 +129,14 @@
   .announcement-bar__inner {
     display: grid;
     grid-template-columns: var(--content-grid);
+    position: relative;
+  }
+  .announcement-bar__item {
+    grid-column: 1 / -1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .announcement-bar__item.hidden {
+    display: none;
   }
   .announcement-bar__text {
     grid-column: 1 / -1;
@@ -70,7 +147,140 @@
   .announcement-bar__countdown {
     grid-column: 1 / -1;
   }
+  .announcement-bar__cta {
+    display: inline-flex;
+    align-items: center;
+  }
+  .announcement-bar__cta svg {
+    width: 1rem;
+    height: 1rem;
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function parseDate(value) {
+      var d = new Date(value);
+      if (!isNaN(d.getTime())) return d;
+      var norm = String(value).replace(' ', 'T');
+      d = new Date(norm);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function initCountdown(container) {
+      var targetStr = container.getAttribute('data-target');
+      if (!targetStr) return;
+      var target = parseDate(targetStr);
+      if (!target) return;
+
+      var daysEl = container.querySelector('.time.days');
+      var hoursEl = container.querySelector('.time.hours');
+      var minutesEl = container.querySelector('.time.minutes');
+      var secondsEl = container.querySelector('.time.seconds');
+
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+      // Clear any existing interval
+      if (container.__countdownTimer) {
+        clearInterval(container.__countdownTimer);
+      }
+
+      function tick() {
+        var now = new Date();
+        var diff = Math.max(0, Math.floor((target.getTime() - now.getTime()) / 1000));
+        var days = Math.floor(diff / 86400);
+        var hours = Math.floor((diff % 86400) / 3600);
+        var minutes = Math.floor((diff % 3600) / 60);
+        var seconds = diff % 60;
+
+        daysEl.textContent = pad(days);
+        hoursEl.textContent = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+
+        if (diff === 0) {
+          clearInterval(container.__countdownTimer);
+          container.__countdownTimer = null;
+        }
+      }
+
+      tick();
+      container.__countdownTimer = setInterval(tick, 1000);
+    }
+
+    function initAnnouncementRotation(container) {
+      if (!container.dataset.autoRotate || container.dataset.autoRotate !== 'true') {
+        return;
+      }
+
+      const items = container.querySelectorAll('.announcement-bar__item');
+      if (items.length <= 1) {
+        return;
+      }
+
+      const interval = parseInt(container.dataset.rotateInterval) || 5000;
+      let currentIndex = 0;
+
+      // Initialize countdown for first visible item
+      const firstCountdown = items[0].querySelector('.announcement-bar__countdown');
+      if (firstCountdown) {
+        initCountdown(firstCountdown);
+      }
+
+      function showNext() {
+        // Hide current item
+        items[currentIndex].classList.add('hidden');
+        
+        // Stop countdown for current item
+        const currentCountdown = items[currentIndex].querySelector('.announcement-bar__countdown');
+        if (currentCountdown && currentCountdown.__countdownTimer) {
+          clearInterval(currentCountdown.__countdownTimer);
+          currentCountdown.__countdownTimer = null;
+        }
+        
+        // Move to next item (with shuffle)
+        const availableIndices = Array.from({ length: items.length }, (_, i) => i)
+          .filter(i => i !== currentIndex);
+        currentIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        
+        // Show next item
+        items[currentIndex].classList.remove('hidden');
+        
+        // Initialize countdown for new item if needed
+        const countdownEl = items[currentIndex].querySelector('.announcement-bar__countdown');
+        if (countdownEl) {
+          initCountdown(countdownEl);
+        }
+      }
+
+      // Start rotation
+      const rotationTimer = setInterval(showNext, interval);
+      container.__rotationTimer = rotationTimer;
+
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', function() {
+        clearInterval(rotationTimer);
+      });
+    }
+
+    function ready(fn) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+    }
+
+    ready(function() {
+      const containers = document.querySelectorAll('.announcement-bar__inner[data-auto-rotate="true"]');
+      containers.forEach(initAnnouncementRotation);
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
@@ -79,30 +289,126 @@
   "class": "announcement-bar",
   "settings": [
     {
+      "type": "header",
+      "content": "Single announcement (legacy)"
+    },
+    {
       "type": "text",
       "id": "message",
       "label": "Text",
-      "default": "Free shipping on orders over $50"
+      "default": "Free shipping on orders over $50",
+      "info": "Used when multiple announcements are disabled"
     },
     {
       "type": "url",
       "id": "link_url",
-      "label": "Link URL"
+      "label": "Link URL",
+      "info": "Used when multiple announcements are disabled"
     },
     {
       "type": "checkbox",
       "id": "enable_countdown",
       "label": "Enable countdown",
-      "default": false
+      "default": false,
+      "info": "Used when multiple announcements are disabled"
     },
     {
       "type": "text",
       "id": "countdown_target",
       "label": "Countdown target",
       "info": "Countdown target info",
-      "placeholder": "2025-12-31T23:59:59Z"
+      "placeholder": "2025-12-31T23:59:59Z",
+      "visible_if": "enable_countdown == true"
+    },
+    {
+      "type": "header",
+      "content": "Multiple announcements"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_multiple",
+      "label": "Enable multiple announcements",
+      "default": false,
+      "info": "When enabled, use blocks below to add multiple announcements that will shuffle automatically"
+    },
+    {
+      "type": "range",
+      "id": "rotate_interval",
+      "label": "Rotation interval",
+      "min": 2000,
+      "max": 10000,
+      "step": 500,
+      "default": 5000,
+      "unit": "ms",
+      "info": "Time between announcement rotations",
+      "visible_if": "enable_multiple == true"
     }
   ],
-  "presets": [{ "name": "Announcement bar" }]
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "message",
+          "label": "Text",
+          "default": "Free shipping on orders over $50"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_countdown",
+          "label": "Enable countdown",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "countdown_target",
+          "label": "Countdown target",
+          "info": "Countdown target info",
+          "placeholder": "2025-12-31T23:59:59Z",
+          "visible_if": "enable_countdown == true"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Announcement bar"
+    },
+    {
+      "name": "Announcement bar (multiple)",
+      "settings": {
+        "enable_multiple": true
+      },
+      "blocks": {
+        "announcement_1": {
+          "type": "announcement",
+          "settings": {
+            "message": "Free shipping on orders over $50"
+          }
+        },
+        "announcement_2": {
+          "type": "announcement",
+          "settings": {
+            "message": "New arrivals - Shop now"
+          }
+        },
+        "announcement_3": {
+          "type": "announcement",
+          "settings": {
+            "message": "Sign up for 10% off your first order"
+          }
+        }
+      },
+      "block_order": ["announcement_1", "announcement_2", "announcement_3"]
+    }
+  ]
 }
 {% endschema %}

@@ -67,7 +67,7 @@
   <div class="container flex flex-col gap-16 md:gap-40 pt-24 pb-8">
     <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-start justify-between flex-wrap">
       <div class="mr-20 md:mr-0">
-        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="[&>svg]:h-12 [&>svg]:w-auto">
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="[&>svg]:h-16 [&>svg]:w-auto">
           {{ 'logo-full.svg' | inline_asset_content }}
         </a>
       </div>
@@ -108,27 +108,39 @@
       </div>
 
       <div class="flex gap-4">
-        <a
-          href="{{ section.settings.social_1 }}"
-          aria-label="Facebook"
-          class="text-foreground-secondary hover:text-foreground-default transition-colors"
-        >
-          {{ 'icon-facebook.svg' | inline_asset_content }}
-        </a>
-        <a
-          href="{{ section.settings.social_2 }}"
-          aria-label="Instagram"
-          class="text-foreground-secondary hover:text-foreground-default transition-colors"
-        >
-          {{ 'icon-instagram.svg' | inline_asset_content }}
-        </a>
-        <a
-          href="{{ section.settings.social_3 }}"
-          aria-label="TikTok"
-          class="text-foreground-secondary hover:text-foreground-default transition-colors"
-        >
-          {{ 'icon-tiktok.svg' | inline_asset_content }}
-        </a>
+        {% if section.settings.social_facebook != blank %}
+          <a
+            href="{{ section.settings.social_facebook }}"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-foreground-secondary hover:text-foreground-default transition-colors"
+          >
+            {{ 'icon-facebook.svg' | inline_asset_content }}
+          </a>
+        {% endif %}
+        {% if section.settings.social_instagram != blank %}
+          <a
+            href="{{ section.settings.social_instagram }}"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-foreground-secondary hover:text-foreground-default transition-colors"
+          >
+            {{ 'icon-instagram.svg' | inline_asset_content }}
+          </a>
+        {% endif %}
+        {% if section.settings.social_tiktok != blank %}
+          <a
+            href="{{ section.settings.social_tiktok }}"
+            aria-label="TikTok"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-foreground-secondary hover:text-foreground-default transition-colors"
+          >
+            {{ 'icon-tiktok.svg' | inline_asset_content }}
+          </a>
+        {% endif %}
       </div>
     </div>
 
@@ -142,7 +154,21 @@
           </div>
         {% endif %}
       </div>
-      <div class="text-secondary text-sm md:text-left">Collabiome &copy; {{ 'now' | date: '%Y' }}</div>
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
+        {%- if section.settings.payment_enable -%}
+          <div class="footer__payment">
+            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
+            <ul class="list list-payment flex flex-wrap items-center gap-3" role="list">
+              {%- for type in shop.enabled_payment_types -%}
+                <li class="list-payment__item">
+                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+        <div class="text-secondary text-sm md:text-left">Collabiome &copy; {{ 'now' | date: '%Y' }}</div>
+      </div>
     </div>
   </div>
 </footer>
@@ -188,10 +214,13 @@
     { "type": "text", "id": "menu2_title", "label": "Menu 2 title" },
     { "type": "link_list", "id": "menu2", "label": "Menu 2" },
     { "type": "link_list", "id": "bottom_menu", "label": "Bottom menu" },
-    { "type": "text", "id": "social_1", "label": "Social 1 (text)" },
-    { "type": "text", "id": "social_2", "label": "Social 2 (text)" },
-    { "type": "text", "id": "social_3", "label": "Social 3 (text)" },
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true },
+    { "type": "header", "content": "Social Media" },
+    { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "social_tiktok", "label": "TikTok URL" },
+    { "type": "header", "content": "Payment Methods" },
+    { "type": "checkbox", "id": "payment_enable", "label": "Show payment icons", "default": true },
+    { "type": "header", "content": "Newsletter" },
     { "type": "image_picker", "id": "newsletter_bg_image", "label": "Newsletter card background image" },
     { "type": "color", "id": "newsletter_bg_color", "label": "Newsletter card background color" },
     { "type": "text", "id": "newsletter_title", "label": "Newsletter title", "default": "Newsletter" },

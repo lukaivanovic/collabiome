@@ -2,151 +2,89 @@ if (!customElements.get("testimonial-video-player")) {
   class TestimonialVideoPlayer extends HTMLElement {
     constructor() {
       super();
-      this.openDialog = this.openDialog.bind(this);
-      this.closeDialog = this.closeDialog.bind(this);
-      this.handleBackdropClick = this.handleBackdropClick.bind(this);
-      this.handleCancel = this.handleCancel.bind(this);
-      this.handleDialogClose = this.handleDialogClose.bind(this);
-      this.handleKeydown = this.handleKeydown.bind(this);
+      this.playVideo = this.playVideo.bind(this);
+      this.handleVideoEnd = this.handleVideoEnd.bind(this);
+      this.isPlayingWithSound = false;
     }
 
     connectedCallback() {
       this.trigger = this.querySelector("[data-video-trigger]");
-      this.dialog = this.querySelector("[data-video-dialog]");
-      this.closeButton = this.querySelector("[data-video-close]");
       this.inlineVideo = this.querySelector("[data-inline-video] video");
-      this.dialogVideo = this.querySelector("[data-dialog-video] video");
-      this.supportsNativeDialog =
-        this.dialog && typeof this.dialog.showModal === "function";
-      this.isFallback = !this.supportsNativeDialog;
+      this.overlay = this.querySelector(".testimonial-video-player__overlay");
 
-      if (this.isFallback) {
-        this.dialog.classList.add("testimonial-video-player__dialog--fallback");
-      }
+      if (!this.trigger || !this.inlineVideo) return;
 
-      if (!this.trigger || !this.dialog) return;
-
-      this.trigger.addEventListener("click", this.openDialog);
-      this.closeButton?.addEventListener("click", this.closeDialog);
-      this.dialog.addEventListener("click", this.handleBackdropClick);
-
-      if (this.supportsNativeDialog) {
-        this.dialog.addEventListener("cancel", this.handleCancel);
-        this.dialog.addEventListener("close", this.handleDialogClose);
-      }
+      this.trigger.addEventListener("click", this.playVideo);
+      this.inlineVideo.addEventListener("ended", this.handleVideoEnd);
     }
 
     disconnectedCallback() {
-      this.trigger?.removeEventListener("click", this.openDialog);
-      this.closeButton?.removeEventListener("click", this.closeDialog);
-      this.dialog?.removeEventListener("click", this.handleBackdropClick);
-
-      if (this.supportsNativeDialog) {
-        this.dialog?.removeEventListener("cancel", this.handleCancel);
-        this.dialog?.removeEventListener("close", this.handleDialogClose);
-      } else {
-        document.removeEventListener("keydown", this.handleKeydown);
-        this.unlockScroll();
-      }
+      this.trigger?.removeEventListener("click", this.playVideo);
+      this.inlineVideo?.removeEventListener("ended", this.handleVideoEnd);
     }
 
-    openDialog() {
-      if (!this.dialog) return;
-
-      if (this.supportsNativeDialog) {
-        if (!this.dialog.open) {
-          this.dialog.showModal();
-        }
-      } else {
-        this.dialog.setAttribute("open", "true");
-        document.addEventListener("keydown", this.handleKeydown);
-        this.lockScroll();
-      }
-
-      this.pauseInlineVideo();
-      this.playDialogVideo();
-    }
-
-    closeDialog() {
-      if (!this.dialog) return;
-
-      if (this.supportsNativeDialog) {
-        if (this.dialog.open) {
-          this.dialog.close();
-        }
-      } else if (this.dialog.hasAttribute("open")) {
-        this.dialog.removeAttribute("open");
-        document.removeEventListener("keydown", this.handleKeydown);
-        this.unlockScroll();
-        this.handleDialogClose();
-      }
-
-      this.trigger?.focus();
-    }
-
-    handleBackdropClick(event) {
-      if (event.target === this.dialog) {
-        this.closeDialog();
-      }
-    }
-
-    handleCancel(event) {
-      event.preventDefault();
-      this.closeDialog();
-    }
-
-    handleDialogClose() {
-      this.pauseDialogVideo();
-      this.resumeInlineVideo();
-    }
-
-    handleKeydown(event) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        this.closeDialog();
-      }
-    }
-
-    playDialogVideo() {
-      if (!this.dialogVideo) return;
-      this.dialogVideo.muted = false;
-      this.dialogVideo.currentTime = 0;
-      const playPromise = this.dialogVideo.play();
-      if (playPromise?.catch) {
-        playPromise.catch(() => {});
-      }
-    }
-
-    pauseDialogVideo() {
-      if (!this.dialogVideo) return;
-      this.dialogVideo.pause();
-      this.dialogVideo.currentTime = 0;
-    }
-
-    pauseInlineVideo() {
+    playVideo(event) {
       if (!this.inlineVideo) return;
-      this.inlineVideo.pause();
-    }
 
-    resumeInlineVideo() {
-      if (!this.inlineVideo) return;
+      // Prevent click from bubbling if video is already playing with sound
+      if (this.isPlayingWithSound) {
+        event?.stopPropagation();
+        return;
+      }
+
+      // Start playing with sound
+      this.inlineVideo.muted = false;
+      this.inlineVideo.loop = false;
+      this.inlineVideo.controls = true;
+      this.inlineVideo.currentTime = 0;
+      
+      // Hide the overlay
+      if (this.overlay) {
+        this.overlay.style.display = "none";
+      }
+
+      // Disable pointer events on trigger so video controls work
+      if (this.trigger) {
+        this.trigger.style.pointerEvents = "none";
+      }
+
       const playPromise = this.inlineVideo.play();
       if (playPromise?.catch) {
         playPromise.catch(() => {});
       }
+      
+      this.isPlayingWithSound = true;
     }
 
-    lockScroll() {
-      if (this.scrollLocked) return;
-      this.previousOverflow = document.documentElement.style.overflow;
-      document.documentElement.style.overflow = "hidden";
-      this.scrollLocked = true;
+    handleVideoEnd() {
+      this.resetVideo();
     }
 
-    unlockScroll() {
-      if (!this.scrollLocked) return;
-      document.documentElement.style.overflow = this.previousOverflow || "";
-      this.scrollLocked = false;
+    resetVideo() {
+      if (!this.inlineVideo) return;
+
+      this.inlineVideo.muted = true;
+      this.inlineVideo.loop = true;
+      this.inlineVideo.controls = false;
+      this.inlineVideo.currentTime = 0;
+
+      // Show the overlay again
+      if (this.overlay) {
+        this.overlay.style.display = "";
+      }
+
+      // Re-enable pointer events on trigger
+      if (this.trigger) {
+        this.trigger.style.pointerEvents = "";
+      }
+
+      // Resume autoplay
+      const playPromise = this.inlineVideo.play();
+      if (playPromise?.catch) {
+        playPromise.catch(() => {});
+      }
+
+      this.isPlayingWithSound = false;
     }
   }
 

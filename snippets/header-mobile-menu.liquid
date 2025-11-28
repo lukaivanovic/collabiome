@@ -19,22 +19,24 @@
 %}
 
 <!-- Mobile Header Bar -->
-<nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 flex items-center justify-between px-4">
-  <button
-    class="flex items-center justify-center p-2 rounded hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
-    aria-label="Open navigation menu"
-    aria-expanded="false"
-    data-menu-toggle
-  >
-    {{ 'icon-menu.svg' | inline_asset_content }}
-  </button>
+<nav class="bg-[var(--color-background-default)] border-b border-black/12 h-16 grid grid-cols-[1fr_auto_1fr] items-center justify-center px-4">
+  <div class="flex items-center justify-start">
+    <button
+      class="flex items-center justify-center p-2 rounded hover:bg-black/5 focus:outline-2 focus:outline-[var(--color-foreground)] focus:outline-offset-2"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      {{ 'icon-menu.svg' | inline_asset_content }}
+    </button>
+  </div>
 
   <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="[&>svg]:size-12">
     {{ 'logo-mark.svg' | inline_asset_content }}
   </a>
 
-  <div class="flex items-center gap-2">
-    <a href="account" aria-label="Account" class=" size-6 [&>svg]:size-6">
+  <div class="flex items-center gap-2 justify-end">
+    <a href="account" aria-label="Account" class="flex items-center justify-center size-6 [&>svg]:size-6">
       {{ 'icon-account.svg' | inline_asset_content }}
     </a>
     <a
@@ -42,7 +44,7 @@
       aria-label="Cart"
       aria-haspopup="drawer"
       id="cart-icon-bubble"
-      class="px-1 [&>svg]:size-6"
+      class="flex items-center justify-center size-6 [&>svg]:size-6"
     >
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
