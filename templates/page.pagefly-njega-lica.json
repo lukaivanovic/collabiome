@@ -48,9 +48,17 @@
       },
       "name": "Product",
       "settings": {
-        "title": "Featured products",
-        "description": "Discover our latest products",
-        "products": []
+        "title": "Sve za njegu lica",
+        "description": "",
+        "products": [
+          "collagen-biome-moistureizer-spf30-multibiome-complex",
+          "collagen-anti-pollution-moisturizer",
+          "complete-collagen-nocna-krema",
+          "essential-collagen-gel-za-ciscenje-lica",
+          "exfolijant-kompleks-vocnih-kiselina-i-enzima",
+          "respiracijski-ultra-hidratantni-serum",
+          "vitamin-c-serum-preko-15-vitamina-c"
+        ]
       }
     },
     "left_image_text_MfQrk6": {
