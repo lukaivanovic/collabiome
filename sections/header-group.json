@@ -23,15 +23,6 @@
             "countdown_target": ""
           }
         },
-        "announcement_PxCYhJ": {
-          "type": "announcement",
-          "settings": {
-            "message": "Free shipping on orders over $50",
-            "link_url": "",
-            "enable_countdown": false,
-            "countdown_target": ""
-          }
-        },
         "announcement_bBJARR": {
           "type": "announcement",
           "settings": {
@@ -40,12 +31,21 @@
             "enable_countdown": false,
             "countdown_target": ""
           }
+        },
+        "announcement_hrbXet": {
+          "type": "announcement",
+          "settings": {
+            "message": "Hello world",
+            "link_url": "",
+            "enable_countdown": true,
+            "countdown_target": "2011-10-05T14:48:00.000Z"
+          }
         }
       },
       "block_order": [
         "announcement_pBhDC9",
-        "announcement_PxCYhJ",
-        "announcement_bBJARR"
+        "announcement_bBJARR",
+        "announcement_hrbXet"
       ],
       "name": "Announcement bar",
       "settings": {
