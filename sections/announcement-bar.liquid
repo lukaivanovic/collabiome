@@ -1,18 +1,8 @@
 {% liquid
   assign section_id = section.settings.custom_id | default: section.id
-  if section.blocks.size > 0
-    assign has_blocks = true
-  else
-    assign has_blocks = false
-  endif
-  if has_blocks
-    if section.settings.enable_multiple
-      assign use_multiple = true
-    else
-      assign use_multiple = false
-    endif
-  else
-    assign use_multiple = false
+  assign should_rotate = false
+  if section.blocks.size > 1
+    assign should_rotate = true
   endif
 %}
 
@@ -21,12 +11,11 @@
 <div
   class="announcement-bar__inner text-sm py-2"
   data-section-id="{{ section_id }}"
-  {% if use_multiple %}
+  {% if should_rotate %}
     data-auto-rotate="true" data-rotate-interval="{{ section.settings.rotate_interval | default: 5000 }}"
   {% endif %}
 >
-  {% if use_multiple %}
-    {% comment %} Multiple announcements with auto-shuffle {% endcomment %}
+  {% if section.blocks.size > 0 %}
     {% for block in section.blocks %}
       <div
         class="announcement-bar__item {% unless forloop.first %}hidden{% endunless %}"
@@ -85,53 +74,6 @@
         {% endif %}
       </div>
     {% endfor %}
-  {% else %}
-    {% comment %} Single announcement (backward compatibility) {% endcomment %}
-    {% if section.settings.link_url != blank %}
-      <a
-        class="announcement-bar__link flex items-center justify-center gap-2 no-underline w-full"
-        href="{{ section.settings.link_url }}"
-      >
-        {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-          <div
-            class="announcement-bar__countdown flex items-center justify-center gap-2"
-            data-target="{{ section.settings.countdown_target | escape }}"
-          >
-            {% if section.settings.message != blank %}
-              <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
-            {% endif %}
-            <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
-              Ends in
-              <span class="time days">00</span>d <span class="time hours">00</span>h
-              <span class="time minutes">00</span>m <span class="time seconds">00</span>s
-            </span>
-          </div>
-        {% else %}
-          <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
-        {% endif %}
-        <span class="announcement-bar__cta flex items-center">
-          {{ 'icon-chevron-right.svg' | inline_asset_content }}
-        </span>
-      </a>
-    {% else %}
-      {% if section.settings.enable_countdown and section.settings.countdown_target != blank %}
-        <div
-          class="announcement-bar__countdown flex items-center justify-center gap-2"
-          data-target="{{ section.settings.countdown_target | escape }}"
-        >
-          {% if section.settings.message != blank %}
-            <span class="announcement-bar__text text-center m-0">{{ section.settings.message }}</span>
-          {% endif %}
-          <span class="announcement-bar__timer tabular-nums whitespace-nowrap" aria-live="polite">
-            Ends in
-            <span class="time days">00</span>d <span class="time hours">00</span>h <span class="time minutes">00</span>m
-            <span class="time seconds">00</span>s
-          </span>
-        </div>
-      {% else %}
-        <p class="announcement-bar__text text-center m-0">{{ section.settings.message }}</p>
-      {% endif %}
-    {% endif %}
   {% endif %}
 </div>
 
@@ -158,6 +100,10 @@
   }
   .announcement-bar__link {
     grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
   .announcement-bar__countdown {
     grid-column: 1 / -1;
@@ -165,10 +111,14 @@
   .announcement-bar__cta {
     display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
+    color: inherit;
   }
   .announcement-bar__cta svg {
     width: 1rem;
     height: 1rem;
+    display: block;
+    stroke: currentColor;
   }
 {% endstylesheet %}
 
@@ -281,6 +231,11 @@
       });
     }
 
+    function initCountdowns(container) {
+      const countdowns = container.querySelectorAll('.announcement-bar__countdown');
+      countdowns.forEach(initCountdown);
+    }
+
     function ready(fn) {
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', fn);
@@ -290,8 +245,16 @@
     }
 
     ready(function () {
-      const containers = document.querySelectorAll('.announcement-bar__inner[data-auto-rotate="true"]');
-      containers.forEach(initAnnouncementRotation);
+      const containers = document.querySelectorAll('.announcement-bar__inner');
+      containers.forEach(function (container) {
+        // Initialize countdowns for all items
+        initCountdowns(container);
+
+        // Initialize rotation if enabled
+        if (container.dataset.autoRotate === 'true') {
+          initAnnouncementRotation(container);
+        }
+      });
     });
   })();
 {% endjavascript %}
@@ -303,49 +266,6 @@
   "class": "announcement-bar",
   "settings": [
     {
-      "type": "header",
-      "content": "Single announcement (legacy)"
-    },
-    {
-      "type": "text",
-      "id": "message",
-      "label": "Text",
-      "default": "Free shipping on orders over $50",
-      "info": "Used when multiple announcements are disabled"
-    },
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Link URL",
-      "info": "Used when multiple announcements are disabled"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_countdown",
-      "label": "Enable countdown",
-      "default": false,
-      "info": "Used when multiple announcements are disabled"
-    },
-    {
-      "type": "text",
-      "id": "countdown_target",
-      "label": "Countdown target",
-      "info": "Countdown target info",
-      "placeholder": "2025-12-31T23:59:59Z",
-      "visible_if": "{{ section.settings.enable_countdown == true }}"
-    },
-    {
-      "type": "header",
-      "content": "Multiple announcements"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_multiple",
-      "label": "Enable multiple announcements",
-      "default": false,
-      "info": "When enabled, use blocks below to add multiple announcements that will shuffle automatically"
-    },
-    {
       "type": "range",
       "id": "rotate_interval",
       "label": "Rotation interval",
@@ -354,8 +274,7 @@
       "step": 500,
       "default": 5000,
       "unit": "ms",
-      "info": "Time between announcement rotations",
-      "visible_if": "{{ section.settings.enable_multiple == true }}"
+      "info": "Time between announcement rotations (only applies when there are multiple announcements)"
     }
   ],
   "blocks": [
@@ -394,13 +313,19 @@
   "max_blocks": 10,
   "presets": [
     {
-      "name": "Announcement bar"
+      "name": "Announcement bar",
+      "blocks": {
+        "announcement_1": {
+          "type": "announcement",
+          "settings": {
+            "message": "Free shipping on orders over $50"
+          }
+        }
+      },
+      "block_order": ["announcement_1"]
     },
     {
       "name": "Announcement bar (multiple)",
-      "settings": {
-        "enable_multiple": true
-      },
       "blocks": {
         "announcement_1": {
           "type": "announcement",
