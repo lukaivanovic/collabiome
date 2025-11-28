@@ -18,6 +18,15 @@
           "type": "announcement",
           "settings": {
             "message": "Free shipping on orders over $50",
+            "link_url": "shopify://collections/all",
+            "enable_countdown": false,
+            "countdown_target": ""
+          }
+        },
+        "announcement_PxCYhJ": {
+          "type": "announcement",
+          "settings": {
+            "message": "Free shipping on orders over $50",
             "link_url": "",
             "enable_countdown": false,
             "countdown_target": ""
@@ -35,15 +44,11 @@
       },
       "block_order": [
         "announcement_pBhDC9",
+        "announcement_PxCYhJ",
         "announcement_bBJARR"
       ],
       "name": "Announcement bar",
       "settings": {
-        "message": "Free shipping on orders over $50",
-        "link_url": "shopify://blogs/news",
-        "enable_countdown": true,
-        "countdown_target": "2025-09-20T23:59:59Z",
-        "enable_multiple": true,
         "rotate_interval": 5000
       }
     },
