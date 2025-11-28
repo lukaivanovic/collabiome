@@ -13,9 +13,134 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "hero_9pD4Jn": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "description": "",
+        "show_buttons": true,
+        "button_label": "Button label",
+        "button_link": "",
+        "button_2_label": "",
+        "button_2_link": "",
+        "video": "shopify://files/videos/0910.mp4",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "products_row_aUtLmH": {
+      "type": "products-row",
+      "blocks": {
+        "products-row-rotating-text": {
+          "type": "rotating-text",
+          "static": true,
+          "settings": {
+            "text": "Rotating text",
+            "speed": 60,
+            "gap": 24
+          },
+          "blocks": {}
+        }
+      },
+      "name": "Product",
+      "settings": {
+        "title": "Featured products",
+        "description": "Discover our latest products",
+        "products": []
+      }
+    },
+    "left_image_text_MfQrk6": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/Beznaslova_1080x1080piks._10.png",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_LywwXY": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/Beznaslova_1080x1080piks._10.png",
+        "image_alt": "Image alt text",
+        "image_position": "right",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_6itCjX": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/Beznaslova_1080x1080piks._10.png",
+        "image_alt": "Image alt text",
+        "image_position": "left",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "left_image_text_mPdDV7": {
+      "type": "left-image-text",
+      "name": "Image and Text",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image": "shopify://shop_images/Beznaslova_1080x1080piks._10.png",
+        "image_alt": "Image alt text",
+        "image_position": "right",
+        "title": "Stunning feature title",
+        "description": "<p>Share a short description that explains why this feature matters.</p>",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_link": "",
+        "button_style": "solid",
+        "button_link_target": "_self"
+      }
+    },
+    "product_faq_LfXUQk": {
+      "type": "product-faq",
+      "name": "Product FAQ",
+      "settings": {
+        "title": "FAQ",
+        "description": "<p>Got a less-frequently asked question?</p>"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "hero_9pD4Jn",
+    "products_row_aUtLmH",
+    "left_image_text_MfQrk6",
+    "left_image_text_LywwXY",
+    "left_image_text_6itCjX",
+    "left_image_text_mPdDV7",
+    "product_faq_LfXUQk"
   ]
 }
